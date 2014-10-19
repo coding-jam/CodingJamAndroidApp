@@ -1,7 +1,5 @@
 package it.cosenonjaviste.base;
 
-import android.app.Application;
-
 import dagger.ObjectGraph;
 
 public class ObjectGraphHolder {
@@ -9,9 +7,14 @@ public class ObjectGraphHolder {
 
     private static ObjectGraphCreator objectGraphCreator;
 
-    public static ObjectGraph getObjectGraph(Application app) {
+    private static OnCreateListener onCreateListener;
+
+    public static ObjectGraph getObjectGraph(DaggerApplication application) {
         if (objectGraph == null) {
-            objectGraph = objectGraphCreator.create(app);
+            objectGraph = objectGraphCreator.create(application);
+            if (onCreateListener != null) {
+                onCreateListener.onCreate(objectGraph);
+            }
         }
         return objectGraph;
     }
@@ -27,8 +30,15 @@ public class ObjectGraphHolder {
         objectGraph = null;
     }
 
-    public static void inject(Application app, Object obj) {
-        ObjectGraphHolder.getObjectGraph(app).inject(obj);
+    public static void setOnCreateListener(OnCreateListener onCreateListener) {
+        ObjectGraphHolder.onCreateListener = onCreateListener;
     }
 
+    public interface OnCreateListener {
+        void onCreate(ObjectGraph objectGraph);
+    }
+
+    public static void inject(DaggerApplication app, Object obj) {
+        ObjectGraphHolder.getObjectGraph(app).inject(obj);
+    }
 }

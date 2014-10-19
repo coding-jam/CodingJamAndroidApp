@@ -1,14 +1,9 @@
 package it.cosenonjaviste;
 
-import android.app.Application;
+import it.cosenonjaviste.base.DaggerApplication;
 
-import dagger.ObjectGraph;
-import it.cosenonjaviste.base.ObjectGraphHolder;
-
-public class CoseNonJavisteApp extends Application {
-
-    @Override public void onCreate() {
-        super.onCreate();
-        ObjectGraphHolder.setObjectGraphCreator(app -> ObjectGraph.create(new AppModule(app)));
+public class CoseNonJavisteApp extends DaggerApplication {
+    @Override public Object[] getModules() {
+        return new Object[]{new AppModule(this)};
     }
 }
