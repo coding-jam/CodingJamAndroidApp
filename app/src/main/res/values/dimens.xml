@@ -2,4 +2,6 @@
 <resources>
     <dimen name="actionbar_home_width">60dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
+    <dimen name="author_image_size">48dp</dimen>
+    <dimen name="author_image_border">2dp</dimen>
 </resources>

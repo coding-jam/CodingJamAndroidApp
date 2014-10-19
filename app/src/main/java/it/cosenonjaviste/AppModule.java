@@ -2,6 +2,7 @@ package it.cosenonjaviste;
 
 import android.app.Application;
 
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import javax.inject.Singleton;
@@ -19,6 +20,7 @@ import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 
 @Module(injects = {PostFragment.class}, library = true)
 public class AppModule {
@@ -51,6 +53,7 @@ public class AppModule {
                 .setClient(client)
                         //http calls are executed in background thread using RxUtils
                 .setExecutors(Runnable::run, new MainThreadExecutor())
+                .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
                 .build();
         if (BuildConfig.DEBUG) {
             restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);

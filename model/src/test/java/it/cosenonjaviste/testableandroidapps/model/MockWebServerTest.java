@@ -1,5 +1,6 @@
 package it.cosenonjaviste.testableandroidapps.model;
 
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -43,10 +45,14 @@ public class MockWebServerTest {
     public void testLoad() throws IOException {
         URL url = server.getUrl("/");
 
-        RestAdapter adapter = new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL).setEndpoint(url.toString()).build();
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
+                .setEndpoint(url.toString())
+                .build();
         WordPressService service = adapter.create(WordPressService.class);
 
-        PostResponse repoResponse = service.listPosts().toBlocking().first();
+        PostResponse repoResponse = service.listPosts(0).toBlocking().first();
         List<Post> posts = repoResponse.getPosts();
         assertEquals(1, posts.size());
         Post post = posts.get(0);

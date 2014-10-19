@@ -1,11 +1,14 @@
 package it.cosenonjaviste.testableandroidapps.model;
 
+import java.util.Date;
+
 public class Post {
     private long id;
     private Author author;
     private String title;
-    private String date;
+    private Date date;
     private String url;
+    private String excerpt;
 
     public long getId() {
         return id;
@@ -19,7 +22,7 @@ public class Post {
         return title;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -27,4 +30,7 @@ public class Post {
         return url;
     }
 
+    public String getExcerpt() {
+        return excerpt;
+    }
 }
