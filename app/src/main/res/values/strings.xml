@@ -15,4 +15,14 @@
     <string name="twitter">Twitter</string>
     <string name="contacts">Contatti</string>
 
+    <string-array name="menu_items">
+        <item>@string/post</item>
+        <item>@string/categories</item>
+        <item>@string/authors</item>
+        <item>@string/twitter</item>
+        <item>@string/contacts</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
 </resources>
