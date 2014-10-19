@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'retrolambda'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.digitatbd.library.mvp"
+        minSdkVersion 9
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile project(':javaLib')
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:support-annotations:20.0.0'
+    compile 'com.jakewharton:butterknife:5.1.2'
+    compile 'org.parceler:parceler-api:0.2.13'
+}
+
+//aaaaa

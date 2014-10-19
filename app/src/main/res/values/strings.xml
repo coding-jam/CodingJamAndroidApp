@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, CoseNonJavisteActivity!</string>
+    <string name="app_name">CoseNonJaviste</string>
+    <string name="loading_">Loading...</string>
+    <string name="download_error">Download error</string>
+    <string name="posts">posts</string>
+    <string name="post">Post</string>
+    <string name="share">Share</string>
+    <string name="share_post">Share post</string>
+    <string name="retry">Retry</string>
+    <string name="categories">Categorie</string>
+    <string name="authors">Autori</string>
+    <string name="twitter">Twitter</string>
+    <string name="contacts">Contatti</string>
+
+</resources>

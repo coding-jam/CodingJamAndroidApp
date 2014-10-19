@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+apply plugin: 'retrolambda'
+
+retrolambda {
+    jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':javaLib')
+    testCompile 'junit:junit:4.10'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    testCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape>
+            <solid android:color="#FFDDDDDD" />
+        </shape>
+    </item>
+    <item>
+        <inset
+            android:insetBottom="2dip"
+            android:insetLeft="2dip"
+            android:insetRight="2dip"
+            android:insetTop="2dip" >
+            <shape>
+                <stroke
+                    android:dashGap="4dip"
+                    android:dashWidth="6dip"
+                    android:width="2dp"
+                    android:color="#FFe18125" />
+
+                <corners android:radius="4dp" />
+
+                <solid android:color="#00000000" />
+            </shape>
+        </inset>
+    </item>
+
+</layer-list>

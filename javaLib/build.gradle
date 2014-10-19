@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+apply plugin: 'retrolambda'
+
+dependencies {
+    testCompile 'junit:junit:4.10'
+    compile 'io.reactivex:rxandroid:0.21.0'
+    compile 'io.reactivex:rxjava-async-util:0.21.0'
+    compile 'com.squareup.retrofit:retrofit:1.7.0'
+}
