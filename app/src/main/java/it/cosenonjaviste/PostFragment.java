@@ -1,5 +1,6 @@
 package it.cosenonjaviste;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -46,10 +47,12 @@ public class PostFragment extends RxMvpFragment<PostListPresenter, PostListModel
         return R.layout.super_list;
     }
 
-    @Override protected void initView(View view) {
+    @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {
         super.initView(view);
         adapter = new PostAdapter(getActivity());
         list.setAdapter(adapter);
+        list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+        list.setRefreshListener(() -> presenter.listPosts(0));
     }
 
     @Override protected void subscribeToModelUpdates(Observable<ModelEvent<PostListModel>> modelUpdates) {

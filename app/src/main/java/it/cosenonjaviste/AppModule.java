@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.mvp.PostListPresenter;
-import it.cosenonjaviste.testableandroidapps.model.RepoService;
+import it.cosenonjaviste.testableandroidapps.model.PostService;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import it.cosenonjaviste.utils.Clock;
 import it.cosenonjaviste.utils.ClockImpl;
@@ -59,12 +59,12 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    public RepoService provideRepoService(WordPressService wordPressService) {
-        return new RepoService(wordPressService);
+    public PostService provideRepoService(WordPressService wordPressService) {
+        return new PostService(wordPressService);
     }
 
     @Provides
-    public PostListPresenter providePostListPresenter(RepoService repoService) {
-        return new PostListPresenter(repoService);
+    public PostListPresenter providePostListPresenter(PostService postService) {
+        return new PostListPresenter(postService);
     }
 }

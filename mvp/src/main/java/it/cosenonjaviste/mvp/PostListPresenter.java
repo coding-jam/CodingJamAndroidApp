@@ -5,22 +5,22 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
 import it.cosenonjaviste.mvp.base.events.ErrorModelEvent;
 import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
-import it.cosenonjaviste.testableandroidapps.model.RepoService;
+import it.cosenonjaviste.testableandroidapps.model.PostService;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
-    private RepoService repoService;
+    private PostService postService;
 
-    public PostListPresenter(RepoService repoService) {
-        this.repoService = repoService;
+    public PostListPresenter(PostService postService) {
+        this.postService = postService;
     }
 
     protected PostListModel createModel(PresenterArgs args) {
         return new PostListModel();
     }
 
-    public void listPosts() {
-        subscribePausable(repoService.listPosts(),
+    public void listPosts(int page) {
+        subscribePausable(postService.listPosts(page),
                 () -> publish(new StartLoadingModelEvent<>(model)),
                 posts -> {
                     model.setReloadVisible(false);
@@ -33,6 +33,6 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     @Override protected void loadOnFirstStart() {
-        listPosts();
+        listPosts(0);
     }
 }
