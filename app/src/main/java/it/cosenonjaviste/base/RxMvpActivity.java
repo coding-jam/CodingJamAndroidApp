@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import butterknife.ButterKnife;
+import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
+import it.cosenonjaviste.lib.mvp.BundleObjectSaver;
+import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
+import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
-import it.cosenonjaviste.mvp.baseCnj.Navigator;
 import it.cosenonjaviste.mvp.baseCnj.RxMvpPresenter;
 import rx.Observable;
 

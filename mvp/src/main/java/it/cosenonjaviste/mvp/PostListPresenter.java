@@ -1,9 +1,9 @@
 package it.cosenonjaviste.mvp;
 
+import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
 import it.cosenonjaviste.mvp.base.events.ErrorModelEvent;
 import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
-import it.cosenonjaviste.mvp.baseCnj.PresenterArgs;
 import it.cosenonjaviste.mvp.baseCnj.RxMvpPresenter;
 import it.cosenonjaviste.testableandroidapps.model.RepoService;
 

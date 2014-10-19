@@ -51,6 +51,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile project(':model')
     compile project(':mvp')
+    compile project(':androidMvp')
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup.picasso:picasso:2.3.4'

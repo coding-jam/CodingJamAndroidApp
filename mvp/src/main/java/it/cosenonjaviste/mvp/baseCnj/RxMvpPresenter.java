@@ -1,6 +1,10 @@
 package it.cosenonjaviste.mvp.baseCnj;
 
 
+import it.cosenonjaviste.mvp.base.ContextBinder;
+import it.cosenonjaviste.mvp.base.Navigator;
+import it.cosenonjaviste.mvp.base.ObjectSaver;
+import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import it.cosenonjaviste.mvp.base.pausable.CompositePausableSubscription;
@@ -22,7 +26,7 @@ public abstract class RxMvpPresenter<M> {
 
     private boolean newModelCreated;
 
-    protected it.cosenonjaviste.mvp.baseCnj.Navigator navigator;
+    protected Navigator navigator;
 
     private PublishSubject<ModelEvent<M>> modelUpdates = PublishSubject.create();
 
@@ -30,11 +34,11 @@ public abstract class RxMvpPresenter<M> {
         return modelUpdates.asObservable();
     }
 
-    public void saveInBundle(it.cosenonjaviste.mvp.baseCnj.ObjectSaver<M> objectSaver) {
+    public void saveInBundle(ObjectSaver<M> objectSaver) {
         objectSaver.saveInBundle(model);
     }
 
-    public M init(ContextBinder contextBinder, it.cosenonjaviste.mvp.baseCnj.ObjectSaver<M> objectSaver, it.cosenonjaviste.mvp.baseCnj.PresenterArgs args, it.cosenonjaviste.mvp.baseCnj.Navigator navigator) {
+    public M init(ContextBinder contextBinder, ObjectSaver<M> objectSaver, PresenterArgs args, Navigator navigator) {
         this.contextBinder = contextBinder;
         this.navigator = navigator;
         model = objectSaver.loadFromBundle();
@@ -48,7 +52,7 @@ public abstract class RxMvpPresenter<M> {
     protected void loadOnFirstStart() {
     }
 
-    protected abstract M createModel(it.cosenonjaviste.mvp.baseCnj.PresenterArgs args);
+    protected abstract M createModel(PresenterArgs args);
 
     protected void publish(ModelEvent<M> event) {
         modelUpdates.onNext(event);
