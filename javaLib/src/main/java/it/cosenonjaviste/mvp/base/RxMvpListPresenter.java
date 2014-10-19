@@ -6,15 +6,16 @@ import rx.Observable;
 
 public abstract class RxMvpListPresenter<M extends ListModel, T> extends RxMvpPresenter<M> {
     public final void loadAllData(int page) {
-        model.start(page);
-        notifyModelChanged();
-        subscribePausable(getDataListObservable(page), apps -> {
-            updateItems(page, apps);
-            notifyModelChanged();
-        }, throwable -> {
-            model.error(page, throwable);
-            notifyModelChanged();
-        });
+        //TODO
+//        model.start(page);
+//        notifyModelChanged();
+//        subscribePausable(getDataListObservable(page), apps -> {
+//            updateItems(page, apps);
+//            notifyModelChanged();
+//        }, throwable -> {
+//            model.error(page, throwable);
+//            notifyModelChanged();
+//        });
     }
 
     public final void loadNextPage() {

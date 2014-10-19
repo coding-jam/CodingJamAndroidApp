@@ -11,6 +11,8 @@ import butterknife.ButterKnife;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.events.ModelEvent;
+import rx.Observable;
 
 public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment implements RxMvpView<M> {
 
@@ -39,7 +41,12 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
     @Override public void onStart() {
         super.onStart();
-        presenter.subscribe(this);
+        Observable<ModelEvent<M>> modelUpdates = presenter.getModelUpdates();
+        subscribeToModelUpdates(modelUpdates);
+        presenter.subscribe();
+    }
+
+    protected void subscribeToModelUpdates(Observable<ModelEvent<M>> modelUpdates) {
     }
 
     @Override public void onStop() {

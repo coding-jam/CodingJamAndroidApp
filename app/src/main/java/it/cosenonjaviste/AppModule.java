@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.mvp.PostListPresenter;
 import it.cosenonjaviste.testableandroidapps.model.RepoService;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import it.cosenonjaviste.utils.Clock;
@@ -19,7 +20,7 @@ import retrofit.android.MainThreadExecutor;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
 
-@Module(injects = {}, library = true)
+@Module(injects = {PostFragment.class}, library = true)
 public class AppModule {
 
     private Application application;
@@ -60,5 +61,10 @@ public class AppModule {
     @Provides @Singleton
     public RepoService provideRepoService(WordPressService wordPressService) {
         return new RepoService(wordPressService);
+    }
+
+    @Provides
+    public PostListPresenter providePostListPresenter(RepoService repoService) {
+        return new PostListPresenter(repoService);
     }
 }

@@ -52,6 +52,7 @@ dependencies {
     compile project(':model')
     compile project(':mvp')
     compile project(':androidMvp')
+    compile project(':SuperListviewLibrary')
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup.picasso:picasso:2.3.4'
