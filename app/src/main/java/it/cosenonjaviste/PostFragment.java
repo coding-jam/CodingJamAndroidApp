@@ -1,7 +1,6 @@
 package it.cosenonjaviste;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
@@ -10,14 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
-import it.cosenonjaviste.base.DaggerApplication;
-import it.cosenonjaviste.base.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.PostListModel;
 import it.cosenonjaviste.mvp.PostListPresenter;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
+import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
 import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
 
 public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> {
 
@@ -26,17 +22,6 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
     @InjectView(R.id.list) SuperListview list;
 
     private PostAdapter adapter;
-
-    private CompositeSubscription subscriptions = new CompositeSubscription();
-
-    @Override public void onCreate(Bundle savedInstanceState) {
-        ObjectGraphHolder.inject((DaggerApplication) getActivity().getApplication(), this);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override protected Navigator getNavigator() {
-        return null;
-    }
 
     @Override protected PostListPresenter createPresenter() {
         return presenterProvider.get();
@@ -55,17 +40,25 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
     }
 
     @Override protected void subscribeToModelUpdates(Observable<ModelEvent<PostListModel>> modelUpdates) {
-        subscriptions.add(modelUpdates.map(ModelEvent::getModel).subscribe(this::updateView));
+        subscriptions.add(
+                modelUpdates
+                        .filter(ModelEvent::isEndOrError)
+                        .map(ModelEvent::getModel)
+                        .subscribe(this::updateView)
+        );
+
+        subscriptions.add(
+                modelUpdates
+                        .ofType(StartLoadingModelEvent.class)
+                        .subscribe(e -> list.showProgress())
+        );
     }
 
-    @Override public void onStop() {
-        super.onStop();
-        subscriptions.unsubscribe();
-        subscriptions = new CompositeSubscription();
-    }
-
-    @Override public void updateView(PostListModel model) {
-        if (model.getPosts() != null) {
+    public void updateView(PostListModel model) {
+        if (model.isReloadVisible()) {
+            list.showError();
+        } else {
+            list.showList();
             adapter.reloadData(model.getPosts());
         }
     }

@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import rx.Observable;
 
-public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment implements RxMvpView<M> {
+public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment {
 
     public static final String PRESENTER_ID = "presenterId";
     protected P presenter;

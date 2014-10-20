@@ -60,11 +60,11 @@ public abstract class RxMvpPresenter<M> {
         if (pausableSubscriptions != null) {
             pausableSubscriptions.resume();
         }
+        publish(new EndLoadingModelEvent<>(model));
         if (newModelCreated) {
             loadOnFirstStart();
             newModelCreated = false;
         }
-        publish(new EndLoadingModelEvent<>(model));
     }
 
     public void pause() {

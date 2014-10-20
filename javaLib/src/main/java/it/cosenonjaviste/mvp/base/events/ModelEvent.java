@@ -26,4 +26,8 @@ public abstract class ModelEvent<M> {
     public boolean isExtraEmpty() {
         return extra == null;
     }
+
+    public abstract boolean isStart();
+
+    public abstract boolean isEndOrError();
 }
