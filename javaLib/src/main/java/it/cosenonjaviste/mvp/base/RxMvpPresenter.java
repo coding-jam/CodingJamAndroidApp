@@ -24,6 +24,8 @@ public abstract class RxMvpPresenter<M> {
 
     protected Navigator navigator;
 
+    private long id;
+
     private PublishSubject<ModelEvent<M>> modelUpdates = PublishSubject.create();
 
     public Observable<ModelEvent<M>> getModelUpdates() {
@@ -75,6 +77,14 @@ public abstract class RxMvpPresenter<M> {
         if (pausableSubscriptions != null) {
             pausableSubscriptions.destroy();
         }
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     protected <T> void subscribePausable(Observable<T> observable, Observer<T> observer) {

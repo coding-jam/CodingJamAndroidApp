@@ -1,5 +1,6 @@
 package it.cosenonjaviste.lib.mvp;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -42,10 +43,31 @@ public class PresenterSaverFragment extends Fragment {
         return (P) fragment.presenters.get(id);
     }
 
+    protected static <P extends RxMvpPresenter<?>> P initPresenter(Bundle savedInstanceState, FragmentManager fragmentManager, PresenterFactory<P> presenterCreator) {
+        P presenter = null;
+        long presenterId = 0;
+        if (savedInstanceState != null) {
+            presenterId = savedInstanceState.getLong(RxMvpFragment.PRESENTER_ID, 0);
+            if (presenterId != 0) {
+                presenter = load(fragmentManager, presenterId);
+            }
+        }
+        if (presenter == null) {
+            presenter = presenterCreator.create();
+            presenterId = save(fragmentManager, presenter);
+        }
+        presenter.setId(presenterId);
+        return presenter;
+    }
+
     @Override public void onDestroy() {
         super.onDestroy();
         for (RxMvpPresenter<?> presenter : presenters.values()) {
             presenter.destroy();
         }
+    }
+
+    public interface PresenterFactory<P> {
+        P create();
     }
 }

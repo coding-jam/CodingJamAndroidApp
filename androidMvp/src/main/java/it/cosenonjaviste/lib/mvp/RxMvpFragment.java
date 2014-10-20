@@ -18,12 +18,14 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
     public static final String PRESENTER_ID = "presenterId";
     protected P presenter;
 
-    private long presenterId;
-
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initPresenter(savedInstanceState);
+        presenter = PresenterSaverFragment.initPresenter(savedInstanceState, getFragmentManager(), new PresenterSaverFragment.PresenterFactory<P>() {
+            @Override public P create() {
+                return createPresenter();
+            }
+        });
 
         BundleObjectSaver<M> objectSaver = new BundleObjectSaver<>(savedInstanceState, "model");
         BundlePresenterArgs args = new BundlePresenterArgs(getArguments());
@@ -35,7 +37,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         presenter.saveInBundle(new BundleObjectSaver<>(outState, "model"));
-        outState.putLong(PRESENTER_ID, presenterId);
+        outState.putLong(PRESENTER_ID, presenter.getId());
     }
 
     @Override public void onStart() {
@@ -51,20 +53,6 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
     @Override public void onStop() {
         presenter.pause();
         super.onStop();
-    }
-
-    protected final P initPresenter(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            presenterId = savedInstanceState.getLong(PRESENTER_ID, 0);
-            if (presenterId != 0) {
-                presenter = PresenterSaverFragment.load(getFragmentManager(), presenterId);
-            }
-        }
-        if (presenter == null) {
-            presenter = createPresenter();
-            presenterId = PresenterSaverFragment.save(getFragmentManager(), presenter);
-        }
-        return presenter;
     }
 
     protected abstract P createPresenter();
