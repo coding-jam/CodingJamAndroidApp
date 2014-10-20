@@ -3,7 +3,8 @@ package it.cosenonjaviste.mvp;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cosenonjaviste.testableandroidapps.model.Post;
+import it.cosenonjaviste.model.Post;
+
 
 public class PostListModel {
 

@@ -1,10 +1,7 @@
 package it.cosenonjaviste.mvc;
 
-import it.cosenonjaviste.mvp.baseCnj.ObjectSaver;
+import it.cosenonjaviste.mvp.base.ObjectSaver;
 
-/**
-* Created by fabiocollini on 14/09/14.
-*/
 public class EmptyObjectSaver<M> implements ObjectSaver<M> {
     private M model;
 

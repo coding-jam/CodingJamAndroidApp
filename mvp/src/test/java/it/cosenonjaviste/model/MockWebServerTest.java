@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.model;
+package it.cosenonjaviste.model;
 
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.mockwebserver.Dispatcher;

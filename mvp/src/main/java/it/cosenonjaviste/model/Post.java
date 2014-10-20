@@ -1,14 +1,14 @@
-package it.cosenonjaviste.testableandroidapps.model;
+package it.cosenonjaviste.model;
 
 import java.util.Date;
 
 public class Post {
-    private long id;
-    private Author author;
-    private String title;
-    private Date date;
-    private String url;
-    private String excerpt;
+    long id;
+    Author author;
+    String title;
+    Date date;
+    String url;
+    String excerpt;
 
     public long getId() {
         return id;

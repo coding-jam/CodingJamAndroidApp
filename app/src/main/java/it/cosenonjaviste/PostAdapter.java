@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import it.cosenonjaviste.testableandroidapps.model.Post;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.utils.CircleTransform;
 
 public class PostAdapter extends BaseAdapter {

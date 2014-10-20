@@ -2,14 +2,6 @@ package it.cosenonjaviste;
 
 import android.app.Activity;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
-import it.cosenonjaviste.mvp.PostListModel;
-import it.cosenonjaviste.testableandroidapps.model.Author;
-import it.cosenonjaviste.testableandroidapps.model.Post;
-
-@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class Dashboard extends Activity {
 
 //    @InjectView(R.id.list) ListView listView;

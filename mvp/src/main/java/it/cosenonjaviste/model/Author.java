@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.model;
+package it.cosenonjaviste.model;
 
 public class Author {
     long id;

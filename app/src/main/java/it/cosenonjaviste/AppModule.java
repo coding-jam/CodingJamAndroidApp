@@ -9,9 +9,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.model.PostService;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.PostListPresenter;
-import it.cosenonjaviste.testableandroidapps.model.PostService;
-import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import it.cosenonjaviste.utils.Clock;
 import it.cosenonjaviste.utils.ClockImpl;
 import it.cosenonjaviste.utils.DatePrefsSaver;

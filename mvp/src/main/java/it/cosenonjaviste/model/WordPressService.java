@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.model;
+package it.cosenonjaviste.model;
 
 import retrofit.http.GET;
 import retrofit.http.Query;

@@ -14,9 +14,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.parceler.ParcelClass;
+import org.parceler.ParcelClasses;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.PostListModel;
 
+@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.left_drawer) ListView mDrawerList;

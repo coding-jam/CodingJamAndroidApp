@@ -27,7 +27,7 @@ public class PostListPresenterTest {
 
     @Test
     public void testLoad() {
-        presenter.listPosts();
+        presenter.listPosts(0);
         assertNotNull(model.getPosts());
     }
 }

@@ -1,6 +1,6 @@
 package it.cosenonjaviste.mvc;
 
-import it.cosenonjaviste.mvp.baseCnj.ContextBinder;
+import it.cosenonjaviste.mvp.base.ContextBinder;
 import rx.Observable;
 
 public class TestContextBinder implements ContextBinder {
