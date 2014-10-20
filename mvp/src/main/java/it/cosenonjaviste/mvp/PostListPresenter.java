@@ -1,5 +1,7 @@
 package it.cosenonjaviste.mvp;
 
+import javax.inject.Inject;
+
 import it.cosenonjaviste.model.PostService;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
@@ -9,11 +11,7 @@ import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
-    private PostService postService;
-
-    public PostListPresenter(PostService postService) {
-        this.postService = postService;
-    }
+    @Inject PostService postService;
 
     protected PostListModel createModel(PresenterArgs args) {
         return new PostListModel();

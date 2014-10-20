@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+apply plugin: 'retrolambda'
+
+dependencies {
+    compile project(':mvp')
+    compile 'com.squareup.dagger:dagger-compiler:1.2.1'
+    testCompile 'junit:junit:4.10'
+    testCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
+}

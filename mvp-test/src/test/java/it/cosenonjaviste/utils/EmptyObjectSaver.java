@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvc;
+package it.cosenonjaviste.utils;
 
 import it.cosenonjaviste.mvp.base.ObjectSaver;
 

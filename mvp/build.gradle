@@ -5,8 +5,7 @@ apply plugin: 'retrolambda'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':javaLib')
-    testCompile 'junit:junit:4.10'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    testCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
+    compile 'com.squareup.dagger:dagger:1.2.1'
 }
