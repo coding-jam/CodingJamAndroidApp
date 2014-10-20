@@ -12,7 +12,6 @@ import javax.inject.Provider;
 import butterknife.InjectView;
 import it.cosenonjaviste.base.DaggerApplication;
 import it.cosenonjaviste.base.ObjectGraphHolder;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.mvp.PostListModel;
 import it.cosenonjaviste.mvp.PostListPresenter;
 import it.cosenonjaviste.mvp.base.Navigator;
@@ -20,7 +19,7 @@ import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
-public class PostFragment extends RxMvpFragment<PostListPresenter, PostListModel> {
+public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> {
 
     @Inject Provider<PostListPresenter> presenterProvider;
 

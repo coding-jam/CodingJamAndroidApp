@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -72,7 +71,6 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.inject(this, view);
         initView(view);
         return view;
     }
