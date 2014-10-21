@@ -1,6 +1,8 @@
 package it.cosenonjaviste.mvp.base;
 
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import it.cosenonjaviste.mvp.base.pausable.CompositePausableSubscription;
@@ -30,6 +32,12 @@ public abstract class RxMvpPresenter<M> {
 
     public Observable<ModelEvent<M>> getModelUpdates() {
         return modelUpdates.asObservable();
+    }
+
+    private static AtomicLong sequence = new AtomicLong(1);
+
+    protected RxMvpPresenter() {
+        id = sequence.getAndIncrement();
     }
 
     public M init(ContextBinder contextBinder, M restoredModel, PresenterArgs args, Navigator navigator) {
@@ -78,10 +86,6 @@ public abstract class RxMvpPresenter<M> {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public M getModel() {
