@@ -2,6 +2,7 @@ package it.cosenonjaviste.mvp;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostService;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
@@ -32,5 +33,9 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Override protected void loadOnFirstStart() {
         listPosts(0);
+    }
+
+    public void goToDetail(Post item) {
+
     }
 }

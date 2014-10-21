@@ -31,7 +31,7 @@ public class PostListPresenterTest {
 
         MockWebServerUtils.initDispatcher(server, PostJson.JSON);
 
-        model = PresenterTestUtils.init(presenter);
+        model = PresenterTestUtils.init(presenter, null, null);
     }
 
     @Test
@@ -39,6 +39,12 @@ public class PostListPresenterTest {
         presenter.listPosts(0);
         assertNotNull(model.getPosts());
         assertEquals(1, model.getPosts().size());
+    }
+
+    @Test
+    public void testGoToDetails() {
+        presenter.listPosts(0);
+        presenter.goToDetail(model.getPosts().get(1));
     }
 
     @Module(injects = PostListPresenterTest.class, addsTo = MvpTestModule.class)
