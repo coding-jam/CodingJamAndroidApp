@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.base;
+package it.cosenonjaviste.mvp.base.validator;
 
 public interface ErrorMessageCreator {
 
