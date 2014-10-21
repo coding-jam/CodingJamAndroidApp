@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
@@ -15,6 +17,7 @@ import rx.Observable;
 public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment {
 
     public static final String PRESENTER_ID = "presenterId";
+    public static final String MODEL = "model";
     protected P presenter;
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -26,16 +29,16 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
             }
         });
 
-        BundleObjectSaver<M> objectSaver = new BundleObjectSaver<>(savedInstanceState, "model");
+        M restoredModel = savedInstanceState != null ? Parcels.unwrap(savedInstanceState.getParcelable(MODEL)) : null;
         BundlePresenterArgs args = new BundlePresenterArgs(getArguments());
-        presenter.init(new ActivityContextBinder(getActivity()), objectSaver, args, getNavigator());
+        presenter.init(new ActivityContextBinder(getActivity()), restoredModel, args, getNavigator());
     }
 
     protected abstract Navigator getNavigator();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        presenter.saveInBundle(new BundleObjectSaver<>(outState, "model"));
+        outState.putParcelable(MODEL, Parcels.wrap(presenter.getModel()));
         outState.putLong(PRESENTER_ID, presenter.getId());
     }
 

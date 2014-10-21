@@ -44,7 +44,7 @@ public class PostListPresenterTest {
     @Test
     public void testGoToDetails() {
         presenter.listPosts(0);
-        presenter.goToDetail(model.getPosts().get(1));
+        presenter.goToDetail(model.getPosts().get(0));
     }
 
     @Module(injects = PostListPresenterTest.class, addsTo = MvpTestModule.class)

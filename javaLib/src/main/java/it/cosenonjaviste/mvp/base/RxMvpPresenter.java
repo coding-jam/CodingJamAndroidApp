@@ -32,15 +32,12 @@ public abstract class RxMvpPresenter<M> {
         return modelUpdates.asObservable();
     }
 
-    public void saveInBundle(ObjectSaver<M> objectSaver) {
-        objectSaver.saveInBundle(model);
-    }
-
-    public M init(ContextBinder contextBinder, ObjectSaver<M> objectSaver, PresenterArgs args, Navigator navigator) {
+    public M init(ContextBinder contextBinder, M restoredModel, PresenterArgs args, Navigator navigator) {
         this.contextBinder = contextBinder;
         this.navigator = navigator;
-        model = objectSaver.loadFromBundle();
-        if (model == null) {
+        if (restoredModel != null) {
+            model = restoredModel;
+        } else {
             newModelCreated = true;
             model = createModel(args);
         }
@@ -85,6 +82,10 @@ public abstract class RxMvpPresenter<M> {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public M getModel() {
+        return model;
     }
 
     protected <T> void subscribePausable(Observable<T> observable, Observer<T> observer) {
