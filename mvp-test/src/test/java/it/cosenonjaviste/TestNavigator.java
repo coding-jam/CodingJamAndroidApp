@@ -1,5 +1,9 @@
 package it.cosenonjaviste;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
@@ -7,6 +11,7 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.utils.PresenterTestUtils;
 import rx.functions.Action1;
 
+@Singleton
 public class TestNavigator implements Navigator {
 
     private Object lastModel;
@@ -15,13 +20,17 @@ public class TestNavigator implements Navigator {
 
     private String lastOpenedUrl;
 
-    @Override public void show(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
+    @Inject
+    public TestNavigator() {
+    }
+
+    @Override public void show(ContextBinder contextBinder, Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
         lastPresenter = createPresenter(presenterClass);
         lastModel = PresenterTestUtils.init(lastPresenter, getArgs(argsAction), this);
     }
 
     @Override public <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
-        show(presenterClass, argsAction);
+        show(contextBinder, presenterClass, argsAction);
         return null;
     }
 

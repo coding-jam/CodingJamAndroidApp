@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostService;
+import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
@@ -16,6 +17,8 @@ import rx.Observable;
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject PostService postService;
+
+    @Inject Navigator navigator;
 
     protected PostListModel createModel(PresenterArgs args) {
         return new PostListModel();
@@ -40,6 +43,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-
+        navigator.show(contextBinder, PostDetailPresenter.class, args -> PostDetailPresenter.populateArgs(args, item));
     }
+
 }

@@ -44,6 +44,7 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         list.setRefreshListener(() -> presenter.listPosts(0));
+        list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
     }
 
     @Override protected void subscribeToModelUpdates(Observable<ModelEvent<PostListModel>> modelUpdates, CompositeSubscription subscriptions) {

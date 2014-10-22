@@ -1,10 +1,10 @@
 package it.cosenonjaviste.mvp.base;
 
 import rx.Observable;
+import rx.functions.Action1;
 
-/**
- * Created by fabiocollini on 14/09/14.
- */
 public interface ContextBinder {
     <T> Observable<T> bindObservable(Observable<T> observable);
+
+    void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction);
 }

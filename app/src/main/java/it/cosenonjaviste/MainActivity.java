@@ -3,7 +3,6 @@ package it.cosenonjaviste;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -19,10 +18,11 @@ import org.parceler.ParcelClasses;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.mvp.LoadableModel;
 
 @ParcelClasses({@ParcelClass(LoadableModel.class)})
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -61,6 +61,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    @Override public void showFragment(Fragment fragment) {
+        replaceFragmentInContainer(fragment);
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,12 +76,15 @@ public class MainActivity extends ActionBarActivity {
         // update the main content by replacing fragments
         Fragment fragment = new PostFragment();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        replaceFragmentInContainer(fragment);
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    private void replaceFragmentInContainer(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override

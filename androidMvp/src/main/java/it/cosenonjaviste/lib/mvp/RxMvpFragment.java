@@ -46,8 +46,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         presenter.subscribe(this::subscribeToModelUpdates);
     }
 
-    protected void subscribeToModelUpdates(Observable<ModelEvent<M>> modelUpdates, CompositeSubscription subscription) {
-    }
+    protected abstract void subscribeToModelUpdates(Observable<ModelEvent<M>> modelUpdates, CompositeSubscription subscription);
 
     @Override public void onStop() {
         presenter.pause();

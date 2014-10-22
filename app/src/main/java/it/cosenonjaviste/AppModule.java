@@ -9,11 +9,15 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.base.Navigator;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
-@Module(injects = {PostFragment.class})
+@Module(injects = {
+        PostFragment.class,
+        PostDetailFragment.class
+})
 public class AppModule {
 
     private Application application;
@@ -22,8 +26,7 @@ public class AppModule {
         this.application = application;
     }
 
-    @Provides @Singleton
-    public WordPressService provideGitHubService() {
+    @Provides @Singleton WordPressService provideGitHubService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://www.cosenonjaviste.it/")
                         //http calls are executed in background thread using RxUtils
@@ -36,4 +39,7 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
+    @Provides @Singleton Navigator provideNavigator(CnjNavigator navigator) {
+        return navigator;
+    }
 }
