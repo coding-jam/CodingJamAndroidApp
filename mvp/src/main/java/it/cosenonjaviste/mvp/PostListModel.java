@@ -8,23 +8,13 @@ import it.cosenonjaviste.model.Post;
 
 public class PostListModel {
 
-    List<Post> posts = new ArrayList<>();
-
-    boolean reloadVisible;
+    LoadableModel postsModel = new LoadableModel<>(new ArrayList<>());
 
     public List<Post> getPosts() {
-        return posts;
+        return getPostsModel().getObject();
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    public boolean isReloadVisible() {
-        return reloadVisible;
-    }
-
-    public void setReloadVisible(boolean reloadVisible) {
-        this.reloadVisible = reloadVisible;
+    public LoadableModel<List<Post>> getPostsModel() {
+        return postsModel;
     }
 }

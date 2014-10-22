@@ -12,13 +12,17 @@ import rx.Observer;
 import rx.Scheduler;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Action2;
 import rx.observers.Observers;
 import rx.subjects.PublishSubject;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class RxMvpPresenter<M> {
     protected M model;
 
-    protected CompositePausableSubscription pausableSubscriptions = new CompositePausableSubscription();
+    protected final CompositePausableSubscription pausableSubscriptions = new CompositePausableSubscription();
+
+    private CompositeSubscription viewSubscriptions = new CompositeSubscription();
 
     protected ContextBinder contextBinder;
 
@@ -29,10 +33,6 @@ public abstract class RxMvpPresenter<M> {
     private long id;
 
     private PublishSubject<ModelEvent<M>> modelUpdates = PublishSubject.create();
-
-    public Observable<ModelEvent<M>> getModelUpdates() {
-        return modelUpdates.asObservable();
-    }
 
     private static AtomicLong sequence = new AtomicLong(1);
 
@@ -61,10 +61,12 @@ public abstract class RxMvpPresenter<M> {
         modelUpdates.onNext(event);
     }
 
-    public void subscribe() {
-        if (pausableSubscriptions != null) {
-            pausableSubscriptions.resume();
+    public void subscribe(Action2<Observable<ModelEvent<M>>, CompositeSubscription> subscribeToModelUpdates) {
+        if (subscribeToModelUpdates != null) {
+            subscribeToModelUpdates.call(modelUpdates.asObservable(), viewSubscriptions);
         }
+
+        pausableSubscriptions.resume();
         publish(new EndLoadingModelEvent<>(model));
         if (newModelCreated) {
             loadOnFirstStart();
@@ -73,15 +75,13 @@ public abstract class RxMvpPresenter<M> {
     }
 
     public void pause() {
-        if (pausableSubscriptions != null) {
-            pausableSubscriptions.pause();
-        }
+        viewSubscriptions.unsubscribe();
+        viewSubscriptions = new CompositeSubscription();
+        pausableSubscriptions.pause();
     }
 
     public void destroy() {
-        if (pausableSubscriptions != null) {
-            pausableSubscriptions.destroy();
-        }
+        pausableSubscriptions.destroy();
     }
 
     public long getId() {

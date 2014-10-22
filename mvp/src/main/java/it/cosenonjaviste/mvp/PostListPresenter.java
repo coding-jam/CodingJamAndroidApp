@@ -1,5 +1,7 @@
 package it.cosenonjaviste.mvp;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import it.cosenonjaviste.model.Post;
@@ -9,6 +11,7 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.events.EndLoadingModelEvent;
 import it.cosenonjaviste.mvp.base.events.ErrorModelEvent;
 import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
+import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
@@ -19,14 +22,15 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void listPosts(int page) {
-        subscribePausable(postService.listPosts(page),
+        Observable<List<Post>> observable = postService.listPosts(page);
+
+        subscribePausable(observable,
                 () -> publish(new StartLoadingModelEvent<>(model)),
                 posts -> {
-                    model.setReloadVisible(false);
-                    model.setPosts(posts);
+                    model.getPostsModel().done(posts);
                     publish(new EndLoadingModelEvent<>(model));
                 }, throwable -> {
-                    model.setReloadVisible(true);
+                    model.getPostsModel().error(throwable);
                     publish(new ErrorModelEvent<>(model, throwable));
                 });
     }
