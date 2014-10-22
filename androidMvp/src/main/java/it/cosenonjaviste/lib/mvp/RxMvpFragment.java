@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import rx.Observable;
@@ -30,10 +29,8 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
         presenter = PresenterSaverFragment.initPresenter(presenterId, getFragmentManager(), this::createPresenter);
 
-        presenter.init(new ActivityContextBinder(getActivity()), restoredModel, new BundlePresenterArgs(getArguments()), getNavigator());
+        presenter.init(new ActivityContextBinder(getActivity()), restoredModel, new BundlePresenterArgs(getArguments()));
     }
-
-    protected abstract Navigator getNavigator();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

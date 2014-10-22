@@ -35,7 +35,7 @@ public class PostListPresenterTest {
 
         MockWebServerUtils.initDispatcher(server, PostJson.JSON);
 
-        model = PresenterTestUtils.init(presenter, null, null);
+        model = PresenterTestUtils.init(presenter, null);
     }
 
     @Test

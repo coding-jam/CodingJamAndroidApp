@@ -26,7 +26,7 @@ public class TestNavigator implements Navigator {
 
     @Override public void show(ContextBinder contextBinder, Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
         lastPresenter = createPresenter(presenterClass);
-        lastModel = PresenterTestUtils.init(lastPresenter, getArgs(argsAction), this);
+        lastModel = PresenterTestUtils.init(lastPresenter, getArgs(argsAction));
     }
 
     @Override public <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {

@@ -10,7 +10,6 @@ import butterknife.ButterKnife;
 import it.cosenonjaviste.base.DaggerApplication;
 import it.cosenonjaviste.base.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
 public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpFragment<P, M> {
@@ -31,8 +30,4 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
     }
 
     protected abstract int getLayoutId();
-
-    @Override protected Navigator getNavigator() {
-        return null;
-    }
 }

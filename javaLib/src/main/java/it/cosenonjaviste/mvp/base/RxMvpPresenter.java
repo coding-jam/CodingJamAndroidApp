@@ -28,8 +28,6 @@ public abstract class RxMvpPresenter<M> {
 
     private boolean newModelCreated;
 
-    protected Navigator navigator;
-
     private long id;
 
     private PublishSubject<ModelEvent<M>> modelUpdates = PublishSubject.create();
@@ -40,9 +38,8 @@ public abstract class RxMvpPresenter<M> {
         id = sequence.getAndIncrement();
     }
 
-    public M init(ContextBinder contextBinder, M restoredModel, PresenterArgs args, Navigator navigator) {
+    public M init(ContextBinder contextBinder, M restoredModel, PresenterArgs args) {
         this.contextBinder = contextBinder;
-        this.navigator = navigator;
         if (restoredModel != null) {
             model = restoredModel;
         } else {

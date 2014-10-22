@@ -12,7 +12,6 @@ import javax.inject.Provider;
 
 import it.cosenonjaviste.mvp.PostDetailModel;
 import it.cosenonjaviste.mvp.PostDetailPresenter;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
@@ -22,10 +21,6 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
     @Inject Provider<PostDetailPresenter> presenterProvider;
 
     private TextView textView;
-
-    @Override protected Navigator getNavigator() {
-        return null;
-    }
 
     @Override protected void subscribeToModelUpdates(Observable<ModelEvent<PostDetailModel>> modelUpdates, CompositeSubscription subscription) {
         modelUpdates.map(ModelEvent::getModel).subscribe(model -> textView.setText(model.getPost().getTitle()));
