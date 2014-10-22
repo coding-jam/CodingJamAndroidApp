@@ -30,7 +30,7 @@ public class TestNavigator implements Navigator {
     }
 
     @Override public <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
-        show(contextBinder, presenterClass, argsAction);
+        show(null, presenterClass, argsAction);
         return null;
     }
 
