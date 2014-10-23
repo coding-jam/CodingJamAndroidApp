@@ -38,6 +38,19 @@ aside.sidebar.right-sidebar {
     display: none;
 }
 
+div.author-info-wrap.clearfix {
+    display: none;
+}
+
+div.inner-page-wrap.has-right-sidebar.has-one-sidebar.row.clearfix {
+    margin-top: 0px;
+}
+
+div.page-heading h1 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
 /* LICENSE & DETAILS
    ==================================================
 

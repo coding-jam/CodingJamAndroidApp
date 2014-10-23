@@ -55,11 +55,20 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
             }
 
             @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-//                http://www.cosenonjaviste.it/wp-content/themes/flexform/style.css
                 if (url.equalsIgnoreCase("http://www.cosenonjaviste.it/wp-content/themes/flexform/style.css")) {
                     return getCssWebResourceResponseFromAsset();
                 }
-                System.out.println(url);
+                if (url.startsWith("https://pbs.twimg.com/")
+                        || url.startsWith("https://cdn.syndication.twimg.com/")
+                        || url.startsWith("https://syndication.twitter.com")
+                        || url.contains("platform.twitter.com/")
+                        || url.startsWith("http://www.facebook.com/plugins/like_box.php")
+                        || url.startsWith("https://fbcdn-profile-")
+                        || url.contains("sharethis.com/")
+                        || url.equals("http://www.cosenonjaviste.it/wp-content/uploads/2013/06/favicon.ico")
+                        ) {
+                    return null;
+                }
                 return super.shouldInterceptRequest(view, url);
             }
 
@@ -71,7 +80,7 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
                 }
             }
 
-            private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream data) {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream data) {
                 return new WebResourceResponse("text/css", "UTF-8", data);
             }
 
