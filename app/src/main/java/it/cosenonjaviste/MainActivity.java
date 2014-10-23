@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,26 +23,25 @@ import it.cosenonjaviste.mvp.LoadableModel;
 @ParcelClasses({@ParcelClass(LoadableModel.class)})
 public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @InjectView(R.id.left_drawer_menu) View mDrawerMenu;
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    private String[] menuItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_2);
+        setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        menuItems = getResources().getStringArray(R.array.menu_items);
+        String[] menuItems = getResources().getStringArray(R.array.menu_items);
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, menuItems));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener((parent, view, position, id) -> selectItem(position));
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
@@ -65,13 +63,6 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
         replaceFragmentInContainer(fragment);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
     private void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment = new PostFragment();
@@ -80,7 +71,7 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawerMenu);
     }
 
     private void replaceFragmentInContainer(Fragment fragment) {

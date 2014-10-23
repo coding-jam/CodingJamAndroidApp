@@ -5,6 +5,7 @@
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:colorPressedHighlight">@color/colorPrimary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/cnj_selection</item>
         <item name="android:windowNoTitle">true</item>
