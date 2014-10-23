@@ -7,4 +7,6 @@ public interface ContextBinder {
     <T> Observable<T> bindObservable(Observable<T> observable);
 
     void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction);
+
+    void startNewActivity(String fragmentClassName, Action1<PresenterArgs> argsAction);
 }

@@ -1,6 +1,7 @@
 package it.cosenonjaviste.lib.mvp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -41,11 +42,22 @@ public class ActivityContextBinder implements ContextBinder {
 
     public void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
         if (activity instanceof MultiFragmentActivity) {
-            Fragment fragment = Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
+            Fragment fragment = instantiate(fragmentClassName, argsAction);
             ((MultiFragmentActivity) activity).showFragment(fragment);
         } else {
             throw new RuntimeException("Actvivity class " + activity.getClass().getName() + " must implement " + MultiFragmentActivity.class.getName());
         }
+    }
+
+    private Fragment instantiate(String fragmentClassName, Action1<PresenterArgs> argsAction) {
+        return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
+    }
+
+    @Override public void startNewActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
+        Intent intent = SingleFragmentActivity.createIntent(activity, fragmentClassName);
+        Bundle bundle = createArgs(argsAction);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
     }
 
     private Bundle createArgs(Action1<PresenterArgs> argsAction) {

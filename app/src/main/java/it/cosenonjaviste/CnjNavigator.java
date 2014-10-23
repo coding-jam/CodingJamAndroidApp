@@ -17,7 +17,7 @@ public class CnjNavigator implements Navigator {
     }
 
     @Override public void show(ContextBinder contextBinder, Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
-        contextBinder.showInActivity(PostDetailFragment.class.getName(), argsAction);
+        contextBinder.startNewActivity(PostDetailFragment.class.getName(), argsAction);
     }
 
     @Override public <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
