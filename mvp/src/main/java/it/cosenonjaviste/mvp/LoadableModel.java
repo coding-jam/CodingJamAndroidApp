@@ -10,7 +10,6 @@ public class LoadableModel<T> {
     Throwable throwable;
 
     public LoadableModel() {
-        System.out.println(123);
     }
 
     public LoadableModel(T object) {
