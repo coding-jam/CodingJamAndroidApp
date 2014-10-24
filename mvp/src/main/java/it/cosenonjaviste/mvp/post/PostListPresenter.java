@@ -5,7 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.model.PostService;
+import it.cosenonjaviste.model.PostResponse;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
@@ -16,7 +17,7 @@ import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
-    @Inject PostService postService;
+    @Inject WordPressService wordPressService;
 
     @Inject Navigator navigator;
 
@@ -25,7 +26,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void listPosts(int page) {
-        Observable<List<Post>> observable = postService.listPosts(page);
+        Observable<List<Post>> observable = wordPressService.listPosts(page).map(PostResponse::getPosts);
 
         subscribePausable(observable,
                 () -> publish(new StartLoadingModelEvent<>(model)),

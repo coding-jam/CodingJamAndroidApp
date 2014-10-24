@@ -1,7 +1,7 @@
 package it.cosenonjaviste.stubs;
 
-public class PostJson {
-    public static final String JSON = "{\n" +
+public class JsonStubs {
+    public static final String POSTS = "{\n" +
             "status: \"ok\",\n" +
             "count: 6,\n" +
             "count_total: 183,\n" +
@@ -58,6 +58,35 @@ public class PostJson {
             "comment_status: \"open\",\n" +
             "custom_fields: {}\n" +
             "}\n" +
+            "]\n" +
+            "}";
+
+    public static final String AUTHORS = "{\n" +
+            "status: \"ok\",\n" +
+            "count: 14,\n" +
+            "authors: [\n" +
+            "\t{\n" +
+            "\t\tid: 13,\n" +
+            "\t\tslug: \"sasa\",\n" +
+            "\t\tname: \"Gianni\",\n" +
+            "\t\tfirst_name: \"Gianni\",\n" +
+            "\t\tlast_name: \"A\",\n" +
+            "\t\tnickname: \"ga\",\n" +
+            "\t\turl: \"\",\n" +
+            "\t\tdescription: \"Sono laureato in Ingegneria Informatica...\",\n" +
+            "\t\temail: \"aaaa@gmail.com\"\n" +
+            "\t},\n" +
+            "\t{\n" +
+            "\t\tid: 7,\n" +
+            "\t\tslug: \"gabriele\",\n" +
+            "\t\tname: \"Gabriele\",\n" +
+            "\t\tfirst_name: \"Gabriele\",\n" +
+            "\t\tlast_name: \"Bia\",\n" +
+            "\t\tnickname: \"gabriele\",\n" +
+            "\t\turl: \"\",\n" +
+            "\t\tdescription: \"Sviluppo da circa tre anni in Java e da quasi....\",\n" +
+            "\t\temail: \"bbb@gmail.com\"\n" +
+            "\t}\n" +
             "]\n" +
             "}";
 }

@@ -13,4 +13,8 @@ public class TestContextBinder implements ContextBinder {
 
     @Override public void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
     }
+
+    @Override public void startNewActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
+
+    }
 }
