@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,28 +60,11 @@ public class PostAdapter extends BaseAdapter {
         rowWrapper.text.setText(Html.fromHtml(excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "")));
         rowWrapper.author.setText(post.getAuthor().getName());
         rowWrapper.date.setText(DateUtils.getRelativeTimeSpanString(context, post.getDate().getTime()));
-        if (!TextUtils.isEmpty(post.getAuthor().getEmail())) {
-            String imageUrl = "http://www.gravatar.com/avatar/" + md5Hex(post.getAuthor().getEmail());
+        String imageUrl = post.getAuthor().getImageUrl();
+        if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(context).load(imageUrl).transform(transformation).into(rowWrapper.image);
         }
         return convertView;
-    }
-
-    public static String hex(byte[] array) {
-        StringBuilder sb = new StringBuilder();
-        for (byte anArray : array) {
-            sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
-        }
-        return sb.toString();
-    }
-
-    public static String md5Hex(String message) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            return hex(md.digest(message.getBytes("CP1252")));
-        } catch (Exception ignored) {
-        }
-        return null;
     }
 
     public void reloadData(List<Post> posts) {
