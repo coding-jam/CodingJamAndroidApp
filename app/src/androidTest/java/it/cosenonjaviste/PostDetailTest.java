@@ -4,7 +4,8 @@ import android.content.Intent;
 
 import it.cosenonjaviste.base.BaseFragmentTest;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.PostDetailPresenter;
+import it.cosenonjaviste.mvp.post.PostDetailPresenter;
+import it.cosenonjaviste.post.PostDetailFragment;
 
 public class PostDetailTest extends BaseFragmentTest {
     public PostDetailTest() {

@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.mvp.LoadableModel;
+import it.cosenonjaviste.post.PostFragment;
 
 @ParcelClasses({@ParcelClass(LoadableModel.class)})
 public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {

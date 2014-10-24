@@ -10,6 +10,8 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
+import it.cosenonjaviste.post.PostDetailFragment;
+import it.cosenonjaviste.post.PostFragment;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;

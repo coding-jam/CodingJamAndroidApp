@@ -1,4 +1,4 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.post;
 
 import android.content.Context;
 import android.text.Html;
@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.utils.CircleTransform;
 

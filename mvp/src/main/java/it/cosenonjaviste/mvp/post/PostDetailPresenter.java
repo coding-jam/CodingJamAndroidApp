@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp;
+package it.cosenonjaviste.mvp.post;
 
 import javax.inject.Inject;
 

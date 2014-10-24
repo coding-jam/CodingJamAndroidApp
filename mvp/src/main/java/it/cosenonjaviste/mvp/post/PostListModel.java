@@ -1,9 +1,10 @@
-package it.cosenonjaviste.mvp;
+package it.cosenonjaviste.mvp.post;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.LoadableModel;
 
 
 public class PostListModel {

@@ -1,4 +1,4 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.post;
 
 import android.annotation.SuppressLint;
 import android.view.View;
@@ -12,12 +12,14 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
+import it.cosenonjaviste.CnjFragment;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.PostListModel;
-import it.cosenonjaviste.mvp.PostListPresenter;
 import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import it.cosenonjaviste.mvp.base.events.StartLoadingModelEvent;
+import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.mvp.post.PostListPresenter;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
