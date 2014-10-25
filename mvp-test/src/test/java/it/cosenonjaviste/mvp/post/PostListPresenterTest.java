@@ -26,6 +26,8 @@ public class PostListPresenterTest {
 
     @Inject PostListPresenter presenter;
 
+    @Inject PostListMvpConfig config;
+
     private TestContextBinder contextBinder;
     private PostListView view;
     private PostListModel model;
@@ -37,9 +39,9 @@ public class PostListPresenterTest {
         contextBinder = new TestContextBinder(objectGraph);
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
-        view = contextBinder.createFragment(PostListView.class, PostListPresenter.class, null);
-        model = contextBinder.getLastModel();
+        view = contextBinder.createFragment(config, null);
         presenter = contextBinder.getLastPresenter();
+        model = presenter.getModel();
         presenter.subscribe(view);
     }
 
@@ -60,7 +62,7 @@ public class PostListPresenterTest {
         assertEquals(firstPost.getId(), detailModel.getPost().getId());
     }
 
-    @Module(injects = {PostListPresenterTest.class, PostDetailView.class, PostListView.class, PostListPresenter.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {PostListPresenterTest.class, PostDetailMvpConfig.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
         @Provides PostListView providePostListView() {
             return mock(PostListView.class);

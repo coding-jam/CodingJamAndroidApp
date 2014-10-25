@@ -3,6 +3,7 @@ package it.cosenonjaviste.utils;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -26,13 +27,13 @@ public class TestContextBinder implements ContextBinder {
     @Override public void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
     }
 
-    @Override public <M> void startNewActivity(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
-        createFragment(viewClass, presenterClass, argsAction);
+    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, Action1<PresenterArgs> argsAction) {
+        createFragment(getObject(config), argsAction);
     }
 
-    @Override public <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
-        RxMvpView<M> view = objectGraph.get(viewClass);
-        RxMvpPresenter<M> presenter = objectGraph.get(presenterClass);
+    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, Action1<PresenterArgs> argsAction) {
+        RxMvpView<?> view = config.createView();
+        RxMvpPresenter<?> presenter = config.createPresenter();
         presenter.init(this, null, getArgs(argsAction));
 
         lastView = view;
