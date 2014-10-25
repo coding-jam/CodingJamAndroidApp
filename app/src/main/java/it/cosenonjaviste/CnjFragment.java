@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import it.cosenonjaviste.base.DaggerApplication;
-import it.cosenonjaviste.base.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
 public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpFragment<P, M> {

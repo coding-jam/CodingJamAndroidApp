@@ -8,10 +8,12 @@ import org.mockito.MockitoAnnotations;
 
 import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphCreator;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import rx.schedulers.Schedulers;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.registerIdlingResources;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.scrollTo;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;

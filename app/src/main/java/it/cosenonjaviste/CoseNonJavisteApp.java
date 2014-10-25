@@ -1,6 +1,6 @@
 package it.cosenonjaviste;
 
-import it.cosenonjaviste.base.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 
 public class CoseNonJavisteApp extends DaggerApplication {
     @Override public Object[] getModules() {

@@ -1,4 +1,4 @@
-package it.cosenonjaviste.base;
+package it.cosenonjaviste.lib.mvp.dagger;
 
 import dagger.ObjectGraph;
 
