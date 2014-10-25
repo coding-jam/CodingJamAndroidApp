@@ -18,9 +18,10 @@ import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListView;
 
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
-public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> {
+public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
 
     @Inject Provider<PostListPresenter> presenterProvider;
 
@@ -52,5 +53,9 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
             list.showList();
             adapter.reloadData(model.getPosts());
         }
+    }
+
+    @Override public void startLoading() {
+        list.showProgress();
     }
 }

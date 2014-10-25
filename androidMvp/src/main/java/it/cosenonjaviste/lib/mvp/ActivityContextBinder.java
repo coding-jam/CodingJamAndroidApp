@@ -6,8 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import dagger.ObjectGraph;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
+import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.observables.AndroidObservable;
@@ -53,8 +58,8 @@ public class ActivityContextBinder implements ContextBinder {
         return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
     }
 
-    @Override public void startNewActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
-        Intent intent = SingleFragmentActivity.createIntent(activity, fragmentClassName);
+    @Override public <M> void startNewActivity(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
+        Intent intent = SingleFragmentActivity.createIntent(activity, viewClass, presenterClass);
         Bundle bundle = createArgs(argsAction);
         intent.putExtras(bundle);
         activity.startActivity(intent);
@@ -69,4 +74,8 @@ public class ActivityContextBinder implements ContextBinder {
         return args;
     }
 
+    @Override public <T> T getObject(Class<T> type) {
+        ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) activity.getApplication());
+        return objectGraph.get(type);
+    }
 }

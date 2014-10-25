@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
+import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
 import it.cosenonjaviste.post.PostFragment2;
@@ -20,8 +21,9 @@ import retrofit.converter.GsonConverter;
 @Module(injects = {
         PostFragment.class,
         PostFragment2.class,
+        PostDetailView.class,
         PostDetailFragment.class
-})
+}, library = true)
 public class AppModule {
 
     private Application application;
@@ -45,5 +47,9 @@ public class AppModule {
 
     @Provides @Singleton Navigator provideNavigator(CnjNavigator navigator) {
         return navigator;
+    }
+
+    @Provides PostDetailView providePostDetailView() {
+        return new PostDetailFragment();
     }
 }

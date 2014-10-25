@@ -3,7 +3,7 @@ package it.cosenonjaviste.mvp.base;
 import rx.functions.Action1;
 
 public interface Navigator {
-    void show(ContextBinder contextBinder, Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction);
+    <M> void show(ContextBinder contextBinder, Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction);
 
     <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction);
 

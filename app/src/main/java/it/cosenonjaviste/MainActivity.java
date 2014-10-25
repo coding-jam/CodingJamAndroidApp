@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.mvp.LoadableModel;
-import it.cosenonjaviste.post.PostFragment2;
+import it.cosenonjaviste.post.PostFragment;
 
 @ParcelClasses({@ParcelClass(LoadableModel.class)})
 public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {
@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = new PostFragment2();
+        Fragment fragment = new PostFragment();
 
         replaceFragmentInContainer(fragment);
 

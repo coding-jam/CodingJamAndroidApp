@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.CnjNavigator;
 import it.cosenonjaviste.MvpTestModule;
-import it.cosenonjaviste.TestNavigator;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 import it.cosenonjaviste.utils.PresenterTestUtils;
@@ -24,11 +24,13 @@ public class AuthorListPresenterTest {
 
     @Inject AuthorListPresenter presenter;
 
-    @Inject TestNavigator navigator;
+    @Inject CnjNavigator navigator;
+    private ObjectGraph objectGraph;
 
     @Before
     public void setup() {
-        ObjectGraph.create(new MvpTestModule(), new TestModule()).inject(this);
+        objectGraph = ObjectGraph.create(new MvpTestModule(), new TestModule());
+        objectGraph.inject(this);
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
 
@@ -36,7 +38,7 @@ public class AuthorListPresenterTest {
 
     @Test
     public void testLoad() {
-        AuthorListModel model = PresenterTestUtils.init(presenter, null);
+        AuthorListModel model = PresenterTestUtils.init(objectGraph, presenter, null, null);
         assertNotNull(model.getAuthors());
         assertEquals(2, model.getAuthors().size());
     }

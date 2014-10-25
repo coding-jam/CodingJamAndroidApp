@@ -11,10 +11,13 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
+import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library = true)
+@Module(library = true, injects = {
+        PostDetailPresenter.class
+})
 public class MvpTestModule {
 
     @Provides @Singleton MockWebServer provideMockWebServer() {
@@ -38,7 +41,7 @@ public class MvpTestModule {
         return restAdapter.create(WordPressService.class);
     }
 
-    @Provides @Singleton Navigator provideNavigator(TestNavigator testNavigator) {
-        return testNavigator;
+    @Provides @Singleton Navigator provideNavigator(CnjNavigator navigator) {
+        return navigator;
     }
 }
