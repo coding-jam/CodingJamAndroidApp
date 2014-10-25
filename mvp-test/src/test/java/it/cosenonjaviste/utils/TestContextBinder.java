@@ -27,18 +27,13 @@ public class TestContextBinder implements ContextBinder {
     }
 
     @Override public <M> void startNewActivity(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
-        RxMvpView<M> view = objectGraph.get(viewClass);
-        RxMvpPresenter<M> presenter = objectGraph.get(presenterClass);
-        PresenterTestUtils.init(objectGraph, presenter, getArgs(argsAction), view);
-
-        lastView = view;
-        lastPresenter = presenter;
+        createFragment(viewClass, presenterClass, argsAction);
     }
 
     @Override public <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
         RxMvpView<M> view = objectGraph.get(viewClass);
         RxMvpPresenter<M> presenter = objectGraph.get(presenterClass);
-        PresenterTestUtils.init(objectGraph, presenter, getArgs(argsAction), view);
+        presenter.init(this, null, getArgs(argsAction));
 
         lastView = view;
         lastPresenter = presenter;
@@ -64,5 +59,9 @@ public class TestContextBinder implements ContextBinder {
 
     public <M> M getLastModel() {
         return (M) lastPresenter.getModel();
+    }
+
+    public <P> P getLastPresenter() {
+        return (P) lastPresenter;
     }
 }
