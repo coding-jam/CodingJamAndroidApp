@@ -15,7 +15,6 @@ import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
-import it.cosenonjaviste.post.PostFragment2;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
@@ -24,7 +23,6 @@ import retrofit.converter.GsonConverter;
         MainActivity.class,
         PostListView.class,
         PostFragment.class,
-        PostFragment2.class,
         PostDetailView.class,
         PostDetailFragment.class,
         PostDetailPresenter.class,
