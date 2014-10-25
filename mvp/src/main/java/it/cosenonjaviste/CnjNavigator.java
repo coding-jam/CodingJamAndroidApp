@@ -21,8 +21,8 @@ public class CnjNavigator implements Navigator {
         contextBinder.startNewActivity(viewClass, presenterClass, argsAction);
     }
 
-    @Override public <T> T createFragment(Class<? extends RxMvpPresenter<?>> presenterClass, Action1<PresenterArgs> argsAction) {
-        return null;
+    @Override public <T, M> T createFragment(ContextBinder contextBinder, Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
+        return contextBinder.createFragment(viewClass, presenterClass, argsAction);
     }
 
     @Override public void open(String url) {

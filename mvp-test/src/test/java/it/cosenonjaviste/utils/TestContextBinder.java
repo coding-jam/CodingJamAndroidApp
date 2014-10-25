@@ -35,6 +35,16 @@ public class TestContextBinder implements ContextBinder {
         lastPresenter = presenter;
     }
 
+    @Override public <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
+        RxMvpView<M> view = objectGraph.get(viewClass);
+        RxMvpPresenter<M> presenter = objectGraph.get(presenterClass);
+        PresenterTestUtils.init(objectGraph, presenter, getArgs(argsAction), view);
+
+        lastView = view;
+        lastPresenter = presenter;
+        return (T) view;
+    }
+
     private MapPresenterArgs getArgs(Action1<PresenterArgs> argsAction) {
         MapPresenterArgs args = new MapPresenterArgs();
         if (argsAction != null) {

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
@@ -23,14 +22,11 @@ import it.cosenonjaviste.mvp.post.PostDetailView;
 
 public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDetailModel> implements PostDetailView {
 
-    @Inject Provider<PostDetailPresenter> presenterProvider;
-
     @InjectView(R.id.web_view) WebView webView;
 
     @InjectView(R.id.progress) ProgressBar progressBar;
 
-    @Override protected PostDetailPresenter createPresenter() {
-        return presenterProvider.get();
+    @Inject public PostDetailFragment() {
     }
 
     @Override protected void initView(View view) {

@@ -10,7 +10,10 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
+import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
 import it.cosenonjaviste.post.PostFragment2;
@@ -19,10 +22,14 @@ import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
 @Module(injects = {
+        MainActivity.class,
+        PostListView.class,
         PostFragment.class,
         PostFragment2.class,
         PostDetailView.class,
-        PostDetailFragment.class
+        PostDetailFragment.class,
+        PostDetailPresenter.class,
+        PostListPresenter.class
 }, library = true)
 public class AppModule {
 
@@ -51,5 +58,9 @@ public class AppModule {
 
     @Provides PostDetailView providePostDetailView() {
         return new PostDetailFragment();
+    }
+
+    @Provides PostListView providePostListView() {
+        return new PostFragment();
     }
 }

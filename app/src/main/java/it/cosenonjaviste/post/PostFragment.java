@@ -9,7 +9,6 @@ import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
@@ -23,14 +22,11 @@ import it.cosenonjaviste.mvp.post.PostListView;
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
 
-    @Inject Provider<PostListPresenter> presenterProvider;
-
     @InjectView(R.id.list) SuperListview list;
 
     private PostAdapter adapter;
 
-    @Override protected PostListPresenter createPresenter() {
-        return presenterProvider.get();
+    @Inject public PostFragment() {
     }
 
     @Override protected int getLayoutId() {

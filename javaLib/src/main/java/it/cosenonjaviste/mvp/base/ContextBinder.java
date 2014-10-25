@@ -10,5 +10,7 @@ public interface ContextBinder {
 
     <M> void startNewActivity(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction);
 
+    <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction);
+
     <T> T getObject(Class<T> type);
 }

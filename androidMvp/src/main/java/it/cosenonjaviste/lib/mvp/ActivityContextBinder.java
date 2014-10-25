@@ -65,6 +65,14 @@ public class ActivityContextBinder implements ContextBinder {
         activity.startActivity(intent);
     }
 
+    @Override public <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
+        Fragment fragment = (Fragment) getObject(viewClass);
+        Bundle args = createArgs(argsAction);
+        args.putString(SingleFragmentActivity.PRESENTER_CLASS, presenterClass.getName());
+        fragment.setArguments(args);
+        return (T) fragment;
+    }
+
     private Bundle createArgs(Action1<PresenterArgs> argsAction) {
         Bundle args = new Bundle();
         if (argsAction != null) {
