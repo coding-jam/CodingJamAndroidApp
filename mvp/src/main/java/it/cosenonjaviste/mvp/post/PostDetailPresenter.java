@@ -19,7 +19,8 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
         return model;
     }
 
-    public static void populateArgs(PresenterArgs args, Post item) {
+    public static PresenterArgs populateArgs(PresenterArgs args, Post item) {
         args.putObject(POST, item);
+        return args;
     }
 }

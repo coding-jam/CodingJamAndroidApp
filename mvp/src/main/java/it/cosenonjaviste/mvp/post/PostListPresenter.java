@@ -38,7 +38,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        contextBinder.startNewActivity(PostDetailMvpConfig.class, args -> PostDetailPresenter.populateArgs(args, item));
+        PresenterArgs args = PostDetailPresenter.populateArgs(contextBinder.createArgs(), item);
+        contextBinder.startNewActivity(PostDetailMvpConfig.class, args);
     }
 
     @Override public PostListView getView() {

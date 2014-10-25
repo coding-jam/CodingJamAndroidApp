@@ -8,7 +8,6 @@ import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
-import rx.functions.Action1;
 
 public class TestContextBinder implements ContextBinder {
 
@@ -24,31 +23,22 @@ public class TestContextBinder implements ContextBinder {
         return observable;
     }
 
-    @Override public void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
+    @Override public void showInActivity(String fragmentClassName, PresenterArgs args) {
     }
 
-    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, Action1<PresenterArgs> argsAction) {
-        createFragment(getObject(config), argsAction);
+    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
+        createFragment(getObject(config), args);
     }
 
-    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, Action1<PresenterArgs> argsAction) {
+    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         RxMvpView<?> view = config.createView();
         RxMvpPresenter<?> presenter = config.createPresenter();
-        presenter.init(this, null, getArgs(argsAction));
+        presenter.init(this, null, args);
 
         lastView = view;
         lastPresenter = presenter;
         return (T) view;
     }
-
-    private MapPresenterArgs getArgs(Action1<PresenterArgs> argsAction) {
-        MapPresenterArgs args = new MapPresenterArgs();
-        if (argsAction != null) {
-            argsAction.call(args);
-        }
-        return args;
-    }
-
 
     @Override public <T> T getObject(Class<T> type) {
         return objectGraph.get(type);
@@ -64,5 +54,9 @@ public class TestContextBinder implements ContextBinder {
 
     public <P> P getLastPresenter() {
         return (P) lastPresenter;
+    }
+
+    @Override public PresenterArgs createArgs() {
+        return new MapPresenterArgs();
     }
 }

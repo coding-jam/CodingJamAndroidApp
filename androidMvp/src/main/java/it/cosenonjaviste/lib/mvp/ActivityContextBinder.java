@@ -15,7 +15,6 @@ import it.cosenonjaviste.mvp.base.PresenterArgs;
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.observables.AndroidObservable;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ActivityContextBinder implements ContextBinder {
@@ -44,45 +43,48 @@ public class ActivityContextBinder implements ContextBinder {
         return background(activity, observable);
     }
 
-    public void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction) {
-        if (activity instanceof MultiFragmentActivity) {
-            Fragment fragment = instantiate(fragmentClassName, argsAction);
-            ((MultiFragmentActivity) activity).showFragment(fragment);
-        } else {
-            throw new RuntimeException("Actvivity class " + activity.getClass().getName() + " must implement " + MultiFragmentActivity.class.getName());
-        }
+    public void showInActivity(String fragmentClassName, PresenterArgs args) {
+//        if (activity instanceof MultiFragmentActivity) {
+//            Fragment fragment = instantiate(fragmentClassName, argsAction);
+//            ((MultiFragmentActivity) activity).showFragment(fragment);
+//        } else {
+//            throw new RuntimeException("Actvivity class " + activity.getClass().getName() + " must implement " + MultiFragmentActivity.class.getName());
+//        }
     }
 
-    private Fragment instantiate(String fragmentClassName, Action1<PresenterArgs> argsAction) {
-        return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
-    }
+//    private Fragment instantiate(String fragmentClassName, Action1<PresenterArgs> argsAction) {
+//        return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
+//    }
 
-    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, Action1<PresenterArgs> argsAction) {
+    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
         Intent intent = SingleFragmentActivity.createIntent(activity, config);
-        Bundle bundle = createArgs(argsAction);
+        Bundle bundle = createArgs(args);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
 
-    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, Action1<PresenterArgs> argsAction) {
+    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         Fragment fragment = (Fragment) config.createView();
-        Bundle args = createArgs(argsAction);
-        args.putString(SingleFragmentActivity.CONFIG_CLASS, config.getClass().getName());
-        fragment.setArguments(args);
+        Bundle bundle = createArgs(args);
+        bundle.putString(SingleFragmentActivity.CONFIG_CLASS, config.getClass().getName());
+        fragment.setArguments(bundle);
         return (T) fragment;
     }
 
-    private Bundle createArgs(Action1<PresenterArgs> argsAction) {
-        Bundle args = new Bundle();
-        if (argsAction != null) {
-            BundlePresenterArgs bundleArgs = new BundlePresenterArgs(args);
-            argsAction.call(bundleArgs);
+    private Bundle createArgs(PresenterArgs args) {
+        if (args != null) {
+            return ((BundlePresenterArgs) args).getBundle();
+        } else {
+            return new Bundle();
         }
-        return args;
     }
 
     @Override public <T> T getObject(Class<T> type) {
         ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) activity.getApplication());
         return objectGraph.get(type);
+    }
+
+    @Override public PresenterArgs createArgs() {
+        return new BundlePresenterArgs();
     }
 }

@@ -1,16 +1,17 @@
 package it.cosenonjaviste.mvp.base;
 
 import rx.Observable;
-import rx.functions.Action1;
 
 public interface ContextBinder {
     <T> Observable<T> bindObservable(Observable<T> observable);
 
-    void showInActivity(String fragmentClassName, Action1<PresenterArgs> argsAction);
+    void showInActivity(String fragmentClassName, PresenterArgs args);
 
-    void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, Action1<PresenterArgs> argsAction);
+    void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args);
 
-    <T> T createFragment(MvpConfig<?, ?, ?> config, Action1<PresenterArgs> argsAction);
+    <T> T createFragment(MvpConfig<?, ?, ?> config, PresenterArgs args);
 
     <T> T getObject(Class<T> type);
+
+    PresenterArgs createArgs();
 }
