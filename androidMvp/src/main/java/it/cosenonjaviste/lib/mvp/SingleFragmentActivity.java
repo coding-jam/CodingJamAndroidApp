@@ -8,26 +8,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
-    public static final String VIEW_CLASS = "viewClass";
-    public static final String PRESENTER_CLASS = "presenterClass";
+    public static final String CONFIG_CLASS = "configClass";
 
-//    public static Intent createIntent(Context context, String fragmentClassName) {
+    //    public static Intent createIntent(Context context, String fragmentClassName) {
 //        Intent intent = new Intent(context, SingleFragmentActivity.class);
 //        intent.putExtra(VIEW_CLASS, fragmentClassName);
 //        return intent;
 //    }
 //
-    public static <M> Intent createIntent(Context context, Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass) {
+    public static Intent createIntent(Context context, Class<? extends MvpConfig<?, ?, ?>> config) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
-        intent.putExtra(VIEW_CLASS, viewClass.getName());
-        intent.putExtra(PRESENTER_CLASS, presenterClass.getName());
+        intent.putExtra(CONFIG_CLASS, config.getName());
         return intent;
     }
 
@@ -47,8 +45,10 @@ public class SingleFragmentActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            String viewClass = getIntent().getStringExtra(VIEW_CLASS);
-            Fragment fragment = (Fragment) ObjectGraphHolder.getObjectGraph((DaggerApplication) getApplication()).get(getType(viewClass));
+            String configClass = getIntent().getStringExtra(CONFIG_CLASS);
+            ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) getApplication());
+            MvpConfig<?, ?, ?> config = (MvpConfig<?, ?, ?>) objectGraph.get(getType(configClass));
+            Fragment fragment = (Fragment) config.createView();
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 Bundle b = new Bundle(extras);
@@ -58,9 +58,9 @@ public class SingleFragmentActivity extends ActionBarActivity {
         }
     }
 
-    private Class<?> getType(String viewClass) {
+    private Class<?> getType(String c) {
         try {
-            return Class.forName(viewClass);
+            return Class.forName(c);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

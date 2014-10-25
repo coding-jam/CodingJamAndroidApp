@@ -9,9 +9,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
+import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailView;
-import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
@@ -21,12 +21,10 @@ import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         MainActivity.class,
-        PostListView.class,
         PostFragment.class,
-        PostDetailView.class,
         PostDetailFragment.class,
-        PostDetailPresenter.class,
-        PostListPresenter.class
+        PostListMvpConfig.class,
+        PostDetailMvpConfig.class
 }, library = true)
 public class AppModule {
 

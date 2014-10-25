@@ -10,9 +10,8 @@ import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ContextBinder;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.observables.AndroidObservable;
@@ -58,17 +57,17 @@ public class ActivityContextBinder implements ContextBinder {
         return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
     }
 
-    @Override public <M> void startNewActivity(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
-        Intent intent = SingleFragmentActivity.createIntent(activity, viewClass, presenterClass);
+    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, Action1<PresenterArgs> argsAction) {
+        Intent intent = SingleFragmentActivity.createIntent(activity, config);
         Bundle bundle = createArgs(argsAction);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
 
-    @Override public <T, M> T createFragment(Class<? extends RxMvpView<M>> viewClass, Class<? extends RxMvpPresenter<M>> presenterClass, Action1<PresenterArgs> argsAction) {
-        Fragment fragment = (Fragment) getObject(viewClass);
+    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, Action1<PresenterArgs> argsAction) {
+        Fragment fragment = (Fragment) config.createView();
         Bundle args = createArgs(argsAction);
-        args.putString(SingleFragmentActivity.PRESENTER_CLASS, presenterClass.getName());
+        args.putString(SingleFragmentActivity.CONFIG_CLASS, config.getClass().getName());
         fragment.setArguments(args);
         return (T) fragment;
     }

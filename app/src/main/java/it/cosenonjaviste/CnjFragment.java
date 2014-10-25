@@ -12,6 +12,7 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.lib.mvp.SingleFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
 public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpFragment<P, M> {
@@ -34,9 +35,10 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
     protected abstract int getLayoutId();
 
     @Override protected P createPresenter() {
-        String string = getArguments().getString(SingleFragmentActivity.PRESENTER_CLASS);
+        String string = getArguments().getString(SingleFragmentActivity.CONFIG_CLASS);
         ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) getActivity().getApplication());
-        return (P) objectGraph.get(getType(string));
+        MvpConfig<?, ?, ?> config = (MvpConfig<?, ?, ?>) objectGraph.get(getType(string));
+        return (P) config.createPresenter();
     }
 
     private Class<?> getType(String className) {
