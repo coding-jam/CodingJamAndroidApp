@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
@@ -50,10 +49,6 @@ public class AppModule {
             restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
         }
         return restAdapter.create(WordPressService.class);
-    }
-
-    @Provides @Singleton Navigator provideNavigator(CnjNavigator navigator) {
-        return navigator;
     }
 
     @Provides PostDetailView providePostDetailView() {

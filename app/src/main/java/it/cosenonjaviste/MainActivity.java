@@ -15,8 +15,6 @@ import android.widget.ListView;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
@@ -24,7 +22,6 @@ import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.LoadableModel;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 
@@ -34,8 +31,6 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
     @InjectView(R.id.left_drawer_menu) View mDrawerMenu;
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    @Inject Navigator navigator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +71,7 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = navigator.createFragment(new ActivityContextBinder(this), PostListView.class, PostListPresenter.class, null);
+        Fragment fragment = new ActivityContextBinder(this).createFragment(PostListView.class, PostListPresenter.class, null);
 
         replaceFragmentInContainer(fragment);
 

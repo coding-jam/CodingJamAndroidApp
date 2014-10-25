@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvp2Presenter;
 import rx.Observable;
@@ -15,8 +14,6 @@ import rx.Observable;
 public class PostListPresenter2 extends RxMvp2Presenter<PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
-
-    @Inject Navigator navigator;
 
     protected PostListModel createModel(PresenterArgs args) {
         return new PostListModel();

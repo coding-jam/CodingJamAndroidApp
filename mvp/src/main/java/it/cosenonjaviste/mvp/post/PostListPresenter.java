@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import rx.Observable;
@@ -15,8 +14,6 @@ import rx.Observable;
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
-
-    @Inject Navigator navigator;
 
     protected PostListModel createModel(PresenterArgs args) {
         return new PostListModel();
@@ -41,7 +38,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        navigator.show(contextBinder, PostDetailView.class, PostDetailPresenter.class, args -> PostDetailPresenter.populateArgs(args, item));
+        contextBinder.startNewActivity(PostDetailView.class, PostDetailPresenter.class, args -> PostDetailPresenter.populateArgs(args, item));
     }
 
     @Override public PostListView getView() {

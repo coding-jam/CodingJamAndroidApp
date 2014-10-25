@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import it.cosenonjaviste.CnjNavigator;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -27,8 +26,6 @@ public class PostListPresenterTest {
     @Inject MockWebServer server;
 
     @Inject PostListPresenter presenter;
-
-    @Inject CnjNavigator navigator;
 
     @Inject PostListView view;
 
@@ -70,6 +67,7 @@ public class PostListPresenterTest {
         @Provides PostListView providePostListView() {
             return mock(PostListView.class);
         }
+
         @Provides PostDetailView providePostDetailView() {
             return mock(PostDetailView.class);
         }

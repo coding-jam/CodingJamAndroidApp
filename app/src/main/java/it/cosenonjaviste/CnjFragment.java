@@ -6,20 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.lib.mvp.SingleFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
 public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpFragment<P, M> {
-
-    @Inject Navigator navigator;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         ObjectGraphHolder.inject((DaggerApplication) getActivity().getApplication(), this);

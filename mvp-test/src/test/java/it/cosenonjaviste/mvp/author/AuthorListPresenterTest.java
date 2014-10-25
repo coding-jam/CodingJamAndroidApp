@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
-import it.cosenonjaviste.CnjNavigator;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
@@ -24,7 +23,6 @@ public class AuthorListPresenterTest {
 
     @Inject AuthorListPresenter presenter;
 
-    @Inject CnjNavigator navigator;
     private ObjectGraph objectGraph;
 
     @Before

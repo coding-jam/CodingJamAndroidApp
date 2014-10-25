@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -31,7 +30,7 @@ public class MvpTestModule {
         return server;
     }
 
-    @Provides @Singleton  WordPressService provideGitHubService(MockWebServer mockWebServer) {
+    @Provides @Singleton WordPressService provideGitHubService(MockWebServer mockWebServer) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(mockWebServer.getUrl("/").toString())
                 .setExecutors(Runnable::run, Runnable::run)
@@ -39,9 +38,5 @@ public class MvpTestModule {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         return restAdapter.create(WordPressService.class);
-    }
-
-    @Provides @Singleton Navigator provideNavigator(CnjNavigator navigator) {
-        return navigator;
     }
 }
