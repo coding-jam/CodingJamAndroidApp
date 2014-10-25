@@ -9,10 +9,10 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.RxMvp2Presenter;
 import rx.Observable;
 
-public class PostListPresenter extends RxMvpPresenter<PostListModel> {
+public class PostListPresenter2 extends RxMvp2Presenter<PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -26,7 +26,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         Observable<List<Post>> observable = wordPressService.listPosts(page).map(PostResponse::getPosts);
 
         subscribePausable(observable,
-                () -> getView().startLoading(),
+                () -> view.startLoading(),
                 posts -> {
                     model.getPostsModel().done(posts);
                     view.update(model);
@@ -41,10 +41,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        navigator.show(contextBinder, PostDetailPresenter.class, args -> PostDetailPresenter.populateArgs(args, item));
+//        navigator.show(contextBinder, PostDetailPresenter.class, args -> PostDetailPresenter.populateArgs(args, item));
     }
 
-    @Override public PostListView getView() {
-        return (PostListView) super.getView();
-    }
 }

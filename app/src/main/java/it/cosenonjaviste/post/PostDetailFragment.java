@@ -17,30 +17,17 @@ import javax.inject.Provider;
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.base.events.ModelEvent;
 import it.cosenonjaviste.mvp.post.PostDetailModel;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
+import it.cosenonjaviste.mvp.post.PostDetailView;
 
-public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDetailModel> {
+public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDetailModel> implements PostDetailView {
 
     @Inject Provider<PostDetailPresenter> presenterProvider;
 
     @InjectView(R.id.web_view) WebView webView;
 
     @InjectView(R.id.progress) ProgressBar progressBar;
-
-    @Override protected void subscribeToModelUpdates(Observable<ModelEvent<PostDetailModel>> modelUpdates, CompositeSubscription subscription) {
-        subscription.add(
-                modelUpdates
-                        .map(ModelEvent::getModel)
-                        .subscribe(model -> {
-                            webView.loadUrl(model.getPost().getUrl());
-//                            textView.setText(model.getPost().getTitle());
-                        })
-        );
-    }
 
     @Override protected PostDetailPresenter createPresenter() {
         return presenterProvider.get();
@@ -97,5 +84,9 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
 
     @Override protected int getLayoutId() {
         return R.layout.post_detail;
+    }
+
+    @Override public void update(PostDetailModel model) {
+        webView.loadUrl(model.getPost().getUrl());
     }
 }

@@ -1,11 +1,11 @@
 package it.cosenonjaviste.mvp.base;
 
 
-public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
+public abstract class RxMvp2Presenter<M, V extends RxMvpView<M>> extends RxMvpPausablePresenter<M> {
 
-    protected RxMvpView<M> view;
+    protected V view;
 
-    public void subscribe(RxMvpView<M> view) {
+    public void subscribe(V view) {
         this.view = view;
         pausableSubscriptions.resume();
         view.update(model);
@@ -18,9 +18,5 @@ public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
     @Override public void pause() {
         view = null;
         super.pause();
-    }
-
-    public RxMvpView<M> getView() {
-        return view;
     }
 }

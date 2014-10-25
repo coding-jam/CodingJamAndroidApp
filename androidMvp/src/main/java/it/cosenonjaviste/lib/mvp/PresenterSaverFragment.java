@@ -6,19 +6,19 @@ import android.support.v4.app.FragmentManager;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.MvpPresenter;
 
 public class PresenterSaverFragment extends Fragment {
 
     private static final String TAG = PresenterSaverFragment.class.getName();
 
-    private Map<Long, RxMvpPresenter<?>> presenters = new HashMap<>();
+    private Map<Long, MvpPresenter<?>> presenters = new HashMap<>();
 
     public PresenterSaverFragment() {
         setRetainInstance(true);
     }
 
-    public static void save(FragmentManager fragmentManager, RxMvpPresenter<?> presenter) {
+    public static void save(FragmentManager fragmentManager, MvpPresenter<?> presenter) {
         PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
         fragment.presenters.put(presenter.getId(), presenter);
     }
@@ -32,12 +32,12 @@ public class PresenterSaverFragment extends Fragment {
         return fragment;
     }
 
-    public static <P extends RxMvpPresenter<?>> P load(FragmentManager fragmentManager, long id) {
+    public static <P extends MvpPresenter<?>> P load(FragmentManager fragmentManager, long id) {
         PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
         return (P) fragment.presenters.get(id);
     }
 
-    protected static <P extends RxMvpPresenter<?>> P initPresenter(long presenterId, FragmentManager fragmentManager, PresenterFactory<P> presenterCreator) {
+    protected static <P extends MvpPresenter<?>> P initPresenter(long presenterId, FragmentManager fragmentManager, PresenterFactory<P> presenterCreator) {
         P presenter = null;
         if (presenterId != 0) {
             presenter = load(fragmentManager, presenterId);
@@ -51,7 +51,7 @@ public class PresenterSaverFragment extends Fragment {
 
     @Override public void onDestroy() {
         super.onDestroy();
-        for (RxMvpPresenter<?> presenter : presenters.values()) {
+        for (MvpPresenter<?> presenter : presenters.values()) {
             presenter.destroy();
         }
     }

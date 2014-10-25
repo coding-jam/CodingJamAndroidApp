@@ -12,12 +12,14 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.Navigator;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
+import it.cosenonjaviste.post.PostFragment2;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         PostFragment.class,
+        PostFragment2.class,
         PostDetailFragment.class
 })
 public class AppModule {

@@ -40,4 +40,7 @@ public abstract class MvpPresenter<M> {
     public M getModel() {
         return model;
     }
+
+    public void destroy() {
+    }
 }
