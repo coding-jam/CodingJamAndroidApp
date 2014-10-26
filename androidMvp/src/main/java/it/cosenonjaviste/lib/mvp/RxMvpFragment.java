@@ -29,7 +29,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         if (state != null) {
             presenterId = state.getLong(PRESENTER_ID, 0);
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
-            newModelCreated = true;
+            newModelCreated = false;
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
