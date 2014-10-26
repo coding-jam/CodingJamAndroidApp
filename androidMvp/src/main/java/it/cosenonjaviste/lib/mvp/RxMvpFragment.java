@@ -15,8 +15,11 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
     protected P presenter;
 
+    protected ActivityContextBinder contextBinder;
+
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        contextBinder = new ActivityContextBinder(getActivity());
 
         long presenterId = 0;
         M restoredModel = null;
@@ -27,7 +30,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
         presenter = PresenterSaverFragment.initPresenter(presenterId, getFragmentManager(), this::createPresenter);
 
-        presenter.init(new ActivityContextBinder(getActivity()), restoredModel, new BundlePresenterArgs(getArguments()));
+        presenter.init(contextBinder, restoredModel, new BundlePresenterArgs(getArguments()));
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {

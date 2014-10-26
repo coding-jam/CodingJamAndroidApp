@@ -8,9 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import dagger.ObjectGraph;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 
 public class SingleFragmentActivity extends ActionBarActivity {
@@ -46,8 +43,7 @@ public class SingleFragmentActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             String configClass = getIntent().getStringExtra(CONFIG_CLASS);
-            ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) getApplication());
-            MvpConfig<?, ?, ?> config = (MvpConfig<?, ?, ?>) objectGraph.get(getType(configClass));
+            MvpConfig<?, ?, ?> config = new ActivityContextBinder(this).createConfig(getType(configClass));
             Fragment fragment = (Fragment) config.createView();
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
@@ -58,9 +54,9 @@ public class SingleFragmentActivity extends ActionBarActivity {
         }
     }
 
-    private Class<?> getType(String c) {
+    private Class<MvpConfig<?, ?, ?>> getType(String c) {
         try {
-            return Class.forName(c);
+            return (Class<MvpConfig<?, ?, ?>>) Class.forName(c);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

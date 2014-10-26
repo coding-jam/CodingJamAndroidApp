@@ -17,7 +17,7 @@ import rx.Scheduler;
 import rx.android.observables.AndroidObservable;
 import rx.schedulers.Schedulers;
 
-public class ActivityContextBinder implements ContextBinder {
+public class ActivityContextBinder extends ContextBinder {
 
     private static Scheduler io = Schedulers.io();
 
@@ -43,19 +43,6 @@ public class ActivityContextBinder implements ContextBinder {
         return background(activity, observable);
     }
 
-    public void showInActivity(String fragmentClassName, PresenterArgs args) {
-//        if (activity instanceof MultiFragmentActivity) {
-//            Fragment fragment = instantiate(fragmentClassName, argsAction);
-//            ((MultiFragmentActivity) activity).showFragment(fragment);
-//        } else {
-//            throw new RuntimeException("Actvivity class " + activity.getClass().getName() + " must implement " + MultiFragmentActivity.class.getName());
-//        }
-    }
-
-//    private Fragment instantiate(String fragmentClassName, Action1<PresenterArgs> argsAction) {
-//        return Fragment.instantiate(activity, fragmentClassName, createArgs(argsAction));
-//    }
-
     @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
         Intent intent = SingleFragmentActivity.createIntent(activity, config);
         Bundle bundle = createArgs(args);
@@ -63,7 +50,7 @@ public class ActivityContextBinder implements ContextBinder {
         activity.startActivity(intent);
     }
 
-    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+    @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         Fragment fragment = (Fragment) config.createView();
         Bundle bundle = createArgs(args);
         bundle.putString(SingleFragmentActivity.CONFIG_CLASS, config.getClass().getName());
@@ -79,7 +66,7 @@ public class ActivityContextBinder implements ContextBinder {
         }
     }
 
-    @Override public <T> T getObject(Class<T> type) {
+    @Override public MvpConfig<?, ?, ?> createConfig(Class<? extends MvpConfig<?, ?, ?>> type) {
         ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) activity.getApplication());
         return objectGraph.get(type);
     }

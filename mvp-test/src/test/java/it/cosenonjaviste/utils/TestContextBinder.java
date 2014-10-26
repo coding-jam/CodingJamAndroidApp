@@ -9,7 +9,7 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
 
-public class TestContextBinder implements ContextBinder {
+public class TestContextBinder extends ContextBinder {
 
     private ObjectGraph objectGraph;
     private RxMvpView<?> lastView;
@@ -23,14 +23,11 @@ public class TestContextBinder implements ContextBinder {
         return observable;
     }
 
-    @Override public void showInActivity(String fragmentClassName, PresenterArgs args) {
-    }
-
     @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
-        createFragment(getObject(config), args);
+        createView(createConfig(config), args);
     }
 
-    @Override public <T> T createFragment(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+    @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         RxMvpView<?> view = config.createView();
         RxMvpPresenter<?> presenter = config.createPresenter();
         presenter.init(this, null, args);
@@ -40,7 +37,7 @@ public class TestContextBinder implements ContextBinder {
         return (T) view;
     }
 
-    @Override public <T> T getObject(Class<T> type) {
+    @Override public MvpConfig<?, ?, ?> createConfig(Class<? extends MvpConfig<?, ?, ?>> type) {
         return objectGraph.get(type);
     }
 

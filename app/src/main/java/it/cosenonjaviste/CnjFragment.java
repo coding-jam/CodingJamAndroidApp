@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.lib.mvp.SingleFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
@@ -36,16 +35,7 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
 
     @Override protected P createPresenter() {
         String string = getArguments().getString(SingleFragmentActivity.CONFIG_CLASS);
-        ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) getActivity().getApplication());
-        MvpConfig<?, ?, ?> config = (MvpConfig<?, ?, ?>) objectGraph.get(getType(string));
+        MvpConfig<?, ?, ?> config = contextBinder.createConfig(string);
         return (P) config.createPresenter();
-    }
-
-    private Class<?> getType(String className) {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

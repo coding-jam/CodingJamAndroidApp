@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = new ActivityContextBinder(this).createFragment(postListMvpConfig, null);
+        Fragment fragment = new ActivityContextBinder(this).createView(postListMvpConfig, null);
 
         replaceFragmentInContainer(fragment);
 

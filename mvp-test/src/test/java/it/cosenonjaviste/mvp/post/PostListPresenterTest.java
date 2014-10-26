@@ -24,9 +24,9 @@ public class PostListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject PostListPresenter presenter;
-
     @Inject PostListMvpConfig config;
+
+    private PostListPresenter presenter;
 
     private TestContextBinder contextBinder;
     private PostListView view;
@@ -39,7 +39,7 @@ public class PostListPresenterTest {
         contextBinder = new TestContextBinder(objectGraph);
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
-        view = contextBinder.createFragment(config, null);
+        view = contextBinder.createView(config, null);
         presenter = contextBinder.getLastPresenter();
         model = presenter.getModel();
         presenter.subscribe(view);
