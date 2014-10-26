@@ -12,25 +12,19 @@ import it.cosenonjaviste.mvp.base.MvpConfig;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
-    public static final String CONFIG_CLASS = "configClass";
+    private static final String CONFIG_CLASS = "configClass";
 
-    //    public static Intent createIntent(Context context, String fragmentClassName) {
-//        Intent intent = new Intent(context, SingleFragmentActivity.class);
-//        intent.putExtra(VIEW_CLASS, fragmentClassName);
-//        return intent;
-//    }
-//
     public static Intent createIntent(Context context, Class<? extends MvpConfig<?, ?, ?>> config) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
         intent.putExtra(CONFIG_CLASS, config.getName());
         return intent;
     }
 
-//    public static Intent createIntent(Class<? extends Fragment> fragmentClass) {
-//        Intent intent = new Intent();
-//        intent.putExtra(VIEW_CLASS, fragmentClass.getName());
-//        return intent;
-//    }
+    public static Intent createIntent(Class<? extends MvpConfig<?, ?, ?>> config) {
+        Intent intent = new Intent();
+        intent.putExtra(CONFIG_CLASS, config.getName());
+        return intent;
+    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +37,7 @@ public class SingleFragmentActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             String configClass = getIntent().getStringExtra(CONFIG_CLASS);
-            MvpConfig<?, ?, ?> config = new ActivityContextBinder(this).createConfig(getType(configClass));
+            MvpConfig<?, ?, ?> config = new ActivityContextBinder(this).createConfig(configClass);
             Fragment fragment = (Fragment) config.createView();
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
@@ -51,14 +45,6 @@ public class SingleFragmentActivity extends ActionBarActivity {
                 fragment.setArguments(b);
             }
             getSupportFragmentManager().beginTransaction().add(R.id.single_fragment_root, fragment).commit();
-        }
-    }
-
-    private Class<MvpConfig<?, ?, ?>> getType(String c) {
-        try {
-            return (Class<MvpConfig<?, ?, ?>>) Class.forName(c);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 

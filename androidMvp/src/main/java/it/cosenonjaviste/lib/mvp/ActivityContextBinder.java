@@ -53,7 +53,6 @@ public class ActivityContextBinder extends ContextBinder {
     @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         Fragment fragment = (Fragment) config.createView();
         Bundle bundle = createArgs(args);
-        bundle.putString(SingleFragmentActivity.CONFIG_CLASS, config.getClass().getName());
         fragment.setArguments(bundle);
         return (T) fragment;
     }
