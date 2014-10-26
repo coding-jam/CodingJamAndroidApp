@@ -25,10 +25,10 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         subscribePausable(observable,
                 () -> getView().startLoading(),
                 posts -> {
-                    model.getPostsModel().done(posts);
+                    model.getPosts().done(posts);
                     view.update(model);
                 }, throwable -> {
-                    model.getPostsModel().error(throwable);
+                    model.getPosts().error(throwable);
                     view.update(model);
                 });
     }

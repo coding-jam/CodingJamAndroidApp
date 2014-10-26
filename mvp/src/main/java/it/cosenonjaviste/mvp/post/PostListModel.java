@@ -8,7 +8,7 @@ public class PostListModel {
 
     OptionalList postsModel = new OptionalList<>();
 
-    public OptionalList<Post> getPostsModel() {
+    public OptionalList<Post> getPosts() {
         return postsModel;
     }
 }

@@ -51,7 +51,7 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
     }
 
     @Override public void update(PostListModel model) {
-        model.getPostsModel()
+        model.getPosts()
                 .call(posts -> {
                     list.showList();
                     adapter.reloadData(posts);
