@@ -15,8 +15,9 @@ public class TestContextBinder extends ContextBinder {
     private RxMvpView<?> lastView;
     private RxMvpPresenter<?> lastPresenter;
 
-    public TestContextBinder(ObjectGraph objectGraph) {
-        this.objectGraph = objectGraph;
+    public TestContextBinder(Object testObject, Object... modules) {
+        objectGraph = ObjectGraph.create(modules);
+        objectGraph.inject(testObject);
     }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {

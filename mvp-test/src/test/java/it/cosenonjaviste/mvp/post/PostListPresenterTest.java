@@ -8,7 +8,6 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.ObjectGraph;
 import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Post;
@@ -16,8 +15,7 @@ import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 import it.cosenonjaviste.utils.TestContextBinder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class PostListPresenterTest {
@@ -34,9 +32,7 @@ public class PostListPresenterTest {
 
     @Before
     public void setup() {
-        ObjectGraph objectGraph = ObjectGraph.create(new MvpTestModule(), new TestModule());
-        objectGraph.inject(this);
-        contextBinder = new TestContextBinder(objectGraph);
+        contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
 
@@ -48,7 +44,7 @@ public class PostListPresenterTest {
     public void testLoad() {
         presenter.listPosts(0);
         PostListModel model = presenter.getModel();
-        assertEquals(1, model.getPosts().size());
+        assertThat(model.getPosts().size()).isEqualTo(1);
     }
 
     @Test
@@ -60,8 +56,10 @@ public class PostListPresenterTest {
         presenter.goToDetail(firstPost);
 
         PostDetailModel detailModel = contextBinder.getLastModel();
-        assertNotNull(detailModel.getPost());
-        assertEquals(firstPost.getId(), detailModel.getPost().getId());
+        Post detailPost = detailModel.getPost();
+
+        assertThat(detailPost).isNotNull();
+        assertThat(detailPost.getId()).isEqualTo(firstPost.getId());
     }
 
     @Module(injects = {PostListPresenterTest.class, PostDetailMvpConfig.class}, addsTo = MvpTestModule.class)
