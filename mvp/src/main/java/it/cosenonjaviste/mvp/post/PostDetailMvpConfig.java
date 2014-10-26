@@ -5,7 +5,7 @@ import javax.inject.Provider;
 
 import it.cosenonjaviste.mvp.base.MvpConfig;
 
-public class PostDetailMvpConfig implements MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> {
+public class PostDetailMvpConfig extends MvpConfig<PostDetailModel,PostDetailView,PostDetailPresenter> {
 
     @Inject Provider<PostDetailView> viewProvider;
 
@@ -15,7 +15,7 @@ public class PostDetailMvpConfig implements MvpConfig<PostDetailModel, PostDetai
         return viewProvider.get();
     }
 
-    @Override public PostDetailPresenter createPresenter() {
+    @Override protected PostDetailPresenter createPresenter() {
         return presenter;
     }
 }

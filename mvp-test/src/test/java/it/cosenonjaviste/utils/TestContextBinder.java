@@ -29,8 +29,7 @@ public class TestContextBinder extends ContextBinder {
 
     @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
         RxMvpView<?> view = config.createView();
-        RxMvpPresenter<?> presenter = config.createPresenter();
-        presenter.init(this, null, args);
+        RxMvpPresenter<?> presenter = config.createAndInitPresenter(this, args);
 
         lastView = view;
         lastPresenter = presenter;

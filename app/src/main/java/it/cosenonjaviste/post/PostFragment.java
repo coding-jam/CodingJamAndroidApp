@@ -16,6 +16,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 
@@ -26,7 +27,10 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
 
     private PostAdapter adapter;
 
-    @Inject public PostFragment() {
+    @Inject PostListMvpConfig config;
+
+    @Override public PostListMvpConfig getConfig() {
+        return config;
     }
 
     @Override protected int getLayoutId() {
@@ -40,6 +44,10 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         list.setRefreshListener(() -> presenter.listPosts(0));
         list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
+    }
+
+    @Override protected void loadOnFirstStart() {
+        presenter.listPosts(0);
     }
 
     @Override public void update(PostListModel model) {

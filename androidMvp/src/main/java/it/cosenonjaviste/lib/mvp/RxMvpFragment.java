@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 
@@ -17,6 +18,8 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
     protected ActivityContextBinder contextBinder;
 
+    private boolean newModelCreated = true;
+
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         contextBinder = new ActivityContextBinder(getActivity());
@@ -26,11 +29,13 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         if (state != null) {
             presenterId = state.getLong(PRESENTER_ID, 0);
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
+            newModelCreated = true;
         }
 
-        presenter = PresenterSaverFragment.initPresenter(presenterId, getFragmentManager(), this::createPresenter);
+        presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
+        presenter = getConfig().createAndInitPresenter(contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
 
-        presenter.init(contextBinder, restoredModel, new BundlePresenterArgs(getArguments()));
+        PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
@@ -42,6 +47,13 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
     @Override public void onStart() {
         super.onStart();
         presenter.subscribe(this);
+        if (newModelCreated) {
+            loadOnFirstStart();
+            newModelCreated = false;
+        }
+    }
+
+    protected void loadOnFirstStart() {
     }
 
     @Override public void onStop() {
@@ -49,4 +61,5 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         super.onStop();
     }
 
-    protected abstract P createPresenter();}
+    protected abstract MvpConfig<M, ? extends RxMvpView<M>, P> getConfig();
+}

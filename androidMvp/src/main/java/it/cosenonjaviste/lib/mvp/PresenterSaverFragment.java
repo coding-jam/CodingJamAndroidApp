@@ -33,20 +33,12 @@ public class PresenterSaverFragment extends Fragment {
     }
 
     public static <P extends MvpPresenter<?>> P load(FragmentManager fragmentManager, long id) {
-        PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
-        return (P) fragment.presenters.get(id);
-    }
-
-    protected static <P extends MvpPresenter<?>> P initPresenter(long presenterId, FragmentManager fragmentManager, PresenterFactory<P> presenterCreator) {
-        P presenter = null;
-        if (presenterId != 0) {
-            presenter = load(fragmentManager, presenterId);
+        if (id != 0) {
+            PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
+            return (P) fragment.presenters.get(id);
+        } else {
+            return null;
         }
-        if (presenter == null) {
-            presenter = presenterCreator.create();
-            save(fragmentManager, presenter);
-        }
-        return presenter;
     }
 
     @Override public void onDestroy() {

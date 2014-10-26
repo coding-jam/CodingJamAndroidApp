@@ -9,10 +9,6 @@ public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
         this.view = view;
         pausableSubscriptions.resume();
         view.update(model);
-        if (newModelCreated) {
-            loadOnFirstStart();
-            newModelCreated = false;
-        }
     }
 
     @Override public void pause() {

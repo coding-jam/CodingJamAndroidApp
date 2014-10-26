@@ -5,7 +5,7 @@ import javax.inject.Provider;
 
 import it.cosenonjaviste.mvp.base.MvpConfig;
 
-public class PostListMvpConfig implements MvpConfig<PostListModel,PostListView,PostListPresenter> {
+public class PostListMvpConfig extends MvpConfig<PostListModel,PostListView,PostListPresenter> {
 
     @Inject Provider<PostListView> viewProvider;
 
@@ -15,7 +15,7 @@ public class PostListMvpConfig implements MvpConfig<PostListModel,PostListView,P
         return viewProvider.get();
     }
 
-    @Override public PostListPresenter createPresenter() {
+    @Override protected PostListPresenter createPresenter() {
         return presenter;
     }
 }

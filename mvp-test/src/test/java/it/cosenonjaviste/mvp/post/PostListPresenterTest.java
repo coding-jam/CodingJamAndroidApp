@@ -26,11 +26,11 @@ public class PostListPresenterTest {
 
     @Inject PostListMvpConfig config;
 
-    private PostListPresenter presenter;
+    @Inject PostListView view;
 
     private TestContextBinder contextBinder;
-    private PostListView view;
-    private PostListModel model;
+
+    private PostListPresenter presenter;
 
     @Before
     public void setup() {
@@ -39,20 +39,23 @@ public class PostListPresenterTest {
         contextBinder = new TestContextBinder(objectGraph);
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
-        view = contextBinder.createView(config, null);
-        presenter = contextBinder.getLastPresenter();
-        model = presenter.getModel();
+
+        presenter = config.createAndInitPresenter(contextBinder, null);
         presenter.subscribe(view);
     }
 
     @Test
     public void testLoad() {
+        presenter.listPosts(0);
+        PostListModel model = presenter.getModel();
         assertNotNull(model.getPosts());
         assertEquals(1, model.getPosts().size());
     }
 
     @Test
     public void testGoToDetails() {
+        presenter.listPosts(0);
+        PostListModel model = presenter.getModel();
         Post firstPost = model.getPosts().get(0);
 
         presenter.goToDetail(firstPost);

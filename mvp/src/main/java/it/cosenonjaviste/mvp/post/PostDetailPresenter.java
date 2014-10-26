@@ -19,7 +19,7 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
         contextBinder.startNewActivity(PostDetailMvpConfig.class, args);
     }
 
-    @Override protected PostDetailModel createModel(PresenterArgs args) {
+    @Override public PostDetailModel createModel(PresenterArgs args) {
         PostDetailModel model = new PostDetailModel();
         model.setPost(args.getObject(POST));
         return model;

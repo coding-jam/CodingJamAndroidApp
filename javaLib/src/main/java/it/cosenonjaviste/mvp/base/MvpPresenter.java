@@ -7,8 +7,6 @@ public abstract class MvpPresenter<M> {
 
     protected ContextBinder contextBinder;
 
-    protected boolean newModelCreated;
-
     private long id;
 
     private static AtomicLong sequence = new AtomicLong(1);
@@ -17,21 +15,12 @@ public abstract class MvpPresenter<M> {
         id = sequence.getAndIncrement();
     }
 
-    public M init(ContextBinder contextBinder, M restoredModel, PresenterArgs args) {
+    public void init(ContextBinder contextBinder, M model) {
+        this.model = model;
         this.contextBinder = contextBinder;
-        if (restoredModel != null) {
-            model = restoredModel;
-        } else {
-            newModelCreated = true;
-            model = createModel(args);
-        }
-        return model;
     }
 
-    protected void loadOnFirstStart() {
-    }
-
-    protected abstract M createModel(PresenterArgs args);
+    public abstract M createModel(PresenterArgs args);
 
     public long getId() {
         return id;

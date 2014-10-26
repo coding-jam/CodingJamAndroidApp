@@ -15,7 +15,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    protected PostListModel createModel(PresenterArgs args) {
+    public PostListModel createModel(PresenterArgs args) {
         return new PostListModel();
     }
 
@@ -31,10 +31,6 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
                     model.getPostsModel().error(throwable);
                     view.update(model);
                 });
-    }
-
-    @Override protected void loadOnFirstStart() {
-        listPosts(0);
     }
 
     public void goToDetail(Post item) {
