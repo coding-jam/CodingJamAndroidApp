@@ -8,46 +8,48 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.ObjectGraph;
+import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.utils.TestContextBinder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class AuthorListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject AuthorListPresenter presenter;
+    @Inject AuthorListMvpConfig config;
 
-    private ObjectGraph objectGraph;
+    @Inject AuthorListView view;
+
+    private AuthorListPresenter presenter;
+
+    private TestContextBinder contextBinder;
 
     @Before
     public void setup() {
-        objectGraph = ObjectGraph.create(new MvpTestModule(), new TestModule());
-        objectGraph.inject(this);
+        contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
 
+        presenter = config.createAndInitPresenter(contextBinder, null);
+        presenter.subscribe(view);
     }
 
     @Test
     public void testLoad() {
-//        AuthorListModel model = PresenterTestUtils.init(objectGraph, presenter, null, null);
-//        assertNotNull(model.getAuthors());
-//        assertEquals(2, model.getAuthors().size());
+        presenter.loadAuthors();
+        AuthorListModel model = presenter.getModel();
+        assertThat(model.getAuthors().size()).isEqualTo(2);
     }
-
-//    @Test
-//    public void testGoToDetails() {
-//        presenter.listPosts(0);
-//        Post firstPost = model.getPosts().get(0);
-//        presenter.goToDetail(firstPost);
-//        PostDetailModel detailModel = navigator.getLastModel();
-//        assertNotNull(detailModel.getPost());
-//        assertEquals(firstPost.getId(), detailModel.getPost().getId());
-//    }
 
     @Module(injects = AuthorListPresenterTest.class, addsTo = MvpTestModule.class)
     public static class TestModule {
+        @Provides AuthorListView provideView() {
+            return mock(AuthorListView.class);
+        }
     }
 }

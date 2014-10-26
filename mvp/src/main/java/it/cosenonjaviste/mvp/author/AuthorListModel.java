@@ -1,19 +1,12 @@
 package it.cosenonjaviste.mvp.author;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mvp.base.optional.OptionalItem;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
 public class AuthorListModel {
-    OptionalItem authors = new OptionalItem<>(new ArrayList<>());
+    OptionalList authors = new OptionalList<>();
 
-    public OptionalItem<List<Author>> getAuthorsModel() {
+    public OptionalList<Author> getAuthors() {
         return authors;
-    }
-
-    public List<Author> getAuthors() {
-        return getAuthorsModel().getObject();
     }
 }

@@ -10,13 +10,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library = true, injects = {
-        PostDetailPresenter.class
-})
+@Module(library = true)
 public class MvpTestModule {
 
     @Provides @Singleton MockWebServer provideMockWebServer() {

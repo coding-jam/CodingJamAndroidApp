@@ -20,7 +20,7 @@ import it.cosenonjaviste.stubs.MockWebServerUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MockWebServerTest {
+public class WordPressServiceTest {
 
     @Inject MockWebServer server;
 
@@ -53,7 +53,7 @@ public class MockWebServerTest {
         server.shutdown();
     }
 
-    @Module(injects = MockWebServerTest.class, addsTo = MvpTestModule.class)
+    @Module(injects = WordPressServiceTest.class, addsTo = MvpTestModule.class)
     public static class TestModule {
     }
 }
