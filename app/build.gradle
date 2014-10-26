@@ -67,8 +67,7 @@ dependencies {
     apt 'com.squareup.dagger:dagger-compiler:1.2.1'
     androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.1'
 
-    apt 'org.parceler:parceler:0.2.12'
-    compile 'org.parceler:parceler-api:0.2.12'
+    apt 'org.parceler:parceler:0.2.13'
 
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'

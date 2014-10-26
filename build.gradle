@@ -16,5 +16,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        /*flatDir {
+            dirs '/Users/fabiocollini/AndroidStudioProjects/parceler/parceler/target','/Users/fabiocollini/AndroidStudioProjects/parceler/parceler-api/target'
+        }*/
     }
 }
