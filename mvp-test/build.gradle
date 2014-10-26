@@ -2,6 +2,12 @@ apply plugin: 'java'
 
 apply plugin: 'retrolambda'
 
+apply plugin: "jacoco"
+
+retrolambda {
+    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home/'
+}
+
 dependencies {
     compile project(':mvp')
     compile 'com.squareup.dagger:dagger-compiler:1.2.1'
@@ -9,4 +15,13 @@ dependencies {
     testCompile 'junit:junit:4.10'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.assertj:assertj-core:1.7.0'
+}
+
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+}
+
+jacocoTestReport {
+    additionalSourceDirs = files("../mvp/src/main/java")
+    additionalClassDirs = files("../mvp/build/classes")
 }
