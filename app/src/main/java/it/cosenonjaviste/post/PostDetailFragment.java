@@ -8,6 +8,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import org.parceler.ParcelClass;
+import org.parceler.ParcelClasses;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -21,6 +24,7 @@ import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 
+@ParcelClasses({@ParcelClass(PostDetailModel.class)})
 public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDetailModel> implements PostDetailView {
 
     @InjectView(R.id.web_view) WebView webView;
