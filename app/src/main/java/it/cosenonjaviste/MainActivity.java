@@ -25,6 +25,8 @@ import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
+import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
@@ -40,6 +42,8 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Inject PostListMvpConfig postListMvpConfig;
+
+    @Inject AuthorListMvpConfig authorListMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +83,15 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
     }
 
     private void selectItem(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = new ActivityContextBinder(this).createView(postListMvpConfig, null);
+        MvpConfig<?, ?, ?> config;
+        switch (position) {
+            case 2:
+                config = authorListMvpConfig;
+                break;
+            default:
+                config = postListMvpConfig;
+        }
+        Fragment fragment = new ActivityContextBinder(this).createView(config, null);
 
         replaceFragmentInContainer(fragment);
 

@@ -8,7 +8,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
+import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
@@ -21,10 +24,12 @@ import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         MainActivity.class,
-        PostFragment.class,
-        PostDetailFragment.class,
         PostListMvpConfig.class,
-        PostDetailMvpConfig.class
+        PostFragment.class,
+        PostDetailMvpConfig.class,
+        PostDetailFragment.class,
+        AuthorListMvpConfig.class,
+        AuthorListFragment.class
 }, library = true)
 public class AppModule {
 
@@ -53,5 +58,9 @@ public class AppModule {
 
     @Provides PostListView providePostListView() {
         return new PostFragment();
+    }
+
+    @Provides AuthorListView provideAuthorListView() {
+        return new AuthorListFragment();
     }
 }

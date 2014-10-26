@@ -1,26 +1,38 @@
 package it.cosenonjaviste.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import it.cosenonjaviste.utils.Md5Utils;
 
-public class Author {
+public class Author implements Comparable<Author> {
     long id;
 
-    String name;
+    @SerializedName("first_name")
+    String firstName;
+
+    @SerializedName("last_name")
+    String lastName;
 
     String email;
 
     String imageUrl;
+
+    String description;
 
     public long getId() {
         return id;
     }
 
     public String getName() {
-        return name;
+        return firstName + " " + lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getImageUrl() {
@@ -28,5 +40,13 @@ public class Author {
             imageUrl = "http://www.gravatar.com/avatar/" + Md5Utils.md5Hex(email);
         }
         return imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override public int compareTo(Author o) {
+        return Long.compare(id, o.id);
     }
 }
