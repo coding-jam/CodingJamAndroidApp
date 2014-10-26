@@ -48,15 +48,14 @@ public class PostListPresenterTest {
     public void testLoad() {
         presenter.listPosts(0);
         PostListModel model = presenter.getModel();
-        assertNotNull(model.getPosts());
-        assertEquals(1, model.getPosts().size());
+        assertEquals(1, model.getPostsModel().size());
     }
 
     @Test
     public void testGoToDetails() {
         presenter.listPosts(0);
         PostListModel model = presenter.getModel();
-        Post firstPost = model.getPosts().get(0);
+        Post firstPost = model.getPostsModel().get(0);
 
         presenter.goToDetail(firstPost);
 

@@ -23,10 +23,16 @@ import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
 import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.mvp.LoadableModel;
+import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
+import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
+import it.cosenonjaviste.mvp.base.optional.OptionalItem;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 
-@ParcelClasses({@ParcelClass(LoadableModel.class)})
+@ParcelClasses({
+        @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
+        @ParcelClass(value = OptionalList.class, converter = OptionalListConverter.class)
+})
 public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.left_drawer_menu) View mDrawerMenu;

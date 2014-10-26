@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mvp.LoadableModel;
+import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 
 public class AuthorListModel {
-    LoadableModel authors = new LoadableModel<>(new ArrayList<>());
+    OptionalItem authors = new OptionalItem<>(new ArrayList<>());
 
-    public LoadableModel<List<Author>> getAuthorsModel() {
+    public OptionalItem<List<Author>> getAuthorsModel() {
         return authors;
     }
 

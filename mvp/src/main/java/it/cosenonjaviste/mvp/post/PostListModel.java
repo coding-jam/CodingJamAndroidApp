@@ -1,21 +1,14 @@
 package it.cosenonjaviste.mvp.post;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.LoadableModel;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
 
 public class PostListModel {
 
-    LoadableModel postsModel = new LoadableModel<>(new ArrayList<>());
+    OptionalList postsModel = new OptionalList<>();
 
-    public List<Post> getPosts() {
-        return getPostsModel().getObject();
-    }
-
-    public LoadableModel<List<Post>> getPostsModel() {
+    public OptionalList<Post> getPostsModel() {
         return postsModel;
     }
 }

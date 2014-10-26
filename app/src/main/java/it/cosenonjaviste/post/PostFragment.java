@@ -51,12 +51,14 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
     }
 
     @Override public void update(PostListModel model) {
-        if (model.getPostsModel().getThrowable() != null) {
-            list.showError();
-        } else {
-            list.showList();
-            adapter.reloadData(model.getPosts());
-        }
+        model.getPostsModel()
+                .call(posts -> {
+                    list.showList();
+                    adapter.reloadData(posts);
+                })
+                .whenError(t -> list.showError())
+                .whenEmpty(() -> {
+                });
     }
 
     @Override public void startLoading() {
