@@ -89,4 +89,35 @@ public class JsonStubs {
             "\t}\n" +
             "]\n" +
             "}";
+
+    public static final String CATEGORIES = "{\n" +
+            "status: \"ok\",\n" +
+            "count: 3,\n" +
+            "categories: [\n" +
+            "{\n" +
+            "id: 602,\n" +
+            "slug: \"agile-2\",\n" +
+            "title: \"Agile\",\n" +
+            "description: \"\",\n" +
+            "parent: 0,\n" +
+            "post_count: 4\n" +
+            "},\n" +
+            "{\n" +
+            "id: 16,\n" +
+            "slug: \"ajax\",\n" +
+            "title: \"AJAX\",\n" +
+            "description: \"\",\n" +
+            "parent: 0,\n" +
+            "post_count: 9\n" +
+            "},\n" +
+            "{\n" +
+            "id: 595,\n" +
+            "slug: \"alfresco-2\",\n" +
+            "title: \"Alfresco\",\n" +
+            "description: \"\",\n" +
+            "parent: 0,\n" +
+            "post_count: 4\n" +
+            "}" +
+            "]" +
+            "}";
 }
