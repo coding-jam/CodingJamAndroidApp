@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
-import it.cosenonjaviste.lib.mvp.MultiFragmentActivity;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
@@ -29,13 +28,14 @@ import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 
 @ParcelClasses({
         @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
         @ParcelClass(value = OptionalList.class, converter = OptionalListConverter.class)
 })
-public class MainActivity extends ActionBarActivity implements MultiFragmentActivity {
+public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.left_drawer_menu) View mDrawerMenu;
     @InjectView(R.id.left_drawer) ListView mDrawerList;
@@ -44,6 +44,8 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
     @Inject PostListMvpConfig postListMvpConfig;
 
     @Inject AuthorListMvpConfig authorListMvpConfig;
+
+    @Inject CategoryListMvpConfig categoryListMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,26 +80,35 @@ public class MainActivity extends ActionBarActivity implements MultiFragmentActi
         }
     }
 
-    @Override public void showFragment(Fragment fragment) {
-        replaceFragmentInContainer(fragment);
+    private void selectItem(int position) {
+        String tag = "fragment_" + position;
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+
+        if (fragment == null) {
+            MvpConfig<?, ?, ?> config = getMvpConfig(position);
+            fragment = new ActivityContextBinder(this).createView(config, null);
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerMenu);
     }
 
-    private void selectItem(int position) {
+    private MvpConfig<?, ?, ?> getMvpConfig(int position) {
         MvpConfig<?, ?, ?> config;
         switch (position) {
+            case 1:
+                config = categoryListMvpConfig;
+                break;
             case 2:
                 config = authorListMvpConfig;
                 break;
             default:
                 config = postListMvpConfig;
         }
-        Fragment fragment = new ActivityContextBinder(this).createView(config, null);
-
-        replaceFragmentInContainer(fragment);
-
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerMenu);
+        return config;
     }
 
     private void replaceFragmentInContainer(Fragment fragment) {

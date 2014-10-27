@@ -9,9 +9,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
+import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
@@ -29,7 +32,9 @@ import retrofit.converter.GsonConverter;
         PostDetailMvpConfig.class,
         PostDetailFragment.class,
         AuthorListMvpConfig.class,
-        AuthorListFragment.class
+        AuthorListFragment.class,
+        CategoryListMvpConfig.class,
+        CategoryListFragment.class
 }, library = true)
 public class AppModule {
 
@@ -62,5 +67,9 @@ public class AppModule {
 
     @Provides AuthorListView provideAuthorListView() {
         return new AuthorListFragment();
+    }
+
+    @Provides CategoryListView provideCategoryListView() {
+        return new CategoryListFragment();
     }
 }
