@@ -3,9 +3,11 @@ package it.cosenonjaviste.mvp.post;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
-public class PostListMvpConfig extends MvpConfig<PostListModel,PostListView,PostListPresenter> {
+public class PostListMvpConfig extends MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> {
 
     @Inject Provider<PostListView> viewProvider;
 

@@ -7,37 +7,18 @@ import javax.inject.Inject;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.ListPresenter;
 import rx.Observable;
 
-public class PostListPresenter extends RxMvpPresenter<PostListModel> {
+public class PostListPresenter extends ListPresenter<Post> {
 
     @Inject WordPressService wordPressService;
 
-    public PostListModel createModel(PresenterArgs args) {
-        return new PostListModel();
-    }
-
-    public void listPosts(int page) {
-        Observable<List<Post>> observable = wordPressService.listPosts(page).map(PostResponse::getPosts);
-
-        subscribePausable(observable,
-                () -> getView().startLoading(),
-                posts -> {
-                    model.getPosts().done(posts);
-                    view.update(model);
-                }, throwable -> {
-                    model.getPosts().error(throwable);
-                    view.update(model);
-                });
+    @Override protected Observable<List<Post>> getObservable(int page) {
+        return wordPressService.listPosts(page).map(PostResponse::getPosts);
     }
 
     public void goToDetail(Post item) {
         PostDetailPresenter.open(contextBinder, item);
-    }
-
-    @Override public PostListView getView() {
-        return (PostListView) super.getView();
     }
 }

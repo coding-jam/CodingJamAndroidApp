@@ -11,6 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 import it.cosenonjaviste.utils.TestContextBinder;
@@ -42,16 +43,16 @@ public class PostListPresenterTest {
 
     @Test
     public void testLoad() {
-        presenter.listPosts(0);
-        PostListModel model = presenter.getModel();
-        assertThat(model.getPosts().size()).isEqualTo(1);
+        presenter.loadData(0);
+        OptionalList<Post> model = presenter.getModel();
+        assertThat(model.size()).isEqualTo(1);
     }
 
     @Test
     public void testGoToDetails() {
-        presenter.listPosts(0);
-        PostListModel model = presenter.getModel();
-        Post firstPost = model.getPosts().get(0);
+        presenter.loadData(0);
+        OptionalList<Post> model = presenter.getModel();
+        Post firstPost = model.get(0);
 
         presenter.goToDetail(firstPost);
 

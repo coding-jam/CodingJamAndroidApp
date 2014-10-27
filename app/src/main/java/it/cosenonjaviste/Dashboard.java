@@ -99,7 +99,7 @@ public class Dashboard extends Activity {
 //    }
 //
 //    @OnClick({R.id.reload}) void executeSearch() {
-//        presenter.listPosts();
+//        presenter.loadData();
 //    }
 //
 //    @Module(injects = Dashboard.class, addsTo = AppModule.class)

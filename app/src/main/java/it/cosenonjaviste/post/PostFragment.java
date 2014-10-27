@@ -15,13 +15,14 @@ import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
+import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
-public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
+@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class)})
+public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Post>> implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -42,23 +43,25 @@ public class PostFragment extends CnjFragment<PostListPresenter, PostListModel> 
         adapter = new PostAdapter(getActivity());
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setRefreshListener(() -> presenter.listPosts(0));
+        list.setRefreshListener(() -> presenter.loadData(0));
         list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
     }
 
     @Override protected void loadOnFirstStart() {
-        presenter.listPosts(0);
+        presenter.loadData(0);
     }
 
-    @Override public void update(PostListModel model) {
-        model.getPosts()
-                .call(posts -> {
+    @Override public void update(OptionalList<Post> model) {
+        model.call(
+                posts -> {
                     list.showList();
                     adapter.reloadData(posts);
-                })
-                .whenError(t -> list.showError())
-                .whenEmpty(() -> {
-                });
+                }
+        ).whenError(
+                t -> list.showError()
+        ).whenEmpty(
+                Actions.empty()
+        );
     }
 
     @Override public void startLoading() {

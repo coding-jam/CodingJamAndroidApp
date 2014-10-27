@@ -1,7 +1,8 @@
 package it.cosenonjaviste.mvp.post;
 
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.RxMvpListView;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
-public interface PostListView extends RxMvpView<PostListModel> {
-    void startLoading();
+public interface PostListView extends RxMvpListView<OptionalList<Post>> {
 }

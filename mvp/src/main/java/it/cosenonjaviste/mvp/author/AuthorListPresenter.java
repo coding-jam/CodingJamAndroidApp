@@ -8,33 +8,18 @@ import javax.inject.Inject;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.ListPresenter;
 import rx.Observable;
 
-public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
+public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject WordPressService wordPressService;
 
-    @Override public AuthorListModel createModel(PresenterArgs args) {
-        return new AuthorListModel();
+    @Override protected Observable<List<Author>> getObservable(int page) {
+        return wordPressService.listAuthors().map(AuthorResponse::getAuthors).doOnNext(Collections::sort);
     }
 
     public void loadAuthors() {
-        Observable<List<Author>> observable = wordPressService.listAuthors().map(AuthorResponse::getAuthors);
-        subscribePausable(observable,
-                () -> getView().startLoading(),
-                posts -> {
-                    Collections.sort(posts);
-                    model.getAuthors().done(posts);
-                    view.update(model);
-                }, throwable -> {
-                    model.getAuthors().error(throwable);
-                    view.update(model);
-                });
-    }
-
-    @Override public AuthorListView getView() {
-        return (AuthorListView) super.getView();
+        loadData(0);
     }
 }
