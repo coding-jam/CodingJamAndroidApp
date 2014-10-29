@@ -12,6 +12,9 @@ import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.mvp.post.PostListMvpConfig;
+import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 import it.cosenonjaviste.utils.TestContextBinder;
@@ -52,10 +55,22 @@ public class CategoryListPresenterTest {
         assertThat(category.getPostCount()).isEqualTo(4);
     }
 
-    @Module(injects = {CategoryListPresenterTest.class}, addsTo = MvpTestModule.class)
+    @Test
+    public void testGoToPosts() {
+        presenter.loadData(0);
+        presenter.goToPosts(1);
+        PostListModel model = contextBinder.getLastModel();
+        assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
+    }
+
+    @Module(injects = {CategoryListPresenterTest.class, PostListMvpConfig.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides CategoryListView providePostListView() {
+        @Provides CategoryListView provideCategoryListView() {
             return mock(CategoryListView.class);
+        }
+
+        @Provides PostListView providePostListView() {
+            return mock(PostListView.class);
         }
     }
 }

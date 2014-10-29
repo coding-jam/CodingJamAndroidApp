@@ -20,7 +20,7 @@ public abstract class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresen
         if (restoredModel != null) {
             model = restoredModel;
         } else {
-            model = presenter.createModel(args);
+            model = presenter.createModel(args != null ? args : PresenterArgs.EMPTY);
         }
         presenter.init(contextBinder, model);
         return presenter;

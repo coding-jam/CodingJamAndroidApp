@@ -8,6 +8,8 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.ListPresenter;
+import it.cosenonjaviste.mvp.post.PostListMvpConfig;
+import it.cosenonjaviste.mvp.post.PostListPresenter;
 import rx.Observable;
 
 public class CategoryListPresenter extends ListPresenter<Category> {
@@ -16,5 +18,10 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     @Override protected Observable<List<Category>> getObservable(int page) {
         return wordPressService.listCategories().map(CategoryResponse::getCategories);
+    }
+
+    public void goToPosts(int position) {
+        Category category = model.get(position);
+        contextBinder.startNewActivity(PostListMvpConfig.class, PostListPresenter.open(contextBinder, category));
     }
 }

@@ -42,7 +42,7 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
         adapter = new CategoryAdapter(getActivity());
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-//        list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
+        list.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
     }
 
     @Override protected void loadOnFirstStart() {
