@@ -2,8 +2,6 @@ package it.cosenonjaviste;
 
 import org.mockito.Mockito;
 
-import javax.inject.Inject;
-
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
@@ -15,8 +13,6 @@ import rx.Observable;
 
 public class TestContextBinder extends ContextBinder {
 
-    @Inject TestMvpConfigFactory configFactory;
-
     private RxMvpView<?> lastView;
     private RxMvpPresenter<?> lastPresenter;
 
@@ -24,15 +20,14 @@ public class TestContextBinder extends ContextBinder {
         ObjectGraph objectGraph = ObjectGraph.create(modules);
         objectGraph.inject(testObject);
         objectGraph.inject(this);
-        configFactory.init(objectGraph);
     }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
         return observable;
     }
 
-    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
-        createView(configFactory.createConfig(config), args);
+    @Override public void startNewActivity(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+        createView(config, args);
     }
 
     @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {

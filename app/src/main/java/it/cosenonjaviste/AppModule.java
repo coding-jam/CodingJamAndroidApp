@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.GsonBuilder;
 
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -57,19 +58,19 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
-    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(AuthorListPresenter presenter) {
+    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return new AuthorListMvpConfig(AuthorListFragment.class, presenter);
     }
 
-    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(CategoryListPresenter presenter) {
+    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
         return new CategoryListMvpConfig(CategoryListFragment.class, presenter);
     }
 
-    @Provides PostListMvpConfig providePostListMvpConfig(PostListPresenter presenter) {
+    @Provides PostListMvpConfig providePostListMvpConfig(Provider<PostListPresenter> presenter) {
         return new PostListMvpConfig(PostFragment.class, presenter);
     }
 
-    @Provides PostDetailMvpConfig providePostDetailMvpConfig(PostDetailPresenter presenter) {
+    @Provides PostDetailMvpConfig providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
         return new PostDetailMvpConfig(PostDetailFragment.class, presenter);
     }
 

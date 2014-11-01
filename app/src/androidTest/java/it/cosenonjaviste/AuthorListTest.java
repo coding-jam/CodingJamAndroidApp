@@ -5,8 +5,8 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import javax.inject.Inject;
 
 import dagger.Module;
+import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.base.BaseFragmentTest;
-import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
@@ -15,7 +15,7 @@ public class AuthorListTest extends BaseFragmentTest {
     @Inject MockWebServer server;
 
     public AuthorListTest() {
-        super(AuthorListMvpConfig.class, true);
+        super(AuthorListFragment.class, true);
     }
 
     @Override protected Object[] getTestModules() {

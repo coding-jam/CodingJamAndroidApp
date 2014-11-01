@@ -16,12 +16,14 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     @Inject WordPressService wordPressService;
 
+    @Inject PostListMvpConfig postListMvpConfig;
+
     @Override protected Observable<List<Category>> getObservable(int page) {
         return wordPressService.listCategories().map(CategoryResponse::getCategories);
     }
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        contextBinder.startNewActivity(PostListMvpConfig.class, PostListPresenter.open(contextBinder, category));
+        contextBinder.startNewActivity(postListMvpConfig, PostListPresenter.open(contextBinder, category));
     }
 }

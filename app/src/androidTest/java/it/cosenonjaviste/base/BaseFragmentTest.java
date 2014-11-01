@@ -4,24 +4,24 @@ import android.content.Intent;
 
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.SingleFragmentActivity;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
+import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.functions.Action2;
 
 public class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {
-    private final Class<? extends MvpConfig<?, ?, ?>> configClass;
+    private final Class<? extends RxMvpView<?>> viewClass;
 
-    public BaseFragmentTest(Class<? extends MvpConfig<?, ?, ?>> configClass) {
-        this(configClass, false);
+    public BaseFragmentTest(Class<? extends RxMvpView<?>> viewClass) {
+        this(viewClass, false);
     }
 
-    public BaseFragmentTest(Class<? extends MvpConfig<?, ?, ?>> configClass, boolean injectTest) {
+    public BaseFragmentTest(Class<? extends RxMvpView<?>> viewClass, boolean injectTest) {
         super(SingleFragmentActivity.class, injectTest);
-        this.configClass = configClass;
+        this.viewClass = viewClass;
     }
 
     @Override protected Intent createActivityIntent() {
-        return SingleFragmentActivity.createIntent(configClass);
+        return SingleFragmentActivity.createIntent(viewClass);
     }
 
     protected <P> Intent createIntent(Intent intent, Action2<PresenterArgs, P> action, P param) {

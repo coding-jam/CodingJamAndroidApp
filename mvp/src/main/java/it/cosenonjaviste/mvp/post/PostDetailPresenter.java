@@ -14,9 +14,9 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
     @Inject public PostDetailPresenter() {
     }
 
-    public static void open(ContextBinder contextBinder, Post item) {
+    public static void open(ContextBinder contextBinder, PostDetailMvpConfig postDetailMvpConfig, Post item) {
         PresenterArgs args = populateArgs(contextBinder.createArgs(), item);
-        contextBinder.startNewActivity(PostDetailMvpConfig.class, args);
+        contextBinder.startNewActivity(postDetailMvpConfig, args);
     }
 
     @Override public PostDetailModel createModel(PresenterArgs args) {

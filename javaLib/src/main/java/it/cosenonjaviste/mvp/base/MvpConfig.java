@@ -1,14 +1,16 @@
 package it.cosenonjaviste.mvp.base;
 
+import rx.functions.Func0;
+
 public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
 
     private Class<? extends V> viewClass;
 
-    private P presenter;
+    private Func0<P> presenterFactory;
 
-    public MvpConfig(Class<? extends V> viewClass, P presenter) {
+    public MvpConfig(Class<? extends V> viewClass, Func0<P> presenterFactory) {
         this.viewClass = viewClass;
-        this.presenter = presenter;
+        this.presenterFactory = presenterFactory;
     }
 
     public Class<? extends V> createView() {
@@ -16,7 +18,7 @@ public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
     }
 
     protected P createPresenter() {
-        return presenter;
+        return presenterFactory.call();
     }
 
     public P createAndInitPresenter(ContextBinder contextBinder, PresenterArgs args) {

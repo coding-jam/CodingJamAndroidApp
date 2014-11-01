@@ -20,6 +20,8 @@ public class PostListPresenter extends ListPresenter<Post> {
 
     @Inject WordPressService wordPressService;
 
+    @Inject PostDetailMvpConfig postDetailMvpConfig;
+
     @Override public OptionalList<Post> createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();
         postListModel.setCategory(args.getObject(CATEGORY));
@@ -31,7 +33,7 @@ public class PostListPresenter extends ListPresenter<Post> {
     }
 
     public void goToDetail(Post item) {
-        PostDetailPresenter.open(contextBinder, item);
+        PostDetailPresenter.open(contextBinder, postDetailMvpConfig, item);
     }
 
     public static PresenterArgs open(ContextBinder contextBinder, Category category) {

@@ -8,22 +8,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
-    private static final String CONFIG_CLASS = "configClass";
+    private static final String VIEW_CLASS = "viewClass";
 
-    public static Intent createIntent(Context context, Class<? extends MvpConfig<?, ?, ?>> config) {
+    public static Intent createIntent(Context context, Class<? extends RxMvpView<?>> viewClass) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
-        intent.putExtra(CONFIG_CLASS, config.getName());
+        intent.putExtra(VIEW_CLASS, viewClass.getName());
         return intent;
     }
 
-    public static Intent createIntent(Class<? extends MvpConfig<?, ?, ?>> config) {
+    public static Intent createIntent(Class<? extends RxMvpView<?>> viewClass) {
         Intent intent = new Intent();
-        intent.putExtra(CONFIG_CLASS, config.getName());
+        intent.putExtra(VIEW_CLASS, viewClass.getName());
         return intent;
     }
 
@@ -37,10 +36,8 @@ public class SingleFragmentActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            String configClass = getIntent().getStringExtra(CONFIG_CLASS);
-            MvpConfig<?, ?, ?> config = new DaggerMvpConfigFactory(getApplication()).createConfig(configClass);
-            Class<? extends RxMvpView<?>> viewClass = config.createView();
-            Fragment fragment = Fragment.instantiate(this, viewClass.getName());
+            String viewClassName = getIntent().getStringExtra(VIEW_CLASS);
+            Fragment fragment = Fragment.instantiate(this, viewClassName);
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 Bundle b = new Bundle(extras);

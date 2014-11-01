@@ -41,8 +41,8 @@ public class ActivityContextBinder extends ContextBinder {
         return background(activity, observable);
     }
 
-    @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
-        Intent intent = SingleFragmentActivity.createIntent(activity, config);
+    @Override public void startNewActivity(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+        Intent intent = SingleFragmentActivity.createIntent(activity, config.createView());
         Bundle bundle = createArgs(args);
         intent.putExtras(bundle);
         activity.startActivity(intent);

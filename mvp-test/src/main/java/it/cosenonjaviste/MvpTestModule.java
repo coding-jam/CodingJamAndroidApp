@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -78,19 +79,19 @@ public class MvpTestModule {
         return mockWebServer.getUrl("/").toString();
     }
 
-    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(AuthorListPresenter presenter) {
+    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return new AuthorListMvpConfig(AuthorListView.class, presenter);
     }
 
-    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(CategoryListPresenter presenter) {
+    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
         return new CategoryListMvpConfig(CategoryListView.class, presenter);
     }
 
-    @Provides PostListMvpConfig providePostListMvpConfig(PostListPresenter presenter) {
+    @Provides PostListMvpConfig providePostListMvpConfig(Provider<PostListPresenter> presenter) {
         return new PostListMvpConfig(PostListView.class, presenter);
     }
 
-    @Provides PostDetailMvpConfig providePostDetailMvpConfig(PostDetailPresenter presenter) {
+    @Provides PostDetailMvpConfig providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
         return new PostDetailMvpConfig(PostDetailView.class, presenter);
     }
 }
