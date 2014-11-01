@@ -12,13 +12,13 @@ import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
-import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
-import it.cosenonjaviste.mvp.category.CategoryListView;
+import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
-import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
-import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
 import retrofit.RestAdapter;
@@ -57,19 +57,20 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
-    @Provides PostDetailView providePostDetailView() {
-        return new PostDetailFragment();
+    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(AuthorListPresenter presenter) {
+        return new AuthorListMvpConfig(AuthorListFragment.class, presenter);
     }
 
-    @Provides PostListView providePostListView() {
-        return new PostFragment();
+    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(CategoryListPresenter presenter) {
+        return new CategoryListMvpConfig(CategoryListFragment.class, presenter);
     }
 
-    @Provides AuthorListView provideAuthorListView() {
-        return new AuthorListFragment();
+    @Provides PostListMvpConfig providePostListMvpConfig(PostListPresenter presenter) {
+        return new PostListMvpConfig(PostFragment.class, presenter);
     }
 
-    @Provides CategoryListView provideCategoryListView() {
-        return new CategoryListFragment();
+    @Provides PostDetailMvpConfig providePostDetailMvpConfig(PostDetailPresenter presenter) {
+        return new PostDetailMvpConfig(PostDetailFragment.class, presenter);
     }
+
 }

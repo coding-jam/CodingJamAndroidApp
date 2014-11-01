@@ -9,20 +9,5 @@ public abstract class ContextBinder {
 
     public abstract <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args);
 
-    public MvpConfig<?, ?, ?> createConfig(String configClass) {
-        return createConfig(getType(configClass));
-    }
-
-    private Class<MvpConfig<?, ?, ?>> getType(String className) {
-        try {
-            return (Class<MvpConfig<?, ?, ?>>) Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public abstract MvpConfig<?, ?, ?> createConfig(Class<? extends MvpConfig<?, ?, ?>> type);
-
     public abstract PresenterArgs createArgs();
 }

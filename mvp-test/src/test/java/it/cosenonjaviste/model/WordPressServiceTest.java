@@ -56,4 +56,8 @@ public class WordPressServiceTest {
     @Module(injects = WordPressServiceTest.class, addsTo = MvpTestModule.class)
     public static class TestModule {
     }
+
+    @After public void shutdownServer() throws IOException {
+        server.shutdown();
+    }
 }

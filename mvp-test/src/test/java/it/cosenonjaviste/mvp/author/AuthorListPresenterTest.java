@@ -2,19 +2,22 @@ package it.cosenonjaviste.mvp.author;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
-import it.cosenonjaviste.utils.TestContextBinder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -53,5 +56,9 @@ public class AuthorListPresenterTest {
         @Provides AuthorListView provideView() {
             return mock(AuthorListView.class);
         }
+    }
+
+    @After public void shutdownServer() throws IOException {
+        server.shutdown();
     }
 }

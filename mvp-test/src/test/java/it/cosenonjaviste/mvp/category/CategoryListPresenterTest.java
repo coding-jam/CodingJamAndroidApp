@@ -10,14 +10,13 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListMvpConfig;
-import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
-import it.cosenonjaviste.utils.TestContextBinder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -69,8 +68,8 @@ public class CategoryListPresenterTest {
             return mock(CategoryListView.class);
         }
 
-        @Provides PostListView providePostListView() {
-            return mock(PostListView.class);
-        }
+//        @Provides PostListView providePostListView() {
+//            return mock(PostListView.class);
+//        }
     }
 }

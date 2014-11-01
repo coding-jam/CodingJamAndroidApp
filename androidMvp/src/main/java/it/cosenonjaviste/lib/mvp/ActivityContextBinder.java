@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import dagger.ObjectGraph;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
+import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
 import rx.Scheduler;
 import rx.android.observables.AndroidObservable;
@@ -51,7 +49,8 @@ public class ActivityContextBinder extends ContextBinder {
     }
 
     @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
-        Fragment fragment = (Fragment) config.createView();
+        Class<? extends RxMvpView<?>> viewClass = config.createView();
+        Fragment fragment = Fragment.instantiate(activity, viewClass.getName());
         Bundle bundle = createArgs(args);
         fragment.setArguments(bundle);
         return (T) fragment;
@@ -63,11 +62,6 @@ public class ActivityContextBinder extends ContextBinder {
         } else {
             return new Bundle();
         }
-    }
-
-    @Override public MvpConfig<?, ?, ?> createConfig(Class<? extends MvpConfig<?, ?, ?>> type) {
-        ObjectGraph objectGraph = ObjectGraphHolder.getObjectGraph((DaggerApplication) activity.getApplication());
-        return objectGraph.get(type);
     }
 
     @Override public PresenterArgs createArgs() {

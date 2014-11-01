@@ -2,22 +2,25 @@ package it.cosenonjaviste.mvp.post;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
-import it.cosenonjaviste.utils.TestContextBinder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class PostListPresenterTest {
 
@@ -25,7 +28,7 @@ public class PostListPresenterTest {
 
     @Inject PostListMvpConfig config;
 
-    @Inject PostListView view;
+    @Mock PostListView view;
 
     private TestContextBinder contextBinder;
 
@@ -33,6 +36,7 @@ public class PostListPresenterTest {
 
     @Before
     public void setup() {
+        MockitoAnnotations.initMocks(this);
         contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
 
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
@@ -65,12 +69,16 @@ public class PostListPresenterTest {
 
     @Module(injects = {PostListPresenterTest.class, PostDetailMvpConfig.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides PostListView providePostListView() {
-            return mock(PostListView.class);
-        }
+//        @Provides PostListView providePostListView() {
+//            return mock(PostListView.class);
+//        }
+//
+//        @Provides PostDetailView providePostDetailView() {
+//            return mock(PostDetailView.class);
+//        }
+    }
 
-        @Provides PostDetailView providePostDetailView() {
-            return mock(PostDetailView.class);
-        }
+    @After public void shutdownServer() throws IOException {
+        server.shutdown();
     }
 }

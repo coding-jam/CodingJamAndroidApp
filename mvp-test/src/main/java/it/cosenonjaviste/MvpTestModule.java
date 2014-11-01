@@ -12,10 +12,22 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
+import it.cosenonjaviste.mvp.author.AuthorListPresenter;
+import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
+import it.cosenonjaviste.mvp.category.CategoryListPresenter;
+import it.cosenonjaviste.mvp.category.CategoryListView;
+import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
+import it.cosenonjaviste.mvp.post.PostDetailPresenter;
+import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.post.PostListMvpConfig;
+import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListView;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library = true, overrides = true)
+@Module(library = true, overrides = true, injects = TestContextBinder.class)
 public class MvpTestModule {
 
     private boolean initInBackgroundThread;
@@ -64,5 +76,21 @@ public class MvpTestModule {
 
     private String getUrlSync(MockWebServer mockWebServer) {
         return mockWebServer.getUrl("/").toString();
+    }
+
+    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(AuthorListPresenter presenter) {
+        return new AuthorListMvpConfig(AuthorListView.class, presenter);
+    }
+
+    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(CategoryListPresenter presenter) {
+        return new CategoryListMvpConfig(CategoryListView.class, presenter);
+    }
+
+    @Provides PostListMvpConfig providePostListMvpConfig(PostListPresenter presenter) {
+        return new PostListMvpConfig(PostListView.class, presenter);
+    }
+
+    @Provides PostDetailMvpConfig providePostDetailMvpConfig(PostDetailPresenter presenter) {
+        return new PostDetailMvpConfig(PostDetailView.class, presenter);
     }
 }

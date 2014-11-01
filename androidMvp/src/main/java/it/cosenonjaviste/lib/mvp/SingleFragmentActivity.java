@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.RxMvpView;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
@@ -37,8 +38,9 @@ public class SingleFragmentActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             String configClass = getIntent().getStringExtra(CONFIG_CLASS);
-            MvpConfig<?, ?, ?> config = new ActivityContextBinder(this).createConfig(configClass);
-            Fragment fragment = (Fragment) config.createView();
+            MvpConfig<?, ?, ?> config = new DaggerMvpConfigFactory(getApplication()).createConfig(configClass);
+            Class<? extends RxMvpView<?>> viewClass = config.createView();
+            Fragment fragment = Fragment.instantiate(this, viewClass.getName());
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 Bundle b = new Bundle(extras);

@@ -1,4 +1,8 @@
-package it.cosenonjaviste.utils;
+package it.cosenonjaviste;
+
+import org.mockito.Mockito;
+
+import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.base.ContextBinder;
@@ -11,13 +15,16 @@ import rx.Observable;
 
 public class TestContextBinder extends ContextBinder {
 
-    private ObjectGraph objectGraph;
+    @Inject TestMvpConfigFactory configFactory;
+
     private RxMvpView<?> lastView;
     private RxMvpPresenter<?> lastPresenter;
 
     public TestContextBinder(Object testObject, Object... modules) {
-        objectGraph = ObjectGraph.create(modules);
+        ObjectGraph objectGraph = ObjectGraph.create(modules);
         objectGraph.inject(testObject);
+        objectGraph.inject(this);
+        configFactory.init(objectGraph);
     }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
@@ -25,20 +32,16 @@ public class TestContextBinder extends ContextBinder {
     }
 
     @Override public void startNewActivity(Class<? extends MvpConfig<?, ?, ?>> config, PresenterArgs args) {
-        createView(createConfig(config), args);
+        createView(configFactory.createConfig(config), args);
     }
 
     @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
-        RxMvpView<?> view = config.createView();
+        Class<? extends RxMvpView<?>> viewClass = config.createView();
         RxMvpPresenter<?> presenter = config.createAndInitPresenter(this, args);
 
-        lastView = view;
+        lastView = Mockito.mock(viewClass);
         lastPresenter = presenter;
-        return (T) view;
-    }
-
-    @Override public MvpConfig<?, ?, ?> createConfig(Class<? extends MvpConfig<?, ?, ?>> type) {
-        return objectGraph.get(type);
+        return (T) lastView;
     }
 
     public <V> V getLastView() {

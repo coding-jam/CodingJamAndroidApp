@@ -1,9 +1,23 @@
 package it.cosenonjaviste.mvp.base;
 
-public abstract class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
-    public abstract V createView();
+public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
 
-    protected abstract P createPresenter();
+    private Class<? extends V> viewClass;
+
+    private P presenter;
+
+    public MvpConfig(Class<? extends V> viewClass, P presenter) {
+        this.viewClass = viewClass;
+        this.presenter = presenter;
+    }
+
+    public Class<? extends V> createView() {
+        return viewClass;
+    }
+
+    protected P createPresenter() {
+        return presenter;
+    }
 
     public P createAndInitPresenter(ContextBinder contextBinder, PresenterArgs args) {
         return createAndInitPresenter(contextBinder, null, null, args);
