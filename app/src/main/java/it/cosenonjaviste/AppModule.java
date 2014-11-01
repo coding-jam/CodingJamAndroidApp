@@ -11,15 +11,21 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
-import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
+import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
-import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
+import it.cosenonjaviste.mvp.category.CategoryListView;
+import it.cosenonjaviste.mvp.post.PostDetailModel;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import it.cosenonjaviste.mvp.post.PostListMvpConfig;
+import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
 import retrofit.RestAdapter;
@@ -28,13 +34,9 @@ import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         MainActivity.class,
-        PostListMvpConfig.class,
         PostFragment.class,
-        PostDetailMvpConfig.class,
         PostDetailFragment.class,
-        AuthorListMvpConfig.class,
         AuthorListFragment.class,
-        CategoryListMvpConfig.class,
         CategoryListFragment.class
 }, library = true)
 public class AppModule {
@@ -58,20 +60,20 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
-    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return new AuthorListMvpConfig(AuthorListFragment.class, presenter);
+    @Provides MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
+        return new MvpConfig<>(AuthorListFragment.class, presenter::get);
     }
 
-    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
-        return new CategoryListMvpConfig(CategoryListFragment.class, presenter);
+    @Provides MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
+        return new MvpConfig<>(CategoryListFragment.class, presenter::get);
     }
 
-    @Provides PostListMvpConfig providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return new PostListMvpConfig(PostFragment.class, presenter);
+    @Provides MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
+        return new MvpConfig<>(PostFragment.class, presenter::get);
     }
 
-    @Provides PostDetailMvpConfig providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return new PostDetailMvpConfig(PostDetailFragment.class, presenter);
+    @Provides MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
+        return new MvpConfig<>(PostDetailFragment.class, presenter::get);
     }
 
 }

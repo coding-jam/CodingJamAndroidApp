@@ -10,6 +10,7 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.ListPresenter;
 import it.cosenonjaviste.mvp.base.ContextBinder;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.Observable;
@@ -20,7 +21,7 @@ public class PostListPresenter extends ListPresenter<Post> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject PostDetailMvpConfig postDetailMvpConfig;
+    @Inject MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> postDetailMvpConfig;
 
     @Override public OptionalList<Post> createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();

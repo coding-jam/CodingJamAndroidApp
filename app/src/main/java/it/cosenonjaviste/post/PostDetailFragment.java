@@ -19,8 +19,8 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailModel;
-import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 
@@ -31,9 +31,9 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
 
     @InjectView(R.id.progress) ProgressBar progressBar;
 
-    @Inject PostDetailMvpConfig config;
+    @Inject MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> config;
 
-    @Override public PostDetailMvpConfig getConfig() {
+    @Override public MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> getConfig() {
         return config;
     }
 

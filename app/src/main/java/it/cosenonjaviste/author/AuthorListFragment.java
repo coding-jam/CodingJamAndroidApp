@@ -11,9 +11,9 @@ import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
@@ -23,9 +23,9 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     private AuthorAdapter adapter;
 
-    @Inject AuthorListMvpConfig config;
+    @Inject MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> config;
 
-    @Override public AuthorListMvpConfig getConfig() {
+    @Override public MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> getConfig() {
         return config;
     }
 

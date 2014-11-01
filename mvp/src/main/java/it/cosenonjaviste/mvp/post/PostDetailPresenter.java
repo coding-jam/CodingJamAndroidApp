@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.ContextBinder;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
@@ -14,7 +15,7 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
     @Inject public PostDetailPresenter() {
     }
 
-    public static void open(ContextBinder contextBinder, PostDetailMvpConfig postDetailMvpConfig, Post item) {
+    public static void open(ContextBinder contextBinder, MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> postDetailMvpConfig, Post item) {
         PresenterArgs args = populateArgs(contextBinder.createArgs(), item);
         contextBinder.startNewActivity(postDetailMvpConfig, args);
     }

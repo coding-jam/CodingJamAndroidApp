@@ -16,6 +16,7 @@ import dagger.Module;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
@@ -26,7 +27,7 @@ public class PostListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject PostListMvpConfig config;
+    @Inject MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> config;
 
     @Mock PostListView view;
 
@@ -67,7 +68,7 @@ public class PostListPresenterTest {
         assertThat(detailPost.getId()).isEqualTo(firstPost.getId());
     }
 
-    @Module(injects = {PostListPresenterTest.class, PostDetailMvpConfig.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {PostListPresenterTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
 //        @Provides PostListView providePostListView() {
 //            return mock(PostListView.class);

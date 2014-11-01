@@ -15,8 +15,8 @@ import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.functions.Actions;
@@ -28,9 +28,9 @@ public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Po
 
     private PostAdapter adapter;
 
-    @Inject PostListMvpConfig config;
+    @Inject MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> config;
 
-    @Override public PostListMvpConfig getConfig() {
+    @Override public MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> getConfig() {
         return config;
     }
 

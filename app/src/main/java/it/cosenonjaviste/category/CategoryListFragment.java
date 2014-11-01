@@ -14,8 +14,8 @@ import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import rx.functions.Actions;
@@ -27,9 +27,9 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
 
     private CategoryAdapter adapter;
 
-    @Inject CategoryListMvpConfig config;
+    @Inject MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> config;
 
-    @Override public CategoryListMvpConfig getConfig() {
+    @Override public MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> getConfig() {
         return config;
     }
 

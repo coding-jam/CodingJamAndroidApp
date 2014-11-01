@@ -12,17 +12,19 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.author.AuthorListMvpConfig;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
-import it.cosenonjaviste.mvp.category.CategoryListMvpConfig;
+import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.post.PostDetailMvpConfig;
+import it.cosenonjaviste.mvp.post.PostDetailModel;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
-import it.cosenonjaviste.mvp.post.PostListMvpConfig;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import retrofit.RestAdapter;
@@ -79,19 +81,19 @@ public class MvpTestModule {
         return mockWebServer.getUrl("/").toString();
     }
 
-    @Provides AuthorListMvpConfig provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return new AuthorListMvpConfig(AuthorListView.class, presenter);
+    @Provides MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
+        return new MvpConfig<>(AuthorListView.class, presenter::get);
     }
 
-    @Provides CategoryListMvpConfig provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
-        return new CategoryListMvpConfig(CategoryListView.class, presenter);
+    @Provides MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
+        return new MvpConfig<>(CategoryListView.class, presenter::get);
     }
 
-    @Provides PostListMvpConfig providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return new PostListMvpConfig(PostListView.class, presenter);
+    @Provides MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
+        return new MvpConfig<>(PostListView.class, presenter::get);
     }
 
-    @Provides PostDetailMvpConfig providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return new PostDetailMvpConfig(PostDetailView.class, presenter);
+    @Provides MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
+        return new MvpConfig<>(PostDetailView.class, presenter::get);
     }
 }

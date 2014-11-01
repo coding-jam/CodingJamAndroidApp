@@ -15,6 +15,7 @@ import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
@@ -26,7 +27,7 @@ public class AuthorListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject AuthorListMvpConfig config;
+    @Inject MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> config;
 
     @Inject AuthorListView view;
 
