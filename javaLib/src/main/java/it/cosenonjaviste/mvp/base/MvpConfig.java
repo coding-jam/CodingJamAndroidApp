@@ -8,7 +8,11 @@ public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
 
     private Func0<P> presenterFactory;
 
-    public MvpConfig(Class<? extends V> viewClass, Func0<P> presenterFactory) {
+    public static <M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> MvpConfig<M, V, P> create(Class<? extends V> viewClass, Func0<P> presenterFactory) {
+        return new MvpConfig<>(viewClass, presenterFactory);
+    }
+
+    private MvpConfig(Class<? extends V> viewClass, Func0<P> presenterFactory) {
         this.viewClass = viewClass;
         this.presenterFactory = presenterFactory;
     }

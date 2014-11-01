@@ -82,18 +82,18 @@ public class MvpTestModule {
     }
 
     @Provides MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return new MvpConfig<>(AuthorListView.class, presenter::get);
+        return MvpConfig.create(AuthorListView.class, presenter::get);
     }
 
     @Provides MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
-        return new MvpConfig<>(CategoryListView.class, presenter::get);
+        return MvpConfig.create(CategoryListView.class, presenter::get);
     }
 
     @Provides MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return new MvpConfig<>(PostListView.class, presenter::get);
+        return MvpConfig.create(PostListView.class, presenter::get);
     }
 
     @Provides MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return new MvpConfig<>(PostDetailView.class, presenter::get);
+        return MvpConfig.create(PostDetailView.class, presenter::get);
     }
 }

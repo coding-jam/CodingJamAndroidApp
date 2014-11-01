@@ -61,19 +61,19 @@ public class AppModule {
     }
 
     @Provides MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return new MvpConfig<>(AuthorListFragment.class, presenter::get);
+        return MvpConfig.create(AuthorListFragment.class, presenter::get);
     }
 
     @Provides MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
-        return new MvpConfig<>(CategoryListFragment.class, presenter::get);
+        return MvpConfig.create(CategoryListFragment.class, presenter::get);
     }
 
     @Provides MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return new MvpConfig<>(PostFragment.class, presenter::get);
+        return MvpConfig.create(PostFragment.class, presenter::get);
     }
 
     @Provides MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return new MvpConfig<>(PostDetailFragment.class, presenter::get);
+        return MvpConfig.create(PostDetailFragment.class, presenter::get);
     }
 
 }
