@@ -17,11 +17,12 @@ import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class)})
+@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Post>> implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
