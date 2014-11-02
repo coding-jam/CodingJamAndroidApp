@@ -2,16 +2,14 @@ package it.cosenonjaviste.mvp.category;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
-import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
@@ -19,28 +17,23 @@ import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
-public class CategoryListPresenterTest {
+public class CategoryListPresenterTest extends PresenterTest<CategoryListView, CategoryListPresenter> {
 
     @Inject MockWebServer server;
 
     @Inject MvpConfig<CategoryListView, CategoryListPresenter> config;
 
-    @Inject CategoryListView view;
+    @Override public MvpConfig<CategoryListView, CategoryListPresenter> getConfig() {
+        return config;
+    }
 
-    private TestContextBinder contextBinder;
+    @Override protected Object getTestModule() {
+        return new TestModule();
+    }
 
-    private CategoryListPresenter presenter;
-
-    @Before
-    public void setup() {
-        contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
-
+    @Override protected void initAfterInject() {
         MockWebServerUtils.initDispatcher(server, JsonStubs.CATEGORIES);
-
-        presenter = config.createAndInitPresenter(contextBinder, null);
-        presenter.subscribe(view);
     }
 
     @Test
@@ -58,18 +51,11 @@ public class CategoryListPresenterTest {
     public void testGoToPosts() {
         presenter.loadData(0);
         presenter.goToPosts(1);
-        PostListModel model = contextBinder.getLastModel();
+        PostListModel model = getLastModel();
         assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
     }
 
     @Module(injects = {CategoryListPresenterTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides CategoryListView provideCategoryListView() {
-            return mock(CategoryListView.class);
-        }
-
-//        @Provides PostListView providePostListView() {
-//            return mock(PostListView.class);
-//        }
     }
 }

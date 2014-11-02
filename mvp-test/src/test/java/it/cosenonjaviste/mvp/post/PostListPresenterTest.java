@@ -3,10 +3,7 @@ package it.cosenonjaviste.mvp.post;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 
@@ -14,8 +11,8 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.MvpTestModule;
-import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -23,27 +20,22 @@ import it.cosenonjaviste.stubs.MockWebServerUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PostListPresenterTest {
+public class PostListPresenterTest extends PresenterTest<PostListView, PostListPresenter> {
 
     @Inject MockWebServer server;
 
     @Inject MvpConfig<PostListView, PostListPresenter> config;
 
-    @Mock PostListView view;
+    @Override public MvpConfig<PostListView, PostListPresenter> getConfig() {
+        return config;
+    }
 
-    private TestContextBinder contextBinder;
+    @Override protected Object getTestModule() {
+        return new TestModule();
+    }
 
-    private PostListPresenter presenter;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
-
+    @Override protected void initAfterInject() {
         MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
-
-        presenter = config.createAndInitPresenter(contextBinder, null);
-        presenter.subscribe(view);
     }
 
     @Test
@@ -61,7 +53,7 @@ public class PostListPresenterTest {
 
         presenter.goToDetail(firstPost);
 
-        PostDetailModel detailModel = contextBinder.getLastModel();
+        PostDetailModel detailModel = getLastModel();
         Post detailPost = detailModel.getPost();
 
         assertThat(detailPost).isNotNull();

@@ -2,47 +2,37 @@ package it.cosenonjaviste.mvp.author;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
 import dagger.Module;
-import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
-import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
-public class AuthorListPresenterTest {
-
-    @Inject MockWebServer server;
+public class AuthorListPresenterTest extends PresenterTest<AuthorListView, AuthorListPresenter> {
 
     @Inject MvpConfig<AuthorListView, AuthorListPresenter> config;
 
-    @Inject AuthorListView view;
+    @Inject MockWebServer server;
 
-    private AuthorListPresenter presenter;
+    @Override protected MvpConfig<AuthorListView, AuthorListPresenter> getConfig() {
+        return config;
+    }
 
-    private TestContextBinder contextBinder;
+    @Override protected Object getTestModule() {
+        return new TestModule();
+    }
 
-    @Before
-    public void setup() {
-        contextBinder = new TestContextBinder(this, new MvpTestModule(), new TestModule());
-
+    @Override protected void initAfterInject() {
         MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
-
-        presenter = config.createAndInitPresenter(contextBinder, null);
-        presenter.subscribe(view);
     }
 
     @Test
@@ -54,12 +44,5 @@ public class AuthorListPresenterTest {
 
     @Module(injects = AuthorListPresenterTest.class, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides AuthorListView provideView() {
-            return mock(AuthorListView.class);
-        }
-    }
-
-    @After public void shutdownServer() throws IOException {
-        server.shutdown();
     }
 }

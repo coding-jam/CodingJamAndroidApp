@@ -31,9 +31,10 @@ public class TestContextBinder extends ContextBinder {
 
     @Override public <T> T createView(MvpConfig<?, ?> config, PresenterArgs args) {
         Class<? extends RxMvpView<?>> viewClass = config.createView();
-        RxMvpPresenter<?> presenter = config.createAndInitPresenter(this, args);
+        RxMvpPresenter presenter = config.createAndInitPresenter(this, args);
 
         lastView = Mockito.mock(viewClass);
+        presenter.subscribe(lastView);
         lastPresenter = presenter;
         return (T) lastView;
     }
