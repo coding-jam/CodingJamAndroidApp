@@ -11,6 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -21,8 +22,12 @@ import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
+import it.cosenonjaviste.mvp.twitter.TweetListView;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.post.PostFragment;
+import it.cosenonjaviste.twitter.TweetListFragment;
+import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
@@ -32,7 +37,8 @@ import retrofit.converter.GsonConverter;
         PostFragment.class,
         PostDetailFragment.class,
         AuthorListFragment.class,
-        CategoryListFragment.class
+        CategoryListFragment.class,
+        TweetListFragment.class
 }, library = true)
 public class AppModule {
 
@@ -55,6 +61,10 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
+    @Provides TwitterService provideTwitterService() {
+        return new Twitter4JService();
+    }
+
     @Provides MvpConfig<AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return MvpConfig.create(AuthorListFragment.class, presenter::get);
     }
@@ -71,4 +81,7 @@ public class AppModule {
         return MvpConfig.create(PostDetailFragment.class, presenter::get);
     }
 
+    @Provides MvpConfig<TweetListView, TweetListPresenter> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
+        return MvpConfig.create(TweetListFragment.class, presenter::get);
+    }
 }

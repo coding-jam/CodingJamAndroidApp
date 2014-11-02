@@ -33,6 +33,8 @@ import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
+import it.cosenonjaviste.mvp.twitter.TweetListView;
 
 @ParcelClasses({
         @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
@@ -49,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
     @Inject MvpConfig<AuthorListView, AuthorListPresenter> authorListMvpConfig;
 
     @Inject MvpConfig<CategoryListView, CategoryListPresenter> categoryListMvpConfig;
+
+    @Inject MvpConfig<TweetListView, TweetListPresenter> tweetListMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class MainActivity extends ActionBarActivity {
                 return categoryListMvpConfig;
             case 2:
                 return authorListMvpConfig;
+            case 3:
+                return tweetListMvpConfig;
             default:
                 return postListMvpConfig;
         }

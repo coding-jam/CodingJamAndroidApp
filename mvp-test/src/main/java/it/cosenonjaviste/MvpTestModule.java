@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -22,6 +23,9 @@ import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
+import it.cosenonjaviste.mvp.twitter.TweetListView;
+import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -76,6 +80,10 @@ public class MvpTestModule {
         return mockWebServer.getUrl("/").toString();
     }
 
+    @Provides @Singleton TwitterService provideTwitterService(TwitterServiceStub twitterServiceStub) {
+        return twitterServiceStub;
+    }
+
     @Provides MvpConfig<AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return MvpConfig.create(AuthorListView.class, presenter::get);
     }
@@ -90,5 +98,9 @@ public class MvpTestModule {
 
     @Provides MvpConfig<PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
         return MvpConfig.create(PostDetailView.class, presenter::get);
+    }
+
+    @Provides MvpConfig<TweetListView, TweetListPresenter> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
+        return MvpConfig.create(TweetListView.class, presenter::get);
     }
 }

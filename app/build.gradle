@@ -38,6 +38,10 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "CONSUMER_KEY", project.oauth_consumerKey
+        buildConfigField "String", "CONSUMER_SECRET", project.oauth_consumerSecret
+        buildConfigField "String", "ACCESS_TOKEN", project.oauth_accessToken
+        buildConfigField "String", "ACCESS_TOKEN_SECRET", project.oauth_accessTokenSecret
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
     buildTypes {
