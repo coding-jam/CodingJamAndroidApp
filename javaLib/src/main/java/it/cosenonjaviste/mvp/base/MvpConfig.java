@@ -2,13 +2,13 @@ package it.cosenonjaviste.mvp.base;
 
 import rx.functions.Func0;
 
-public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
+public class MvpConfig<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
 
     private Class<? extends V> viewClass;
 
     private Func0<P> presenterFactory;
 
-    public static <M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> MvpConfig<M, V, P> create(Class<? extends V> viewClass, Func0<P> presenterFactory) {
+    public static <M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> MvpConfig<V, P> create(Class<? extends V> viewClass, Func0<P> presenterFactory) {
         return new MvpConfig<>(viewClass, presenterFactory);
     }
 
@@ -29,20 +29,20 @@ public class MvpConfig<M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> {
         return createAndInitPresenter(contextBinder, null, null, args);
     }
 
-    public P createAndInitPresenter(ContextBinder contextBinder, M restoredModel, P restoredpresenter, PresenterArgs args) {
+    public <M> P createAndInitPresenter(ContextBinder contextBinder, M restoredModel, P restoredPresenter, PresenterArgs args) {
         P presenter;
-        if (restoredpresenter == null) {
+        if (restoredPresenter == null) {
             presenter = createPresenter();
         } else {
-            presenter = restoredpresenter;
+            presenter = restoredPresenter;
         }
         M model;
         if (restoredModel != null) {
             model = restoredModel;
         } else {
-            model = presenter.createModel(args != null ? args : PresenterArgs.EMPTY);
+            model = (M) presenter.createModel(args != null ? args : PresenterArgs.EMPTY);
         }
-        presenter.init(contextBinder, model);
+        ((RxMvpPresenter) presenter).init(contextBinder, model);
         return presenter;
     }
 

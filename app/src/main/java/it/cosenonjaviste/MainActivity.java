@@ -24,9 +24,6 @@ import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
-import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
@@ -47,11 +44,11 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @Inject MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> postListMvpConfig;
+    @Inject MvpConfig<PostListView, PostListPresenter> postListMvpConfig;
 
-    @Inject MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> authorListMvpConfig;
+    @Inject MvpConfig<AuthorListView, AuthorListPresenter> authorListMvpConfig;
 
-    @Inject MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> categoryListMvpConfig;
+    @Inject MvpConfig<CategoryListView, CategoryListPresenter> categoryListMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         if (fragment == null) {
-            MvpConfig<?, ?, ?> config = getMvpConfig(position);
+            MvpConfig<?, ?> config = getMvpConfig(position);
             fragment = new ActivityContextBinder(this).createView(config, null);
         }
 
@@ -102,19 +99,15 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.closeDrawer(mDrawerMenu);
     }
 
-    private MvpConfig<?, ?, ?> getMvpConfig(int position) {
-        MvpConfig<?, ?, ?> config;
+    private MvpConfig<?, ?> getMvpConfig(int position) {
         switch (position) {
             case 1:
-                config = categoryListMvpConfig;
-                break;
+                return categoryListMvpConfig;
             case 2:
-                config = authorListMvpConfig;
-                break;
+                return authorListMvpConfig;
             default:
-                config = postListMvpConfig;
+                return postListMvpConfig;
         }
-        return config;
     }
 
     private void replaceFragmentInContainer(Fragment fragment) {

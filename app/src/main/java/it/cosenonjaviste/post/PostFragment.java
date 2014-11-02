@@ -28,9 +28,9 @@ public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Po
 
     private PostAdapter adapter;
 
-    @Inject MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> config;
+    @Inject MvpConfig<PostListView, PostListPresenter> config;
 
-    @Override public MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> getConfig() {
+    @Override public MvpConfig<PostListView, PostListPresenter> getConfig() {
         return config;
     }
 

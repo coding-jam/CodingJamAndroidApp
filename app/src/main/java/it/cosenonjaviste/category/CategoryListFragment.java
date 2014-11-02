@@ -27,9 +27,9 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
 
     private CategoryAdapter adapter;
 
-    @Inject MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> config;
+    @Inject MvpConfig<CategoryListView, CategoryListPresenter> config;
 
-    @Override public MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> getConfig() {
+    @Override public MvpConfig<CategoryListView, CategoryListPresenter> getConfig() {
         return config;
     }
 

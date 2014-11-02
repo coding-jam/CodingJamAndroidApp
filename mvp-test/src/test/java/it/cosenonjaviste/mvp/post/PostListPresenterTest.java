@@ -27,7 +27,7 @@ public class PostListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject MvpConfig<OptionalList<Post>, PostListView, PostListPresenter> config;
+    @Inject MvpConfig<PostListView, PostListPresenter> config;
 
     @Mock PostListView view;
 
@@ -70,13 +70,6 @@ public class PostListPresenterTest {
 
     @Module(injects = {PostListPresenterTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-//        @Provides PostListView providePostListView() {
-//            return mock(PostListView.class);
-//        }
-//
-//        @Provides PostDetailView providePostDetailView() {
-//            return mock(PostDetailView.class);
-//        }
     }
 
     @After public void shutdownServer() throws IOException {

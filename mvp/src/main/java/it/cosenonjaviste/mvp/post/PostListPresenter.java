@@ -21,7 +21,7 @@ public class PostListPresenter extends ListPresenter<Post> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject MvpConfig<PostDetailModel, PostDetailView, PostDetailPresenter> postDetailMvpConfig;
+    @Inject MvpConfig<PostDetailView, PostDetailPresenter> postDetailMvpConfig;
 
     @Override public OptionalList<Post> createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();

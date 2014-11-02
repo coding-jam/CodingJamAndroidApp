@@ -25,7 +25,7 @@ public class CategoryListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject MvpConfig<OptionalList<Category>, CategoryListView, CategoryListPresenter> config;
+    @Inject MvpConfig<CategoryListView, CategoryListPresenter> config;
 
     @Inject CategoryListView view;
 

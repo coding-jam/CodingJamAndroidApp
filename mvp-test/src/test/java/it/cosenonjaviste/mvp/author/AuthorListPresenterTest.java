@@ -27,7 +27,7 @@ public class AuthorListPresenterTest {
 
     @Inject MockWebServer server;
 
-    @Inject MvpConfig<OptionalList<Author>, AuthorListView, AuthorListPresenter> config;
+    @Inject MvpConfig<AuthorListView, AuthorListPresenter> config;
 
     @Inject AuthorListView view;
 

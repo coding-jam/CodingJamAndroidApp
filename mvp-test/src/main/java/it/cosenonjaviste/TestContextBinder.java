@@ -25,11 +25,11 @@ public class TestContextBinder extends ContextBinder {
         return observable;
     }
 
-    @Override public void startNewActivity(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+    @Override public void startNewActivity(MvpConfig<?, ?> config, PresenterArgs args) {
         createView(config, args);
     }
 
-    @Override public <T> T createView(MvpConfig<?, ?, ?> config, PresenterArgs args) {
+    @Override public <T> T createView(MvpConfig<?, ?> config, PresenterArgs args) {
         Class<? extends RxMvpView<?>> viewClass = config.createView();
         RxMvpPresenter<?> presenter = config.createAndInitPresenter(this, args);
 
