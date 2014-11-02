@@ -30,7 +30,7 @@ import it.cosenonjaviste.mvp.post.PostListView;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library = true, overrides = true, injects = TestContextBinder.class)
+@Module(library = true, overrides = true)
 public class MvpTestModule {
 
     private boolean initInBackgroundThread;

@@ -19,7 +19,6 @@ public class TestContextBinder extends ContextBinder {
     public TestContextBinder(Object testObject, Object... modules) {
         ObjectGraph objectGraph = ObjectGraph.create(modules);
         objectGraph.inject(testObject);
-        objectGraph.inject(this);
     }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
