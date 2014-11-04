@@ -88,6 +88,4 @@ dependencies {
         exclude group: 'com.squareup.dagger'
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
-    compile project(':mvp-test')
-    compile project(':javaLib')
 }
