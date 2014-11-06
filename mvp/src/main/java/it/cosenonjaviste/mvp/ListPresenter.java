@@ -14,9 +14,7 @@ public abstract class ListPresenter<I> extends RxMvpPresenter<OptionalList<I>> {
         return (RxMvpListView<I>) super.getView();
     }
 
-    public void loadData(int page) {
-        Observable<List<I>> observable = getObservable(page);
-
+    protected void subscribeListObservable(Observable<List<I>> observable) {
         subscribePausable(observable,
                 () -> getView().startLoading(),
                 posts -> {
@@ -31,6 +29,4 @@ public abstract class ListPresenter<I> extends RxMvpPresenter<OptionalList<I>> {
     public OptionalList<I> createModel(PresenterArgs args) {
         return new OptionalList<>();
     }
-
-    protected abstract Observable<List<I>> getObservable(int page);
 }

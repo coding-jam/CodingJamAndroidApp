@@ -13,7 +13,9 @@ public class TweetListPresenter extends ListPresenter<Tweet> {
 
     @Inject TwitterService twitterService;
 
-    @Override protected Observable<List<Tweet>> getObservable(int page) {
-        return twitterService.loadTweets();
+    public void reloadData() {
+        Observable<List<Tweet>> observable = twitterService.loadTweets();
+
+        subscribeListObservable(observable);
     }
 }

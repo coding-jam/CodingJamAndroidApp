@@ -19,8 +19,12 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     @Inject MvpConfig<PostListView, PostListPresenter> postListMvpConfig;
 
-    @Override protected Observable<List<Category>> getObservable(int page) {
-        return wordPressService.listCategories().map(CategoryResponse::getCategories);
+    public void loadData() {
+        Observable<List<Category>> observable = wordPressService
+                .listCategories()
+                .map(CategoryResponse::getCategories);
+
+        subscribeListObservable(observable);
     }
 
     public void goToPosts(int position) {

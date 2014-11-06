@@ -40,14 +40,14 @@ public class PostListPresenterTest extends PresenterTest<PostListView, PostListP
 
     @Test
     public void testLoad() {
-        presenter.loadData(0);
+        presenter.reloadData();
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(1);
     }
 
     @Test
     public void testGoToDetails() {
-        presenter.loadData(0);
+        presenter.reloadData();
         OptionalList<Post> model = presenter.getModel();
         Post firstPost = model.get(0);
 

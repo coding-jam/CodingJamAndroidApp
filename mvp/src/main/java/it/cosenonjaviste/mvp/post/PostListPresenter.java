@@ -29,8 +29,12 @@ public class PostListPresenter extends ListPresenter<Post> {
         return postListModel;
     }
 
-    @Override protected Observable<List<Post>> getObservable(int page) {
-        return wordPressService.listPosts(page).map(PostResponse::getPosts);
+    public void reloadData() {
+        Observable<List<Post>> observable = wordPressService
+                .listPosts(0)
+                .map(PostResponse::getPosts);
+
+        subscribeListObservable(observable);
     }
 
     public void goToDetail(Post item) {

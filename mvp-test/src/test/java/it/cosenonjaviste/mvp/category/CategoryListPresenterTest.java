@@ -38,7 +38,7 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
 
     @Test
     public void testLoad() {
-        presenter.loadData(0);
+        presenter.loadData();
         OptionalList<Category> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(0);
@@ -49,7 +49,7 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
 
     @Test
     public void testGoToPosts() {
-        presenter.loadData(0);
+        presenter.loadData();
         presenter.goToPosts(1);
         PostListModel model = getLastModel();
         assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));

@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.base.BaseFragmentTest;
-import it.cosenonjaviste.post.PostFragment;
+import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
@@ -15,7 +15,7 @@ public class PostListTest extends BaseFragmentTest {
     @Inject MockWebServer server;
 
     public PostListTest() {
-        super(PostFragment.class, true);
+        super(PostListFragment.class, true);
     }
 
     @Override protected Object[] getTestModules() {

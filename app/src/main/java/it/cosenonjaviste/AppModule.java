@@ -25,7 +25,7 @@ import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 import it.cosenonjaviste.post.PostDetailFragment;
-import it.cosenonjaviste.post.PostFragment;
+import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
@@ -34,7 +34,7 @@ import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         MainActivity.class,
-        PostFragment.class,
+        PostListFragment.class,
         PostDetailFragment.class,
         AuthorListFragment.class,
         CategoryListFragment.class,
@@ -74,7 +74,7 @@ public class AppModule {
     }
 
     @Provides MvpConfig<PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return MvpConfig.create(PostFragment.class, presenter::get);
+        return MvpConfig.create(PostListFragment.class, presenter::get);
     }
 
     @Provides MvpConfig<PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {

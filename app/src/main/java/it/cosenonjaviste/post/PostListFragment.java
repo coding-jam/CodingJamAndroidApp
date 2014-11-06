@@ -3,6 +3,7 @@ package it.cosenonjaviste.post;
 import android.annotation.SuppressLint;
 import android.view.View;
 
+import com.quentindommerc.superlistview.OnMoreListener;
 import com.quentindommerc.superlistview.SuperListview;
 
 import org.parceler.ParcelClass;
@@ -23,7 +24,7 @@ import it.cosenonjaviste.mvp.post.PostListView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
-public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Post>> implements PostListView {
+public class PostListFragment extends CnjFragment<PostListPresenter, OptionalList<Post>> implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -44,12 +45,17 @@ public class PostFragment extends CnjFragment<PostListPresenter, OptionalList<Po
         adapter = new PostAdapter(getActivity());
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setRefreshListener(() -> presenter.loadData(0));
+        list.setRefreshListener(presenter::reloadData);
         list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
+        list.setupMoreListener(new OnMoreListener() {
+            @Override public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
+                System.out.println(numberOfItems);
+            }
+        }, 1);
     }
 
     @Override protected void loadOnFirstStart() {
-        presenter.loadData(0);
+        presenter.reloadData();
     }
 
     @Override public void update(OptionalList<Post> model) {

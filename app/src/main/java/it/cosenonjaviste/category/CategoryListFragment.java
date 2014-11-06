@@ -46,7 +46,7 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
     }
 
     @Override protected void loadOnFirstStart() {
-        presenter.loadData(0);
+        presenter.loadData();
     }
 
     @Override public void update(OptionalList<Category> model) {

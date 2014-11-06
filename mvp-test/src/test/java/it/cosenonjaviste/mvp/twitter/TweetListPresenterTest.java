@@ -23,7 +23,7 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
     }
 
     @Test public void testLoadTweets() {
-        presenter.loadData(0);
+        presenter.reloadData();
         assertThat(presenter.getModel().isEmpty()).isFalse();
     }
 

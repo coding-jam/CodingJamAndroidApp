@@ -15,11 +15,11 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject WordPressService wordPressService;
 
-    @Override protected Observable<List<Author>> getObservable(int page) {
-        return wordPressService.listAuthors().map(AuthorResponse::getAuthors).doOnNext(Collections::sort);
-    }
-
     public void loadAuthors() {
-        loadData(0);
+        Observable<List<Author>> observable = wordPressService
+                .listAuthors()
+                .map(AuthorResponse::getAuthors)
+                .doOnNext(Collections::sort);
+        subscribeListObservable(observable);
     }
 }

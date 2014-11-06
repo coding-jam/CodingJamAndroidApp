@@ -42,11 +42,11 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, OptionalL
         adapter = new TweetAdapter(getActivity());
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setRefreshListener(() -> presenter.loadData(0));
+        list.setRefreshListener(presenter::reloadData);
     }
 
     @Override protected void loadOnFirstStart() {
-        presenter.loadData(0);
+        presenter.reloadData();
     }
 
     @Override public void update(OptionalList<Tweet> model) {

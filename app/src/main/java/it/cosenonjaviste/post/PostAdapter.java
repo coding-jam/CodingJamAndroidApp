@@ -55,7 +55,7 @@ public class PostAdapter extends BaseAdapter {
         }
         RowWrapper rowWrapper = (RowWrapper) convertView.getTag();
         Post post = getItem(position);
-        rowWrapper.title.setText(post.getTitle());
+        rowWrapper.title.setText(Html.fromHtml(post.getTitle()));
         String excerpt = post.getExcerpt() != null ? post.getExcerpt() : "";
         rowWrapper.text.setText(Html.fromHtml(excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "")));
         rowWrapper.author.setText(post.getAuthor().getName());
