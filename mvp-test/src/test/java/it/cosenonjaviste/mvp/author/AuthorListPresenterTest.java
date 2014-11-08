@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthorListPresenterTest extends PresenterTest<AuthorListView, AuthorListPresenter> {
 
-    @Inject MvpConfig<AuthorListView, AuthorListPresenter> config;
+    @Inject MvpConfig<AuthorListView> config;
 
     @Inject MockWebServerWrapper server;
 
-    @Override protected MvpConfig<AuthorListView, AuthorListPresenter> getConfig() {
+    @Override protected MvpConfig<AuthorListView> getConfig() {
         return config;
     }
 

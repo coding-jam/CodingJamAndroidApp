@@ -23,7 +23,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject MvpConfig<PostDetailView, PostDetailPresenter> postDetailMvpConfig;
+    @Inject MvpConfig<PostDetailView> postDetailMvpConfig;
 
     @Override public PostListModel createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();

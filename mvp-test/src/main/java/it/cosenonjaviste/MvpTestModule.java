@@ -56,23 +56,23 @@ public class MvpTestModule {
         return twitterServiceStub;
     }
 
-    @Provides MvpConfig<AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
+    @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return MvpConfig.create(AuthorListView.class, presenter::get);
     }
 
-    @Provides MvpConfig<CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
+    @Provides MvpConfig<CategoryListView> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
         return MvpConfig.create(CategoryListView.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
+    @Provides MvpConfig<PostListView> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
         return MvpConfig.create(PostListView.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
+    @Provides MvpConfig<PostDetailView> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
         return MvpConfig.create(PostDetailView.class, presenter::get);
     }
 
-    @Provides MvpConfig<TweetListView, TweetListPresenter> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
+    @Provides MvpConfig<TweetListView> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
         return MvpConfig.create(TweetListView.class, presenter::get);
     }
 }

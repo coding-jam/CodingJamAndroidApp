@@ -24,16 +24,12 @@ import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
-import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
-import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 
 @ParcelClasses({
@@ -46,13 +42,13 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @Inject MvpConfig<PostListView, PostListPresenter> postListMvpConfig;
+    @Inject MvpConfig<PostListView> postListMvpConfig;
 
-    @Inject MvpConfig<AuthorListView, AuthorListPresenter> authorListMvpConfig;
+    @Inject MvpConfig<AuthorListView> authorListMvpConfig;
 
-    @Inject MvpConfig<CategoryListView, CategoryListPresenter> categoryListMvpConfig;
+    @Inject MvpConfig<CategoryListView> categoryListMvpConfig;
 
-    @Inject MvpConfig<TweetListView, TweetListPresenter> tweetListMvpConfig;
+    @Inject MvpConfig<TweetListView> tweetListMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         if (fragment == null) {
-            MvpConfig<?, ?> config = getMvpConfig(position);
+            MvpConfig<?> config = getMvpConfig(position);
             fragment = new ActivityContextBinder(this).createView(config, null);
         }
 
@@ -103,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.closeDrawer(mDrawerMenu);
     }
 
-    private MvpConfig<?, ?> getMvpConfig(int position) {
+    private MvpConfig<?> getMvpConfig(int position) {
         switch (position) {
             case 1:
                 return categoryListMvpConfig;

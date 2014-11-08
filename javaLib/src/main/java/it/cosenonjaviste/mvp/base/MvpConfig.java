@@ -2,17 +2,17 @@ package it.cosenonjaviste.mvp.base;
 
 import rx.functions.Func0;
 
-public class MvpConfig<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
+public class MvpConfig<V extends RxMvpView<?>> {
 
     private Class<? extends V> viewClass;
 
-    private Func0<P> presenterFactory;
+    private Func0<? extends RxMvpPresenter<?>> presenterFactory;
 
-    public static <M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> MvpConfig<V, P> create(Class<? extends V> viewClass, Func0<P> presenterFactory) {
+    public static <M, V extends RxMvpView<M>, P extends RxMvpPresenter<M>> MvpConfig<V> create(Class<? extends V> viewClass, Func0<P> presenterFactory) {
         return new MvpConfig<>(viewClass, presenterFactory);
     }
 
-    private MvpConfig(Class<? extends V> viewClass, Func0<P> presenterFactory) {
+    private MvpConfig(Class<? extends V> viewClass, Func0<? extends RxMvpPresenter<?>> presenterFactory) {
         this.viewClass = viewClass;
         this.presenterFactory = presenterFactory;
     }
@@ -21,18 +21,18 @@ public class MvpConfig<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
         return viewClass;
     }
 
-    protected P createPresenter() {
+    protected RxMvpPresenter<?> createPresenter() {
         return presenterFactory.call();
     }
 
-    public P createAndInitPresenter(ContextBinder contextBinder, PresenterArgs args) {
+    public <P extends RxMvpPresenter<?>> P createAndInitPresenter(ContextBinder contextBinder, PresenterArgs args) {
         return createAndInitPresenter(contextBinder, null, null, args);
     }
 
-    public <M> P createAndInitPresenter(ContextBinder contextBinder, M restoredModel, P restoredPresenter, PresenterArgs args) {
+    public <M, P extends RxMvpPresenter<?>> P createAndInitPresenter(ContextBinder contextBinder, M restoredModel, P restoredPresenter, PresenterArgs args) {
         P presenter;
         if (restoredPresenter == null) {
-            presenter = createPresenter();
+            presenter = (P) createPresenter();
         } else {
             presenter = restoredPresenter;
         }

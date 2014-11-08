@@ -13,9 +13,9 @@ import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public abstract class PostListPresenterBaseTest extends PresenterTest<PostListView, PostListPresenter> {
     @Inject MockWebServerWrapper server;
-    @Inject MvpConfig<PostListView, PostListPresenter> config;
+    @Inject MvpConfig<PostListView> config;
 
-    @Override public MvpConfig<PostListView, PostListPresenter> getConfig() {
+    @Override public MvpConfig<PostListView> getConfig() {
         return config;
     }
 

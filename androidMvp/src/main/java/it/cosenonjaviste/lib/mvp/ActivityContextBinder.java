@@ -41,14 +41,14 @@ public class ActivityContextBinder extends ContextBinder {
         return background(activity, observable);
     }
 
-    @Override public void startNewActivity(MvpConfig<?, ?> config, PresenterArgs args) {
+    @Override public void startNewActivity(MvpConfig<?> config, PresenterArgs args) {
         Intent intent = SingleFragmentActivity.createIntent(activity, config.createView());
         Bundle bundle = createArgs(args);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
 
-    @Override public <T> T createView(MvpConfig<?, ?> config, PresenterArgs args) {
+    @Override public <T> T createView(MvpConfig<?> config, PresenterArgs args) {
         Class<? extends RxMvpView<?>> viewClass = config.createView();
         Fragment fragment = Fragment.instantiate(activity, viewClass.getName());
         Bundle bundle = createArgs(args);

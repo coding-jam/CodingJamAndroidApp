@@ -17,7 +17,7 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject MvpConfig<PostListView, PostListPresenter> postListMvpConfig;
+    @Inject MvpConfig<PostListView> postListMvpConfig;
 
     public void loadData() {
         Observable<List<Category>> observable = wordPressService

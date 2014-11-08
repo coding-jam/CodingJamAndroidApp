@@ -34,7 +34,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     protected void initAfterInject() {
     }
 
-    protected abstract MvpConfig<V, P> getConfig();
+    protected abstract MvpConfig<V> getConfig();
 
     protected abstract Object getTestModule();
 

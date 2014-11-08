@@ -61,5 +61,5 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         super.onStop();
     }
 
-    protected abstract MvpConfig<? extends RxMvpView<M>, P> getConfig();
+    protected abstract MvpConfig<? extends RxMvpView<M>> getConfig();
 }

@@ -27,9 +27,9 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, OptionalL
 
     private TweetAdapter adapter;
 
-    @Inject MvpConfig<TweetListView, TweetListPresenter> config;
+    @Inject MvpConfig<TweetListView> config;
 
-    @Override public MvpConfig<TweetListView, TweetListPresenter> getConfig() {
+    @Override public MvpConfig<TweetListView> getConfig() {
         return config;
     }
 

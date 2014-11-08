@@ -30,9 +30,9 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
 
     @InjectView(R.id.progress) View progressBar;
 
-    @Inject MvpConfig<PostDetailView, PostDetailPresenter> config;
+    @Inject MvpConfig<PostDetailView> config;
 
-    @Override public MvpConfig<PostDetailView, PostDetailPresenter> getConfig() {
+    @Override public MvpConfig<PostDetailView> getConfig() {
         return config;
     }
 

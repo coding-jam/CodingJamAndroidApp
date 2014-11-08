@@ -65,23 +65,23 @@ public class AppModule {
         return new Twitter4JService();
     }
 
-    @Provides MvpConfig<AuthorListView, AuthorListPresenter> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
+    @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
         return MvpConfig.create(AuthorListFragment.class, presenter::get);
     }
 
-    @Provides MvpConfig<CategoryListView, CategoryListPresenter> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
+    @Provides MvpConfig<CategoryListView> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
         return MvpConfig.create(CategoryListFragment.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostListView, PostListPresenter> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
+    @Provides MvpConfig<PostListView> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
         return MvpConfig.create(PostListFragment.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostDetailView, PostDetailPresenter> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
+    @Provides MvpConfig<PostDetailView> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
         return MvpConfig.create(PostDetailFragment.class, presenter::get);
     }
 
-    @Provides MvpConfig<TweetListView, TweetListPresenter> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
+    @Provides MvpConfig<TweetListView> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
         return MvpConfig.create(TweetListFragment.class, presenter::get);
     }
 }

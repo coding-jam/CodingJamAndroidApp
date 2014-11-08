@@ -12,9 +12,9 @@ import it.cosenonjaviste.mvp.base.MvpConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetListPresenter> {
-    @Inject MvpConfig<TweetListView, TweetListPresenter> config;
+    @Inject MvpConfig<TweetListView> config;
 
-    @Override public MvpConfig<TweetListView, TweetListPresenter> getConfig() {
+    @Override public MvpConfig<TweetListView> getConfig() {
         return config;
     }
 

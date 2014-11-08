@@ -28,9 +28,9 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
 
     private PostAdapter adapter;
 
-    @Inject MvpConfig<PostListView, PostListPresenter> config;
+    @Inject MvpConfig<PostListView> config;
 
-    @Override public MvpConfig<PostListView, PostListPresenter> getConfig() {
+    @Override public MvpConfig<PostListView> getConfig() {
         return config;
     }
 

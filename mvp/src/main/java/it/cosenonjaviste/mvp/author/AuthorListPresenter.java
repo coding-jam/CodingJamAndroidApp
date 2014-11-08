@@ -18,7 +18,7 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject MvpConfig<PostListView, PostListPresenter> postListMvpConfig;
+    @Inject MvpConfig<PostListView> postListMvpConfig;
 
     public void loadAuthors() {
         Observable<List<Author>> observable = wordPressService

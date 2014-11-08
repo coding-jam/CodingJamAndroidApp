@@ -23,9 +23,9 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     private AuthorAdapter adapter;
 
-    @Inject MvpConfig<AuthorListView, AuthorListPresenter> config;
+    @Inject MvpConfig<AuthorListView> config;
 
-    @Override public MvpConfig<AuthorListView, AuthorListPresenter> getConfig() {
+    @Override public MvpConfig<AuthorListView> getConfig() {
         return config;
     }
 
