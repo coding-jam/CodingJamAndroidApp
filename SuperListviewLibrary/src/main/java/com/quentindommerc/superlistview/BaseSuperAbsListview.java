@@ -373,4 +373,8 @@ public abstract class BaseSuperAbsListview extends FrameLayout implements AbsLis
     public void setOnTouchListener(OnTouchListener listener) {
         mList.setOnTouchListener(listener);
     }
+
+    public void setRefreshing(boolean refreshing) {
+        mPtrLayout.setRefreshing(refreshing);
+    }
 }
