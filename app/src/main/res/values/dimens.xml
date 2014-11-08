@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actionbar_home_width">60dp</dimen>
-    <dimen name="shadow_width">15dp</dimen>
     <dimen name="author_image_size">48dp</dimen>
     <dimen name="author_image_size_big">64dp</dimen>
     <dimen name="author_image_border">2dp</dimen>

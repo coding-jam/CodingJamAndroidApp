@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, CoseNonJavisteActivity!</string>
     <string name="app_name">CoseNonJaviste</string>
     <string name="loading_">Loading...</string>
     <string name="download_error">Download error</string>
