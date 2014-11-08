@@ -178,7 +178,6 @@ public abstract class BaseSuperAbsListview extends FrameLayout implements AbsLis
                 } else if (mEmptyId != 0) {
                     mEmpty.setVisibility(View.GONE);
                 }
-                mMoreItemsAvailable = true;
             }
         });
         if ((adapter == null || adapter.getCount() == 0) && mEmptyId != 0) {
@@ -351,12 +350,14 @@ public abstract class BaseSuperAbsListview extends FrameLayout implements AbsLis
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
-        if (((totalItemCount - firstVisibleItem - visibleItemCount) == ITEM_LEFT_TO_LOAD_MORE || (totalItemCount - firstVisibleItem - visibleItemCount) == 0 && totalItemCount > visibleItemCount) && !isLoadingMore && mMoreItemsAvailable) {
-            isLoadingMore = true;
-            if (mOnMoreListener != null) {
-                showMoreProgress();
-                mOnMoreListener.onMoreAsked(mList.getAdapter().getCount(), ITEM_LEFT_TO_LOAD_MORE, firstVisibleItem);
+        if (!isLoadingMore && mMoreItemsAvailable) {
+            if (((totalItemCount - firstVisibleItem - visibleItemCount) == ITEM_LEFT_TO_LOAD_MORE || (totalItemCount - firstVisibleItem - visibleItemCount) == 0 && totalItemCount > visibleItemCount)) {
+                isLoadingMore = true;
+                if (mOnMoreListener != null) {
+                    showMoreProgress();
+                    mOnMoreListener.onMoreAsked(mList.getAdapter().getCount(), ITEM_LEFT_TO_LOAD_MORE, firstVisibleItem);
 
+                }
             }
         }
         if(mOnScrollListener != null) mOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);

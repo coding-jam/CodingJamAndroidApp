@@ -29,9 +29,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void reloadData() {
-        Observable<List<Post>> observable = wordPressService
-                .listPosts(0)
-                .map(PostResponse::getPosts);
+        Observable<List<Post>> observable = getObservable(0);
 
         subscribePausable(observable,
                 () -> getView().startLoading(model.isEmpty()),
@@ -56,9 +54,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void loadNextPage() {
-        Observable<List<Post>> observable = wordPressService
-                .listPosts(calcNextPage(model.size(), WordPressService.POST_PAGE_SIZE))
-                .map(PostResponse::getPosts);
+        int page = calcNextPage(model.size(), WordPressService.POST_PAGE_SIZE);
+        Observable<List<Post>> observable = getObservable(page);
 
         subscribePausable(observable,
                 () -> getView().startMoreItemsLoading(),
@@ -70,6 +67,17 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
                     model.error(throwable);
                     view.update(model);
                 });
+    }
+
+    private Observable<List<Post>> getObservable(int page) {
+        Observable<PostResponse> observable;
+        Category category = model.getCategory();
+        if (category == null) {
+            observable = wordPressService.listPosts(page);
+        } else {
+            observable = wordPressService.listCategoryPosts(category.getId(), page);
+        }
+        return observable.map(PostResponse::getPosts);
     }
 
     public static int calcNextPage(int size, int pageSize) {

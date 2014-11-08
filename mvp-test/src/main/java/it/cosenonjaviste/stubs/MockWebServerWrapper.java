@@ -6,6 +6,7 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,6 +15,8 @@ import rx.functions.Func1;
 public class MockWebServerWrapper {
 
     private final MockWebServer server;
+
+    private LinkedList<RecordedRequest> requests = new LinkedList<>();
 
     public MockWebServerWrapper() {
         server = new MockWebServer();
@@ -31,6 +34,7 @@ public class MockWebServerWrapper {
     public void initDispatcher(final Func1<RecordedRequest, MockResponse> func) {
         server.setDispatcher(new Dispatcher() {
             @Override public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                requests.add(request);
                 return func.call(request);
             }
         });
@@ -59,5 +63,13 @@ public class MockWebServerWrapper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int getRequestCount() {
+        return requests.size();
+    }
+
+    public String getLastUrl() {
+        return requests.getLast().getPath();
     }
 }

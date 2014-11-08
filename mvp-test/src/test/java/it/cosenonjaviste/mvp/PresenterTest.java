@@ -5,6 +5,7 @@ import org.junit.Before;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 
@@ -14,7 +15,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     protected P presenter;
 
-    private TestContextBinder contextBinder;
+    protected TestContextBinder contextBinder;
 
     @Before
     public void setup() {
@@ -22,8 +23,12 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
         initAfterInject();
 
-        view = contextBinder.createView(getConfig(), null);
+        view = contextBinder.createView(getConfig(), getArgs());
         presenter = contextBinder.getLastPresenter();
+    }
+
+    protected PresenterArgs getArgs() {
+        return null;
     }
 
     protected void initAfterInject() {

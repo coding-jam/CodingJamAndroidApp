@@ -10,6 +10,15 @@ public class Category {
     @SerializedName("post_count")
     int postCount;
 
+    public Category() {
+    }
+
+    public Category(long id, String title, int postCount) {
+        this.id = id;
+        this.title = title;
+        this.postCount = postCount;
+    }
+
     public long getId() {
         return id;
     }

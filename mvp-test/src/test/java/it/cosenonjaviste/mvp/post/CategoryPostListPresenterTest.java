@@ -4,16 +4,23 @@ import org.junit.Test;
 
 import dagger.Module;
 import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PostListPresenterTest extends PostListPresenterBaseTest {
+public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
 
     @Override protected Object getTestModule() {
         return new TestModule();
+    }
+
+    @Override protected PresenterArgs getArgs() {
+        return PostListPresenter.open(contextBinder, new Category(1, "cat", 10));
     }
 
     @Test
@@ -22,9 +29,8 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
-        System.out.println(lastUrl);
-//        int requestCount = server.getRequestCount();
-//        System.out.println(recordedRequest);
+        assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
+        assertThat(lastUrl).contains("id=1");
     }
 
     @Test
@@ -35,24 +41,12 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         presenter.loadNextPage();
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(25);
+        String lastUrl = server.getLastUrl();
+        assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
+        assertThat(lastUrl).contains("id=1");
     }
 
-    @Test
-    public void testGoToDetails() {
-        presenter.reloadData();
-        OptionalList<Post> model = presenter.getModel();
-        Post firstPost = model.get(0);
-
-        presenter.goToDetail(firstPost);
-
-        PostDetailModel detailModel = getLastModel();
-        Post detailPost = detailModel.getPost();
-
-        assertThat(detailPost).isNotNull();
-        assertThat(detailPost.getId()).isEqualTo(firstPost.getId());
-    }
-
-    @Module(injects = {PostListPresenterTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {CategoryPostListPresenterTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
     }
 
