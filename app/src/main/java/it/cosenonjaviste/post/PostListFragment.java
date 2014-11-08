@@ -3,7 +3,6 @@ package it.cosenonjaviste.post;
 import android.annotation.SuppressLint;
 import android.view.View;
 
-import com.quentindommerc.superlistview.OnMoreListener;
 import com.quentindommerc.superlistview.SuperListview;
 
 import org.parceler.ParcelClass;
@@ -17,14 +16,13 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.MvpConfig;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
-public class PostListFragment extends CnjFragment<PostListPresenter, OptionalList<Post>> implements PostListView {
+public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -47,21 +45,18 @@ public class PostListFragment extends CnjFragment<PostListPresenter, OptionalLis
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         list.setRefreshListener(presenter::reloadData);
         list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
-        list.setupMoreListener(new OnMoreListener() {
-            @Override public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
-                System.out.println(numberOfItems);
-            }
-        }, 1);
+        list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
     }
 
     @Override protected void loadOnFirstStart() {
         presenter.reloadData();
     }
 
-    @Override public void update(OptionalList<Post> model) {
+    @Override public void update(PostListModel model) {
         model.call(
                 posts -> {
                     list.showList();
+                    list.hideMoreProgress(model.isMoreDataAvailable());
                     adapter.reloadData(posts);
                 }
         ).whenError(
@@ -71,7 +66,15 @@ public class PostListFragment extends CnjFragment<PostListPresenter, OptionalLis
         );
     }
 
-    @Override public void startLoading() {
-        list.showProgress();
+    @Override public void startLoading(boolean showMainLoading) {
+        if (showMainLoading) {
+            list.showProgress();
+        } else {
+            list.setRefreshing(true);
+        }
+    }
+
+    @Override public void startMoreItemsLoading() {
+        list.showMoreProgress();
     }
 }

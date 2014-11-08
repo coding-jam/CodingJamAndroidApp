@@ -7,8 +7,8 @@ public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
 
     public void subscribe(RxMvpView<M> view) {
         this.view = view;
-        pausableSubscriptions.resume();
         view.update(model);
+        pausableSubscriptions.resume();
     }
 
     @Override public void pause() {

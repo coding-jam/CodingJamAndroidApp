@@ -29,7 +29,7 @@ public class WordPressServiceTest {
     @Before
     public void init() throws IOException {
         ObjectGraph.create(new MvpTestModule(), new TestModule()).inject(this);
-        MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
+        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(1));
     }
 
     @Test

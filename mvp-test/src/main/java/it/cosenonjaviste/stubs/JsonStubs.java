@@ -1,13 +1,7 @@
 package it.cosenonjaviste.stubs;
 
 public class JsonStubs {
-    public static final String POSTS = "{\n" +
-            "status: \"ok\",\n" +
-            "count: 6,\n" +
-            "count_total: 183,\n" +
-            "pages: 31,\n" +
-            "posts: [\n" +
-            "{\n" +
+    private static final String SINGLE_POST = "{\n" +
             "id: 11213,\n" +
             "type: \"post\",\n" +
             "slug: \"decorator-patten-corretto-lambda-con-java-8\",\n" +
@@ -57,9 +51,29 @@ public class JsonStubs {
             "comment_count: 0,\n" +
             "comment_status: \"open\",\n" +
             "custom_fields: {}\n" +
-            "}\n" +
+            "}\n";
+
+
+    private static final String POSTS = "{\n" +
+            "status: \"ok\",\n" +
+            "count: 6,\n" +
+            "count_total: 183,\n" +
+            "pages: 31,\n" +
+            "posts: [\n" +
+            "%s" +
             "]\n" +
             "}";
+
+    public static String getPostList(int numberOfPost) {
+        StringBuffer b = new StringBuffer();
+        for (int i = 0; i < numberOfPost; i++) {
+            if (i > 0) {
+                b.append(',');
+            }
+            b.append(SINGLE_POST);
+        }
+        return String.format(POSTS, b.toString());
+    }
 
     public static final String AUTHORS = "{\n" +
             "status: \"ok\",\n" +

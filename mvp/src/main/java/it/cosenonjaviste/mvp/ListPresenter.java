@@ -15,10 +15,18 @@ public abstract class ListPresenter<I> extends RxMvpPresenter<OptionalList<I>> {
     }
 
     protected void subscribeListObservable(Observable<List<I>> observable) {
+        subscribeListObservable(observable, false);
+    }
+
+    protected void subscribeListObservable(Observable<List<I>> observable, boolean appendData) {
         subscribePausable(observable,
                 () -> getView().startLoading(),
                 posts -> {
-                    model.done(posts);
+                    if (appendData) {
+                        model.append(posts);
+                    } else {
+                        model.done(posts);
+                    }
                     view.update(model);
                 }, throwable -> {
                     model.error(throwable);

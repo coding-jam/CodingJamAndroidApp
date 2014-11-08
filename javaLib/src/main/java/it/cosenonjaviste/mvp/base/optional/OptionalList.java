@@ -35,4 +35,9 @@ public class OptionalList<T> extends OptionalItem<List<T>> {
             return null;
         }
     }
+
+    public void append(List<T> object) {
+        throwable = null;
+        this.object.addAll(object);
+    }
 }
