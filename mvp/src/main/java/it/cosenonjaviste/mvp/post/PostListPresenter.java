@@ -13,6 +13,8 @@ import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
@@ -23,7 +25,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject MvpConfig<PostDetailView> postDetailMvpConfig;
+    @Inject MvpConfig<PageView> postDetailMvpConfig;
 
     @Override public PostListModel createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();
@@ -48,7 +50,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PostDetailPresenter.open(contextBinder, postDetailMvpConfig, item);
+        PagePresenter.open(contextBinder, postDetailMvpConfig, item.getUrl());
     }
 
     public static PresenterArgs open(ContextBinder contextBinder, Category category) {

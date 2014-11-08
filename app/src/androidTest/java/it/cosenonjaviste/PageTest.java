@@ -8,18 +8,17 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.base.CnjFragmentTest;
-import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import it.cosenonjaviste.mvp.post.PostDetailUrlManager;
-import it.cosenonjaviste.post.PostDetailFragment;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageUrlManager;
+import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class PostDetailTest extends CnjFragmentTest {
+public class PageTest extends CnjFragmentTest {
 
     @Inject MockWebServerWrapper server;
 
-    public PostDetailTest() {
-        super(PostDetailFragment.class);
+    public PageTest() {
+        super(PageFragment.class);
     }
 
     @Override protected void initAfterInject() {
@@ -32,19 +31,18 @@ public class PostDetailTest extends CnjFragmentTest {
     }
 
     @Override protected Intent createActivityIntent() {
-        Post post = new Post(123, "Title", "url");
-        return createIntent(super.createActivityIntent(), PostDetailPresenter::populateArgs, post);
+        return createIntent(super.createActivityIntent(), PagePresenter::populateArgs, "url");
     }
 
     public void testDetailFragment() {
         showUi();
     }
 
-    @Module(injects = {PostDetailTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {PageTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides @Singleton PostDetailUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
-            return new PostDetailUrlManager() {
-                @Override public String getUrl(Post post) {
+        @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
+            return new PageUrlManager() {
+                @Override public String getUrl(String url) {
                     return server.getUrl(true);
                 }
             };

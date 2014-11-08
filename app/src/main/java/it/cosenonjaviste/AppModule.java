@@ -18,13 +18,13 @@ import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
-import it.cosenonjaviste.post.PostDetailFragment;
+import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.Twitter4JService;
@@ -35,7 +35,7 @@ import retrofit.converter.GsonConverter;
 @Module(injects = {
         MainActivity.class,
         PostListFragment.class,
-        PostDetailFragment.class,
+        PageFragment.class,
         AuthorListFragment.class,
         CategoryListFragment.class,
         TweetListFragment.class
@@ -77,8 +77,8 @@ public class AppModule {
         return MvpConfig.create(PostListFragment.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostDetailView> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return MvpConfig.create(PostDetailFragment.class, presenter::get);
+    @Provides MvpConfig<PageView> providePostDetailMvpConfig(Provider<PagePresenter> presenter) {
+        return MvpConfig.create(PageFragment.class, presenter::get);
     }
 
     @Provides MvpConfig<TweetListView> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {

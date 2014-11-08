@@ -19,20 +19,20 @@ import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.mvp.base.MvpConfig;
-import it.cosenonjaviste.mvp.post.PostDetailModel;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.page.PageModel;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 
-@ParcelClasses({@ParcelClass(PostDetailModel.class)})
-public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDetailModel> implements PostDetailView {
+@ParcelClasses({@ParcelClass(PageModel.class)})
+public class PageFragment extends CnjFragment<PagePresenter, PageModel> implements PageView {
 
     @InjectView(R.id.web_view) WebView webView;
 
     @InjectView(R.id.progress) View progressBar;
 
-    @Inject MvpConfig<PostDetailView> config;
+    @Inject MvpConfig<PageView> config;
 
-    @Override public MvpConfig<PostDetailView> getConfig() {
+    @Override public MvpConfig<PageView> getConfig() {
         return config;
     }
 
@@ -89,7 +89,7 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
         return R.layout.post_detail;
     }
 
-    @Override public void update(PostDetailModel model) {
-        webView.loadUrl(presenter.getPostUrl(model.getPost()));
+    @Override public void update(PageModel model) {
+        webView.loadUrl(presenter.getPostUrl(model.getUrl()));
     }
 }

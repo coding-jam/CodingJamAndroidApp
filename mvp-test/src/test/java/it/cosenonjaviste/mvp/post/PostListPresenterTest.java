@@ -6,6 +6,7 @@ import dagger.Module;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,11 +46,11 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
 
         presenter.goToDetail(firstPost);
 
-        PostDetailModel detailModel = getLastModel();
-        Post detailPost = detailModel.getPost();
+        PageModel detailModel = getLastModel();
+        String url = detailModel.getUrl();
 
-        assertThat(detailPost).isNotNull();
-        assertThat(detailPost.getId()).isEqualTo(firstPost.getId());
+        assertThat(url).isNotNull();
+        assertThat(url).isEqualTo(firstPost.getUrl());
     }
 
     @Module(injects = {PostListPresenterTest.class}, addsTo = MvpTestModule.class)

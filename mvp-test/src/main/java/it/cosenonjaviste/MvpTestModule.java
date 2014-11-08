@@ -14,8 +14,8 @@ import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.post.PostDetailPresenter;
-import it.cosenonjaviste.mvp.post.PostDetailView;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
@@ -68,8 +68,8 @@ public class MvpTestModule {
         return MvpConfig.create(PostListView.class, presenter::get);
     }
 
-    @Provides MvpConfig<PostDetailView> providePostDetailMvpConfig(Provider<PostDetailPresenter> presenter) {
-        return MvpConfig.create(PostDetailView.class, presenter::get);
+    @Provides MvpConfig<PageView> providePostDetailMvpConfig(Provider<PagePresenter> presenter) {
+        return MvpConfig.create(PageView.class, presenter::get);
     }
 
     @Provides MvpConfig<TweetListView> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
