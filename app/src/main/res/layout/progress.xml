@@ -6,11 +6,17 @@
     android:layout_gravity="center"
     android:id="@+id/progress_root">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/progress_in"/>
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@android:style/Widget.ProgressBar.Inverse"
+        android:indeterminateDrawable="@drawable/progress_bar"
         android:layout_centerHorizontal="true"
         android:indeterminate="false"/>
 
