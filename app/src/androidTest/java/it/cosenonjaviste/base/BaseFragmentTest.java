@@ -8,7 +8,7 @@ import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.functions.Action2;
 
-public class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {
+public abstract class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {
     private final Class<? extends RxMvpView<?>> viewClass;
 
     public BaseFragmentTest(Class<? extends RxMvpView<?>> viewClass) {

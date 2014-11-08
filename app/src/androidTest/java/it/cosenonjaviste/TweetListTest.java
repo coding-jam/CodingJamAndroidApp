@@ -1,21 +1,17 @@
 package it.cosenonjaviste;
 
 import dagger.Module;
-import it.cosenonjaviste.base.BaseFragmentTest;
+import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.twitter.TweetListFragment;
 
-public class TweetListTest extends BaseFragmentTest {
+public class TweetListTest extends CnjFragmentTest {
 
     public TweetListTest() {
-        super(TweetListFragment.class, true);
+        super(TweetListFragment.class);
     }
 
-    @Override protected Object[] getTestModules() {
-        return new Object[]{new MvpTestModule(true), new TestModule()};
-    }
-
-    @Override protected void initAfterInject() {
-        super.initAfterInject();
+    @Override protected Object getTestModule() {
+        return new TestModule();
     }
 
     public void testPostList() throws InterruptedException {

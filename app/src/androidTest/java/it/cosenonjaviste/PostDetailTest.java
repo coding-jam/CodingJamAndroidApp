@@ -9,19 +9,19 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.base.BaseFragmentTest;
+import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailUrlManager;
 import it.cosenonjaviste.post.PostDetailFragment;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
-public class PostDetailTest extends BaseFragmentTest {
+public class PostDetailTest extends CnjFragmentTest {
 
     @Inject MockWebServer server;
 
     public PostDetailTest() {
-        super(PostDetailFragment.class, true);
+        super(PostDetailFragment.class);
     }
 
     @Override protected void initAfterInject() {
@@ -29,8 +29,8 @@ public class PostDetailTest extends BaseFragmentTest {
         MockWebServerUtils.initDispatcher(server, "<html><body>CoseNonJaviste</body></html>");
     }
 
-    @Override protected Object[] getTestModules() {
-        return new Object[]{new MvpTestModule(true), new TestModule()};
+    @Override protected Object getTestModule() {
+        return new TestModule();
     }
 
     @Override protected Intent createActivityIntent() {
