@@ -27,8 +27,8 @@ public class CategoryListTest extends BaseFragmentTest {
         MockWebServerUtils.initDispatcher(server, JsonStubs.CATEGORIES);
     }
 
-    public void testPostList() throws InterruptedException {
-        Thread.sleep(20000);
+    public void testCategoryList() throws InterruptedException {
+        showUi();
     }
 
     @Module(injects = {CategoryListTest.class}, addsTo = MvpTestModule.class)

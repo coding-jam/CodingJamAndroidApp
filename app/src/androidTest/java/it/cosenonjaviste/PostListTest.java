@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.base.BaseFragmentTest;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
@@ -24,11 +25,11 @@ public class PostListTest extends BaseFragmentTest {
 
     @Override protected void initAfterInject() {
         super.initAfterInject();
-        MockWebServerUtils.initDispatcher(server, JsonStubs.POSTS);
+        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(WordPressService.POST_PAGE_SIZE));
     }
 
     public void testPostList() throws InterruptedException {
-        Thread.sleep(20000);
+        showUi();
     }
 
     @Module(injects = {PostListTest.class}, addsTo = MvpTestModule.class)

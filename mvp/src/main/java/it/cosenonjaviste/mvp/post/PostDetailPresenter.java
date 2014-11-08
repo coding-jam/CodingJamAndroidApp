@@ -12,8 +12,7 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
 
     public static final String POST = "Post";
 
-    @Inject public PostDetailPresenter() {
-    }
+    @Inject PostDetailUrlManager postDetailUrlManager;
 
     public static void open(ContextBinder contextBinder, MvpConfig<PostDetailView, PostDetailPresenter> postDetailMvpConfig, Post item) {
         PresenterArgs args = populateArgs(contextBinder.createArgs(), item);
@@ -29,5 +28,9 @@ public class PostDetailPresenter extends RxMvpPresenter<PostDetailModel> {
     public static PresenterArgs populateArgs(PresenterArgs args, Post item) {
         args.putObject(POST, item);
         return args;
+    }
+
+    public String getPostUrl(Post post) {
+        return postDetailUrlManager.getUrl(post);
     }
 }

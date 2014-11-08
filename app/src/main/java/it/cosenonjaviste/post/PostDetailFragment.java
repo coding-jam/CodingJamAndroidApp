@@ -91,6 +91,6 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
     }
 
     @Override public void update(PostDetailModel model) {
-        webView.loadUrl(model.getPost().getUrl());
+        webView.loadUrl(presenter.getPostUrl(model.getPost()));
     }
 }

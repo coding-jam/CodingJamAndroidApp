@@ -19,7 +19,7 @@ public class TweetListTest extends BaseFragmentTest {
     }
 
     public void testPostList() throws InterruptedException {
-        Thread.sleep(20000);
+        showUi();
     }
 
     @Module(injects = {TweetListTest.class}, addsTo = MvpTestModule.class)

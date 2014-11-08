@@ -42,4 +42,8 @@ public class Post {
     public String getExcerpt() {
         return excerpt;
     }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

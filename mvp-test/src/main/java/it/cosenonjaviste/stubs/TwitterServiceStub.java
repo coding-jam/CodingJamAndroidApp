@@ -1,6 +1,7 @@
 package it.cosenonjaviste.stubs;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +16,11 @@ public class TwitterServiceStub implements TwitterService {
     }
 
     @Override public Observable<List<Tweet>> loadTweets() {
-        return Observable.just(Arrays.asList(new Tweet()));
+        Tweet tweet = new Tweet();
+        tweet.setId(123);
+        tweet.setAuthor("author");
+        tweet.setCreatedAt(new Date());
+        tweet.setText("text");
+        return Observable.just(Arrays.asList(tweet));
     }
 }

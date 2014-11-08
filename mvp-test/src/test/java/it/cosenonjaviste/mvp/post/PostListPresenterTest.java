@@ -18,7 +18,6 @@ import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerUtils;
 
-import static it.cosenonjaviste.mvp.post.PostListPresenter.calcNextPage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PostListPresenterTest extends PresenterTest<PostListView, PostListPresenter> {
@@ -54,13 +53,6 @@ public class PostListPresenterTest extends PresenterTest<PostListView, PostListP
         presenter.loadNextPage();
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(25);
-    }
-
-    @Test
-    public void testNextPage() {
-        assertThat(calcNextPage(0, 20)).isEqualTo(0);
-        assertThat(calcNextPage(20, 20)).isEqualTo(1);
-        assertThat(calcNextPage(40, 20)).isEqualTo(2);
     }
 
     @Test

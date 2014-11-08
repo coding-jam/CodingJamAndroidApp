@@ -27,8 +27,8 @@ public class AuthorListTest extends BaseFragmentTest {
         MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
     }
 
-    public void testPostList() throws InterruptedException {
-        Thread.sleep(20000);
+    public void testAuthorList() {
+        showUi();
     }
 
     @Module(injects = {AuthorListTest.class}, addsTo = MvpTestModule.class)

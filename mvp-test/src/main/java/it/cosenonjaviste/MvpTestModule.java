@@ -4,8 +4,6 @@ import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -25,6 +23,7 @@ import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
+import it.cosenonjaviste.stubs.MockWebServerUtils;
 import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -55,29 +54,12 @@ public class MvpTestModule {
 
     @Provides @Singleton WordPressService provideGitHubService(MockWebServer mockWebServer) {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getUrl(mockWebServer))
+                .setEndpoint(MockWebServerUtils.getUrl(mockWebServer, initInBackgroundThread))
                 .setExecutors(Runnable::run, Runnable::run)
                 .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         return restAdapter.create(WordPressService.class);
-    }
-
-    private String getUrl(MockWebServer mockWebServer) {
-        if (initInBackgroundThread) {
-            try {
-                ExecutorService executorService = Executors.newSingleThreadExecutor();
-                return executorService.submit(() -> getUrlSync(mockWebServer)).get();
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            return getUrlSync(mockWebServer);
-        }
-    }
-
-    private String getUrlSync(MockWebServer mockWebServer) {
-        return mockWebServer.getUrl("/").toString();
     }
 
     @Provides @Singleton TwitterService provideTwitterService(TwitterServiceStub twitterServiceStub) {

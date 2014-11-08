@@ -112,13 +112,14 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
         onView(withId(id)).perform(scrollTo(), typeText(text));
     }
 
-//    protected void showUi() {
-//        if (BuildConfig.ESPRESSO_DEBUG) {
+    protected void showUi() {
+//        if (BuildConfig.ESPRESSO_DEBUG)
+//        {
 //            try {
 //                Thread.sleep(60000);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
 //        }
-//    }
+    }
 }
