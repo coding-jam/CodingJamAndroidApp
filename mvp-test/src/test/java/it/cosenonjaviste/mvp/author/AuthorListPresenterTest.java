@@ -10,6 +10,7 @@ import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
@@ -38,6 +39,14 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
         presenter.loadAuthors();
         OptionalList<Author> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void testGoToDetail() {
+        presenter.loadAuthors();
+        presenter.goToAuthorDetail(1);
+        PostListModel model = getLastModel();
+        assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
     }
 
     @Module(injects = AuthorListPresenterTest.class, addsTo = MvpTestModule.class)

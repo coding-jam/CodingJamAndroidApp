@@ -38,7 +38,7 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
         adapter = new AuthorAdapter(getActivity());
         grid.getList().setNumColumns(2);
         grid.setAdapter(adapter);
-//        grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
+        grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToAuthorDetail(position));
     }
 
     @Override protected void loadOnFirstStart() {
