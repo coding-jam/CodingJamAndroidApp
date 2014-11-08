@@ -1,7 +1,5 @@
 package it.cosenonjaviste;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import javax.inject.Inject;
 
 import dagger.Module;
@@ -9,11 +7,11 @@ import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public class PostListTest extends CnjFragmentTest {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     public PostListTest() {
         super(PostListFragment.class);
@@ -25,7 +23,7 @@ public class PostListTest extends CnjFragmentTest {
 
     @Override protected void initAfterInject() {
         super.initAfterInject();
-        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(WordPressService.POST_PAGE_SIZE));
+        server.initDispatcher(JsonStubs.getPostList(WordPressService.POST_PAGE_SIZE));
     }
 
     public void testPostList() throws InterruptedException {

@@ -2,8 +2,6 @@ package it.cosenonjaviste;
 
 import android.content.Intent;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -14,11 +12,11 @@ import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.post.PostDetailPresenter;
 import it.cosenonjaviste.mvp.post.PostDetailUrlManager;
 import it.cosenonjaviste.post.PostDetailFragment;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public class PostDetailTest extends CnjFragmentTest {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     public PostDetailTest() {
         super(PostDetailFragment.class);
@@ -26,7 +24,7 @@ public class PostDetailTest extends CnjFragmentTest {
 
     @Override protected void initAfterInject() {
         super.initAfterInject();
-        MockWebServerUtils.initDispatcher(server, "<html><body>CoseNonJaviste</body></html>");
+        server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
     }
 
     @Override protected Object getTestModule() {
@@ -44,10 +42,10 @@ public class PostDetailTest extends CnjFragmentTest {
 
     @Module(injects = {PostDetailTest.class}, addsTo = MvpTestModule.class)
     public static class TestModule {
-        @Provides @Singleton PostDetailUrlManager providePostDetailUrlManager(MockWebServer server) {
+        @Provides @Singleton PostDetailUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
             return new PostDetailUrlManager() {
                 @Override public String getUrl(Post post) {
-                    return MockWebServerUtils.getUrl(server, true);
+                    return server.getUrl(true);
                 }
             };
         }

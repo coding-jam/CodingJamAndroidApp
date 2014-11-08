@@ -1,7 +1,5 @@
 package it.cosenonjaviste.mvp.post;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import org.junit.After;
 import org.junit.Test;
 
@@ -16,13 +14,13 @@ import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PostListPresenterTest extends PresenterTest<PostListView, PostListPresenter> {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     @Inject MvpConfig<PostListView, PostListPresenter> config;
 
@@ -35,21 +33,24 @@ public class PostListPresenterTest extends PresenterTest<PostListView, PostListP
     }
 
     @Override protected void initAfterInject() {
-        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(1));
+        server.initDispatcher(JsonStubs.getPostList(1));
     }
 
     @Test
-    public void testLoad() {
+    public void testLoad() throws InterruptedException {
+//        RecordedRequest recordedRequest = server.takeRequest();
         presenter.reloadData();
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(1);
+//        int requestCount = server.getRequestCount();
+//        System.out.println(recordedRequest);
     }
 
     @Test
     public void testLoadMore() {
-        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(20));
+        server.initDispatcher(JsonStubs.getPostList(20));
         presenter.reloadData();
-        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(5));
+        server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
         OptionalList<Post> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(25);

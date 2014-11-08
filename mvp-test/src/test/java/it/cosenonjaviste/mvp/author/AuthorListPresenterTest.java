@@ -1,7 +1,5 @@
 package it.cosenonjaviste.mvp.author;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import org.junit.Test;
 
 import javax.inject.Inject;
@@ -13,7 +11,7 @@ import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +19,7 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
 
     @Inject MvpConfig<AuthorListView, AuthorListPresenter> config;
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     @Override protected MvpConfig<AuthorListView, AuthorListPresenter> getConfig() {
         return config;
@@ -32,7 +30,7 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
     }
 
     @Override protected void initAfterInject() {
-        MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
+        server.initDispatcher(JsonStubs.AUTHORS);
     }
 
     @Test

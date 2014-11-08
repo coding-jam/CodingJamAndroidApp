@@ -1,7 +1,5 @@
 package it.cosenonjaviste.mvp.category;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import org.junit.Test;
 
 import javax.inject.Inject;
@@ -14,13 +12,13 @@ import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategoryListPresenterTest extends PresenterTest<CategoryListView, CategoryListPresenter> {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     @Inject MvpConfig<CategoryListView, CategoryListPresenter> config;
 
@@ -33,7 +31,7 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
     }
 
     @Override protected void initAfterInject() {
-        MockWebServerUtils.initDispatcher(server, JsonStubs.CATEGORIES);
+        server.initDispatcher(JsonStubs.CATEGORIES);
     }
 
     @Test

@@ -1,18 +1,16 @@
 package it.cosenonjaviste;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public class AuthorListTest extends CnjFragmentTest {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     public AuthorListTest() {
         super(AuthorListFragment.class);
@@ -24,7 +22,7 @@ public class AuthorListTest extends CnjFragmentTest {
 
     @Override protected void initAfterInject() {
         super.initAfterInject();
-        MockWebServerUtils.initDispatcher(server, JsonStubs.AUTHORS);
+        server.initDispatcher(JsonStubs.AUTHORS);
     }
 
     public void testAuthorList() {

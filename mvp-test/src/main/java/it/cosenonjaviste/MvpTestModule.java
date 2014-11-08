@@ -1,9 +1,6 @@
 package it.cosenonjaviste;
 
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
-import java.io.IOException;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -23,7 +20,7 @@ import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -41,20 +38,13 @@ public class MvpTestModule {
         this.initInBackgroundThread = initInBackgroundThread;
     }
 
-    @Provides @Singleton MockWebServer provideMockWebServer() {
-        MockWebServer server = new MockWebServer();
-        try {
-            server.play();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return server;
+    @Provides @Singleton MockWebServerWrapper provideMockWebServer() {
+        return new MockWebServerWrapper();
     }
 
-    @Provides @Singleton WordPressService provideGitHubService(MockWebServer mockWebServer) {
+    @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(MockWebServerUtils.getUrl(mockWebServer, initInBackgroundThread))
+                .setEndpoint(mockWebServer.getUrl(initInBackgroundThread))
                 .setExecutors(Runnable::run, Runnable::run)
                 .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
                 .setLogLevel(RestAdapter.LogLevel.FULL)

@@ -1,7 +1,5 @@
 package it.cosenonjaviste.model;
 
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,21 +13,21 @@ import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerUtils;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class WordPressServiceTest {
 
-    @Inject MockWebServer server;
+    @Inject MockWebServerWrapper server;
 
     @Inject WordPressService service;
 
     @Before
     public void init() throws IOException {
         ObjectGraph.create(new MvpTestModule(), new TestModule()).inject(this);
-        MockWebServerUtils.initDispatcher(server, JsonStubs.getPostList(1));
+        server.initDispatcher(JsonStubs.getPostList(1));
     }
 
     @Test
