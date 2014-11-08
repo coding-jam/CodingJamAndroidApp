@@ -6,7 +6,6 @@ import android.view.View;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
@@ -29,7 +28,7 @@ public class PostDetailFragment extends CnjFragment<PostDetailPresenter, PostDet
 
     @InjectView(R.id.web_view) WebView webView;
 
-    @InjectView(R.id.progress) ProgressBar progressBar;
+    @InjectView(R.id.progress) View progressBar;
 
     @Inject MvpConfig<PostDetailView, PostDetailPresenter> config;
 
