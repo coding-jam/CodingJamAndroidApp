@@ -3,7 +3,7 @@ package it.cosenonjaviste.category;
 import android.annotation.SuppressLint;
 import android.view.View;
 
-import com.quentindommerc.superlistview.SuperListview;
+import com.quentindommerc.superlistview.SuperGridview;
 
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
@@ -23,7 +23,7 @@ import rx.functions.Actions;
 @ParcelClasses({@ParcelClass(Category.class)})
 public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements CategoryListView {
 
-    @InjectView(R.id.list) SuperListview list;
+    @InjectView(R.id.grid) SuperGridview grid;
 
     private CategoryAdapter adapter;
 
@@ -34,15 +34,16 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
     }
 
     @Override protected int getLayoutId() {
-        return R.layout.super_list;
+        return R.layout.super_grid;
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {
         super.initView(view);
         adapter = new CategoryAdapter(getActivity());
-        list.setAdapter(adapter);
-        list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
+        grid.setAdapter(adapter);
+        grid.getList().setNumColumns(2);
+        grid.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+        grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
     }
 
     @Override protected void loadOnFirstStart() {
@@ -52,17 +53,17 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
     @Override public void update(OptionalList<Category> model) {
         model.call(
                 categories -> {
-                    list.showList();
+                    grid.showList();
                     adapter.reloadData(categories);
                 }
         ).whenError(
-                t -> list.showError()
+                t -> grid.showError()
         ).whenEmpty(
                 Actions.empty()
         );
     }
 
     @Override public void startLoading() {
-        list.showProgress();
+        grid.showProgress();
     }
 }
