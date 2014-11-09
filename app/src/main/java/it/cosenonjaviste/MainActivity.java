@@ -26,9 +26,12 @@ import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListView;
+import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 
@@ -49,6 +52,8 @@ public class MainActivity extends ActionBarActivity {
     @Inject MvpConfig<CategoryListView> categoryListMvpConfig;
 
     @Inject MvpConfig<TweetListView> tweetListMvpConfig;
+
+    @Inject MvpConfig<PageView> pageViewMvpConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +93,7 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         if (fragment == null) {
-            MvpConfig<?> config = getMvpConfig(position);
-            fragment = new ActivityContextBinder(this).createView(config, null);
+            fragment = createFragment(position);
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
@@ -99,21 +103,22 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.closeDrawer(mDrawerMenu);
     }
 
-    private MvpConfig<?> getMvpConfig(int position) {
+    private Fragment createFragment(int position) {
+        //TODO activity title
+        ActivityContextBinder contextBinder = new ActivityContextBinder(this);
         switch (position) {
             case 1:
-                return categoryListMvpConfig;
+                return contextBinder.createView(categoryListMvpConfig, null);
             case 2:
-                return authorListMvpConfig;
+                return contextBinder.createView(authorListMvpConfig, null);
             case 3:
-                return tweetListMvpConfig;
+                return contextBinder.createView(tweetListMvpConfig, null);
+            case 4:
+                PresenterArgs args = PagePresenter.populateArgs(contextBinder.createArgs(), "http://www.cosenonjaviste.it/contatti/");
+                return contextBinder.createView(pageViewMvpConfig, args);
             default:
-                return postListMvpConfig;
+                return contextBinder.createView(postListMvpConfig, null);
         }
-    }
-
-    private void replaceFragmentInContainer(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
