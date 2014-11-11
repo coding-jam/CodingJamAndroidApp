@@ -1,17 +1,17 @@
 package it.cosenonjaviste.lib.mvp.dagger;
 
-import dagger.ObjectGraph;
+public class ObjectGraphHolder<T> {
+    private static ObjectGraphHolder singleton;
 
-public class ObjectGraphHolder {
-    private static ObjectGraph objectGraph;
+    private T objectGraph;
 
-    private static ObjectGraphCreator objectGraphCreator;
+    private ObjectGraphCreator objectGraphCreator;
 
-    private static OnCreateListener onCreateListener;
+    private OnCreateListener<T> onCreateListener;
 
-    public static ObjectGraph getObjectGraph(DaggerApplication application) {
+    public T getObjectGraph(DaggerApplication application) {
         if (objectGraph == null) {
-            objectGraph = objectGraphCreator.create(application);
+            objectGraph = (T) objectGraphCreator.create(application);
             if (onCreateListener != null) {
                 onCreateListener.onCreate(objectGraph);
             }
@@ -20,25 +20,25 @@ public class ObjectGraphHolder {
     }
 
     public static void setObjectGraphCreator(ObjectGraphCreator objectGraphCreator) {
-        if (ObjectGraphHolder.objectGraphCreator == null) {
-            ObjectGraphHolder.objectGraphCreator = objectGraphCreator;
-        }
+//        if (ObjectGraphHolder.objectGraphCreator == null) {
+//            ObjectGraphHolder.objectGraphCreator = objectGraphCreator;
+//        }
     }
 
     public static void forceObjectGraphCreator(ObjectGraphCreator objectGraphCreator) {
-        ObjectGraphHolder.objectGraphCreator = objectGraphCreator;
-        objectGraph = null;
+//        ObjectGraphHolder.objectGraphCreator = objectGraphCreator;
+//        objectGraph = null;
     }
 
     public static void setOnCreateListener(OnCreateListener onCreateListener) {
-        ObjectGraphHolder.onCreateListener = onCreateListener;
+//        ObjectGraphHolder.onCreateListener = onCreateListener;
     }
 
-    public interface OnCreateListener {
-        void onCreate(ObjectGraph objectGraph);
+    public interface OnCreateListener<T> {
+        void onCreate(T objectGraph);
     }
 
     public static void inject(DaggerApplication app, Object obj) {
-        ObjectGraphHolder.getObjectGraph(app).inject(obj);
+//        ObjectGraphHolder.getObjectGraph(app).inject(obj);
     }
 }

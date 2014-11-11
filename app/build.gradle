@@ -59,6 +59,7 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile project(':mvp')
@@ -73,8 +74,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup.picasso:picasso:2.3.4'
-    apt 'com.squareup.dagger:dagger-compiler:1.2.1'
-    androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.1'
     apt 'org.parceler:parceler:0.2.13'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'

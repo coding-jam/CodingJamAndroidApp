@@ -9,8 +9,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Component;
 import dagger.Module;
-import dagger.ObjectGraph;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
@@ -26,7 +26,9 @@ public class WordPressServiceTest {
 
     @Before
     public void init() throws IOException {
-        ObjectGraph.create(new MvpTestModule(), new TestModule()).inject(this);
+        TestComponent component = Dagger_TestComponent.builder().build();
+        component.inject(this);
+//        ObjectGraph.create(new MvpTestModule(), new TestModule()).inject(this);
         server.initDispatcher(JsonStubs.getPostList(1));
     }
 
@@ -53,6 +55,12 @@ public class WordPressServiceTest {
 
     @Module(injects = WordPressServiceTest.class, addsTo = MvpTestModule.class)
     public static class TestModule {
+    }
+
+    @Component()
+//    @Component(dependencies = MvpTestModule.class)
+    public interface TestComponent {
+        void inject(WordPressServiceTest test);
     }
 
     @After public void shutdownServer() throws IOException {

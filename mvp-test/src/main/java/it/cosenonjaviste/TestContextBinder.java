@@ -2,7 +2,6 @@ package it.cosenonjaviste;
 
 import org.mockito.Mockito;
 
-import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
 import it.cosenonjaviste.mvp.base.MvpConfig;
@@ -17,8 +16,8 @@ public class TestContextBinder extends ContextBinder {
     private RxMvpPresenter<?> lastPresenter;
 
     public TestContextBinder(Object testObject, Object... modules) {
-        ObjectGraph objectGraph = ObjectGraph.create(modules);
-        objectGraph.inject(testObject);
+//        ObjectGraph objectGraph = ObjectGraph.create(modules);
+//        objectGraph.inject(testObject);
     }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
