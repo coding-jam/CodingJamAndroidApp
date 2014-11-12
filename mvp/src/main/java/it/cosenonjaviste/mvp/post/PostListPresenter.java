@@ -97,7 +97,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         return observable.map(PostResponse::getPosts);
     }
 
-    public static int calcNextPage(int size, int pageSize) {
+    private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
     }
 

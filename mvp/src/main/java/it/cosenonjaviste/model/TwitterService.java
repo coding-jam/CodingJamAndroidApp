@@ -5,5 +5,8 @@ import java.util.List;
 import rx.Observable;
 
 public interface TwitterService {
-    Observable<List<Tweet>> loadTweets();
+
+    int PAGE_SIZE = 20;
+
+    Observable<List<Tweet>> loadTweets(int page);
 }

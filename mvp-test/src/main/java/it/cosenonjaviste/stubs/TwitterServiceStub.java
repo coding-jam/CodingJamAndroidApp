@@ -15,7 +15,7 @@ public class TwitterServiceStub implements TwitterService {
     @Inject public TwitterServiceStub() {
     }
 
-    @Override public Observable<List<Tweet>> loadTweets() {
+    @Override public Observable<List<Tweet>> loadTweets(int page) {
         Tweet tweet = new Tweet();
         tweet.setId(123);
         tweet.setAuthor("author");
