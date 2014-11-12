@@ -7,6 +7,7 @@ import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 import rx.Subscriber;
+import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -29,10 +30,10 @@ public class Twitter4JService implements TwitterService {
         twitter = tf.getInstance();
     }
 
-    @Override public Observable<List<Tweet>> loadTweets() {
+    @Override public Observable<List<Tweet>> loadTweets(int page) {
         return Observable.create((Subscriber<? super List<Status>> subscriber) -> {
             try {
-                List<Status> statuses = twitter.getUserTimeline(251259751);
+                List<Status> statuses = twitter.getUserTimeline(251259751, new Paging(page, PAGE_SIZE));
                 subscriber.onNext(statuses);
                 subscriber.onCompleted();
             } catch (TwitterException e) {

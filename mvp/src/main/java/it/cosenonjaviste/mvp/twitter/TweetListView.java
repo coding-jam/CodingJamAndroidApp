@@ -1,7 +1,9 @@
 package it.cosenonjaviste.mvp.twitter;
 
-import it.cosenonjaviste.model.Tweet;
-import it.cosenonjaviste.mvp.base.RxMvpListView;
+import it.cosenonjaviste.mvp.base.RxMvpView;
 
-public interface TweetListView extends RxMvpListView<Tweet> {
+public interface TweetListView extends RxMvpView<TweetListModel> {
+    void startLoading(boolean showMainLoading);
+
+    void startMoreItemsLoading();
 }

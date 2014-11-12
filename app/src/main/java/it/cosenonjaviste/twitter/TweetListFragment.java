@@ -15,13 +15,13 @@ import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.mvp.base.MvpConfig;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.mvp.twitter.TweetListModel;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(Tweet.class)})
-public class TweetListFragment extends CnjFragment<TweetListPresenter, OptionalList<Tweet>> implements TweetListView {
+public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements TweetListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -43,17 +43,18 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, OptionalL
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         list.setRefreshListener(presenter::reloadData);
-        //TODO more items
+        list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
     }
 
     @Override protected void loadOnFirstStart() {
         presenter.reloadData();
     }
 
-    @Override public void update(OptionalList<Tweet> model) {
+    @Override public void update(TweetListModel model) {
         model.call(
                 items -> {
                     list.showList();
+                    list.hideMoreProgress(model.isMoreDataAvailable());
                     adapter.reloadData(items);
                 }
         ).whenError(
@@ -63,7 +64,16 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, OptionalL
         );
     }
 
-    @Override public void startLoading() {
-        list.showProgress();
+
+    @Override public void startLoading(boolean showMainLoading) {
+        if (showMainLoading) {
+            list.showProgress();
+        } else {
+            list.setRefreshing(true);
+        }
+    }
+
+    @Override public void startMoreItemsLoading() {
+        list.showMoreProgress();
     }
 }

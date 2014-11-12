@@ -3,7 +3,6 @@ package it.cosenonjaviste.post;
 import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import butterknife.InjectView;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.DateFormatter;
 
 public class PostAdapter extends BaseAdapter {
 
@@ -59,7 +59,7 @@ public class PostAdapter extends BaseAdapter {
         String excerpt = post.getExcerpt() != null ? post.getExcerpt() : "";
         rowWrapper.text.setText(Html.fromHtml(excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "")));
         rowWrapper.author.setText(post.getAuthor().getName());
-        rowWrapper.date.setText(DateUtils.getRelativeTimeSpanString(context, post.getDate().getTime()));
+        rowWrapper.date.setText(DateFormatter.formatDate(post.getDate()));
         String imageUrl = post.getAuthor().getImageUrl();
         if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(context).load(imageUrl).transform(transformation).into(rowWrapper.image);
