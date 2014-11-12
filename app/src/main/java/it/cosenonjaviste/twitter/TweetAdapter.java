@@ -2,7 +2,6 @@ package it.cosenonjaviste.twitter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import butterknife.InjectView;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.DateFormatter;
 
 public class TweetAdapter extends BaseAdapter {
 
@@ -57,7 +57,7 @@ public class TweetAdapter extends BaseAdapter {
         Tweet item = getItem(position);
         rowWrapper.title.setText(item.getText());
         rowWrapper.author.setText(item.getAuthor());
-        rowWrapper.date.setText(DateUtils.getRelativeTimeSpanString(context, item.getCreatedAt().getTime()));
+        rowWrapper.date.setText(DateFormatter.formatDate(item.getCreatedAt()));
         String imageUrl = item.getUserImage();
         if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(context).load(imageUrl).transform(transformation).into(rowWrapper.image);
