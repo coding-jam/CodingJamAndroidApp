@@ -32,14 +32,7 @@ import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
-@Module(injects = {
-        MainActivity.class,
-        PostListFragment.class,
-        PageFragment.class,
-        AuthorListFragment.class,
-        CategoryListFragment.class,
-        TweetListFragment.class
-}, library = true)
+@Module()
 public class AppModule {
 
     private Application application;

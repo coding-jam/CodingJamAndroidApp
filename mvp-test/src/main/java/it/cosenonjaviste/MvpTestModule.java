@@ -7,11 +7,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.page.PagePresenter;
@@ -24,6 +27,7 @@ import it.cosenonjaviste.stubs.MockWebServerWrapper;
 import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
+import rx.functions.Func0;
 
 @Module(library = true, overrides = true)
 public class MvpTestModule {
@@ -36,10 +40,6 @@ public class MvpTestModule {
 
     public MvpTestModule(boolean initInBackgroundThread) {
         this.initInBackgroundThread = initInBackgroundThread;
-    }
-
-    @Provides @Singleton MockWebServerWrapper provideMockWebServer() {
-        return new MockWebServerWrapper();
     }
 
     @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
@@ -56,8 +56,12 @@ public class MvpTestModule {
         return twitterServiceStub;
     }
 
-    @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return MvpConfig.create(AuthorListView.class, presenter::get);
+    @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(AuthorListPresenter presenter) {
+        return MvpConfig.create(AuthorListView.class, new Func0<RxMvpPresenter<OptionalList<Author>>>() {
+            @Override public RxMvpPresenter<OptionalList<Author>> call() {
+                return presenter;
+            }
+        });
     }
 
     @Provides MvpConfig<CategoryListView> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {

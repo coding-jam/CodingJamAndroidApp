@@ -10,15 +10,19 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import rx.functions.Func1;
 
+@Singleton
 public class MockWebServerWrapper {
 
     private final MockWebServer server;
 
     private LinkedList<RecordedRequest> requests = new LinkedList<>();
 
-    public MockWebServerWrapper() {
+    @Inject public MockWebServerWrapper() {
         server = new MockWebServer();
         try {
             server.play();

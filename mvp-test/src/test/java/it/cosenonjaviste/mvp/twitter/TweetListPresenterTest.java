@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Component;
+import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 
@@ -18,8 +18,8 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
         return config;
     }
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
+    @Override protected void initAfterInject() {
+        createComponent(TestComponent.class).inject(this);
     }
 
     @Test public void testLoadTweets() {
@@ -27,7 +27,8 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
         assertThat(presenter.getModel().isEmpty()).isFalse();
     }
 
-    @Module(injects = {TweetListPresenterTest.class}, addsTo = MvpTestModule.class)
-    public static class TestModule {
+    @Component(dependencies = MvpTestComponent.class)
+    public interface TestComponent {
+        void inject(TweetListPresenterTest test);
     }
 }

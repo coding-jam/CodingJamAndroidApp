@@ -19,6 +19,9 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     @Inject MvpConfig<PostListView> postListMvpConfig;
 
+    @Inject public CategoryListPresenter() {
+    }
+
     public void loadData() {
         Observable<List<Category>> observable = wordPressService
                 .listCategories()

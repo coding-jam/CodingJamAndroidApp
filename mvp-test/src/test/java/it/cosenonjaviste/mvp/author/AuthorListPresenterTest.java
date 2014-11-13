@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Component;
+import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
@@ -26,11 +26,8 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
         return config;
     }
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
-
     @Override protected void initAfterInject() {
+        createComponent(TestComponent.class).inject(this);
         server.initDispatcher(JsonStubs.AUTHORS);
     }
 
@@ -49,7 +46,8 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Module(injects = AuthorListPresenterTest.class, addsTo = MvpTestModule.class)
-    public static class TestModule {
+    @Component(dependencies = MvpTestComponent.class)
+    public interface TestComponent {
+        void inject(AuthorListPresenterTest authorListPresenterTest);
     }
 }

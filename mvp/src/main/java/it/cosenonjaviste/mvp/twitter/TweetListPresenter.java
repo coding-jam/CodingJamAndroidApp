@@ -14,6 +14,9 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
     @Inject TwitterService twitterService;
 
+    @Inject public TweetListPresenter() {
+    }
+
     public void reloadData() {
         Observable<List<Tweet>> observable = twitterService.loadTweets(1);
 

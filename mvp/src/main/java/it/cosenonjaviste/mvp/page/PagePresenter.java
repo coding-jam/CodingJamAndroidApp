@@ -13,6 +13,9 @@ public class PagePresenter extends RxMvpPresenter<PageModel> {
 
     @Inject PageUrlManager pageUrlManager;
 
+    @Inject public PagePresenter() {
+    }
+
     public static void open(ContextBinder contextBinder, MvpConfig<PageView> postDetailMvpConfig, String url) {
         PresenterArgs args = populateArgs(contextBinder.createArgs(), url);
         contextBinder.startNewActivity(postDetailMvpConfig, args);

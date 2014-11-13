@@ -20,6 +20,9 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject MvpConfig<PostListView> postListMvpConfig;
 
+    @Inject public AuthorListPresenter() {
+    }
+
     public void loadAuthors() {
         Observable<List<Author>> observable = wordPressService
                 .listAuthors()

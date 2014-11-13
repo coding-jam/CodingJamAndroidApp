@@ -2,12 +2,13 @@ package it.cosenonjaviste.mvp;
 
 import org.junit.Before;
 
-import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.utils.ComponentBuilder;
 
 public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
 
@@ -19,12 +20,19 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     @Before
     public void setup() {
-        contextBinder = new TestContextBinder(this, new MvpTestModule(), getTestModule());
+//        component.inject(this);
+
+        contextBinder = new TestContextBinder();
 
         initAfterInject();
 
         view = contextBinder.createView(getConfig(), getArgs());
         presenter = contextBinder.getLastPresenter();
+    }
+
+    public <T> T createComponent(Class<T> c) {
+        MvpTestComponent mvpComponent = ComponentBuilder.build(MvpTestComponent.class);
+        return ComponentBuilder.build(c, mvpComponent);
     }
 
     protected PresenterArgs getArgs() {
@@ -35,8 +43,6 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     }
 
     protected abstract MvpConfig<V> getConfig();
-
-    protected abstract Object getTestModule();
 
     public <V1> V1 getLastView() {
         return contextBinder.getLastView();

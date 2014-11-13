@@ -2,8 +2,8 @@ package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
 
-import dagger.Module;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Component;
+import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.page.PageModel;
@@ -13,8 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PostListPresenterTest extends PostListPresenterBaseTest {
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
+    @Override protected void initAfterInject() {
+        createComponent(TestComponent.class).inject(this);
+        super.initAfterInject();
     }
 
     @Test
@@ -53,8 +54,7 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         assertThat(url).isEqualTo(firstPost.getUrl());
     }
 
-    @Module(injects = {PostListPresenterTest.class}, addsTo = MvpTestModule.class)
-    public static class TestModule {
-    }
-
-}
+    @Component(dependencies = MvpTestComponent.class)
+    public interface TestComponent {
+        void inject(PostListPresenterTest test);
+    }}

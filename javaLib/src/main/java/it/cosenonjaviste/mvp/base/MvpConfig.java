@@ -12,6 +12,10 @@ public class MvpConfig<V extends RxMvpView<?>> {
         return new MvpConfig<>(viewClass, presenterFactory);
     }
 
+    protected MvpConfig(Class<? extends V> viewClass) {
+        this.viewClass = viewClass;
+    }
+
     private MvpConfig(Class<? extends V> viewClass, Func0<? extends RxMvpPresenter<?>> presenterFactory) {
         this.viewClass = viewClass;
         this.presenterFactory = presenterFactory;

@@ -27,6 +27,9 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject MvpConfig<PageView> postDetailMvpConfig;
 
+    @Inject public PostListPresenter() {
+    }
+
     @Override public PostListModel createModel(PresenterArgs args) {
         PostListModel postListModel = new PostListModel();
         postListModel.setCategory(args.getObject(CATEGORY));

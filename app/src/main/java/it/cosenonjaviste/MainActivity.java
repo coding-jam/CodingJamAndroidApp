@@ -20,8 +20,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -34,6 +32,7 @@ import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
+import it.cosenonjaviste.utils.ComponentBuilder;
 
 @ParcelClasses({
         @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
@@ -58,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ObjectGraphHolder.inject((DaggerApplication) getApplication(), this);
+        ComponentBuilder.build(AppComponent.class, new AppModule(getApplication())).inject(this);
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);

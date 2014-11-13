@@ -2,8 +2,8 @@ package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
 
-import dagger.Module;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Component;
+import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
@@ -15,12 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
-
     @Override protected PresenterArgs getArgs() {
         return PostListPresenter.open(contextBinder, new Category(1, "cat", 10));
+    }
+
+    @Override protected void initAfterInject() {
+        createComponent(TestComponent.class).inject(this);
+        super.initAfterInject();
     }
 
     @Test
@@ -46,8 +47,8 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         assertThat(lastUrl).contains("id=1");
     }
 
-    @Module(injects = {CategoryPostListPresenterTest.class}, addsTo = MvpTestModule.class)
-    public static class TestModule {
+    @Component(dependencies = MvpTestComponent.class)
+    public interface TestComponent {
+        void inject(CategoryPostListPresenterTest test);
     }
-
 }
