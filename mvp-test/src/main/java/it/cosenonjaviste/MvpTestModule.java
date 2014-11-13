@@ -53,7 +53,7 @@ public class MvpTestModule {
     }
 
     @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return MvpConfig.create(AuthorListView.class, presenter::getFix);
+        return MvpConfig.create(AuthorListView.class, presenter::get);
     }
 
     @Provides MvpConfig<CategoryListView> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
