@@ -6,11 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import org.mockito.MockitoAnnotations;
 
-import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphCreator;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import rx.schedulers.Schedulers;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
@@ -45,17 +41,17 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
 
         final EspressoExecutor espressoExecutor = EspressoExecutor.newCachedThreadPool();
 
-        ObjectGraphHolder.forceObjectGraphCreator(new ObjectGraphCreator() {
-            @Override public ObjectGraph create(DaggerApplication app) {
-                Object[] modules = mergeArrays(app.getModules(), getTestModules());
-                ObjectGraph objectGraph = ObjectGraph.create(modules);
-                if (injectTest) {
-                    objectGraph.inject(BaseActivityTest.this);
-                    initAfterInject();
-                }
-                return objectGraph;
-            }
-        });
+//        ObjectGraphHolder.forceObjectGraphCreator(new ObjectGraphCreator() {
+//            @Override public ObjectGraph create(DaggerApplication app) {
+//                Object[] modules = mergeArrays(app.getModules(), getTestModules());
+//                ObjectGraph objectGraph = ObjectGraph.create(modules);
+//                if (injectTest) {
+//                    objectGraph.inject(BaseActivityTest.this);
+//                    initAfterInject();
+//                }
+//                return objectGraph;
+//            }
+//        });
 
         registerIdlingResources(espressoExecutor);
 
