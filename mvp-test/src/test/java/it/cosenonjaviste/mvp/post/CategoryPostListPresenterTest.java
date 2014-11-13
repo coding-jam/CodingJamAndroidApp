@@ -2,8 +2,10 @@ package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
-import it.cosenonjaviste.MvpTestComponent;
+import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
@@ -47,7 +49,8 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         assertThat(lastUrl).contains("id=1");
     }
 
-    @Component(dependencies = MvpTestComponent.class)
+    @Singleton
+    @Component(modules = MvpTestModule.class)
     public interface TestComponent {
         void inject(CategoryPostListPresenterTest test);
     }

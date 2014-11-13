@@ -3,9 +3,10 @@ package it.cosenonjaviste.mvp.author;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.MvpTestComponent;
+import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
@@ -46,7 +47,8 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Component(dependencies = MvpTestComponent.class)
+    @Singleton
+    @Component(modules = MvpTestModule.class)
     public interface TestComponent {
         void inject(AuthorListPresenterTest authorListPresenterTest);
     }

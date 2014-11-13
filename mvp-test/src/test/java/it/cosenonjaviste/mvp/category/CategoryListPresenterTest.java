@@ -3,9 +3,10 @@ package it.cosenonjaviste.mvp.category;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.MvpTestComponent;
+import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
@@ -50,7 +51,8 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
         assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Component(dependencies = MvpTestComponent.class)
+    @Singleton
+    @Component(modules = MvpTestModule.class)
     public interface TestComponent {
         void inject(CategoryListPresenterTest test);
     }

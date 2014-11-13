@@ -2,7 +2,6 @@ package it.cosenonjaviste.mvp;
 
 import org.junit.Before;
 
-import it.cosenonjaviste.MvpTestComponent;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
@@ -31,8 +30,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     }
 
     public <T> T createComponent(Class<T> c) {
-        MvpTestComponent mvpComponent = ComponentBuilder.build(MvpTestComponent.class);
-        return ComponentBuilder.build(c, mvpComponent);
+        return ComponentBuilder.build(c);
     }
 
     protected PresenterArgs getArgs() {

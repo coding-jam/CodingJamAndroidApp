@@ -3,9 +3,10 @@ package it.cosenonjaviste.mvp.twitter;
 import org.junit.Test;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.MvpTestComponent;
+import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.MvpConfig;
 
@@ -27,7 +28,8 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
         assertThat(presenter.getModel().isEmpty()).isFalse();
     }
 
-    @Component(dependencies = MvpTestComponent.class)
+    @Singleton
+    @Component(modules = MvpTestModule.class)
     public interface TestComponent {
         void inject(TweetListPresenterTest test);
     }
