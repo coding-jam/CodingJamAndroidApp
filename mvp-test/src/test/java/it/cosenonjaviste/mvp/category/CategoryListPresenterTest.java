@@ -20,8 +20,8 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
 
     @Inject MockWebServerWrapper server;
 
-    @Override public Class<CategoryListView> getConfig() {
-        return CategoryListView.class;
+    public CategoryListPresenterTest() {
+        super(CategoryListView.class);
     }
 
     @Override protected void initAfterInject() {

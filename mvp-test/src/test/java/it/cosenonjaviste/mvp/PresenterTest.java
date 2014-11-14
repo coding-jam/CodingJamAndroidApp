@@ -19,7 +19,13 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     protected TestContextBinder contextBinder;
 
+    private Class<V> viewClass;
+
     @Inject CnjPresenterConfig cnjPresenterConfig;
+
+    public PresenterTest(Class<V> viewClass) {
+        this.viewClass = viewClass;
+    }
 
     @Before
     public void setup() {
@@ -29,7 +35,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
         cnjPresenterConfig.init();
 
-        view = contextBinder.createView(getConfig(), getArgs());
+        view = contextBinder.createView(viewClass, getArgs());
         presenter = contextBinder.getLastPresenter();
     }
 
@@ -44,7 +50,9 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     protected void initAfterInject() {
     }
 
-    protected abstract Class<V> getConfig();
+    protected final Class<V> getConfig() {
+        return null;
+    }
 
     public <V1> V1 getLastView() {
         return contextBinder.getLastView();

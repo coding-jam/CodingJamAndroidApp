@@ -11,8 +11,9 @@ import it.cosenonjaviste.mvp.PresenterTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetListPresenter> {
-    @Override public Class<TweetListView> getConfig() {
-        return TweetListView.class;
+
+    public TweetListPresenterTest() {
+        super(TweetListView.class);
     }
 
     @Override protected void initAfterInject() {

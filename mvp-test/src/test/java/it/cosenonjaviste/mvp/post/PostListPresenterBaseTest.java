@@ -13,8 +13,8 @@ import it.cosenonjaviste.stubs.MockWebServerWrapper;
 public abstract class PostListPresenterBaseTest extends PresenterTest<PostListView, PostListPresenter> {
     @Inject MockWebServerWrapper server;
 
-    @Override public Class<PostListView> getConfig() {
-        return PostListView.class;
+    protected PostListPresenterBaseTest() {
+        super(PostListView.class);
     }
 
     @Override protected void initAfterInject() {

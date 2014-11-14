@@ -20,8 +20,8 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
 
     @Inject MockWebServerWrapper server;
 
-    @Override protected Class<AuthorListView> getConfig() {
-        return AuthorListView.class;
+    public AuthorListPresenterTest() {
+        super(AuthorListView.class);
     }
 
     @Override protected void initAfterInject() {
