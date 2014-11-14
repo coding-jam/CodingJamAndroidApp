@@ -2,24 +2,12 @@ package it.cosenonjaviste;
 
 import com.google.gson.GsonBuilder;
 
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.author.AuthorListPresenter;
-import it.cosenonjaviste.mvp.author.AuthorListView;
-import it.cosenonjaviste.mvp.base.MvpConfig;
-import it.cosenonjaviste.mvp.category.CategoryListPresenter;
-import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.page.PagePresenter;
-import it.cosenonjaviste.mvp.page.PageView;
-import it.cosenonjaviste.mvp.post.PostListPresenter;
-import it.cosenonjaviste.mvp.post.PostListView;
-import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
-import it.cosenonjaviste.mvp.twitter.TweetListView;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
@@ -50,25 +38,5 @@ public class MvpTestModule {
 
     @Provides @Singleton TwitterService provideTwitterService(TwitterServiceStub twitterServiceStub) {
         return twitterServiceStub;
-    }
-
-    @Provides MvpConfig<AuthorListView> provideAuthorListMvpConfig(Provider<AuthorListPresenter> presenter) {
-        return MvpConfig.create(AuthorListView.class, presenter::get);
-    }
-
-    @Provides MvpConfig<CategoryListView> provideCategoryListMvpConfig(Provider<CategoryListPresenter> presenter) {
-        return MvpConfig.create(CategoryListView.class, presenter::get);
-    }
-
-    @Provides MvpConfig<PostListView> providePostListMvpConfig(Provider<PostListPresenter> presenter) {
-        return MvpConfig.create(PostListView.class, presenter::get);
-    }
-
-    @Provides MvpConfig<PageView> providePostDetailMvpConfig(Provider<PagePresenter> presenter) {
-        return MvpConfig.create(PageView.class, presenter::get);
-    }
-
-    @Provides MvpConfig<TweetListView> provideTweetListMvpConfig(Provider<TweetListPresenter> presenter) {
-        return MvpConfig.create(TweetListView.class, presenter::get);
     }
 }

@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.mvp.base.MvpConfig;
+import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 
@@ -33,7 +33,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = getConfig().createAndInitPresenter(contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
+        presenter = ConfigManager.createAndInitPresenter(getConfig(), contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
@@ -61,5 +61,5 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         super.onStop();
     }
 
-    protected abstract MvpConfig<? extends RxMvpView<M>> getConfig();
+    protected abstract Class<? extends RxMvpView<M>> getConfig();
 }

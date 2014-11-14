@@ -23,7 +23,6 @@ import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
@@ -44,20 +43,14 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @Inject MvpConfig<PostListView> postListMvpConfig;
-
-    @Inject MvpConfig<AuthorListView> authorListMvpConfig;
-
-    @Inject MvpConfig<CategoryListView> categoryListMvpConfig;
-
-    @Inject MvpConfig<TweetListView> tweetListMvpConfig;
-
-    @Inject MvpConfig<PageView> pageViewMvpConfig;
+    @Inject CnjPresenterConfig cnjPresenterConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ComponentBuilder.build(AppComponent.class, new AppModule(getApplication())).inject(this);
+        //TODO move
+        cnjPresenterConfig.init();
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);
@@ -107,16 +100,16 @@ public class MainActivity extends ActionBarActivity {
         ActivityContextBinder contextBinder = new ActivityContextBinder(this);
         switch (position) {
             case 1:
-                return contextBinder.createView(categoryListMvpConfig, null);
+                return contextBinder.createView(CategoryListView.class, null);
             case 2:
-                return contextBinder.createView(authorListMvpConfig, null);
+                return contextBinder.createView(AuthorListView.class, null);
             case 3:
-                return contextBinder.createView(tweetListMvpConfig, null);
+                return contextBinder.createView(TweetListView.class, null);
             case 4:
                 PresenterArgs args = PagePresenter.populateArgs(contextBinder.createArgs(), "http://www.cosenonjaviste.it/contatti/");
-                return contextBinder.createView(pageViewMvpConfig, args);
+                return contextBinder.createView(PageView.class, args);
             default:
-                return contextBinder.createView(postListMvpConfig, null);
+                return contextBinder.createView(PostListView.class, null);
         }
     }
 

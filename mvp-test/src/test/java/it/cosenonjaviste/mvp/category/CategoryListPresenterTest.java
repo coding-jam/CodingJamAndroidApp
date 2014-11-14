@@ -9,7 +9,6 @@ import dagger.Component;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.PresenterTest;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -21,10 +20,8 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
 
     @Inject MockWebServerWrapper server;
 
-    @Inject MvpConfig<CategoryListView> config;
-
-    @Override public MvpConfig<CategoryListView> getConfig() {
-        return config;
+    @Override public Class<CategoryListView> getConfig() {
+        return CategoryListView.class;
     }
 
     @Override protected void initAfterInject() {

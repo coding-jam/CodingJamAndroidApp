@@ -2,9 +2,9 @@ package it.cosenonjaviste;
 
 import org.mockito.Mockito;
 
+import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -19,13 +19,13 @@ public class TestContextBinder extends ContextBinder {
         return observable;
     }
 
-    @Override public void startNewActivity(MvpConfig<?> config, PresenterArgs args) {
-        createView(config, args);
+    @Override public void startNewActivity(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
+        createView(view, args);
     }
 
-    @Override public <T> T createView(MvpConfig<?> config, PresenterArgs args) {
-        Class<? extends RxMvpView<?>> viewClass = config.createView();
-        RxMvpPresenter presenter = config.createAndInitPresenter(this, args);
+    @Override public <T> T createView(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
+        Class<? extends RxMvpView<?>> viewClass = ConfigManager.singleton().get(view);
+        RxMvpPresenter presenter = ConfigManager.createAndInitPresenter(view, this, args);
 
         lastView = Mockito.mock(viewClass);
         presenter.subscribe(lastView);

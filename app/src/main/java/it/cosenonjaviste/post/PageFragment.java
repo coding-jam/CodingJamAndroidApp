@@ -14,12 +14,9 @@ import org.parceler.ParcelClasses;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.inject.Inject;
-
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
@@ -31,10 +28,8 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
     @InjectView(R.id.progress) View progressBar;
 
-    @Inject MvpConfig<PageView> config;
-
-    @Override public MvpConfig<PageView> getConfig() {
-        return config;
+    @Override public Class<PageView> getConfig() {
+        return PageView.class;
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {

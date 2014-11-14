@@ -7,16 +7,14 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.mvp.PresenterTest;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public abstract class PostListPresenterBaseTest extends PresenterTest<PostListView, PostListPresenter> {
     @Inject MockWebServerWrapper server;
-    @Inject MvpConfig<PostListView> config;
 
-    @Override public MvpConfig<PostListView> getConfig() {
-        return config;
+    @Override public Class<PostListView> getConfig() {
+        return PostListView.class;
     }
 
     @Override protected void initAfterInject() {

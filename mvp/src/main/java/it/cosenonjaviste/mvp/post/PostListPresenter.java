@@ -10,11 +10,9 @@ import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.ContextBinder;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.page.PagePresenter;
-import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
@@ -24,8 +22,6 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     private static final String AUTHOR = "author";
 
     @Inject WordPressService wordPressService;
-
-    @Inject MvpConfig<PageView> postDetailMvpConfig;
 
     @Inject public PostListPresenter() {
     }
@@ -53,7 +49,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PagePresenter.open(contextBinder, postDetailMvpConfig, item.getUrl());
+        PagePresenter.open(contextBinder, item.getUrl());
     }
 
     public static PresenterArgs open(ContextBinder contextBinder, Category category) {

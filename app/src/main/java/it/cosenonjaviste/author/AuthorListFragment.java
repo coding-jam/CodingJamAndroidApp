@@ -6,15 +6,12 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
-import javax.inject.Inject;
-
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
@@ -24,10 +21,8 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     private AuthorAdapter adapter;
 
-    @Inject MvpConfig<AuthorListView> config;
-
-    @Override public MvpConfig<AuthorListView> getConfig() {
-        return config;
+    @Override public Class<AuthorListView> getConfig() {
+        return AuthorListView.class;
     }
 
     @Override protected int getLayoutId() {

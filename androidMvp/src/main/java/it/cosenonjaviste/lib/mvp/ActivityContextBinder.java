@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.ContextBinder;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import rx.Observable;
@@ -41,16 +41,17 @@ public class ActivityContextBinder extends ContextBinder {
         return background(activity, observable);
     }
 
-    @Override public void startNewActivity(MvpConfig<?> config, PresenterArgs args) {
-        Intent intent = SingleFragmentActivity.createIntent(activity, config.createView());
+    @Override public void startNewActivity(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
+        Class<? extends RxMvpView<?>> fragmentClass = ConfigManager.singleton().get(view);
+        Intent intent = SingleFragmentActivity.createIntent(activity, fragmentClass);
         Bundle bundle = createArgs(args);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
 
-    @Override public <T> T createView(MvpConfig<?> config, PresenterArgs args) {
-        Class<? extends RxMvpView<?>> viewClass = config.createView();
-        Fragment fragment = Fragment.instantiate(activity, viewClass.getName());
+    @Override public <T> T createView(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
+        Class<? extends RxMvpView<?>> fragmentClass = ConfigManager.singleton().get(view);
+        Fragment fragment = Fragment.instantiate(activity, fragmentClass.getName());
         Bundle bundle = createArgs(args);
         fragment.setArguments(bundle);
         return (T) fragment;

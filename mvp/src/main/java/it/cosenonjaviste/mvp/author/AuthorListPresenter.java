@@ -9,7 +9,6 @@ import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.ListPresenter;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.Observable;
@@ -17,8 +16,6 @@ import rx.Observable;
 public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject WordPressService wordPressService;
-
-    @Inject MvpConfig<PostListView> postListMvpConfig;
 
     @Inject public AuthorListPresenter() {
     }
@@ -33,6 +30,6 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        contextBinder.startNewActivity(postListMvpConfig, PostListPresenter.open(contextBinder, author));
+        contextBinder.startNewActivity(PostListView.class, PostListPresenter.open(contextBinder, author));
     }
 }

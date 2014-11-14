@@ -9,13 +9,10 @@ import com.quentindommerc.superlistview.SuperListview;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
-import javax.inject.Inject;
-
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.twitter.TweetListModel;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
@@ -28,10 +25,8 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
 
     private TweetAdapter adapter;
 
-    @Inject MvpConfig<TweetListView> config;
-
-    @Override public MvpConfig<TweetListView> getConfig() {
-        return config;
+    @Override public Class<TweetListView> getConfig() {
+        return TweetListView.class;
     }
 
     @Override protected int getLayoutId() {

@@ -9,7 +9,6 @@ import dagger.Component;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.PresenterTest;
-import it.cosenonjaviste.mvp.base.MvpConfig;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -19,12 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthorListPresenterTest extends PresenterTest<AuthorListView, AuthorListPresenter> {
 
-    @Inject MvpConfig<AuthorListView> config;
-
     @Inject MockWebServerWrapper server;
 
-    @Override protected MvpConfig<AuthorListView> getConfig() {
-        return config;
+    @Override protected Class<AuthorListView> getConfig() {
+        return AuthorListView.class;
     }
 
     @Override protected void initAfterInject() {
