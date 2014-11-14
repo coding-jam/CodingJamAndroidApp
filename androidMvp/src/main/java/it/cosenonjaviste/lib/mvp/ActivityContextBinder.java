@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dalvik.system.DexFile;
-import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -59,19 +58,16 @@ public class ActivityContextBinder extends ContextBinder {
     private Set<Class<?>> viewImplementations;
 
     protected Class<RxMvpView<?>> getRxMvpViewClass(Class<? extends RxMvpView<?>> view) {
-        Class<RxMvpView<?>> ret = ConfigManager.singleton().get(view);
-        if (ret == null) {
-            if (viewImplementations == null) {
-                loadViewImplementations();
-            }
-            for (Class<?> viewImplementation : viewImplementations) {
-                if (view.isAssignableFrom(viewImplementation)) {
-                    return (Class<RxMvpView<?>>) viewImplementation;
-                }
+        if (viewImplementations == null) {
+            loadViewImplementations();
+        }
+        for (Class<?> viewImplementation : viewImplementations) {
+            if (view.isAssignableFrom(viewImplementation)) {
+                return (Class<RxMvpView<?>>) viewImplementation;
             }
         }
 
-        return ret;
+        throw new RuntimeException("Unable to find implementation of " + view.getName() + " interface");
     }
 
     private void loadViewImplementations() {

@@ -9,8 +9,6 @@ public class ConfigManager {
 
     private static ConfigManager singleton = new ConfigManager();
 
-    private Map<Class<? extends RxMvpView<?>>, Class<?>> viewClasses = new HashMap<>();
-
     private Map<Class<? extends RxMvpView<?>>, Func0<? extends RxMvpPresenter<?>>> presenterCreators = new HashMap<>();
 
     private ConfigManager() {
@@ -39,18 +37,6 @@ public class ConfigManager {
         }
         ((RxMvpPresenter) presenter).init(contextBinder, model);
         return presenter;
-    }
-
-    public void register(Class<? extends RxMvpView<?>> key, Class<?> value) {
-        viewClasses.put(key, value);
-    }
-
-    public <T> Class<T> get(Class<? extends RxMvpView<?>> key) {
-        Class<T> ret = (Class<T>) viewClasses.get(key);
-        if (ret == null) {
-            return null;
-        }
-        return ret;
     }
 
     public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends RxMvpView<?>> key, Func0<P> value) {
