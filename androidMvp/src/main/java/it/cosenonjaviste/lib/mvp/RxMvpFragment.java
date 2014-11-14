@@ -33,7 +33,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = ConfigManager.createAndInitPresenter(getConfig(), contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
+        presenter = ConfigManager.singleton().createAndInitPresenter(getConfig(), contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
