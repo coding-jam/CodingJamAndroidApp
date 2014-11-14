@@ -13,11 +13,13 @@ import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.base.ViewImplementation;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListPresenter;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import rx.functions.Actions;
 
+@ViewImplementation
 @ParcelClasses({@ParcelClass(Category.class)})
 public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements CategoryListView {
 

@@ -12,9 +12,11 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.author.AuthorListPresenter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.base.ViewImplementation;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
+@ViewImplementation
 public class AuthorListFragment extends CnjFragment<AuthorListPresenter, OptionalList<Author>> implements AuthorListView {
 
     @InjectView(R.id.grid) SuperGridview grid;

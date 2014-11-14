@@ -14,11 +14,13 @@ import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.ViewImplementation;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListPresenter;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.functions.Actions;
 
+@ViewImplementation
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
 

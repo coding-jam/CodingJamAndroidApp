@@ -48,7 +48,7 @@ public class ConfigManager {
     public <T> Class<T> get(Class<? extends RxMvpView<?>> key) {
         Class<T> ret = (Class<T>) viewClasses.get(key);
         if (ret == null) {
-            return (Class<T>) key;
+            return null;
         }
         return ret;
     }

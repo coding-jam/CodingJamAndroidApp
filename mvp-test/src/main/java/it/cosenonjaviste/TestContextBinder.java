@@ -24,10 +24,9 @@ public class TestContextBinder extends ContextBinder {
     }
 
     @Override public <T> T createView(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
-        Class<? extends RxMvpView<?>> viewClass = ConfigManager.singleton().get(view);
         RxMvpPresenter presenter = ConfigManager.createAndInitPresenter(view, this, args);
 
-        lastView = Mockito.mock(viewClass);
+        lastView = Mockito.mock(view);
         presenter.subscribe(lastView);
         lastPresenter = presenter;
         return (T) lastView;

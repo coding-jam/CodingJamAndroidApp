@@ -17,10 +17,12 @@ import java.io.InputStream;
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.mvp.base.ViewImplementation;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
 
+@ViewImplementation
 @ParcelClasses({@ParcelClass(PageModel.class)})
 public class PageFragment extends CnjFragment<PagePresenter, PageModel> implements PageView {
 

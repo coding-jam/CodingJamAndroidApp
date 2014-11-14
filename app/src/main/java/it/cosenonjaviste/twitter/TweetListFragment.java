@@ -13,11 +13,13 @@ import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
+import it.cosenonjaviste.mvp.base.ViewImplementation;
 import it.cosenonjaviste.mvp.twitter.TweetListModel;
 import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 import rx.functions.Actions;
 
+@ViewImplementation
 @ParcelClasses({@ParcelClass(Tweet.class)})
 public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements TweetListView {
 
