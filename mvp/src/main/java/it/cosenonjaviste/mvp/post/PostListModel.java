@@ -9,7 +9,8 @@ public class PostListModel extends OptionalList<Post> {
     Category category;
 
     boolean moreDataAvailable;
-    private Author author;
+
+    Author author;
 
     public Category getCategory() {
         return category;
