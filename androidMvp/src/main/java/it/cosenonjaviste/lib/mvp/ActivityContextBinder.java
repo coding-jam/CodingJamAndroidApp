@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dalvik.system.DexFile;
+import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -58,6 +59,10 @@ public class ActivityContextBinder extends ContextBinder {
     private Set<Class<?>> viewImplementations;
 
     protected Class<RxMvpView<?>> getRxMvpViewClass(Class<? extends RxMvpView<?>> view) {
+        Class<RxMvpView<?>> ret = ConfigManager.singleton().get(view);
+        if (ret != null) {
+            return ret;
+        }
         if (viewImplementations == null) {
             loadViewImplementations();
         }

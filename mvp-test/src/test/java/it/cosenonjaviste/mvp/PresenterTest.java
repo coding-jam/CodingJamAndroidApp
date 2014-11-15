@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.CnjPresenterConfig;
 import it.cosenonjaviste.TestContextBinder;
+import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -29,11 +30,10 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     @Before
     public void setup() {
-        contextBinder = new TestContextBinder();
-
         initAfterInject();
 
-        cnjPresenterConfig.init();
+        ConfigManager configManager = cnjPresenterConfig.init();
+        contextBinder = new TestContextBinder(configManager);
 
         view = contextBinder.createView(viewClass, getArgs());
         presenter = contextBinder.getLastPresenter();

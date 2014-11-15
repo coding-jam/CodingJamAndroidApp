@@ -14,6 +14,11 @@ public class TestContextBinder extends ContextBinder {
 
     private RxMvpView<?> lastView;
     private RxMvpPresenter<?> lastPresenter;
+    private ConfigManager configManager;
+
+    public TestContextBinder(ConfigManager configManager) {
+        this.configManager = configManager;
+    }
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
         return observable;
@@ -24,7 +29,7 @@ public class TestContextBinder extends ContextBinder {
     }
 
     @Override public <T> T createView(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
-        RxMvpPresenter presenter = ConfigManager.singleton().createAndInitPresenter(view, this, args);
+        RxMvpPresenter presenter = configManager.createAndInitPresenter(view, this, args);
 
         lastView = Mockito.mock(view);
         presenter.subscribe(lastView);

@@ -23,4 +23,6 @@ public interface AppComponent {
     void inject(AuthorListFragment authorListFragment);
 
     void inject(TweetListFragment tweetListFragment);
+
+    CnjPresenterConfig presenterConfig();
 }

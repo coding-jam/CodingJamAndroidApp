@@ -15,8 +15,6 @@ import android.widget.ListView;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
@@ -43,14 +41,10 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.left_drawer) ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @Inject CnjPresenterConfig cnjPresenterConfig;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ComponentBuilder.build(AppComponent.class, new AppModule(getApplication())).inject(this);
-        //TODO move
-        cnjPresenterConfig.init();
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);
