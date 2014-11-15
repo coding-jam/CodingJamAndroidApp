@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
@@ -39,5 +40,9 @@ public class AppModule {
 
     @Provides TwitterService provideTwitterService() {
         return new Twitter4JService();
+    }
+
+    @Provides @Singleton SchedulerManager provideSchedulerManager() {
+        return new SchedulerManager();
     }
 }

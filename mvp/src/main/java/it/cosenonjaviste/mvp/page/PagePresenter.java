@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.SchedulerManager;
 
 public class PagePresenter extends RxMvpPresenter<PageModel> {
 
@@ -11,7 +12,8 @@ public class PagePresenter extends RxMvpPresenter<PageModel> {
 
     @Inject PageUrlManager pageUrlManager;
 
-    @Inject public PagePresenter() {
+    @Inject public PagePresenter(SchedulerManager schedulerManager) {
+        super(schedulerManager);
     }
 
     @Override public PageModel createModel(PresenterArgs args) {

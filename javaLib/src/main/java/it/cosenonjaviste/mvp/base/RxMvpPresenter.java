@@ -5,6 +5,10 @@ public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
 
     protected RxMvpView<M> view;
 
+    public RxMvpPresenter(SchedulerManager schedulerManager) {
+        super(schedulerManager);
+    }
+
     public void subscribe(RxMvpView<M> view) {
         this.view = view;
         view.update(model);

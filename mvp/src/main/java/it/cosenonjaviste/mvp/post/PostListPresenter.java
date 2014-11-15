@@ -12,6 +12,7 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
+import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
@@ -24,7 +25,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject public PostListPresenter() {
+    @Inject public PostListPresenter(SchedulerManager schedulerManager) {
+        super(schedulerManager);
     }
 
     @Override public PostListModel createModel(PresenterArgs args) {

@@ -6,7 +6,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import org.mockito.MockitoAnnotations;
 
-import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
+import it.cosenonjaviste.mvp.base.SchedulerManager;
 import rx.schedulers.Schedulers;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
@@ -55,7 +55,7 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
 
         registerIdlingResources(espressoExecutor);
 
-        ActivityContextBinder.setIo(Schedulers.from(espressoExecutor));
+        SchedulerManager.setIo(Schedulers.from(espressoExecutor));
 
         // Espresso will not launch our activity for us, we must launch it via getActivity().
         getActivity();
