@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import rx.functions.Func0;
 
 public class ConfigManager {

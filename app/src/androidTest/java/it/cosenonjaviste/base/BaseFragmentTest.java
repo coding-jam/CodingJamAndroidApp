@@ -4,8 +4,8 @@ import android.content.Intent;
 
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.SingleFragmentActivity;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import rx.functions.Action2;
 
 public abstract class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {

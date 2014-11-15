@@ -9,10 +9,10 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.ContextBinder;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
+import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
@@ -25,8 +25,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject public PostListPresenter(SchedulerManager schedulerManager) {
-        super(schedulerManager);
+    @Inject public PostListPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
+        super(schedulerManager, presenterArgsFactory);
     }
 
     @Override public PostListModel createModel(PresenterArgs args) {
@@ -52,18 +52,18 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PresenterArgs args = PagePresenter.populateArgs(contextBinder.createArgs(), item.getUrl());
+        PresenterArgs args = PagePresenter.populateArgs(presenterArgsFactory.create(), item.getUrl());
         getView().open(PageView.class, args);
     }
 
-    public static PresenterArgs open(ContextBinder contextBinder, Category category) {
-        PresenterArgs args = contextBinder.createArgs();
+    public static PresenterArgs open(PresenterArgsFactory factory, Category category) {
+        PresenterArgs args = factory.create();
         args.putObject(CATEGORY, category);
         return args;
     }
 
-    public static PresenterArgs open(ContextBinder contextBinder, Author author) {
-        PresenterArgs args = contextBinder.createArgs();
+    public static PresenterArgs open(PresenterArgsFactory factory, Author author) {
+        PresenterArgs args = factory.create();
         args.putObject(AUTHOR, author);
         return args;
     }

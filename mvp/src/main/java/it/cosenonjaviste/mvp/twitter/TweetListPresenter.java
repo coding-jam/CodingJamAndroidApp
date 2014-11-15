@@ -6,17 +6,18 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
+import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import rx.Observable;
 
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
     @Inject TwitterService twitterService;
 
-    @Inject public TweetListPresenter(SchedulerManager schedulerManager) {
-        super(schedulerManager);
+    @Inject public TweetListPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
+        super(schedulerManager, presenterArgsFactory);
     }
 
     public void reloadData() {

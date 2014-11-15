@@ -9,7 +9,7 @@ import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
 import static org.assertj.core.api.Assertions.assertThat;

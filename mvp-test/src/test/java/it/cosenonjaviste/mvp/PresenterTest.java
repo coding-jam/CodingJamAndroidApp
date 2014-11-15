@@ -8,9 +8,9 @@ import javax.inject.Inject;
 import it.cosenonjaviste.CnjPresenterConfig;
 import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
-import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.utils.ComponentBuilder;
 
 import static org.mockito.Matchers.any;

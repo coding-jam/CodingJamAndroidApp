@@ -1,9 +1,8 @@
 package it.cosenonjaviste.mvp.base;
 
-import rx.Observable;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 
 public abstract class ContextBinder {
-    public abstract <T> Observable<T> bindObservable(Observable<T> observable);
 
     public abstract PresenterArgs createArgs();
 }

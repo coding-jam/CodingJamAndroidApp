@@ -8,9 +8,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
+import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
@@ -44,5 +46,9 @@ public class AppModule {
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {
         return new SchedulerManager();
+    }
+
+    @Provides @Singleton PresenterArgsFactory providePresenterArgsFactory() {
+        return new BundlePresenterArgs.Factory();
     }
 }

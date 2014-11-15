@@ -1,5 +1,7 @@
 package it.cosenonjaviste.mvp.base;
 
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
+
 public class ViewIntent {
     private Class<? extends RxMvpView<?>> viewClass;
 
