@@ -17,7 +17,7 @@ import org.parceler.ParcelClasses;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import it.cosenonjaviste.lib.mvp.ActivityContextBinder;
+import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -91,19 +91,18 @@ public class MainActivity extends ActionBarActivity {
 
     private Fragment createFragment(int position) {
         //TODO activity title
-        ActivityContextBinder contextBinder = new ActivityContextBinder(this);
         switch (position) {
             case 1:
-                return contextBinder.createView(CategoryListView.class, null);
+                return CnjFragment.createView(this, CategoryListView.class, null);
             case 2:
-                return contextBinder.createView(AuthorListView.class, null);
+                return CnjFragment.createView(this, AuthorListView.class, null);
             case 3:
-                return contextBinder.createView(TweetListView.class, null);
+                return CnjFragment.createView(this, TweetListView.class, null);
             case 4:
-                PresenterArgs args = PagePresenter.populateArgs(contextBinder.createArgs(), "http://www.cosenonjaviste.it/contatti/");
-                return contextBinder.createView(PageView.class, args);
+                PresenterArgs args = PagePresenter.populateArgs(new BundlePresenterArgs(), "http://www.cosenonjaviste.it/contatti/");
+                return CnjFragment.createView(this, PageView.class, args);
             default:
-                return contextBinder.createView(PostListView.class, null);
+                return CnjFragment.createView(this, PostListView.class, null);
         }
     }
 

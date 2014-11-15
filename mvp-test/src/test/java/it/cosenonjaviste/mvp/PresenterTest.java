@@ -1,6 +1,7 @@
 package it.cosenonjaviste.mvp;
 
 import org.junit.Before;
+import org.mockito.Mockito;
 
 import javax.inject.Inject;
 
@@ -12,6 +13,8 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.utils.ComponentBuilder;
 
+import static org.mockito.Matchers.any;
+
 public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
 
     protected V view;
@@ -21,6 +24,8 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     protected TestContextBinder contextBinder;
 
     private Class<V> viewClass;
+
+    private Object lastModel;
 
     @Inject CnjPresenterConfig cnjPresenterConfig;
 
@@ -35,8 +40,19 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
         ConfigManager configManager = cnjPresenterConfig.init();
         contextBinder = new TestContextBinder(configManager);
 
-        view = contextBinder.createView(viewClass, getArgs());
-        presenter = contextBinder.getLastPresenter();
+        presenter = configManager.createAndInitPresenter(viewClass, contextBinder, getArgs());
+
+        view = Mockito.mock(viewClass);
+
+        presenter.subscribe((RxMvpView) view);
+
+        Mockito.doAnswer(invocation -> {
+            Object[] arguments = invocation.getArguments();
+            Class<? extends RxMvpView<?>> newViewClass = (Class<? extends RxMvpView<?>>) arguments[0];
+            RxMvpPresenter presenter1 = configManager.createAndInitPresenter(newViewClass, contextBinder, (PresenterArgs) arguments[1]);
+            lastModel = presenter1.getModel();
+            return null;
+        }).when(view).open(any(), any());
     }
 
     public <T> T createComponent(Class<T> c) {
@@ -50,19 +66,10 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     protected void initAfterInject() {
     }
 
-    protected final Class<V> getConfig() {
-        return null;
-    }
-
-    public <V1> V1 getLastView() {
-        return contextBinder.getLastView();
-    }
-
     public <M> M getLastModel() {
+        if (lastModel != null) {
+            return (M) lastModel;
+        }
         return contextBinder.getLastModel();
-    }
-
-    public <P1> P1 getLastPresenter() {
-        return contextBinder.getLastPresenter();
     }
 }

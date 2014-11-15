@@ -13,6 +13,7 @@ import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
@@ -49,7 +50,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PagePresenter.open(contextBinder, item.getUrl());
+        PresenterArgs args = PagePresenter.populateArgs(contextBinder.createArgs(), item.getUrl());
+        getView().open(PageView.class, args);
     }
 
     public static PresenterArgs open(ContextBinder contextBinder, Category category) {

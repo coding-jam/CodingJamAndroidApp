@@ -30,6 +30,6 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        contextBinder.startNewActivity(PostListView.class, PostListPresenter.open(contextBinder, author));
+        getView().open(PostListView.class, PostListPresenter.open(contextBinder, author));
     }
 }

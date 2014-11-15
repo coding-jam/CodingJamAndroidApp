@@ -29,6 +29,6 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        contextBinder.startNewActivity(PostListView.class, PostListPresenter.open(contextBinder, category));
+        getView().open(PostListView.class, PostListPresenter.open(contextBinder, category));
     }
 }

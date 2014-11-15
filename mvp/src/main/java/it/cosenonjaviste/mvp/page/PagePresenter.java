@@ -2,7 +2,6 @@ package it.cosenonjaviste.mvp.page;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.PresenterArgs;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 
@@ -13,11 +12,6 @@ public class PagePresenter extends RxMvpPresenter<PageModel> {
     @Inject PageUrlManager pageUrlManager;
 
     @Inject public PagePresenter() {
-    }
-
-    public static void open(ContextBinder contextBinder, String url) {
-        PresenterArgs args = populateArgs(contextBinder.createArgs(), url);
-        contextBinder.startNewActivity(PageView.class, args);
     }
 
     @Override public PageModel createModel(PresenterArgs args) {

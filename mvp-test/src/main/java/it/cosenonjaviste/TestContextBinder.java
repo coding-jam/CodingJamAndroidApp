@@ -1,7 +1,5 @@
 package it.cosenonjaviste;
 
-import org.mockito.Mockito;
-
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.ContextBinder;
 import it.cosenonjaviste.mvp.base.MapPresenterArgs;
@@ -22,19 +20,6 @@ public class TestContextBinder extends ContextBinder {
 
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
         return observable;
-    }
-
-    @Override public void startNewActivity(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
-        createView(view, args);
-    }
-
-    @Override public <T> T createView(Class<? extends RxMvpView<?>> view, PresenterArgs args) {
-        RxMvpPresenter presenter = configManager.createAndInitPresenter(view, this, args);
-
-        lastView = Mockito.mock(view);
-        presenter.subscribe(lastView);
-        lastPresenter = presenter;
-        return (T) lastView;
     }
 
     public <V> V getLastView() {
