@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
 
     @Override protected PresenterArgs getArgs() {
-        return PostListPresenter.open(contextBinder, new Category(1, "cat", 10));
+        return PostListPresenter.open(presenterArgsFactory, new Category(1, "cat", 10));
     }
 
     @Override protected void initAfterInject() {

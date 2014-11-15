@@ -16,13 +16,10 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
 
     protected P presenter;
 
-    protected ActivityContextBinder contextBinder;
-
     private boolean newModelCreated = true;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        contextBinder = new ActivityContextBinder(getActivity());
 
         long presenterId = 0;
         M restoredModel = null;
@@ -33,7 +30,7 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = ConfigManager.singleton().createAndInitPresenter(getConfig(), contextBinder, restoredModel, presenter, new BundlePresenterArgs(getArguments()));
+        presenter = ConfigManager.singleton().createAndInitPresenter(getConfig(), restoredModel, presenter, new BundlePresenterArgs(getArguments()));
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }

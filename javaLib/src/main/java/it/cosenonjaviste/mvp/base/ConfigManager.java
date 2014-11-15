@@ -24,11 +24,11 @@ public class ConfigManager {
         return singleton;
     }
 
-    public <P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, ContextBinder contextBinder, PresenterArgs args) {
-        return createAndInitPresenter(viewClass, contextBinder, null, null, args);
+    public <P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, PresenterArgs args) {
+        return createAndInitPresenter(viewClass, null, null, args);
     }
 
-    public <M, P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, ContextBinder contextBinder, M restoredModel, P restoredPresenter, PresenterArgs args) {
+    public <M, P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
         P presenter;
         if (restoredPresenter == null) {
             presenter = createPresenter(viewClass);
@@ -41,7 +41,7 @@ public class ConfigManager {
         } else {
             model = (M) presenter.createModel(args != null ? args : PresenterArgs.EMPTY);
         }
-        ((RxMvpPresenter) presenter).init(contextBinder, model);
+        ((RxMvpPresenter) presenter).init(model);
         return presenter;
     }
 

@@ -8,8 +8,6 @@ import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 public abstract class MvpPresenter<M> {
     protected M model;
 
-    protected ContextBinder contextBinder;
-
     protected PresenterArgsFactory presenterArgsFactory;
 
     private long id;
@@ -21,9 +19,8 @@ public abstract class MvpPresenter<M> {
         id = sequence.getAndIncrement();
     }
 
-    public void init(ContextBinder contextBinder, M model) {
+    public void init(M model) {
         this.model = model;
-        this.contextBinder = contextBinder;
     }
 
     public abstract M createModel(PresenterArgs args);

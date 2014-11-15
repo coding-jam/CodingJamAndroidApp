@@ -6,11 +6,11 @@ import org.mockito.Mockito;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.CnjPresenterConfig;
-import it.cosenonjaviste.TestContextBinder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
+import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.utils.ComponentBuilder;
 
 import static org.mockito.Matchers.any;
@@ -21,13 +21,13 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     protected P presenter;
 
-    protected TestContextBinder contextBinder;
-
     private Class<V> viewClass;
 
     private Object lastModel;
 
     @Inject CnjPresenterConfig cnjPresenterConfig;
+
+    @Inject protected PresenterArgsFactory presenterArgsFactory;
 
     public PresenterTest(Class<V> viewClass) {
         this.viewClass = viewClass;
@@ -38,9 +38,8 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
         initAfterInject();
 
         ConfigManager configManager = cnjPresenterConfig.init();
-        contextBinder = new TestContextBinder(configManager);
 
-        presenter = configManager.createAndInitPresenter(viewClass, contextBinder, getArgs());
+        presenter = configManager.createAndInitPresenter(viewClass, getArgs());
 
         view = Mockito.mock(viewClass);
 
@@ -49,7 +48,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
         Mockito.doAnswer(invocation -> {
             Object[] arguments = invocation.getArguments();
             Class<? extends RxMvpView<?>> newViewClass = (Class<? extends RxMvpView<?>>) arguments[0];
-            RxMvpPresenter presenter1 = configManager.createAndInitPresenter(newViewClass, contextBinder, (PresenterArgs) arguments[1]);
+            RxMvpPresenter presenter1 = configManager.createAndInitPresenter(newViewClass, (PresenterArgs) arguments[1]);
             lastModel = presenter1.getModel();
             return null;
         }).when(view).open(any(), any());
@@ -67,9 +66,6 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
     }
 
     public <M> M getLastModel() {
-        if (lastModel != null) {
-            return (M) lastModel;
-        }
-        return contextBinder.getLastModel();
+        return (M) lastModel;
     }
 }
