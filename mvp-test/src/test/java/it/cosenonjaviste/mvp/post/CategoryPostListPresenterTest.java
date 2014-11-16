@@ -2,13 +2,11 @@ package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Module;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -17,13 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
 
-    @Override protected PresenterArgs getArgs() {
-        return PostListPresenter.open(presenterArgsFactory, new Category(1, "cat", 10));
+    @Override protected Object getTestModule() {
+        return new TestModule();
     }
 
-    @Override protected void initAfterInject() {
-        createComponent(TestComponent.class).inject(this);
-        super.initAfterInject();
+    @Override protected PresenterArgs getArgs() {
+        return PostListPresenter.open(presenterArgsFactory, new Category(1, "cat", 10));
     }
 
     @Test
@@ -49,9 +46,8 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         assertThat(lastUrl).contains("id=1");
     }
 
-    @Singleton
-    @Component(modules = MvpTestModule.class)
-    public interface TestComponent {
-        void inject(CategoryPostListPresenterTest test);
+    @Module(injects = {CategoryPostListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    public static class TestModule {
     }
+
 }

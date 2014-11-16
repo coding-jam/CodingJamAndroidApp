@@ -1,5 +1,7 @@
 package it.cosenonjaviste.lib.mvp.dagger;
 
-public interface ObjectGraphCreator<T> {
-    T create(DaggerApplication app);
+import dagger.ObjectGraph;
+
+public interface ObjectGraphCreator {
+    ObjectGraph create(DaggerApplication app);
 }

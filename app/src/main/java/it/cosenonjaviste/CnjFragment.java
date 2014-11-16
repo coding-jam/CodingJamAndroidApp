@@ -33,10 +33,6 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
         return view;
     }
 
-    protected AppComponent getComponent() {
-        return ((CoseNonJavisteApp) getActivity().getApplication()).getComponent();
-    }
-
     protected void initView(View view) {
         ButterKnife.inject(this, view);
     }

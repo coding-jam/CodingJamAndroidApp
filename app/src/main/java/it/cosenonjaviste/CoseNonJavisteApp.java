@@ -3,6 +3,7 @@ package it.cosenonjaviste;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.page.PageView;
@@ -12,36 +13,23 @@ import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 
-public class CoseNonJavisteApp extends DaggerApplication<AppComponent> {
+public class CoseNonJavisteApp extends DaggerApplication {
 
-    @Override public void onCreate() {
-        super.onCreate();
-//        component = ComponentBuilder.build(AppComponent.class, new AppModule(this));
-
-        getComponent().presenterConfig().init()
-                .register(PostListView.class, PostListFragment.class)
-                .register(AuthorListView.class, AuthorListFragment.class)
-                .register(CategoryListView.class, CategoryListFragment.class)
-                .register(TweetListView.class, TweetListFragment.class)
-                .register(PageView.class, PageFragment.class);
-    }
-
-    @Override public Class<AppComponent> getComponentClass() {
-        return AppComponent.class;
-    }
-
-//    public AppComponent getComponent() {
-//        return objectGraphHolder.getObjectGraph(this);
-//    }
-
-    @Override public Object[] getDependencies() {
+    @Override public Object[] getModules() {
         return new Object[]{new AppModule(this)};
     }
 
-//    public static ObjectGraphHolder<AppComponent> getObjectGraphHolder() {
-//        if (objectGraphHolder == null) {
-//            objectGraphHolder = new ObjectGraphHolder<>();
-//        }
-//        return objectGraphHolder;
-//    }
+    @Override public void onCreate() {
+        ObjectGraphHolder.setOnCreateListener(objectGraph -> {
+            CnjPresenterConfig config = objectGraph.get(CnjPresenterConfig.class);
+            config.init()
+                    .register(PostListView.class, PostListFragment.class)
+                    .register(AuthorListView.class, AuthorListFragment.class)
+                    .register(CategoryListView.class, CategoryListFragment.class)
+                    .register(TweetListView.class, TweetListFragment.class)
+                    .register(PageView.class, PageFragment.class);
+        });
+        super.onCreate();
+
+    }
 }

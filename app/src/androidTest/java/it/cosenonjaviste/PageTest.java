@@ -21,8 +21,8 @@ public class PageTest extends CnjFragmentTest {
         super(PageFragment.class);
     }
 
-    @Override protected void initAfterInject(Object component) {
-        super.initAfterInject(component);
+    @Override protected void initAfterInject() {
+        super.initAfterInject();
         server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
     }
 
@@ -38,7 +38,7 @@ public class PageTest extends CnjFragmentTest {
         showUi();
     }
 
-    @Module(injects = {PageTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {PageTest.class}, addsTo = MvpTestModule.class, library = true)
     public static class TestModule {
         @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
             return new PageUrlManager() {

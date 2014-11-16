@@ -3,11 +3,10 @@ package it.cosenonjaviste.mvp.category;
 import org.junit.Test;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import dagger.Component;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Module;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
@@ -24,8 +23,11 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
         super(CategoryListView.class);
     }
 
+    @Override protected Object getTestModule() {
+        return new TestModule();
+    }
+
     @Override protected void initAfterInject() {
-        createComponent(TestComponent.class).inject(this);
         server.initDispatcher(JsonStubs.CATEGORIES);
     }
 
@@ -48,9 +50,7 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
         assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Singleton
-    @Component(modules = MvpTestModule.class)
-    public interface TestComponent {
-        void inject(CategoryListPresenterTest test);
+    @Module(injects = {CategoryListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    public static class TestModule {
     }
 }

@@ -5,8 +5,8 @@ import org.mockito.Mockito;
 
 import javax.inject.Inject;
 
+import dagger.ObjectGraph;
 import it.cosenonjaviste.CnjPresenterConfig;
-import it.cosenonjaviste.ComponentBuilder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
@@ -35,6 +35,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
     @Before
     public void setup() {
+        ObjectGraph.create(new MvpJUnitTestModule(), getTestModule()).inject(this);
         initAfterInject();
 
         ConfigManager configManager = cnjPresenterConfig.init();
@@ -54,9 +55,7 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
         }).when(view).open(any(), any());
     }
 
-    public <T> T createComponent(Class<T> c) {
-        return ComponentBuilder.build(c);
-    }
+    protected abstract Object getTestModule();
 
     protected PresenterArgs getArgs() {
         return null;

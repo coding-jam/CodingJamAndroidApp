@@ -18,7 +18,8 @@ import org.parceler.ParcelClasses;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
-import it.cosenonjaviste.lib.mvp.dagger.ComponentBuilder;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -44,7 +45,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ComponentBuilder.build(AppComponent.class, new AppModule(getApplication())).inject(this);
+        ObjectGraphHolder.inject((DaggerApplication) getApplication(), this);
+
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);

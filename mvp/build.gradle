@@ -3,10 +3,9 @@ apply plugin: 'java'
 apply plugin: 'retrolambda'
 
 dependencies {
-    compile 'javax.inject:javax.inject:1'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':javaLib')
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
 }

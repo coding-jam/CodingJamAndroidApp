@@ -8,17 +8,30 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
+import it.cosenonjaviste.post.PageFragment;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
 import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
-@Module()
+@Module(injects = {
+        MainActivity.class,
+        CnjPresenterConfig.class,
+        PostListFragment.class,
+        PageFragment.class,
+        AuthorListFragment.class,
+        CategoryListFragment.class,
+        TweetListFragment.class
+}, library = true)
 public class AppModule {
 
     private Application application;

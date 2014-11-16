@@ -1,9 +1,8 @@
 package it.cosenonjaviste;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import dagger.Component;
+import dagger.Module;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -18,27 +17,19 @@ public class AuthorListTest extends CnjFragmentTest {
     }
 
     @Override protected Object getTestModule() {
-        return null;
+        return new TestModule();
     }
 
-    @Override protected void initAfterInject(Object component) {
-        ((TestComponent) component).inject(this);
-//        createComponent(TestComponent.class).inject(this);
-        System.out.println("initAfterInject " + server);
+    @Override protected void initAfterInject() {
+        super.initAfterInject();
         server.initDispatcher(JsonStubs.AUTHORS);
-    }
-
-    @Override protected Class<? extends Object> getComponentClass() {
-        return TestComponent.class;
     }
 
     public void testAuthorList() {
         showUi();
     }
 
-    @Singleton
-    @Component(modules = MvpTestModule.class, dependencies = AppComponent.class)
-    public interface TestComponent extends AppComponent {
-        void inject(AuthorListTest authorListTest);
+    @Module(injects = {AuthorListTest.class}, addsTo = MvpTestModule.class, overrides = true, library = true)
+    public static class TestModule {
     }
 }

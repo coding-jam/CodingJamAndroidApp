@@ -1,7 +1,6 @@
 package it.cosenonjaviste.author;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
@@ -29,11 +28,6 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     @Override protected int getLayoutId() {
         return R.layout.super_grid;
-    }
-
-    @Override public void onCreate(Bundle savedInstanceState) {
-        getComponent().inject(this);
-        super.onCreate(savedInstanceState);
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {

@@ -1,7 +1,6 @@
 package it.cosenonjaviste.post;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
@@ -34,11 +33,6 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
 
     @Override protected int getLayoutId() {
         return R.layout.super_list;
-    }
-
-    @Override public void onCreate(Bundle savedInstanceState) {
-        getComponent().inject(this);
-        super.onCreate(savedInstanceState);
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {

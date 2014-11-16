@@ -2,10 +2,8 @@ package it.cosenonjaviste.mvp.twitter;
 
 import org.junit.Test;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
-import it.cosenonjaviste.MvpTestModule;
+import dagger.Module;
+import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.PresenterTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,8 +14,8 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
         super(TweetListView.class);
     }
 
-    @Override protected void initAfterInject() {
-        createComponent(TestComponent.class).inject(this);
+    @Override protected Object getTestModule() {
+        return new TestModule();
     }
 
     @Test public void testLoadTweets() {
@@ -25,9 +23,7 @@ public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetLi
         assertThat(presenter.getModel().isEmpty()).isFalse();
     }
 
-    @Singleton
-    @Component(modules = MvpTestModule.class)
-    public interface TestComponent {
-        void inject(TweetListPresenterTest test);
+    @Module(injects = {TweetListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    public static class TestModule {
     }
 }

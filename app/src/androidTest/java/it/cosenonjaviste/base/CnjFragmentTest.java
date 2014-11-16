@@ -9,13 +9,7 @@ public abstract class CnjFragmentTest extends BaseFragmentTest {
     }
 
     @Override protected final Object[] getTestModules() {
-        Object testModule = getTestModule();
-        MvpTestModule mvpTestModule = new MvpTestModule(true);
-        if (testModule == null) {
-            return new Object[]{mvpTestModule};
-        } else {
-            return new Object[]{mvpTestModule, testModule};
-        }
+        return new Object[]{new MvpTestModule(true), new MvpEspressoTestModule(), getTestModule()};
     }
 
     protected abstract Object getTestModule();

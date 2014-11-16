@@ -2,7 +2,6 @@ package it.cosenonjaviste.post;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -32,11 +31,6 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
     @Override public Class<PageView> getConfig() {
         return PageView.class;
-    }
-
-    @Override public void onCreate(Bundle savedInstanceState) {
-        getComponent().inject(this);
-        super.onCreate(savedInstanceState);
     }
 
     @Override protected void initView(View view) {
