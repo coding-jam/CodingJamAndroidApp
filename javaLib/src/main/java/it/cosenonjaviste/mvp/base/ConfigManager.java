@@ -13,8 +13,6 @@ public class ConfigManager {
 
     private Map<Class<? extends MvpView<?>>, PresenterFactory<?>> presenterCreators = new HashMap<>();
 
-//    private Set<Class<?>> viewImplementations;
-
     private ConfigManager() {
     }
 
@@ -51,40 +49,10 @@ public class ConfigManager {
     public <T> Class<T> get(Class<? extends MvpView<?>> view) {
         Class<T> ret = (Class<T>) viewClasses.get(view);
         if (ret == null) {
-//            if (viewImplementations == null) {
-//                loadViewImplementations();
-//            }
-//            for (Class<?> viewImplementation : viewImplementations) {
-//                if (view.isAssignableFrom(viewImplementation)) {
-//                    return (Class<T>) viewImplementation;
-//                }
-//            }
-
             throw new RuntimeException("Unable to find implementation of " + view.getName() + " interface");
         }
         return ret;
     }
-
-//    private void loadViewImplementations() {
-//        viewImplementations = new HashSet<>();
-//        try {
-//            DexFile df = new DexFile(application.getPackageCodePath());
-//            for (Enumeration<String> iter = df.entries(); iter.hasMoreElements(); ) {
-//                String s = iter.nextElement();
-//                if (s.startsWith("it.cosenonjaviste")) {
-//                    try {
-//                        Class<?> c = Class.forName(s);
-//                        if (c.isAnnotationPresent(ViewImplementation.class)) {
-//                            viewImplementations.add(c);
-//                        }
-//                    } catch (ClassNotFoundException ignored) {
-//                    }
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends MvpView<?>> key, PresenterFactory<P> value) {
         presenterCreators.put(key, value);
