@@ -20,8 +20,8 @@ public class ConfigManager {
         return singleton;
     }
 
-    public <M, P extends RxMvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
-        return this.<M, P>createAndInitPresenter(viewClass, null, null, args);
+    public <P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
+        return (P) createAndInitPresenter(viewClass, null, null, args);
     }
 
     public <M, P extends MvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
