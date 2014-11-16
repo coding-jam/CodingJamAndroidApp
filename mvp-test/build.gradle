@@ -4,10 +4,6 @@ apply plugin: 'retrolambda'
 
 apply plugin: "jacoco"
 
-retrolambda {
-    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home/'
-}
-
 dependencies {
     compile project(':mvp')
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'

@@ -20,10 +20,6 @@ apply plugin: 'retrolambda'
 
 apply plugin: 'com.neenbedankt.android-apt'
 
-retrolambda {
-    jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/'
-}
-
 android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

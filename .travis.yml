@@ -1,5 +1,7 @@
 language: android
-jdk: oraclejdk8
+jdk:
+    - oraclejdk8
+    - oraclejdk7
 env:
   matrix:
     - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
@@ -14,6 +16,7 @@ android:
     - sys-img-armeabi-v7a-android-19
 
 before_script:
+    - export "JAVA7_HOME=/usr/lib/jvm/java-7-oracle"
     - export "JAVA8_HOME=/usr/lib/jvm/java-8-oracle"
     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
     - emulator -avd test -no-skin -no-audio -no-window &
