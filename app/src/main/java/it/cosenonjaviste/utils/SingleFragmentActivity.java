@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 
 public class SingleFragmentActivity extends ActionBarActivity {

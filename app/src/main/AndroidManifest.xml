@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".lib.mvp.SingleFragmentActivity" />
+        <activity android:name=".utils.SingleFragmentActivity" />
     </application>
 
 </manifest>
