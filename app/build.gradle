@@ -71,9 +71,8 @@ dependencies {
         exclude group: 'com.squareup.okhttp', module: 'okhttp'
     }
     compile project(':SuperListviewLibrary')
-    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile 'com.jakewharton:butterknife:5.1.2'
-    compile 'com.squareup.picasso:picasso:2.3.4'
+    compile 'com.squareup.picasso:picasso:2.4.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
     androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.2'
     apt 'org.parceler:parceler:0.2.13'
