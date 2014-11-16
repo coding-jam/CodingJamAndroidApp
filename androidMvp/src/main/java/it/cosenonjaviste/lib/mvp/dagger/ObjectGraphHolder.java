@@ -1,7 +1,6 @@
 package it.cosenonjaviste.lib.mvp.dagger;
 
 public class ObjectGraphHolder<T> {
-    private static ObjectGraphHolder singleton;
 
     private T objectGraph;
 
@@ -19,10 +18,10 @@ public class ObjectGraphHolder<T> {
         return objectGraph;
     }
 
-    public static void setObjectGraphCreator(ObjectGraphCreator objectGraphCreator) {
-//        if (ObjectGraphHolder.objectGraphCreator == null) {
-//            ObjectGraphHolder.objectGraphCreator = objectGraphCreator;
-//        }
+    public void setObjectGraphCreator(ObjectGraphCreator objectGraphCreator) {
+        if (objectGraphCreator == null) {
+            this.objectGraphCreator = objectGraphCreator;
+        }
     }
 
     public static void forceObjectGraphCreator(ObjectGraphCreator objectGraphCreator) {

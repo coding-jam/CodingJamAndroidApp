@@ -6,12 +6,12 @@ import org.mockito.Mockito;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.CnjPresenterConfig;
+import it.cosenonjaviste.ComponentBuilder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
-import it.cosenonjaviste.utils.ComponentBuilder;
 
 import static org.mockito.Matchers.any;
 

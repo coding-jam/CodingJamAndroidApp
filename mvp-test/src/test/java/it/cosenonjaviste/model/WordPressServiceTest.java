@@ -11,10 +11,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import it.cosenonjaviste.ComponentBuilder;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
-import it.cosenonjaviste.utils.ComponentBuilder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

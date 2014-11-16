@@ -18,6 +18,7 @@ import org.parceler.ParcelClasses;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
+import it.cosenonjaviste.lib.mvp.dagger.ComponentBuilder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
@@ -29,7 +30,6 @@ import it.cosenonjaviste.mvp.page.PagePresenter;
 import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
-import it.cosenonjaviste.utils.ComponentBuilder;
 
 @ParcelClasses({
         @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),

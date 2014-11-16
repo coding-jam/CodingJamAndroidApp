@@ -21,8 +21,8 @@ public class PageTest extends CnjFragmentTest {
         super(PageFragment.class);
     }
 
-    @Override protected void initAfterInject() {
-        super.initAfterInject();
+    @Override protected void initAfterInject(Object component) {
+        super.initAfterInject(component);
         server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
     }
 

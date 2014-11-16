@@ -1,4 +1,4 @@
-package it.cosenonjaviste.utils;
+package it.cosenonjaviste;
 
 import java.lang.reflect.Method;
 

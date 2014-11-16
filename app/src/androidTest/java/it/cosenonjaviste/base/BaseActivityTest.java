@@ -6,6 +6,11 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+
+import it.cosenonjaviste.lib.mvp.dagger.ComponentBuilder;
+import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphCreator;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import rx.schedulers.Schedulers;
 
@@ -29,6 +34,10 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
         this.injectTest = injectTest;
     }
 
+    public <T> T createComponent(Class<T> c) {
+        return ComponentBuilder.build(c);
+    }
+
     public void setUp() throws Exception {
         super.setUp();
         Intent activityIntent = createActivityIntent();
@@ -40,6 +49,19 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
         MockitoAnnotations.initMocks(this);
 
         final EspressoExecutor espressoExecutor = EspressoExecutor.newCachedThreadPool();
+
+        DaggerApplication.forceObjectGraphCreator(new ObjectGraphCreator<Object>() {
+            @Override public Object create(DaggerApplication app) {
+                Object[] dependencies = mergeArrays(app.getDependencies(), getTestModules());
+                System.out.println("Build " + getComponentClass());
+                System.out.println(Arrays.toString(dependencies));
+                Object component = ComponentBuilder.build(getComponentClass(), dependencies, DaggerApplication.oldComponent);
+//                Object objectGraph = ObjectGraph.create(dependencies);
+//                objectGraph.inject(BaseActivityTest.this);
+                initAfterInject(component);
+                return component;
+            }
+        });
 
 //        ObjectGraphHolder.forceObjectGraphCreator(new ObjectGraphCreator() {
 //            @Override public ObjectGraph create(DaggerApplication app) {
@@ -53,6 +75,8 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
 //            }
 //        });
 
+//        initAfterInject();
+
         registerIdlingResources(espressoExecutor);
 
         SchedulerManager.setIo(Schedulers.from(espressoExecutor));
@@ -61,11 +85,15 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
         getActivity();
     }
 
+    protected Class<? extends Object> getComponentClass() {
+        return null;
+    }
+
     protected Intent createActivityIntent() {
         return null;
     }
 
-    protected void initAfterInject() {
+    protected void initAfterInject(Object component) {
     }
 
     @Override public T getActivity() {
@@ -73,6 +101,9 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
     }
 
     private Object[] mergeArrays(Object[] appModules, Object[] testModules) {
+        if (testModules == null || testModules.length == 0) {
+            return appModules;
+        }
         Object[] modules = new Object[testModules.length + appModules.length];
         System.arraycopy(appModules, 0, modules, 0, appModules.length);
         System.arraycopy(testModules, 0, modules, appModules.length, testModules.length);
@@ -111,11 +142,11 @@ public class BaseActivityTest<T extends Activity> extends ActivityInstrumentatio
     protected void showUi() {
 //        if (BuildConfig.ESPRESSO_DEBUG)
 //        {
-//            try {
-//                Thread.sleep(60000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        }
     }
 }

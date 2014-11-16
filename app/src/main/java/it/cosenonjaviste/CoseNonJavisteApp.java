@@ -11,20 +11,14 @@ import it.cosenonjaviste.mvp.twitter.TweetListView;
 import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
-import it.cosenonjaviste.utils.ComponentBuilder;
 
-public class CoseNonJavisteApp extends DaggerApplication {
-    private AppComponent component;
-
-    @Override public Object[] getModules() {
-        return null;// new Object[]{new AppModule(this)};
-    }
+public class CoseNonJavisteApp extends DaggerApplication<AppComponent> {
 
     @Override public void onCreate() {
         super.onCreate();
-        component = ComponentBuilder.build(AppComponent.class, new AppModule(this));
+//        component = ComponentBuilder.build(AppComponent.class, new AppModule(this));
 
-        component.presenterConfig().init()
+        getComponent().presenterConfig().init()
                 .register(PostListView.class, PostListFragment.class)
                 .register(AuthorListView.class, AuthorListFragment.class)
                 .register(CategoryListView.class, CategoryListFragment.class)
@@ -32,7 +26,22 @@ public class CoseNonJavisteApp extends DaggerApplication {
                 .register(PageView.class, PageFragment.class);
     }
 
-    public AppComponent getComponent() {
-        return component;
+    @Override public Class<AppComponent> getComponentClass() {
+        return AppComponent.class;
     }
+
+//    public AppComponent getComponent() {
+//        return objectGraphHolder.getObjectGraph(this);
+//    }
+
+    @Override public Object[] getDependencies() {
+        return new Object[]{new AppModule(this)};
+    }
+
+//    public static ObjectGraphHolder<AppComponent> getObjectGraphHolder() {
+//        if (objectGraphHolder == null) {
+//            objectGraphHolder = new ObjectGraphHolder<>();
+//        }
+//        return objectGraphHolder;
+//    }
 }

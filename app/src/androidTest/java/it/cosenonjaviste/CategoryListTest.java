@@ -20,8 +20,8 @@ public class CategoryListTest extends CnjFragmentTest {
         return new TestModule();
     }
 
-    @Override protected void initAfterInject() {
-        super.initAfterInject();
+    @Override protected void initAfterInject(Object component) {
+        super.initAfterInject(component);
         server.initDispatcher(JsonStubs.CATEGORIES);
     }
 
