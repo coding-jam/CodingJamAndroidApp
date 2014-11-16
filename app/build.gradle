@@ -53,6 +53,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'LICENSE.txt'
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
