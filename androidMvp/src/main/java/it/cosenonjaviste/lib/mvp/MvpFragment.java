@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.mvp.base.ConfigManager;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpPresenter;
+import it.cosenonjaviste.mvp.base.MvpView;
 
-public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment implements RxMvpView<M> {
+public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
     private static final String PRESENTER_ID = "presenterId";
     private static final String MODEL = "model";
@@ -58,5 +58,5 @@ public abstract class RxMvpFragment<P extends RxMvpPresenter<M>, M> extends Frag
         super.onStop();
     }
 
-    protected abstract Class<? extends RxMvpView<M>> getConfig();
+    protected abstract Class<? extends MvpView<M>> getConfig();
 }

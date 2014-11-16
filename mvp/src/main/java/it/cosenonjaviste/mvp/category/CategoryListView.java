@@ -1,7 +1,7 @@
 package it.cosenonjaviste.mvp.category;
 
 import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.mvp.base.RxMvpListView;
+import it.cosenonjaviste.mvp.base.MvpListView;
 
-public interface CategoryListView extends RxMvpListView<Category> {
+public interface CategoryListView extends MvpListView<Category> {
 }

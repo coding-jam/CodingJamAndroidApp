@@ -1,10 +1,10 @@
 package it.cosenonjaviste.base;
 
 import it.cosenonjaviste.MvpTestModule;
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpView;
 
 public abstract class CnjFragmentTest extends BaseFragmentTest {
-    public CnjFragmentTest(Class<? extends RxMvpView<?>> viewClass) {
+    public CnjFragmentTest(Class<? extends MvpView<?>> viewClass) {
         super(viewClass, true);
     }
 

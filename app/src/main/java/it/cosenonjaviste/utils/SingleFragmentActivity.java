@@ -9,19 +9,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpView;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
     private static final String VIEW_CLASS = "viewClass";
 
-    public static Intent createIntent(Context context, Class<? extends RxMvpView<?>> viewClass) {
+    public static Intent createIntent(Context context, Class<? extends MvpView<?>> viewClass) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
         intent.putExtra(VIEW_CLASS, viewClass.getName());
         return intent;
     }
 
-    public static Intent createIntent(Class<? extends RxMvpView<?>> viewClass) {
+    public static Intent createIntent(Class<? extends MvpView<?>> viewClass) {
         Intent intent = new Intent();
         intent.putExtra(VIEW_CLASS, viewClass.getName());
         return intent;

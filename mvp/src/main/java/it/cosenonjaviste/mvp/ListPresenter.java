@@ -2,7 +2,7 @@ package it.cosenonjaviste.mvp;
 
 import java.util.List;
 
-import it.cosenonjaviste.mvp.base.RxMvpListView;
+import it.cosenonjaviste.mvp.base.MvpListView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
@@ -16,8 +16,8 @@ public abstract class ListPresenter<I> extends RxMvpPresenter<OptionalList<I>> {
         super(schedulerManager, presenterArgsFactory);
     }
 
-    @Override public RxMvpListView<I> getView() {
-        return (RxMvpListView<I>) super.getView();
+    @Override public MvpListView<I> getView() {
+        return (MvpListView<I>) super.getView();
     }
 
     protected void subscribeListObservable(Observable<List<I>> observable) {

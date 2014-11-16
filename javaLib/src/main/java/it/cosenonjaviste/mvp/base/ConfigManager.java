@@ -9,9 +9,9 @@ public class ConfigManager {
 
     private static ConfigManager singleton = new ConfigManager();
 
-    private Map<Class<? extends RxMvpView<?>>, Class<?>> viewClasses = new HashMap<>();
+    private Map<Class<? extends MvpView<?>>, Class<?>> viewClasses = new HashMap<>();
 
-    private Map<Class<? extends RxMvpView<?>>, PresenterFactory<?>> presenterCreators = new HashMap<>();
+    private Map<Class<? extends MvpView<?>>, PresenterFactory<?>> presenterCreators = new HashMap<>();
 
 //    private Set<Class<?>> viewImplementations;
 
@@ -22,11 +22,11 @@ public class ConfigManager {
         return singleton;
     }
 
-    public <M, P extends RxMvpPresenter<M>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, PresenterArgs args) {
+    public <M, P extends RxMvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
         return this.<M, P>createAndInitPresenter(viewClass, null, null, args);
     }
 
-    public <M, P extends RxMvpPresenter<M>> P createAndInitPresenter(Class<? extends RxMvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
+    public <M, P extends MvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
         P presenter;
         if (restoredPresenter == null) {
             presenter = this.<M, P>createPresenter(viewClass);
@@ -43,12 +43,12 @@ public class ConfigManager {
         return presenter;
     }
 
-    public ConfigManager register(Class<? extends RxMvpView<?>> key, Class<?> value) {
+    public ConfigManager register(Class<? extends MvpView<?>> key, Class<?> value) {
         viewClasses.put(key, value);
         return this;
     }
 
-    public <T> Class<T> get(Class<? extends RxMvpView<?>> view) {
+    public <T> Class<T> get(Class<? extends MvpView<?>> view) {
         Class<T> ret = (Class<T>) viewClasses.get(view);
         if (ret == null) {
 //            if (viewImplementations == null) {
@@ -86,11 +86,11 @@ public class ConfigManager {
 //        }
 //    }
 
-    public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends RxMvpView<?>> key, PresenterFactory<P> value) {
+    public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends MvpView<?>> key, PresenterFactory<P> value) {
         presenterCreators.put(key, value);
     }
 
-    private <M, P extends RxMvpPresenter<M>> P createPresenter(Class<? extends RxMvpView<?>> key) {
+    private <M, P extends MvpPresenter<M>> P createPresenter(Class<? extends MvpView<?>> key) {
         return (P) presenterCreators.get(key).create();
     }
 

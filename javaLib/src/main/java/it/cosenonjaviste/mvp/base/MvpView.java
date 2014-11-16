@@ -2,8 +2,8 @@ package it.cosenonjaviste.mvp.base;
 
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 
-public interface RxMvpView<M> {
+public interface MvpView<M> {
     void update(M model);
 
-    void open(Class<? extends RxMvpView<?>> viewClass, PresenterArgs args);
+    void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args);
 }

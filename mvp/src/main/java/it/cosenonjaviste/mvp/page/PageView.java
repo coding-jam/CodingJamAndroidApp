@@ -1,6 +1,6 @@
 package it.cosenonjaviste.mvp.page;
 
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpView;
 
-public interface PageView extends RxMvpView<PageModel> {
+public interface PageView extends MvpView<PageModel> {
 }

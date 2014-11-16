@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.CnjPresenterConfig;
 import it.cosenonjaviste.mvp.base.ConfigManager;
+import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 
 import static org.mockito.Matchers.any;
 
-public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPresenter<?>> {
+public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresenter<?>> {
 
     protected V view;
 
@@ -44,11 +44,11 @@ public abstract class PresenterTest<V extends RxMvpView<?>, P extends RxMvpPrese
 
         view = Mockito.mock(viewClass);
 
-        presenter.subscribe((RxMvpView) view);
+        presenter.subscribe((MvpView) view);
 
         Mockito.doAnswer(invocation -> {
             Object[] arguments = invocation.getArguments();
-            Class<? extends RxMvpView<?>> newViewClass = (Class<? extends RxMvpView<?>>) arguments[0];
+            Class<? extends MvpView<?>> newViewClass = (Class<? extends MvpView<?>>) arguments[0];
             RxMvpPresenter presenter1 = configManager.createAndInitPresenter(newViewClass, (PresenterArgs) arguments[1]);
             lastModel = presenter1.getModel();
             return null;

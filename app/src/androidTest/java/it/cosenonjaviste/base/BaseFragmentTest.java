@@ -3,19 +3,19 @@ package it.cosenonjaviste.base;
 import android.content.Intent;
 
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
-import it.cosenonjaviste.mvp.base.RxMvpView;
+import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Action2;
 
 public abstract class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {
-    private final Class<? extends RxMvpView<?>> viewClass;
+    private final Class<? extends MvpView<?>> viewClass;
 
-    public BaseFragmentTest(Class<? extends RxMvpView<?>> viewClass) {
+    public BaseFragmentTest(Class<? extends MvpView<?>> viewClass) {
         this(viewClass, false);
     }
 
-    public BaseFragmentTest(Class<? extends RxMvpView<?>> viewClass, boolean injectTest) {
+    public BaseFragmentTest(Class<? extends MvpView<?>> viewClass, boolean injectTest) {
         super(SingleFragmentActivity.class, injectTest);
         this.viewClass = viewClass;
     }

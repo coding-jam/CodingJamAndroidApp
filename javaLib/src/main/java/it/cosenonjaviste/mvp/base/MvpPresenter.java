@@ -8,6 +8,8 @@ import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 public abstract class MvpPresenter<M> {
     protected M model;
 
+    protected MvpView<M> view;
+
     protected PresenterArgsFactory presenterArgsFactory;
 
     private long id;
@@ -34,5 +36,18 @@ public abstract class MvpPresenter<M> {
     }
 
     public void destroy() {
+    }
+
+    public void subscribe(MvpView<M> view) {
+        this.view = view;
+        view.update(model);
+    }
+
+    public void pause() {
+        view = null;
+    }
+
+    public MvpView<M> getView() {
+        return view;
     }
 }

@@ -2,27 +2,65 @@ package it.cosenonjaviste.mvp.base;
 
 
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
+import it.cosenonjaviste.mvp.base.pausable.CompositePausableSubscription;
+import it.cosenonjaviste.mvp.base.pausable.PausableSubscriptions;
+import rx.Observable;
+import rx.Observer;
+import rx.Scheduler;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.observers.Observers;
 
-public abstract class RxMvpPresenter<M> extends RxMvpPausablePresenter<M> {
+public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
 
-    protected RxMvpView<M> view;
+    private SchedulerManager schedulerManager;
+
+    protected final CompositePausableSubscription pausableSubscriptions = new CompositePausableSubscription();
 
     public RxMvpPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
-        super(schedulerManager, presenterArgsFactory);
+        super(presenterArgsFactory);
+        this.schedulerManager = schedulerManager;
     }
 
-    public void subscribe(RxMvpView<M> view) {
-        this.view = view;
-        view.update(model);
+    public void pause() {
+        super.pause();
+        pausableSubscriptions.pause();
+    }
+
+    @Override public void subscribe(MvpView<M> view) {
+        super.subscribe(view);
         pausableSubscriptions.resume();
     }
 
-    @Override public void pause() {
-        view = null;
-        super.pause();
+    public void destroy() {
+        pausableSubscriptions.destroy();
     }
 
-    public RxMvpView<M> getView() {
-        return view;
+    protected <T> void subscribePausable(Observable<T> observable, Observer<T> observer) {
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), observer));
+    }
+
+    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), Observers.create(onNext, onError)));
+    }
+
+    protected <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), onAttach, Observers.create(onNext, onError)));
+    }
+
+    protected <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), onAttach, Observers.create(onNext, onError, onCompleted)));
+    }
+
+    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Scheduler scheduler) {
+        if (scheduler != null) {
+            observable = observable.subscribeOn(scheduler);
+        }
+        observable = schedulerManager.bindObservable(observable);
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(observable, Observers.create(onNext, onError)));
+    }
+
+    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
+        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), Observers.create(onNext, onError, onCompleted)));
     }
 }

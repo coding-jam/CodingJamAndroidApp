@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
+import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.RxMvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpFragment<P, M> {
+public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFragment<P, M> {
 
     @Override public void onCreate(Bundle savedInstanceState) {
         ObjectGraphHolder.inject((DaggerApplication) getActivity().getApplication(), this);
@@ -39,8 +39,8 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
 
     protected abstract int getLayoutId();
 
-    @Override public void open(Class<? extends RxMvpView<?>> viewClass, PresenterArgs args) {
-        Class<RxMvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
+    @Override public void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
+        Class<MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
         Intent intent = SingleFragmentActivity.createIntent(getActivity(), fragmentClass);
         if (args != null) {
             Bundle bundle = ((BundlePresenterArgs) args).getBundle();
@@ -49,8 +49,8 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends RxMvpF
         getActivity().startActivity(intent);
     }
 
-    public static <T> T createView(Context context, Class<? extends RxMvpView<?>> viewClass, PresenterArgs args) {
-        Class<? extends RxMvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
+    public static <T> T createView(Context context, Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
+        Class<? extends MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
         Fragment fragment = Fragment.instantiate(context, fragmentClass.getName());
         Bundle bundle = createArgs(args);
         fragment.setArguments(bundle);
