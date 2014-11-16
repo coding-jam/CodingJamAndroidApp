@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-import rx.functions.Func0;
 
 public class ConfigManager {
 
@@ -12,7 +11,7 @@ public class ConfigManager {
 
     private Map<Class<? extends RxMvpView<?>>, Class<?>> viewClasses = new HashMap<>();
 
-    private Map<Class<? extends RxMvpView<?>>, Func0<? extends RxMvpPresenter<?>>> presenterCreators = new HashMap<>();
+    private Map<Class<? extends RxMvpView<?>>, PresenterFactory<?>> presenterCreators = new HashMap<>();
 
 //    private Set<Class<?>> viewImplementations;
 
@@ -87,11 +86,15 @@ public class ConfigManager {
 //        }
 //    }
 
-    public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends RxMvpView<?>> key, Func0<P> value) {
+    public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends RxMvpView<?>> key, PresenterFactory<P> value) {
         presenterCreators.put(key, value);
     }
 
     private <M, P extends RxMvpPresenter<M>> P createPresenter(Class<? extends RxMvpView<?>> key) {
-        return (P) presenterCreators.get(key).call();
+        return (P) presenterCreators.get(key).create();
+    }
+
+    public interface PresenterFactory<P extends RxMvpPresenter<?>> {
+        P create();
     }
 }

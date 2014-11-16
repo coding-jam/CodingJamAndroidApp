@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+apply plugin: 'retrolambda'
+
+dependencies {
+    compile 'io.reactivex:rxandroid:0.21.0'
+}
