@@ -6,5 +6,5 @@ dependencies {
     testCompile 'junit:junit:4.10'
     compile project(':PausableSubscription')
     compile 'com.squareup.retrofit:retrofit:1.7.0'
-    compile 'org.parceler:parceler-api:0.2.13'
+    compile 'org.parceler:parceler-api:0.2.14'
 }

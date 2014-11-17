@@ -75,7 +75,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.4.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
     androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.2'
-    apt 'org.parceler:parceler:0.2.13'
+    apt 'org.parceler:parceler:0.2.14'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
