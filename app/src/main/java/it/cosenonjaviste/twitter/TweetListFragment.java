@@ -17,7 +17,7 @@ import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(Tweet.class)})
+@ParcelClasses({@ParcelClass(TweetListModel.class), @ParcelClass(Tweet.class)})
 public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements TweetListView {
 
     @InjectView(R.id.list) SuperListview list;

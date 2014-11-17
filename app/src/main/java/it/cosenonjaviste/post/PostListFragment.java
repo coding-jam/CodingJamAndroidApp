@@ -48,7 +48,7 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
     }
 
     @Override public void update(PostListModel model) {
-        model.call(
+        model.getItems().call(
                 posts -> {
                     list.showList();
                     list.hideMoreProgress(model.isMoreDataAvailable());
