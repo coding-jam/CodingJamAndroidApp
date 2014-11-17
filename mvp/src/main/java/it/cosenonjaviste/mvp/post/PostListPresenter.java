@@ -40,13 +40,13 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         Observable<List<Post>> observable = getObservable(0);
 
         subscribePausable(observable,
-                () -> getView().startLoading(model.isEmpty()),
+                () -> getView().startLoading(model.getItems().isEmpty()),
                 posts -> {
-                    model.done(posts);
+                    model.getItems().done(posts);
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                     view.update(model);
                 }, throwable -> {
-                    model.error(throwable);
+                    model.getItems().error(throwable);
                     view.update(model);
                 });
     }
@@ -69,17 +69,17 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void loadNextPage() {
-        int page = calcNextPage(model.size(), WordPressService.POST_PAGE_SIZE);
+        int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
         subscribePausable(observable,
                 () -> getView().startMoreItemsLoading(),
                 posts -> {
-                    model.append(posts);
+                    model.getItems().append(posts);
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                     view.update(model);
                 }, throwable -> {
-                    model.error(throwable);
+                    model.getItems().error(throwable);
                     view.update(model);
                 });
     }

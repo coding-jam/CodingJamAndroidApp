@@ -5,7 +5,10 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
-public class PostListModel extends OptionalList<Post> {
+public class PostListModel {
+
+    OptionalList items = new OptionalList<>();
+
     Category category;
 
     boolean moreDataAvailable;
@@ -34,5 +37,9 @@ public class PostListModel extends OptionalList<Post> {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public OptionalList<Post> getItems() {
+        return items;
     }
 }
