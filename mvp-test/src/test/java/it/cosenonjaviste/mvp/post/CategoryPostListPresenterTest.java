@@ -4,11 +4,9 @@ import org.junit.Test;
 
 import dagger.Module;
 import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,8 +24,8 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
     @Test
     public void testLoad() throws InterruptedException {
         presenter.reloadData();
-        OptionalList<Post> model = presenter.getModel();
-        assertThat(model.size()).isEqualTo(1);
+        PostListModel model = presenter.getModel();
+        assertThat(model.getItems().size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
         assertThat(lastUrl).contains("id=1");
@@ -39,8 +37,8 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         presenter.reloadData();
         server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
-        OptionalList<Post> model = presenter.getModel();
-        assertThat(model.size()).isEqualTo(25);
+        PostListModel model = presenter.getModel();
+        assertThat(model.getItems().size()).isEqualTo(25);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
         assertThat(lastUrl).contains("id=1");

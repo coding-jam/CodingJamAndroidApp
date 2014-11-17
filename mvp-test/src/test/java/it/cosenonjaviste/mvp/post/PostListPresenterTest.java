@@ -5,7 +5,6 @@ import org.junit.Test;
 import dagger.Module;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 
@@ -20,8 +19,8 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
     @Test
     public void testLoad() throws InterruptedException {
         presenter.reloadData();
-        OptionalList<Post> model = presenter.getModel();
-        assertThat(model.size()).isEqualTo(1);
+        PostListModel model = presenter.getModel();
+        assertThat(model.getItems().size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
         System.out.println(lastUrl);
 //        int requestCount = server.getRequestCount();
@@ -34,15 +33,15 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         presenter.reloadData();
         server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
-        OptionalList<Post> model = presenter.getModel();
-        assertThat(model.size()).isEqualTo(25);
+        PostListModel model = presenter.getModel();
+        assertThat(model.getItems().size()).isEqualTo(25);
     }
 
     @Test
     public void testGoToDetails() {
         presenter.reloadData();
-        OptionalList<Post> model = presenter.getModel();
-        Post firstPost = model.get(0);
+        PostListModel model = presenter.getModel();
+        Post firstPost = model.getItems().get(0);
 
         presenter.goToDetail(firstPost);
 
