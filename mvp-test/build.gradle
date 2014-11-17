@@ -4,6 +4,10 @@ apply plugin: 'retrolambda'
 
 apply plugin: "jacoco"
 
+retrolambda {
+    oldJdk '/usr/lib/jvm/java-7-oracle/'
+}
+
 dependencies {
     compile project(':mvp')
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
