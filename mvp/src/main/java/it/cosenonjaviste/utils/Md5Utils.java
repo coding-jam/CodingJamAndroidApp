@@ -3,7 +3,7 @@ package it.cosenonjaviste.utils;
 import java.security.MessageDigest;
 
 public class Md5Utils {
-    public static String hex(byte[] array) {
+    private static String hex(byte[] array) {
         StringBuilder sb = new StringBuilder();
         for (byte anArray : array) {
             sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));

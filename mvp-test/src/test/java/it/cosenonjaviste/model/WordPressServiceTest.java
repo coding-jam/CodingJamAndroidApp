@@ -41,6 +41,7 @@ public class WordPressServiceTest {
             assertNotNull(post.getTitle());
             assertNotNull(post.getUrl());
             assertNotNull(post.getAuthor());
+            assertNotNull(post.getAuthor().getImageUrl());
             assertEquals(8, post.getAuthor().getId());
             assertNotNull(post.getAuthor().getName());
         });
