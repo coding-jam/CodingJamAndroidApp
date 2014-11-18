@@ -6,6 +6,8 @@ apply plugin: "jacoco"
 
 apply plugin: 'com.github.kt3k.coveralls'
 
+coveralls.sourceDirs = ['mvp/src/main/java']
+
 buildscript {
     repositories {
         mavenCentral()
@@ -24,7 +26,7 @@ jacocoTestReport {
 }
 
 retrolambda {
-    oldJdk '/usr/lib/jvm/java-7-oracle/'
+    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
 }
 
 dependencies {
