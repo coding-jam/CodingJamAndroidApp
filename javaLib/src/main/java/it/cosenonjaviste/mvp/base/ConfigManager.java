@@ -41,7 +41,7 @@ public class ConfigManager {
         return presenter;
     }
 
-    public ConfigManager register(Class<? extends MvpView<?>> key, Class<?> value) {
+    public <V extends MvpView<?>> ConfigManager register(Class<V> key, Class<? extends V> value) {
         viewClasses.put(key, value);
         return this;
     }
@@ -54,7 +54,7 @@ public class ConfigManager {
         return ret;
     }
 
-    public <P extends RxMvpPresenter<?>> void registerPresenter(Class<? extends MvpView<?>> key, PresenterFactory<P> value) {
+    public <M, P extends RxMvpPresenter<M>> void registerPresenter(Class<? extends MvpView<M>> key, PresenterFactory<P> value) {
         presenterCreators.put(key, value);
     }
 
