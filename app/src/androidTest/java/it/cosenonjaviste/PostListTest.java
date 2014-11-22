@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.post.PostListFragment;
@@ -31,7 +32,7 @@ public class PostListTest extends CnjFragmentTest<PostListModel> {
         showUi();
     }
 
-    @Module(injects = {PostListTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {PostListTest.class}, includes = MvpEspressoTestModule.class)
     public static class TestModule {
     }
 }

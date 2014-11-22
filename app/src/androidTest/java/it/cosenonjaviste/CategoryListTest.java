@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
@@ -31,7 +32,7 @@ public class CategoryListTest extends CnjFragmentTest<OptionalList<Category>> {
         showUi();
     }
 
-    @Module(injects = {CategoryListTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = {CategoryListTest.class}, includes = MvpEspressoTestModule.class)
     public static class TestModule {
     }
 }

@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageUrlManager;
 import it.cosenonjaviste.post.PageFragment;
@@ -32,7 +33,7 @@ public class PageTest extends CnjFragmentTest<PageModel> {
         showUi();
     }
 
-    @Module(injects = {PageTest.class}, addsTo = MvpTestModule.class, library = true)
+    @Module(injects = {PageTest.class}, includes = MvpEspressoTestModule.class, library = true)
     public static class TestModule {
         @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
             return new PageUrlManager() {

@@ -4,7 +4,6 @@ import android.content.Intent;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.mvp.base.MvpView;
 
@@ -17,7 +16,7 @@ public abstract class CnjFragmentTest<M> extends BaseFragmentTest {
     }
 
     @Override protected final Object[] getTestModules() {
-        return new Object[]{new MvpTestModule(true), new MvpEspressoTestModule(), getTestModule()};
+        return new Object[]{getTestModule()};
     }
 
     @Override protected Intent createActivityIntent() {

@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -31,7 +32,7 @@ public class AuthorListTest extends CnjFragmentTest<OptionalList<Author>> {
         showUi();
     }
 
-    @Module(injects = {AuthorListTest.class}, addsTo = MvpTestModule.class, overrides = true, library = true)
+    @Module(injects = AuthorListTest.class, includes = MvpEspressoTestModule.class, overrides = true, library = true)
     public static class TestModule {
     }
 }

@@ -2,6 +2,7 @@ package it.cosenonjaviste;
 
 import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.mvp.twitter.TweetListModel;
 import it.cosenonjaviste.twitter.TweetListFragment;
 
@@ -19,7 +20,7 @@ public class TweetListTest extends CnjFragmentTest<TweetListModel> {
         showUi();
     }
 
-    @Module(injects = {TweetListTest.class}, addsTo = MvpTestModule.class)
+    @Module(injects = TweetListTest.class, includes = MvpEspressoTestModule.class)
     public static class TestModule {
     }
 }
