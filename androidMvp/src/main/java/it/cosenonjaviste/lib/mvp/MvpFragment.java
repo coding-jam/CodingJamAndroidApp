@@ -33,7 +33,7 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = ConfigManager.singleton().createAndInitPresenter(getViewClass(), restoredModel, presenter, new BundlePresenterArgs(getArguments()));
+        presenter = ConfigManager.singleton().createAndInitPresenter(getViewClass(), restoredModel, presenter);
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }

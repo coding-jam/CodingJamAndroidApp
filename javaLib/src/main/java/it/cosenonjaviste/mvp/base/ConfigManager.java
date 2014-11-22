@@ -3,8 +3,6 @@ package it.cosenonjaviste.mvp.base;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-
 public class ConfigManager {
 
     private static ConfigManager singleton = new ConfigManager();
@@ -20,7 +18,7 @@ public class ConfigManager {
         return singleton;
     }
 
-    public <M, P extends MvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
+    public <M, P extends MvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, M restoredModel, P restoredPresenter) {
         P presenter;
         if (restoredPresenter == null) {
             presenter = this.<M, P>createPresenter(viewClass);

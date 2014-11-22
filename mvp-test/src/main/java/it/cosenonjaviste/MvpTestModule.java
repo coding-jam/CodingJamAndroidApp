@@ -8,8 +8,6 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.args.MapPresenterArgsFactory;
-import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 import it.cosenonjaviste.stubs.TwitterServiceStub;
 import retrofit.RestAdapter;
@@ -40,9 +38,5 @@ public class MvpTestModule {
 
     @Provides @Singleton TwitterService provideTwitterService(TwitterServiceStub twitterServiceStub) {
         return twitterServiceStub;
-    }
-
-    @Provides @Singleton PresenterArgsFactory providePresenterArgsFactory() {
-        return new MapPresenterArgsFactory();
     }
 }
