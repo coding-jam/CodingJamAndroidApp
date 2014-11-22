@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
 import butterknife.ButterKnife;
 import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
@@ -38,6 +40,13 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFra
     }
 
     protected abstract int getLayoutId();
+
+    @Override public <MM> void openM(Class<? extends MvpView<MM>> viewClass, MM model) {
+        Class<MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
+        Intent intent = SingleFragmentActivity.createIntent(getActivity(), fragmentClass);
+        intent.putExtra(MODEL, Parcels.wrap(model));
+        getActivity().startActivity(intent);
+    }
 
     @Override public void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
         Class<MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);

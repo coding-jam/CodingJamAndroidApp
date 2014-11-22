@@ -21,6 +21,11 @@ public abstract class MvpPresenter<M> {
         this.model = model;
     }
 
+    public void initAndSubscribe(M model, MvpView<M> view) {
+        init(model);
+        subscribe(view);
+    }
+
     public abstract M createModel(PresenterArgs args);
 
     public long getId() {

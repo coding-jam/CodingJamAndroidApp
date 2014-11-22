@@ -1,29 +1,38 @@
 package it.cosenonjaviste.mvp.twitter;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import javax.inject.Inject;
 
 import dagger.Module;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.PresenterTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TweetListPresenterTest extends PresenterTest<TweetListView, TweetListPresenter> {
+@RunWith(MockitoJUnitRunner.class)
+public class TweetListPresenterTest {
 
-    public TweetListPresenterTest() {
-        super(TweetListView.class);
-    }
+    @Mock TweetListView view;
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
+    @Inject TweetListPresenter presenter;
 
     @Test public void testLoadTweets() {
         presenter.reloadData();
         assertThat(presenter.getModel().isEmpty()).isFalse();
     }
 
-    @Module(injects = {TweetListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    @Before
+    public void setup() {
+        ObjectGraph.create(new TestModule()).inject(this);
+        presenter.initAndSubscribe(new TweetListModel(), view);
+    }
+
+    @Module(injects = {TweetListPresenterTest.class}, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 }

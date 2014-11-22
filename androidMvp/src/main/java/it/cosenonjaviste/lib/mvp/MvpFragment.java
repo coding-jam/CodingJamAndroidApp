@@ -13,7 +13,7 @@ import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
     private static final String PRESENTER_ID = "presenterId";
-    private static final String MODEL = "model";
+    protected static final String MODEL = "model";
 
     protected P presenter;
 
@@ -28,6 +28,9 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
             presenterId = state.getLong(PRESENTER_ID, 0);
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
             newModelCreated = false;
+        }
+        if (restoredModel == null && getArguments() != null) {
+            restoredModel = Parcels.unwrap(getArguments().getParcelable(MODEL));
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);

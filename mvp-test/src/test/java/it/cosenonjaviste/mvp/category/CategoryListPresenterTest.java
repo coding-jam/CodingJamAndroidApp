@@ -1,34 +1,44 @@
 package it.cosenonjaviste.mvp.category;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
 import dagger.Module;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 
-public class CategoryListPresenterTest extends PresenterTest<CategoryListView, CategoryListPresenter> {
+@RunWith(MockitoJUnitRunner.class)
+public class CategoryListPresenterTest {
 
     @Inject MockWebServerWrapper server;
 
-    public CategoryListPresenterTest() {
-        super(CategoryListView.class);
-    }
+    @Inject CategoryListPresenter presenter;
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
+    @Mock CategoryListView view;
 
-    @Override protected void initAfterInject() {
+    @Captor ArgumentCaptor<PostListModel> modelCaptor;
+
+    @Before
+    public void setup() {
+        ObjectGraph.create(new TestModule()).inject(this);
         server.initDispatcher(JsonStubs.CATEGORIES);
+        presenter.initAndSubscribe(new OptionalList<>(), view);
     }
 
     @Test
@@ -46,11 +56,13 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
     public void testGoToPosts() {
         presenter.loadData();
         presenter.goToPosts(1);
-        PostListModel model = new PostListModel(getLastArgs());
-        assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
+
+        verify(view).openM(any(), modelCaptor.capture());
+
+        assertThat(modelCaptor.getValue().getCategory()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Module(injects = {CategoryListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    @Module(injects = {CategoryListPresenterTest.class}, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 }

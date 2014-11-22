@@ -1,27 +1,37 @@
 package it.cosenonjaviste.mvp.post;
 
 import org.junit.After;
+import org.junit.Before;
+import org.mockito.Mock;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.mvp.PresenterTest;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public abstract class PostListPresenterBaseTest extends PresenterTest<PostListView, PostListPresenter> {
+public abstract class PostListPresenterBaseTest {
+
+    @Mock PostListView view;
+
+    @Inject PostListPresenter presenter;
+
     @Inject MockWebServerWrapper server;
-
-    protected PostListPresenterBaseTest() {
-        super(PostListView.class);
-    }
-
-    @Override protected void initAfterInject() {
-        server.initDispatcher(JsonStubs.getPostList(1));
-    }
 
     @After public void shutdownServer() throws IOException {
         server.shutdown();
     }
+
+    @Before
+    public void setup() {
+        ObjectGraph.create(getTestModule()).inject(this);
+        server.initDispatcher(JsonStubs.getPostList(1));
+        presenter.initAndSubscribe(getModel(), view);
+    }
+
+    protected abstract Object getTestModule();
+
+    protected abstract PostListModel getModel();
 }

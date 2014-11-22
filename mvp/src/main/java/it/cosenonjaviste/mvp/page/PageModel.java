@@ -15,6 +15,10 @@ public class PageModel {
         url = args.getObject(URL);
     }
 
+    public PageModel(String url) {
+        this.url = url;
+    }
+
     public static PresenterArgs populateArgs(PresenterArgs args, String url) {
         args.putObject(URL, url);
         return args;

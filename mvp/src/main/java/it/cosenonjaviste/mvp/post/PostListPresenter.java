@@ -44,8 +44,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PresenterArgs args = PageModel.populateArgs(getView().createArgs(), item.getUrl());
-        getView().open(PageView.class, args);
+        getView().openM(PageView.class, new PageModel(item.getUrl()));
     }
 
     public void loadNextPage() {

@@ -1,35 +1,38 @@
 package it.cosenonjaviste.mvp.author;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
 import dagger.Module;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.PresenterTest;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 
-public class AuthorListPresenterTest extends PresenterTest<AuthorListView, AuthorListPresenter> {
+@RunWith(MockitoJUnitRunner.class)
+public class AuthorListPresenterTest {
+
+    @Mock AuthorListView view;
+
+    @Inject AuthorListPresenter presenter;
 
     @Inject MockWebServerWrapper server;
 
-    public AuthorListPresenterTest() {
-        super(AuthorListView.class);
-    }
-
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
-
-    @Override protected void initAfterInject() {
-        server.initDispatcher(JsonStubs.AUTHORS);
-    }
+    @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
     @Test
     public void testLoad() {
@@ -42,11 +45,22 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
     public void testGoToDetail() {
         presenter.loadAuthors();
         presenter.goToAuthorDetail(1);
-        PostListModel model = new PostListModel(getLastArgs());
+
+        verify(view).openM(any(), modelCaptor.capture());
+
+        PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
     }
 
-    @Module(injects = AuthorListPresenterTest.class, addsTo = MvpJUnitTestModule.class)
+    @Before
+    public void setup() {
+        ObjectGraph.create(new TestModule()).inject(this);
+        server.initDispatcher(JsonStubs.AUTHORS);
+
+        presenter.initAndSubscribe(new OptionalList<>(), view);
+    }
+
+    @Module(injects = AuthorListPresenterTest.class, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 }

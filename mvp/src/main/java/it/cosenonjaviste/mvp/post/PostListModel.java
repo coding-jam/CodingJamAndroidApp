@@ -29,6 +29,14 @@ public class PostListModel {
         author = args.getObject(PostListModel.AUTHOR);
     }
 
+    public PostListModel(Category category) {
+        this.category = category;
+    }
+
+    public PostListModel(Author author) {
+        this.author = author;
+    }
+
     public static PresenterArgs open(MvpView<?> view, Category category) {
         PresenterArgs args = view.createArgs();
         args.putObject(CATEGORY, category);

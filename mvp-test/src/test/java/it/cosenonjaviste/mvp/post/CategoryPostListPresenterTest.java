@@ -1,24 +1,26 @@
 package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import dagger.Module;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
 
     @Override protected Object getTestModule() {
         return new TestModule();
     }
 
-    @Override protected PresenterArgs getArgs() {
-        return PostListModel.open(getView(), new Category(1, "cat", 10));
+    @Override protected PostListModel getModel() {
+        return new PostListModel(new Category(1, "cat", 10));
     }
 
     @Test
@@ -44,7 +46,7 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         assertThat(lastUrl).contains("id=1");
     }
 
-    @Module(injects = {CategoryPostListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    @Module(injects = {CategoryPostListPresenterTest.class}, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 

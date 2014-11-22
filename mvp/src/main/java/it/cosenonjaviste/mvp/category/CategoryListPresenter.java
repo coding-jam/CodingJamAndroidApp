@@ -31,6 +31,6 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        getView().open(PostListView.class, PostListModel.open(getView(), category));
+        getView().openM(PostListView.class, new PostListModel(category));
     }
 }

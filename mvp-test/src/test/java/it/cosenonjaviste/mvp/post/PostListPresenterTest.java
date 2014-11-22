@@ -1,20 +1,32 @@
 package it.cosenonjaviste.mvp.post;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import dagger.Module;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.page.PageModel;
-import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest extends PostListPresenterBaseTest {
+
+    @Captor ArgumentCaptor<PageModel> modelCaptor;
 
     @Override protected Object getTestModule() {
         return new TestModule();
+    }
+
+    @Override protected PostListModel getModel() {
+        return new PostListModel();
     }
 
     @Test
@@ -46,16 +58,16 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
 
         presenter.goToDetail(firstPost);
 
-        assertThat(getLastView()).isInstanceOf(PageView.class);
+        verify(view).openM(any(), modelCaptor.capture());
 
-        PageModel detailModel = new PageModel(getLastArgs());
+        PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getUrl();
 
         assertThat(url).isNotNull();
         assertThat(url).isEqualTo(firstPost.getUrl());
     }
 
-    @Module(injects = {PostListPresenterTest.class}, addsTo = MvpJUnitTestModule.class)
+    @Module(injects = {PostListPresenterTest.class}, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 

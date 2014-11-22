@@ -7,5 +7,7 @@ public interface MvpView<M> {
 
     void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args);
 
+    <MM> void openM(Class<? extends MvpView<MM>> viewClass, MM model);
+
     PresenterArgs createArgs();
 }
