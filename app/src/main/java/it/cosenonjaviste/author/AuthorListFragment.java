@@ -20,7 +20,7 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     private AuthorAdapter adapter;
 
-    @Override public Class<AuthorListView> getConfig() {
+    @Override public Class<AuthorListView> getViewClass() {
         return AuthorListView.class;
     }
 

@@ -25,7 +25,7 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
 
     private PostAdapter adapter;
 
-    @Override public Class<PostListView> getConfig() {
+    @Override public Class<PostListView> getViewClass() {
         return PostListView.class;
     }
 

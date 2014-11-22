@@ -24,7 +24,7 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
 
     private TweetAdapter adapter;
 
-    @Override public Class<TweetListView> getConfig() {
+    @Override public Class<TweetListView> getViewClass() {
         return TweetListView.class;
     }
 

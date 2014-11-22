@@ -27,7 +27,7 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
     @InjectView(R.id.progress) View progressBar;
 
-    @Override public Class<PageView> getConfig() {
+    @Override public Class<PageView> getViewClass() {
         return PageView.class;
     }
 

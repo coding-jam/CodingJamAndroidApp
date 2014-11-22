@@ -24,7 +24,7 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
 
     private CategoryAdapter adapter;
 
-    @Override public Class<CategoryListView> getConfig() {
+    @Override public Class<CategoryListView> getViewClass() {
         return CategoryListView.class;
     }
 

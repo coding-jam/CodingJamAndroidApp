@@ -30,7 +30,7 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = ConfigManager.singleton().createAndInitPresenter(getConfig(), restoredModel, presenter, new BundlePresenterArgs(getArguments()));
+        presenter = ConfigManager.singleton().createAndInitPresenter(getViewClass(), restoredModel, presenter, new BundlePresenterArgs(getArguments()));
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
@@ -58,5 +58,5 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         super.onStop();
     }
 
-    protected abstract Class<? extends MvpView<M>> getConfig();
+    protected abstract Class<? extends MvpView<M>> getViewClass();
 }
