@@ -5,15 +5,17 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.base.CnjFragmentTest;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class AuthorListTest extends CnjFragmentTest {
+public class AuthorListTest extends CnjFragmentTest<OptionalList<Author>> {
 
     @Inject MockWebServerWrapper server;
 
     public AuthorListTest() {
-        super(AuthorListFragment.class);
+        super(AuthorListFragment.class, new OptionalList<>());
     }
 
     @Override protected Object getTestModule() {

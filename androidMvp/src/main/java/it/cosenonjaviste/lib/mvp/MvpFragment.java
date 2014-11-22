@@ -12,7 +12,7 @@ import it.cosenonjaviste.mvp.base.MvpView;
 public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
     private static final String PRESENTER_ID = "presenterId";
-    protected static final String MODEL = "model";
+    public static final String MODEL = "model";
 
     protected P presenter;
 

@@ -8,7 +8,6 @@ import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import rx.Observable;
 
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
@@ -54,10 +53,6 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
     private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
-    }
-
-    @Override public TweetListModel createModel(PresenterArgs args) {
-        return new TweetListModel();
     }
 
     @Override public TweetListView getView() {

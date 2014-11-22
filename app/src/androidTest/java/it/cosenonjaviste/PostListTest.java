@@ -5,16 +5,17 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class PostListTest extends CnjFragmentTest {
+public class PostListTest extends CnjFragmentTest<PostListModel> {
 
     @Inject MockWebServerWrapper server;
 
     public PostListTest() {
-        super(PostListFragment.class);
+        super(PostListFragment.class, new PostListModel());
     }
 
     @Override protected Object getTestModule() {

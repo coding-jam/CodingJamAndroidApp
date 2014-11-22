@@ -41,6 +41,9 @@ public class CircleTransform implements Transformation {
             return null;
         }
         int size = Math.min(source.getWidth(), source.getHeight());
+        if (size == 0) {
+            return null;
+        }
         Bitmap squaredBitmap = createSquaredImage(source, size);
 
         if (size != imageSize) {

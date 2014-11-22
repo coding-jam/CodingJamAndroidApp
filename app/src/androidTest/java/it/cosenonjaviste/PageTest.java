@@ -1,7 +1,5 @@
 package it.cosenonjaviste;
 
-import android.content.Intent;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -13,12 +11,12 @@ import it.cosenonjaviste.mvp.page.PageUrlManager;
 import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class PageTest extends CnjFragmentTest {
+public class PageTest extends CnjFragmentTest<PageModel> {
 
     @Inject MockWebServerWrapper server;
 
     public PageTest() {
-        super(PageFragment.class);
+        super(PageFragment.class, new PageModel("url"));
     }
 
     @Override protected void initAfterInject() {
@@ -28,10 +26,6 @@ public class PageTest extends CnjFragmentTest {
 
     @Override protected Object getTestModule() {
         return new TestModule();
-    }
-
-    @Override protected Intent createActivityIntent() {
-        return createIntent(super.createActivityIntent(), PageModel::populateArgs, "url");
     }
 
     public void testDetailFragment() {

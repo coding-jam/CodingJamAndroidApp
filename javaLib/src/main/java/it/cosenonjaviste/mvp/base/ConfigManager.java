@@ -20,10 +20,6 @@ public class ConfigManager {
         return singleton;
     }
 
-    public <P extends RxMvpPresenter<?>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
-        return (P) createAndInitPresenter(viewClass, null, null, args);
-    }
-
     public <M, P extends MvpPresenter<M>> P createAndInitPresenter(Class<? extends MvpView<?>> viewClass, M restoredModel, P restoredPresenter, PresenterArgs args) {
         P presenter;
         if (restoredPresenter == null) {
@@ -31,13 +27,7 @@ public class ConfigManager {
         } else {
             presenter = restoredPresenter;
         }
-        M model;
-        if (restoredModel != null) {
-            model = restoredModel;
-        } else {
-            model = presenter.createModel(args != null ? args : PresenterArgs.EMPTY);
-        }
-        presenter.init(model);
+        presenter.init(restoredModel);
         return presenter;
     }
 

@@ -17,19 +17,19 @@ import org.parceler.ParcelClasses;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
 import it.cosenonjaviste.mvp.author.AuthorListView;
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageView;
+import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.twitter.TweetListModel;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
 
 @ParcelClasses({
@@ -95,16 +95,15 @@ public class MainActivity extends ActionBarActivity {
         //TODO activity title
         switch (position) {
             case 1:
-                return CnjFragment.createView(this, CategoryListView.class, null);
+                return CnjFragment.createView(this, CategoryListView.class, new OptionalList<>());
             case 2:
-                return CnjFragment.createView(this, AuthorListView.class, null);
+                return CnjFragment.createView(this, AuthorListView.class, new OptionalList<>());
             case 3:
-                return CnjFragment.createView(this, TweetListView.class, null);
+                return CnjFragment.createView(this, TweetListView.class, new TweetListModel());
             case 4:
-                PresenterArgs args = PageModel.populateArgs(new BundlePresenterArgs(), "http://www.cosenonjaviste.it/contatti/");
-                return CnjFragment.createView(this, PageView.class, args);
+                return CnjFragment.createView(this, PageView.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
             default:
-                return CnjFragment.createView(this, PostListView.class, null);
+                return CnjFragment.createView(this, PostListView.class, new PostListModel());
         }
     }
 

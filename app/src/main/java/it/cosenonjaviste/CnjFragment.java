@@ -3,6 +3,7 @@ package it.cosenonjaviste;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,14 +13,12 @@ import android.view.ViewGroup;
 import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
-import it.cosenonjaviste.lib.mvp.BundlePresenterArgs;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFragment<P, M> {
@@ -48,19 +47,12 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFra
         getActivity().startActivity(intent);
     }
 
-    public static <T> T createView(Context context, Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
+    public static <T, M> T createView(@NonNull Context context, @NonNull Class<? extends MvpView<M>> viewClass, @NonNull M model) {
         Class<? extends MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
         Fragment fragment = Fragment.instantiate(context, fragmentClass.getName());
-        Bundle bundle = createArgs(args);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MODEL, Parcels.wrap(model));
         fragment.setArguments(bundle);
         return (T) fragment;
-    }
-
-    private static Bundle createArgs(PresenterArgs args) {
-        if (args != null) {
-            return ((BundlePresenterArgs) args).getBundle();
-        } else {
-            return new Bundle();
-        }
     }
 }

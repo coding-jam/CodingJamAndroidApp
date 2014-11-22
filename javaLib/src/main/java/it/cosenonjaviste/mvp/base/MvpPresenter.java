@@ -2,8 +2,6 @@ package it.cosenonjaviste.mvp.base;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-
 public abstract class MvpPresenter<M> {
     protected M model;
 
@@ -25,8 +23,6 @@ public abstract class MvpPresenter<M> {
         init(model);
         subscribe(view);
     }
-
-    public abstract M createModel(PresenterArgs args);
 
     public long getId() {
         return id;

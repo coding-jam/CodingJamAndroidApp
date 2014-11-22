@@ -5,15 +5,17 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class CategoryListTest extends CnjFragmentTest {
+public class CategoryListTest extends CnjFragmentTest<OptionalList<Category>> {
 
     @Inject MockWebServerWrapper server;
 
     public CategoryListTest() {
-        super(CategoryListFragment.class);
+        super(CategoryListFragment.class, new OptionalList<>());
     }
 
     @Override protected Object getTestModule() {
