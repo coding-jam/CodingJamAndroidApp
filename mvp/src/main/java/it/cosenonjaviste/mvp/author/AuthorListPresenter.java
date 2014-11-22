@@ -32,6 +32,6 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        getView().openM(PostListView.class, new PostListModel(author));
+        getView().open(PostListView.class, new PostListModel(author));
     }
 }

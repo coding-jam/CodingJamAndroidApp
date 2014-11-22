@@ -3,7 +3,6 @@ package it.cosenonjaviste.mvp.post;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
@@ -35,18 +34,6 @@ public class PostListModel {
 
     public PostListModel(Author author) {
         this.author = author;
-    }
-
-    public static PresenterArgs open(MvpView<?> view, Category category) {
-        PresenterArgs args = view.createArgs();
-        args.putObject(CATEGORY, category);
-        return args;
-    }
-
-    public static PresenterArgs open(MvpView<?> view, Author author) {
-        PresenterArgs args = view.createArgs();
-        args.putObject(AUTHOR, author);
-        return args;
     }
 
     public Category getCategory() {

@@ -58,7 +58,7 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
 
         presenter.goToDetail(firstPost);
 
-        verify(view).openM(any(), modelCaptor.capture());
+        verify(view).open(any(), modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getUrl();

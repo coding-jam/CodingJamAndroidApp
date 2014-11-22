@@ -41,20 +41,10 @@ public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFra
 
     protected abstract int getLayoutId();
 
-    @Override public <MM> void openM(Class<? extends MvpView<MM>> viewClass, MM model) {
+    @Override public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
         Class<MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
         Intent intent = SingleFragmentActivity.createIntent(getActivity(), fragmentClass);
         intent.putExtra(MODEL, Parcels.wrap(model));
-        getActivity().startActivity(intent);
-    }
-
-    @Override public void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args) {
-        Class<MvpView<?>> fragmentClass = ConfigManager.singleton().get(viewClass);
-        Intent intent = SingleFragmentActivity.createIntent(getActivity(), fragmentClass);
-        if (args != null) {
-            Bundle bundle = ((BundlePresenterArgs) args).getBundle();
-            intent.putExtras(bundle);
-        }
         getActivity().startActivity(intent);
     }
 

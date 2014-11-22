@@ -46,7 +46,7 @@ public class AuthorListPresenterTest {
         presenter.loadAuthors();
         presenter.goToAuthorDetail(1);
 
-        verify(view).openM(any(), modelCaptor.capture());
+        verify(view).open(any(), modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));

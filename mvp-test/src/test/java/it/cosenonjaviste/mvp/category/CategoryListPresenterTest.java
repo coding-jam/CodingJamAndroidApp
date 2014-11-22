@@ -57,7 +57,7 @@ public class CategoryListPresenterTest {
         presenter.loadData();
         presenter.goToPosts(1);
 
-        verify(view).openM(any(), modelCaptor.capture());
+        verify(view).open(any(), modelCaptor.capture());
 
         assertThat(modelCaptor.getValue().getCategory()).isEqualTo(presenter.getModel().get(1));
     }
