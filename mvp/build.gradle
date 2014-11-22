@@ -6,6 +6,7 @@ dependencies {
     compile project(':javaLib')
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.retrofit:retrofit:1.7.0'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
 }
