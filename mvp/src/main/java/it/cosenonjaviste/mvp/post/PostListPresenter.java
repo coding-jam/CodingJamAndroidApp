@@ -13,15 +13,11 @@ import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
-import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
-
-    private static final String CATEGORY = "category";
-
-    private static final String AUTHOR = "author";
 
     @Inject WordPressService wordPressService;
 
@@ -30,10 +26,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     @Override public PostListModel createModel(PresenterArgs args) {
-        PostListModel postListModel = new PostListModel();
-        postListModel.setCategory(args.getObject(CATEGORY));
-        postListModel.setAuthor(args.getObject(AUTHOR));
-        return postListModel;
+        return new PostListModel(args);
     }
 
     public void reloadData() {
@@ -52,20 +45,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PresenterArgs args = PagePresenter.populateArgs(presenterArgsFactory.create(), item.getUrl());
+        PresenterArgs args = PageModel.populateArgs(presenterArgsFactory.create(), item.getUrl());
         getView().open(PageView.class, args);
-    }
-
-    public static PresenterArgs open(PresenterArgsFactory factory, Category category) {
-        PresenterArgs args = factory.create();
-        args.putObject(CATEGORY, category);
-        return args;
-    }
-
-    public static PresenterArgs open(PresenterArgsFactory factory, Author author) {
-        PresenterArgs args = factory.create();
-        args.putObject(AUTHOR, author);
-        return args;
     }
 
     public void loadNextPage() {

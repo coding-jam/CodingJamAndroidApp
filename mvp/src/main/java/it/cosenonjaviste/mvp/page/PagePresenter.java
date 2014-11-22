@@ -9,8 +9,6 @@ import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 
 public class PagePresenter extends RxMvpPresenter<PageModel> {
 
-    public static final String URL = "url";
-
     @Inject PageUrlManager pageUrlManager;
 
     @Inject public PagePresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
@@ -18,14 +16,7 @@ public class PagePresenter extends RxMvpPresenter<PageModel> {
     }
 
     @Override public PageModel createModel(PresenterArgs args) {
-        PageModel model = new PageModel();
-        model.setUrl(args.getObject(URL));
-        return model;
-    }
-
-    public static PresenterArgs populateArgs(PresenterArgs args, String url) {
-        args.putObject(URL, url);
-        return args;
+        return new PageModel(args);
     }
 
     public String getPostUrl(String url) {

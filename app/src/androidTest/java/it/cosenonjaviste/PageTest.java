@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.base.CnjFragmentTest;
-import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageUrlManager;
 import it.cosenonjaviste.post.PageFragment;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
@@ -31,7 +31,7 @@ public class PageTest extends CnjFragmentTest {
     }
 
     @Override protected Intent createActivityIntent() {
-        return createIntent(super.createActivityIntent(), PagePresenter::populateArgs, "url");
+        return createIntent(super.createActivityIntent(), PageModel::populateArgs, "url");
     }
 
     public void testDetailFragment() {

@@ -46,7 +46,7 @@ public class CategoryListPresenterTest extends PresenterTest<CategoryListView, C
     public void testGoToPosts() {
         presenter.loadData();
         presenter.goToPosts(1);
-        PostListModel model = getLastModel();
+        PostListModel model = new PostListModel(getLastArgs());
         assertThat(model.getCategory()).isEqualTo(presenter.getModel().get(1));
     }
 

@@ -3,9 +3,15 @@ package it.cosenonjaviste.mvp.post;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
+import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
 public class PostListModel {
+
+    private static final String CATEGORY = "category";
+
+    private static final String AUTHOR = "author";
 
     OptionalList items = new OptionalList<>();
 
@@ -14,6 +20,26 @@ public class PostListModel {
     boolean moreDataAvailable;
 
     Author author;
+
+    PostListModel() {
+    }
+
+    public PostListModel(PresenterArgs args) {
+        category = args.getObject(PostListModel.CATEGORY);
+        author = args.getObject(PostListModel.AUTHOR);
+    }
+
+    public static PresenterArgs open(PresenterArgsFactory factory, Category category) {
+        PresenterArgs args = factory.create();
+        args.putObject(CATEGORY, category);
+        return args;
+    }
+
+    public static PresenterArgs open(PresenterArgsFactory factory, Author author) {
+        PresenterArgs args = factory.create();
+        args.putObject(AUTHOR, author);
+        return args;
+    }
 
     public Category getCategory() {
         return category;

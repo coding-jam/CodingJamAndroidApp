@@ -42,7 +42,7 @@ public class AuthorListPresenterTest extends PresenterTest<AuthorListView, Autho
     public void testGoToDetail() {
         presenter.loadAuthors();
         presenter.goToAuthorDetail(1);
-        PostListModel model = getLastModel();
+        PostListModel model = new PostListModel(getLastArgs());
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
     }
 

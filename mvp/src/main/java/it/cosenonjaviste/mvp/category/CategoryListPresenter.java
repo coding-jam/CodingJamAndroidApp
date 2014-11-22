@@ -10,7 +10,7 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.ListPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
-import it.cosenonjaviste.mvp.post.PostListPresenter;
+import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.Observable;
 
@@ -32,6 +32,6 @@ public class CategoryListPresenter extends ListPresenter<Category> {
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        getView().open(PostListView.class, PostListPresenter.open(presenterArgsFactory, category));
+        getView().open(PostListView.class, PostListModel.open(presenterArgsFactory, category));
     }
 }

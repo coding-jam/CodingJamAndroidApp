@@ -17,7 +17,7 @@ public class AuthorPostListPresenterTest extends PostListPresenterBaseTest {
     }
 
     @Override protected PresenterArgs getArgs() {
-        return PostListPresenter.open(presenterArgsFactory, new Author(145, "a", "b"));
+        return PostListModel.open(presenterArgsFactory, new Author(145, "a", "b"));
     }
 
     @Test

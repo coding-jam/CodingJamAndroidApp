@@ -27,7 +27,7 @@ import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.page.PagePresenter;
+import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
@@ -101,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
             case 3:
                 return CnjFragment.createView(this, TweetListView.class, null);
             case 4:
-                PresenterArgs args = PagePresenter.populateArgs(new BundlePresenterArgs(), "http://www.cosenonjaviste.it/contatti/");
+                PresenterArgs args = PageModel.populateArgs(new BundlePresenterArgs(), "http://www.cosenonjaviste.it/contatti/");
                 return CnjFragment.createView(this, PageView.class, args);
             default:
                 return CnjFragment.createView(this, PostListView.class, null);

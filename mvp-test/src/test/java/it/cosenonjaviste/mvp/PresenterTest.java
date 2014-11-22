@@ -23,7 +23,9 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
 
     private Class<V> viewClass;
 
-    private Object lastModel;
+    private MvpView<?> lastView;
+
+    private PresenterArgs lastArgs;
 
     @Inject CnjPresenterConfig cnjPresenterConfig;
 
@@ -49,8 +51,8 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
         Mockito.doAnswer(invocation -> {
             Object[] arguments = invocation.getArguments();
             Class<? extends MvpView<?>> newViewClass = (Class<? extends MvpView<?>>) arguments[0];
-            RxMvpPresenter presenter1 = configManager.createAndInitPresenter(newViewClass, (PresenterArgs) arguments[1]);
-            lastModel = presenter1.getModel();
+            lastView = Mockito.mock(newViewClass);
+            lastArgs = (PresenterArgs) arguments[1];
             return null;
         }).when(view).open(any(), any());
     }
@@ -64,7 +66,11 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
     protected void initAfterInject() {
     }
 
-    public <M> M getLastModel() {
-        return (M) lastModel;
+    public MvpView<?> getLastView() {
+        return lastView;
+    }
+
+    public PresenterArgs getLastArgs() {
+        return lastArgs;
     }
 }

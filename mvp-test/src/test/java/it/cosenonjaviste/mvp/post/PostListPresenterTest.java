@@ -6,6 +6,7 @@ import dagger.Module;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.page.PageModel;
+import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +46,9 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
 
         presenter.goToDetail(firstPost);
 
-        PageModel detailModel = getLastModel();
+        assertThat(getLastView()).isInstanceOf(PageView.class);
+
+        PageModel detailModel = new PageModel(getLastArgs());
         String url = detailModel.getUrl();
 
         assertThat(url).isNotNull();
