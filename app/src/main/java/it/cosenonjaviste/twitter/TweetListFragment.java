@@ -8,6 +8,9 @@ import com.quentindommerc.superlistview.SuperListview;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
@@ -22,10 +25,12 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
 
     @InjectView(R.id.list) SuperListview list;
 
+    @Inject Provider<TweetListPresenter> presenterProvider;
+
     private TweetAdapter adapter;
 
-    @Override public Class<TweetListView> getViewClass() {
-        return TweetListView.class;
+    @Override protected TweetListPresenter createPresenter() {
+        return presenterProvider.get();
     }
 
     @Override protected int getLayoutId() {

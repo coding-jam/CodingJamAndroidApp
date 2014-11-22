@@ -13,6 +13,9 @@ import org.parceler.ParcelClasses;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
@@ -27,8 +30,10 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
     @InjectView(R.id.progress) View progressBar;
 
-    @Override public Class<PageView> getViewClass() {
-        return PageView.class;
+    @Inject Provider<PagePresenter> presenterProvider;
+
+    @Override protected PagePresenter createPresenter() {
+        return presenterProvider.get();
     }
 
     @Override protected void initView(View view) {

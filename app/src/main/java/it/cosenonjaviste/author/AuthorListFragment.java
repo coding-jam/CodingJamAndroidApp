@@ -5,6 +5,9 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
@@ -18,10 +21,12 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
 
     @InjectView(R.id.grid) SuperGridview grid;
 
+    @Inject Provider<AuthorListPresenter> presenterProvider;
+
     private AuthorAdapter adapter;
 
-    @Override public Class<AuthorListView> getViewClass() {
-        return AuthorListView.class;
+    @Override protected AuthorListPresenter createPresenter() {
+        return presenterProvider.get();
     }
 
     @Override protected int getLayoutId() {

@@ -23,7 +23,6 @@ import retrofit.converter.GsonConverter;
 
 @Module(injects = {
         MainActivity.class,
-        CnjPresenterConfig.class,
         PostListFragment.class,
         PageFragment.class,
         AuthorListFragment.class,

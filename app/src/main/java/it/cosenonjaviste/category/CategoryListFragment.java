@@ -8,6 +8,9 @@ import com.quentindommerc.superlistview.SuperGridview;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
@@ -22,10 +25,12 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
 
     @InjectView(R.id.grid) SuperGridview grid;
 
+    @Inject Provider<CategoryListPresenter> presenterProvider;
+
     private CategoryAdapter adapter;
 
-    @Override public Class<CategoryListView> getViewClass() {
-        return CategoryListView.class;
+    @Override protected CategoryListPresenter createPresenter() {
+        return presenterProvider.get();
     }
 
     @Override protected int getLayoutId() {

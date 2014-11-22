@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.MvpPresenter;
 import it.cosenonjaviste.mvp.base.MvpView;
 
@@ -33,7 +32,10 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         }
 
         presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
-        presenter = ConfigManager.singleton().createAndInitPresenter(getViewClass(), restoredModel, presenter);
+        if (presenter == null) {
+            presenter = createPresenter();
+        }
+        presenter.init(restoredModel);
 
         PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
@@ -61,5 +63,5 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         super.onStop();
     }
 
-    protected abstract Class<? extends MvpView<M>> getViewClass();
+    protected abstract P createPresenter();
 }
