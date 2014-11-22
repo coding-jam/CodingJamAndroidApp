@@ -42,6 +42,7 @@ public class JsonStubs {
             "\tname: \"Giampaolo Trapasso\",\n" +
             "\tfirst_name: \"Giampaolo\",\n" +
             "\tlast_name: \"Trapasso\",\n" +
+            "\temail: \"abc@gmail.com\",\n" +
             "\tnickname: \"trapo\",\n" +
             "\turl: \"http://www.cosenonjaviste.it/?team=giampaolo-trapasso\",\n" +
             "\tdescription: \"aaaaa\"\n" +

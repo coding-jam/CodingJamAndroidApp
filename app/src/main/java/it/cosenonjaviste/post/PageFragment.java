@@ -90,6 +90,6 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
     }
 
     @Override public void update(PageModel model) {
-        webView.loadUrl(presenter.getPostUrl(model.getUrl()));
+        webView.loadUrl(presenter.getPostUrl());
     }
 }

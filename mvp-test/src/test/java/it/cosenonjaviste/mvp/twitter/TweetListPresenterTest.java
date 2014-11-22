@@ -23,7 +23,15 @@ public class TweetListPresenterTest {
 
     @Test public void testLoadTweets() {
         presenter.reloadData();
-        assertThat(presenter.getModel().isEmpty()).isFalse();
+        assertThat(presenter.getModel().size()).isEqualTo(10);
+    }
+
+    @Test public void testLoadMoreTweets() {
+        presenter.reloadData();
+
+        presenter.loadNextPage();
+
+        assertThat(presenter.getModel().size()).isEqualTo(20);
     }
 
     @Before

@@ -13,7 +13,7 @@ public class PagePresenter extends RxMvpPresenter<PageModel> {
         super(schedulerManager);
     }
 
-    public String getPostUrl(String url) {
-        return pageUrlManager.getUrl(url);
+    public String getPostUrl() {
+        return pageUrlManager.getUrl(model.getUrl());
     }
 }

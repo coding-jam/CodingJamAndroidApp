@@ -30,10 +30,6 @@ public class PostListModel {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public boolean isMoreDataAvailable() {
         return moreDataAvailable;
     }
@@ -44,10 +40,6 @@ public class PostListModel {
 
     public Author getAuthor() {
         return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 
     public OptionalList<Post> getItems() {
