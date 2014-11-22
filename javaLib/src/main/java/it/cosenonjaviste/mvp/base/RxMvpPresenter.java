@@ -1,7 +1,6 @@
 package it.cosenonjaviste.mvp.base;
 
 
-import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.base.pausable.CompositePausableSubscription;
 import it.cosenonjaviste.mvp.base.pausable.PausableSubscriptions;
 import rx.Observable;
@@ -17,8 +16,7 @@ public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
 
     protected final CompositePausableSubscription pausableSubscriptions = new CompositePausableSubscription();
 
-    public RxMvpPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
-        super(presenterArgsFactory);
+    public RxMvpPresenter(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
     }
 

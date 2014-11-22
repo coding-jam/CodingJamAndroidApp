@@ -12,7 +12,6 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.mvp.page.PageView;
 import rx.Observable;
@@ -21,8 +20,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject public PostListPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
-        super(schedulerManager, presenterArgsFactory);
+    @Inject public PostListPresenter(SchedulerManager schedulerManager) {
+        super(schedulerManager);
     }
 
     @Override public PostListModel createModel(PresenterArgs args) {
@@ -45,7 +44,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        PresenterArgs args = PageModel.populateArgs(presenterArgsFactory.create(), item.getUrl());
+        PresenterArgs args = PageModel.populateArgs(getView().createArgs(), item.getUrl());
         getView().open(PageView.class, args);
     }
 

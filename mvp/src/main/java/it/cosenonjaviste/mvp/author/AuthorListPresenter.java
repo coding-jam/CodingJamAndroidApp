@@ -10,7 +10,6 @@ import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.ListPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
-import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.post.PostListModel;
 import it.cosenonjaviste.mvp.post.PostListView;
 import rx.Observable;
@@ -19,8 +18,8 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     @Inject WordPressService wordPressService;
 
-    @Inject public AuthorListPresenter(SchedulerManager schedulerManager, PresenterArgsFactory presenterArgsFactory) {
-        super(schedulerManager, presenterArgsFactory);
+    @Inject public AuthorListPresenter(SchedulerManager schedulerManager) {
+        super(schedulerManager);
     }
 
     public void loadAuthors() {
@@ -33,6 +32,6 @@ public class AuthorListPresenter extends ListPresenter<Author> {
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        getView().open(PostListView.class, PostListModel.open(presenterArgsFactory, author));
+        getView().open(PostListView.class, PostListModel.open(getView(), author));
     }
 }

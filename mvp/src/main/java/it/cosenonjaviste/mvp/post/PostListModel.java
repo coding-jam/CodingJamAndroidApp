@@ -3,8 +3,8 @@ package it.cosenonjaviste.mvp.post;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-import it.cosenonjaviste.mvp.base.args.PresenterArgsFactory;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
 public class PostListModel {
@@ -29,14 +29,14 @@ public class PostListModel {
         author = args.getObject(PostListModel.AUTHOR);
     }
 
-    public static PresenterArgs open(PresenterArgsFactory factory, Category category) {
-        PresenterArgs args = factory.create();
+    public static PresenterArgs open(MvpView<?> view, Category category) {
+        PresenterArgs args = view.createArgs();
         args.putObject(CATEGORY, category);
         return args;
     }
 
-    public static PresenterArgs open(PresenterArgsFactory factory, Author author) {
-        PresenterArgs args = factory.create();
+    public static PresenterArgs open(MvpView<?> view, Author author) {
+        PresenterArgs args = view.createArgs();
         args.putObject(AUTHOR, author);
         return args;
     }

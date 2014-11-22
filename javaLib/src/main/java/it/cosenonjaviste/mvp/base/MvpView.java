@@ -6,4 +6,6 @@ public interface MvpView<M> {
     void update(M model);
 
     void open(Class<? extends MvpView<?>> viewClass, PresenterArgs args);
+
+    PresenterArgs createArgs();
 }

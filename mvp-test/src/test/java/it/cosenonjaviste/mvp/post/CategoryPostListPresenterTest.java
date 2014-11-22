@@ -18,7 +18,7 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
     }
 
     @Override protected PresenterArgs getArgs() {
-        return PostListModel.open(presenterArgsFactory, new Category(1, "cat", 10));
+        return PostListModel.open(getView(), new Category(1, "cat", 10));
     }
 
     @Test

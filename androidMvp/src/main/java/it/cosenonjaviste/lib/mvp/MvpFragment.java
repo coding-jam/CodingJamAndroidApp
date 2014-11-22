@@ -8,6 +8,7 @@ import org.parceler.Parcels;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.MvpPresenter;
 import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.mvp.base.args.PresenterArgs;
 
 public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
@@ -59,4 +60,8 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
     }
 
     protected abstract Class<? extends MvpView<M>> getViewClass();
+
+    @Override public PresenterArgs createArgs() {
+        return new BundlePresenterArgs();
+    }
 }
