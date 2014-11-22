@@ -1,7 +1,6 @@
 package it.cosenonjaviste.mvp;
 
 import org.junit.Before;
-import org.mockito.Mockito;
 
 import javax.inject.Inject;
 
@@ -10,11 +9,7 @@ import it.cosenonjaviste.CnjPresenterConfig;
 import it.cosenonjaviste.mvp.base.ConfigManager;
 import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.args.MapPresenterArgs;
 import it.cosenonjaviste.mvp.base.args.PresenterArgs;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
 
 public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresenter<?>> {
 
@@ -24,11 +19,9 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
 
     private Class<V> viewClass;
 
-    private MvpView<?> lastView;
-
-    private PresenterArgs lastArgs;
-
     @Inject CnjPresenterConfig cnjPresenterConfig;
+
+    private ViewMocker viewMocker = new ViewMocker();
 
     public PresenterTest(Class<V> viewClass) {
         this.viewClass = viewClass;
@@ -41,25 +34,11 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
 
         ConfigManager configManager = cnjPresenterConfig.init();
 
-        view = mockView(viewClass);
+        view = viewMocker.mockView(viewClass);
 
         presenter = configManager.createAndInitPresenter(viewClass, getArgs());
 
         presenter.subscribe((MvpView) view);
-    }
-
-    private <V extends MvpView<?>> V mockView(Class<V> viewClass) {
-        MvpView<?> view = Mockito.mock(viewClass);
-        doAnswer(invocation -> {
-            Object[] arguments = invocation.getArguments();
-            Class<? extends MvpView<?>> newViewClass = (Class<? extends MvpView<?>>) arguments[0];
-            lastView = mockView(newViewClass);
-            lastArgs = (PresenterArgs) arguments[1];
-            return null;
-        }).when(view).open(any(), any());
-
-        doAnswer(invocation -> new MapPresenterArgs()).when(view).createArgs();
-        return (V) view;
     }
 
     protected abstract Object getTestModule();
@@ -72,11 +51,11 @@ public abstract class PresenterTest<V extends MvpView<?>, P extends RxMvpPresent
     }
 
     public MvpView<?> getLastView() {
-        return lastView;
+        return viewMocker.getLastView();
     }
 
     public PresenterArgs getLastArgs() {
-        return lastArgs;
+        return viewMocker.getLastArgs();
     }
 
     public V getView() {
