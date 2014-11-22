@@ -10,15 +10,6 @@ public class Post {
     String url;
     String excerpt;
 
-    public Post() {
-    }
-
-    public Post(long id, String title, String url) {
-        this.id = id;
-        this.title = title;
-        this.url = url;
-    }
-
     public long getId() {
         return id;
     }
@@ -41,9 +32,5 @@ public class Post {
 
     public String getExcerpt() {
         return excerpt;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }
