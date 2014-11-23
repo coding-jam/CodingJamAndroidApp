@@ -34,30 +34,28 @@ public class AuthorListPresenterTest {
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
+    @Before
+    public void setup() {
+        ObjectGraph.create(new TestModule()).inject(this);
+        server.initDispatcher(JsonStubs.AUTHORS);
+    }
+
     @Test
     public void testLoad() {
-        presenter.loadAuthors();
+        presenter.initAndSubscribe(new OptionalList<>(), view);
         OptionalList<Author> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(2);
     }
 
     @Test
     public void testGoToDetail() {
-        presenter.loadAuthors();
+        presenter.initAndSubscribe(new OptionalList<>(), view);
         presenter.goToAuthorDetail(1);
 
         verify(view).open(any(), modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
-    }
-
-    @Before
-    public void setup() {
-        ObjectGraph.create(new TestModule()).inject(this);
-        server.initDispatcher(JsonStubs.AUTHORS);
-
-        presenter.initAndSubscribe(new OptionalList<>(), view);
     }
 
     @Module(injects = AuthorListPresenterTest.class, includes = MvpJUnitTestModule.class)

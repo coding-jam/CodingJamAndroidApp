@@ -21,23 +21,22 @@ public class TweetListPresenterTest {
 
     @Inject TweetListPresenter presenter;
 
+    @Before
+    public void setup() {
+        ObjectGraph.create(new TestModule()).inject(this);
+    }
+
     @Test public void testLoadTweets() {
-        presenter.reloadData();
+        presenter.initAndSubscribe(new TweetListModel(), view);
         assertThat(presenter.getModel().size()).isEqualTo(10);
     }
 
     @Test public void testLoadMoreTweets() {
-        presenter.reloadData();
+        presenter.initAndSubscribe(new TweetListModel(), view);
 
         presenter.loadNextPage();
 
         assertThat(presenter.getModel().size()).isEqualTo(20);
-    }
-
-    @Before
-    public void setup() {
-        ObjectGraph.create(new TestModule()).inject(this);
-        presenter.initAndSubscribe(new TweetListModel(), view);
     }
 
     @Module(injects = {TweetListPresenterTest.class}, includes = MvpJUnitTestModule.class)

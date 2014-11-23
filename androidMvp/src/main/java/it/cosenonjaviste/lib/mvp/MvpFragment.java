@@ -15,8 +15,6 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
 
     protected P presenter;
 
-    private boolean newModelCreated = true;
-
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
 
@@ -25,7 +23,6 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
         if (state != null) {
             presenterId = state.getLong(PRESENTER_ID, 0);
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
-            newModelCreated = false;
         }
         if (restoredModel == null && getArguments() != null) {
             restoredModel = Parcels.unwrap(getArguments().getParcelable(MODEL));
@@ -49,13 +46,6 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
     @Override public void onStart() {
         super.onStart();
         presenter.subscribe(this);
-        if (newModelCreated) {
-            loadOnFirstStart();
-            newModelCreated = false;
-        }
-    }
-
-    protected void loadOnFirstStart() {
     }
 
     @Override public void onStop() {

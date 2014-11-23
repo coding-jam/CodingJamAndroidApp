@@ -18,14 +18,12 @@ public class AuthorPostListPresenterTest extends PostListPresenterBaseTest {
         return new TestModule();
     }
 
-    @Override protected PostListModel getModel() {
-        return new PostListModel(new Author(145, "a", "b"));
-    }
-
     @Test
     public void testLoad() throws InterruptedException {
-        presenter.reloadData();
-        PostListModel model = presenter.getModel();
+        PostListModel model = new PostListModel(new Author(145, "a", "b"));
+
+        presenter.initAndSubscribe(model, view);
+
         assertThat(model.getItems().size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.AUTHOR_POSTS_URL);

@@ -21,7 +21,7 @@ public class OptionalList<T> extends OptionalItem<List<T>> {
     }
 
     public int size() {
-        if (isPresent()) {
+        if (isValueAvalaible()) {
             return getObject().size();
         } else {
             return 0;
@@ -29,7 +29,7 @@ public class OptionalList<T> extends OptionalItem<List<T>> {
     }
 
     public T get(int index) {
-        if (isPresent()) {
+        if (isValueAvalaible()) {
             return getObject().get(index);
         } else {
             return null;

@@ -46,10 +46,6 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
         list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
     }
 
-    @Override protected void loadOnFirstStart() {
-        presenter.reloadData();
-    }
-
     @Override public void update(TweetListModel model) {
         model.call(
                 items -> {

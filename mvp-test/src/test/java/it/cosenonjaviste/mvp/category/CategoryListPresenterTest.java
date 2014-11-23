@@ -38,12 +38,11 @@ public class CategoryListPresenterTest {
     public void setup() {
         ObjectGraph.create(new TestModule()).inject(this);
         server.initDispatcher(JsonStubs.CATEGORIES);
-        presenter.initAndSubscribe(new OptionalList<>(), view);
     }
 
     @Test
     public void testLoad() {
-        presenter.loadData();
+        presenter.initAndSubscribe(new OptionalList<>(), view);
         OptionalList<Category> model = presenter.getModel();
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(0);
@@ -54,7 +53,7 @@ public class CategoryListPresenterTest {
 
     @Test
     public void testGoToPosts() {
-        presenter.loadData();
+        presenter.initAndSubscribe(new OptionalList<>(), view);
         presenter.goToPosts(1);
 
         verify(view).open(any(), modelCaptor.capture());

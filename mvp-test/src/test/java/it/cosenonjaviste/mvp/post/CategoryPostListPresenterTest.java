@@ -19,14 +19,14 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
         return new TestModule();
     }
 
-    @Override protected PostListModel getModel() {
+    protected PostListModel createModel() {
         return new PostListModel(new Category(1, "cat", 10));
     }
 
     @Test
     public void testLoad() throws InterruptedException {
-        presenter.reloadData();
-        PostListModel model = presenter.getModel();
+        PostListModel model = createModel();
+        presenter.initAndSubscribe(model, view);
         assertThat(model.getItems().size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
@@ -36,10 +36,10 @@ public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
     @Test
     public void testLoadMore() {
         server.initDispatcher(JsonStubs.getPostList(20));
-        presenter.reloadData();
+        PostListModel model = createModel();
+        presenter.initAndSubscribe(model, view);
         server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
-        PostListModel model = presenter.getModel();
         assertThat(model.getItems().size()).isEqualTo(25);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);

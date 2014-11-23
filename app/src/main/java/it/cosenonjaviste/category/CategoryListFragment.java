@@ -46,10 +46,6 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
         grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
     }
 
-    @Override protected void loadOnFirstStart() {
-        presenter.loadData();
-    }
-
     @Override public void update(OptionalList<Category> model) {
         model.call(
                 categories -> {

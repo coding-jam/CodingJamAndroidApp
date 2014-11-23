@@ -49,7 +49,7 @@ public class OptionalItem<T> {
         return throwable != null;
     }
 
-    public boolean isPresent() {
+    public boolean isValueAvalaible() {
         return !isError() && !isEmpty();
     }
 

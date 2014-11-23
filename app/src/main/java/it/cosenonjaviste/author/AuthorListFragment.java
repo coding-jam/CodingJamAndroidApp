@@ -41,10 +41,6 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
         grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToAuthorDetail(position));
     }
 
-    @Override protected void loadOnFirstStart() {
-        presenter.loadAuthors();
-    }
-
     @Override public void update(OptionalList<Author> model) {
         model.call(authors -> {
             grid.showList();

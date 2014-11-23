@@ -28,10 +28,7 @@ public abstract class PostListPresenterBaseTest {
     public void setup() {
         ObjectGraph.create(getTestModule()).inject(this);
         server.initDispatcher(JsonStubs.getPostList(1));
-        presenter.initAndSubscribe(getModel(), view);
     }
 
     protected abstract Object getTestModule();
-
-    protected abstract PostListModel getModel();
 }

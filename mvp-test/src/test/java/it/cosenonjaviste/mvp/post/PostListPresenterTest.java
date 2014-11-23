@@ -25,17 +25,12 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         return new TestModule();
     }
 
-    @Override protected PostListModel getModel() {
-        return new PostListModel();
-    }
-
     @Test
     public void testLoad() throws InterruptedException {
-        presenter.reloadData();
-        PostListModel model = presenter.getModel();
+        PostListModel model = new PostListModel();
+        presenter.initAndSubscribe(model, view);
         assertThat(model.getItems().size()).isEqualTo(1);
         String lastUrl = server.getLastUrl();
-        System.out.println(lastUrl);
 //        int requestCount = server.getRequestCount();
 //        System.out.println(recordedRequest);
     }
@@ -43,17 +38,17 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
     @Test
     public void testLoadMore() {
         server.initDispatcher(JsonStubs.getPostList(20));
-        presenter.reloadData();
+        PostListModel model = new PostListModel();
+        presenter.initAndSubscribe(model, view);
         server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
-        PostListModel model = presenter.getModel();
         assertThat(model.getItems().size()).isEqualTo(25);
     }
 
     @Test
     public void testGoToDetails() {
-        presenter.reloadData();
-        PostListModel model = presenter.getModel();
+        PostListModel model = new PostListModel();
+        presenter.initAndSubscribe(model, view);
         Post firstPost = model.getItems().get(0);
 
         presenter.goToDetail(firstPost);

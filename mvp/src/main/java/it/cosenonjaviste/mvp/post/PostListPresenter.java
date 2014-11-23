@@ -9,6 +9,7 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.page.PageModel;
@@ -19,15 +20,27 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;
 
+    private boolean loadStarted;
+
     @Inject public PostListPresenter(SchedulerManager schedulerManager) {
         super(schedulerManager);
+    }
+
+    @Override public void subscribe(MvpView<PostListModel> view) {
+        super.subscribe(view);
+        if (model.getItems().isEmpty() && !loadStarted) {
+            reloadData();
+        }
     }
 
     public void reloadData() {
         Observable<List<Post>> observable = getObservable(0);
 
         subscribePausable(observable,
-                () -> getView().startLoading(model.getItems().isEmpty()),
+                () -> {
+                    loadStarted = true;
+                    getView().startLoading(model.getItems().isEmpty());
+                },
                 posts -> {
                     model.getItems().done(posts);
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);

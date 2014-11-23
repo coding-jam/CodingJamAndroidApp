@@ -48,10 +48,6 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
         list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
     }
 
-    @Override protected void loadOnFirstStart() {
-        presenter.reloadData();
-    }
-
     @Override public void update(PostListModel model) {
         model.getItems().call(
                 posts -> {
