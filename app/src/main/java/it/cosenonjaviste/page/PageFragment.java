@@ -1,9 +1,9 @@
-package it.cosenonjaviste.post;
+package it.cosenonjaviste.page;
 
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -11,7 +11,6 @@ import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -36,9 +35,19 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
         return presenterProvider.get();
     }
 
-    @Override protected void initView(View view) {
+    @SuppressLint("SetJavaScriptEnabled") @Override protected void initView(View view) {
         super.initView(view);
-        webView.getSettings().setJavaScriptEnabled(true);
+
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+//        File externalFilesDir = getActivity().getExternalFilesDir(null);
+//        if (externalFilesDir != null) {
+//            settings.setAppCachePath(externalFilesDir.getAbsolutePath());
+//            settings.setAppCacheMaxSize(20 * 1024 * 1024);
+//            settings.setAppCacheEnabled(true);
+//            settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+//        }
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -46,7 +55,7 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
                 return true;
             }
 
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            @Override public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
                 if (url.equalsIgnoreCase("http://www.cosenonjaviste.it/wp-content/themes/flexform/style.css")) {
                     return getCssWebResourceResponseFromAsset();
                 }
@@ -66,14 +75,10 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
             private WebResourceResponse getCssWebResourceResponseFromAsset() {
                 try {
-                    return getUtf8EncodedCssWebResourceResponse(getActivity().getAssets().open("style.css"));
+                    return new WebResourceResponse("text/css", "UTF-8", getActivity().getAssets().open("style.css"));
                 } catch (IOException e) {
                     return null;
                 }
-            }
-
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB) private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream data) {
-                return new WebResourceResponse("text/css", "UTF-8", data);
             }
 
             @Override

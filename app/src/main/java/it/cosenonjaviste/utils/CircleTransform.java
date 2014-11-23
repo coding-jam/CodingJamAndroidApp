@@ -41,37 +41,38 @@ public class CircleTransform implements Transformation {
             return null;
         }
         int size = Math.min(source.getWidth(), source.getHeight());
-        if (size == 0) {
-            return null;
-        }
         Bitmap squaredBitmap = createSquaredImage(source, size);
 
-        if (size != imageSize) {
-            size = imageSize;
-            squaredBitmap = screateScaledImage(squaredBitmap, size);
+        try {
+            if (size != imageSize) {
+                size = imageSize;
+                squaredBitmap = screateScaledImage(squaredBitmap, size);
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(bitmap);
+
+            float r = size / 2f;
+            if (showBorder) {
+                Paint borderPaint = new Paint();
+                borderPaint.setStrokeWidth(borderSize);
+                borderPaint.setColor(borderColor);
+                borderPaint.setAntiAlias(true);
+
+                float borderRadius = size / 2f;
+                canvas.drawCircle(borderRadius, borderRadius, borderRadius, borderPaint);
+
+                r = r - borderSize;
+            }
+
+            canvas.drawCircle(size / 2f, size / 2f, r, createBitmapPainter(squaredBitmap));
+
+            squaredBitmap.recycle();
+            return bitmap;
+        } catch (IllegalArgumentException e) {
+            return squaredBitmap;
         }
-
-        Bitmap bitmap = Bitmap.createBitmap(size, size, Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(bitmap);
-
-        float r = size / 2f;
-        if (showBorder) {
-            Paint borderPaint = new Paint();
-            borderPaint.setStrokeWidth(borderSize);
-            borderPaint.setColor(borderColor);
-            borderPaint.setAntiAlias(true);
-
-            float borderRadius = size / 2f;
-            canvas.drawCircle(borderRadius, borderRadius, borderRadius, borderPaint);
-
-            r = r - borderSize;
-        }
-
-        canvas.drawCircle(size / 2f, size / 2f, r, createBitmapPainter(squaredBitmap));
-
-        squaredBitmap.recycle();
-        return bitmap;
     }
 
     private Paint createBitmapPainter(Bitmap squaredBitmap) {

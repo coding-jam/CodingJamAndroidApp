@@ -12,7 +12,7 @@ import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.model.WordPressServiceFactory;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
-import it.cosenonjaviste.post.PageFragment;
+import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.Twitter4JService;

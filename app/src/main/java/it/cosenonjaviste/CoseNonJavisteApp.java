@@ -10,7 +10,7 @@ import it.cosenonjaviste.mvp.category.CategoryListView;
 import it.cosenonjaviste.mvp.page.PageView;
 import it.cosenonjaviste.mvp.post.PostListView;
 import it.cosenonjaviste.mvp.twitter.TweetListView;
-import it.cosenonjaviste.post.PageFragment;
+import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 
