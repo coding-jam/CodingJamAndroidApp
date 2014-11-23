@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
@@ -46,6 +47,10 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
         list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
     }
 
+    @OnClick(R.id.error_retry) void retry() {
+        presenter.reloadData();
+    }
+
     @Override public void update(TweetListModel model) {
         model.call(
                 items -> {
@@ -59,7 +64,6 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
                 Actions.empty()
         );
     }
-
 
     @Override public void startLoading(boolean showMainLoading) {
         if (showMainLoading) {

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
@@ -39,6 +40,10 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
         grid.getList().setNumColumns(2);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToAuthorDetail(position));
+    }
+
+    @OnClick(R.id.error_retry) void retry() {
+        presenter.loadAuthors();
     }
 
     @Override public void update(OptionalList<Author> model) {

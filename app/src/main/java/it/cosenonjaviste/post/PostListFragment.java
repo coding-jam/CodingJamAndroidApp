@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
@@ -46,6 +47,10 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
         list.setRefreshListener(presenter::reloadData);
         list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
         list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
+    }
+
+    @OnClick(R.id.error_retry) void retry() {
+        presenter.reloadData();
     }
 
     @Override public void update(PostListModel model) {

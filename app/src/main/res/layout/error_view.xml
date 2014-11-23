@@ -10,11 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:drawableTop="@drawable/ic_launcher"
+        android:drawablePadding="10dp"
         android:text="@string/download_error"
         android:id="@+id/error_message"
         android:layout_centerInParent="true"/>
 
-    <TextView
+    <Button
         android:id="@+id/error_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Category;
@@ -45,6 +46,11 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
         grid.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
     }
+
+    @OnClick(R.id.error_retry) void retry() {
+        presenter.loadData();
+    }
+
 
     @Override public void update(OptionalList<Category> model) {
         model.call(
