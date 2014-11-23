@@ -17,11 +17,11 @@ import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.ConfigManager;
+import it.cosenonjaviste.mvp.base.MvpPresenter;
 import it.cosenonjaviste.mvp.base.MvpView;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFragment<P, M> {
+public abstract class CnjFragment<P extends MvpPresenter<M>, M> extends MvpFragment<P, M> {
 
     @Override public void onCreate(Bundle savedInstanceState) {
         ObjectGraphHolder.inject((DaggerApplication) getActivity().getApplication(), this);
