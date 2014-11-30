@@ -16,7 +16,6 @@ import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.Twitter4JService;
-import retrofit.android.MainThreadExecutor;
 
 @Module(injects = {
         MainActivity.class,
@@ -35,7 +34,7 @@ public class AppModule {
     }
 
     @Provides @Singleton WordPressService provideGitHubService() {
-        return WordPressServiceFactory.create("http://www.cosenonjaviste.it/", new MainThreadExecutor(), BuildConfig.DEBUG);
+        return WordPressServiceFactory.create("http://www.cosenonjaviste.it/", BuildConfig.DEBUG);
     }
 
     @Provides TwitterService provideTwitterService() {

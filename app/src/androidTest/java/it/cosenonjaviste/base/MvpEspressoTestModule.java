@@ -14,7 +14,7 @@ import it.cosenonjaviste.stubs.MockWebServerWrapper;
 public class MvpEspressoTestModule {
 
     @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
-        return WordPressServiceFactory.create(mockWebServer.getUrl(true), Runnable::run, true);
+        return WordPressServiceFactory.create(mockWebServer.getUrl(true), true);
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {

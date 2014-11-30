@@ -15,7 +15,7 @@ import it.cosenonjaviste.stubs.TestSchedulerManager;
 public class MvpJUnitTestModule {
 
     @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
-        return WordPressServiceFactory.create(mockWebServer.getUrl(false), Runnable::run, true);
+        return WordPressServiceFactory.create(mockWebServer.getUrl(false), true);
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager(TestSchedulerManager testSchedulerManager) {
