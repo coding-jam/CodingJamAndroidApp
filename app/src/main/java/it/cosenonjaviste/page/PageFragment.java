@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
     @InjectView(R.id.web_view) WebView webView;
 
-    @InjectView(R.id.progress) View progressBar;
+    @InjectView(R.id.progress_detail) View progressBar;
 
     @Inject Provider<PagePresenter> presenterProvider;
 
@@ -40,13 +41,13 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> implemen
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-//        File externalFilesDir = getActivity().getExternalFilesDir(null);
-//        if (externalFilesDir != null) {
-//            settings.setAppCachePath(externalFilesDir.getAbsolutePath());
-//            settings.setAppCacheMaxSize(20 * 1024 * 1024);
-//            settings.setAppCacheEnabled(true);
-//            settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
-//        }
+        File externalFilesDir = getActivity().getExternalFilesDir(null);
+        if (externalFilesDir != null) {
+            settings.setAppCachePath(externalFilesDir.getAbsolutePath());
+            settings.setAppCacheMaxSize(20 * 1024 * 1024);
+            settings.setAppCacheEnabled(true);
+            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        }
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

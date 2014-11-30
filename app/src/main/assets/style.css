@@ -34,6 +34,10 @@ aside.sidebar.right-sidebar {
     display: none;
 }
 
+#comment-area {
+    display: none;
+}
+
 #copyright {
     display: none;
 }

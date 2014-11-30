@@ -11,6 +11,6 @@
         android:visibility="invisible"/>
 
     <include
-        android:id="@+id/progress"
+        android:id="@+id/progress_detail"
         layout="@layout/progress"/>
 </FrameLayout>
