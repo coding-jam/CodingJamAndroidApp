@@ -33,8 +33,8 @@ android {
         applicationId "it.cosenonjaviste"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "2.0"
         buildConfigField "String", "CONSUMER_KEY", project.oauth_consumerKey
         buildConfigField "String", "CONSUMER_SECRET", project.oauth_consumerSecret
         buildConfigField "String", "ACCESS_TOKEN", project.oauth_accessToken
