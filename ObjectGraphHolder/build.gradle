@@ -7,7 +7,6 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "it.cosenonjaviste.lib.mvp.dagger"
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 1
