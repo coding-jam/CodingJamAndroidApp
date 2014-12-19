@@ -21,7 +21,7 @@ public abstract class PostListPresenterBaseTest {
     @Inject MockWebServerWrapper server;
 
     @After public void shutdownServer() throws IOException {
-        server.shutdown();
+//        server.shutdown();
     }
 
     @Before
