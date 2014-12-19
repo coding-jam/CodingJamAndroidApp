@@ -55,8 +55,4 @@ public class WordPressServiceTest {
     @Module(injects = WordPressServiceTest.class, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
-
-    @After public void shutdownServer() throws IOException {
-        server.shutdown();
-    }
 }
