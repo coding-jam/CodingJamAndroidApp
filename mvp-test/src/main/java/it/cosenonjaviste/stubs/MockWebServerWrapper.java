@@ -20,9 +20,9 @@ public class MockWebServerWrapper {
 
     private static MockWebServer server;
 
-    private LinkedList<RecordedRequest> requests = new LinkedList<>();
+    private static LinkedList<RecordedRequest> requests = new LinkedList<>();
 
-    private Func1<RecordedRequest, MockResponse> dispatchFunction;
+    private static Func1<RecordedRequest, MockResponse> dispatchFunction;
 
     @Inject public MockWebServerWrapper() {
         if (server == null) {
@@ -38,6 +38,7 @@ public class MockWebServerWrapper {
 
     public void initDispatcher(String responseBody) {
         dispatchFunction = recordedRequest -> new MockResponse().setBody(responseBody);
+        requests = new LinkedList<>();
     }
 
     private void initDispatcher() {
