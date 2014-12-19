@@ -49,7 +49,7 @@ public class WordPressServiceTest {
 
     @After
     public void shutdown() throws IOException {
-        server.shutdown();
+//        server.shutdown();
     }
 
     @Module(injects = WordPressServiceTest.class, includes = MvpJUnitTestModule.class)
