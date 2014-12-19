@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dagger.Module;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 
@@ -42,7 +43,9 @@ public class PostListPresenterTest extends PostListPresenterBaseTest {
         presenter.initAndSubscribe(model, view);
         server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
-        assertThat(model.getItems().size()).isEqualTo(25);
+        OptionalList<Post> items = model.getItems();
+        int size = items.size();
+        assertThat(size).isEqualTo(25);
     }
 
     @Test
