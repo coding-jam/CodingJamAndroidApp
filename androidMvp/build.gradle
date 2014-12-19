@@ -4,7 +4,7 @@ apply plugin: 'retrolambda'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         minSdkVersion 9
@@ -30,7 +30,7 @@ android {
 
 dependencies {
     compile project(':javaLib')
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.android.support:support-annotations:20.0.0'
     compile 'org.parceler:parceler-api:0.2.14'
 }
