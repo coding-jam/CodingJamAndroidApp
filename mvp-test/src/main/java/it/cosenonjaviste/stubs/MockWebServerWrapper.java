@@ -18,20 +18,22 @@ import rx.functions.Func1;
 @Singleton
 public class MockWebServerWrapper {
 
-    private final MockWebServer server;
+    private static MockWebServer server;
 
     private LinkedList<RecordedRequest> requests = new LinkedList<>();
 
     private Func1<RecordedRequest, MockResponse> dispatchFunction;
 
     @Inject public MockWebServerWrapper() {
-        server = new MockWebServer();
-        try {
-            server.play();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (server == null) {
+            server = new MockWebServer();
+            try {
+                server.play();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            initDispatcher();
         }
-        initDispatcher();
     }
 
     public void initDispatcher(String responseBody) {
