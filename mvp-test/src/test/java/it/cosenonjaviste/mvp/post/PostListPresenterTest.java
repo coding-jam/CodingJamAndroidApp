@@ -35,7 +35,6 @@ public class PostListPresenterTest {
     @Before
     public void setup() {
         ObjectGraph.create(getTestModule()).inject(this);
-        server.initDispatcher(JsonStubs.getPostList(1));
     }
 
     @Captor ArgumentCaptor<PageModel> modelCaptor;
@@ -46,6 +45,7 @@ public class PostListPresenterTest {
 
     @Test
     public void testLoad() throws InterruptedException {
+        server.initDispatcher(JsonStubs.getPostList(1));
         PostListModel model = new PostListModel();
         presenter.initAndSubscribe(model, view);
         assertThat(model.getItems().size()).isEqualTo(1);
@@ -68,6 +68,7 @@ public class PostListPresenterTest {
 
     @Test
     public void testGoToDetails() {
+        server.initDispatcher(JsonStubs.getPostList(1));
         PostListModel model = new PostListModel();
         presenter.initAndSubscribe(model, view);
         Post firstPost = model.getItems().get(0);
