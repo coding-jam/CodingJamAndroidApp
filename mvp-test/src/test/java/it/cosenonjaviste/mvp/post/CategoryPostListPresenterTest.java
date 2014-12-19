@@ -1,21 +1,39 @@
 package it.cosenonjaviste.mvp.post;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.inject.Inject;
+
 import dagger.Module;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CategoryPostListPresenterTest extends PostListPresenterBaseTest {
+public class CategoryPostListPresenterTest {
 
-    @Override protected Object getTestModule() {
+    @Mock PostListView view;
+
+    @Inject PostListPresenter presenter;
+
+    @Inject MockWebServerWrapper server;
+
+    @Before
+    public void setup() {
+        ObjectGraph.create(getTestModule()).inject(this);
+        server.initDispatcher(JsonStubs.getPostList(1));
+    }
+
+    protected Object getTestModule() {
         return new TestModule();
     }
 

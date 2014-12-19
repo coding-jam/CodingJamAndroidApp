@@ -1,28 +1,46 @@
 package it.cosenonjaviste.mvp.post;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.inject.Inject;
+
 import dagger.Module;
+import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.mvp.page.PageModel;
 import it.cosenonjaviste.stubs.JsonStubs;
+import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PostListPresenterTest extends PostListPresenterBaseTest {
+public class PostListPresenterTest {
+
+    @Mock PostListView view;
+
+    @Inject PostListPresenter presenter;
+
+    @Inject MockWebServerWrapper server;
+
+    @Before
+    public void setup() {
+        ObjectGraph.create(getTestModule()).inject(this);
+        server.initDispatcher(JsonStubs.getPostList(1));
+    }
 
     @Captor ArgumentCaptor<PageModel> modelCaptor;
 
-    @Override protected Object getTestModule() {
+    protected Object getTestModule() {
         return new TestModule();
     }
 
