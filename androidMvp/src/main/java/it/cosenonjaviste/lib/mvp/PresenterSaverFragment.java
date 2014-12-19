@@ -47,8 +47,4 @@ public class PresenterSaverFragment extends Fragment {
             presenter.destroy();
         }
     }
-
-    public interface PresenterFactory<P> {
-        P create();
-    }
 }
