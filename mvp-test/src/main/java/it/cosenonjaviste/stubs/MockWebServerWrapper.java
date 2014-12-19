@@ -22,6 +22,8 @@ public class MockWebServerWrapper {
 
     private LinkedList<RecordedRequest> requests = new LinkedList<>();
 
+    private Func1<RecordedRequest, MockResponse> dispatchFunction;
+
     @Inject public MockWebServerWrapper() {
         server = new MockWebServer();
         try {
@@ -29,17 +31,18 @@ public class MockWebServerWrapper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        initDispatcher();
     }
 
     public void initDispatcher(String responseBody) {
-        initDispatcher(recordedRequest -> new MockResponse().setBody(responseBody));
+        dispatchFunction = recordedRequest -> new MockResponse().setBody(responseBody);
     }
 
-    public void initDispatcher(final Func1<RecordedRequest, MockResponse> func) {
+    private void initDispatcher() {
         server.setDispatcher(new Dispatcher() {
             @Override public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 requests.add(request);
-                return func.call(request);
+                return dispatchFunction.call(request);
             }
         });
     }
