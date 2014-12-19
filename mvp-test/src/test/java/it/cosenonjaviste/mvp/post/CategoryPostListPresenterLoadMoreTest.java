@@ -19,7 +19,7 @@ import it.cosenonjaviste.stubs.MockWebServerWrapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CategoryPostListPresenterTest {
+public class CategoryPostListPresenterLoadMoreTest {
 
     @Mock PostListView view;
 
@@ -38,16 +38,19 @@ public class CategoryPostListPresenterTest {
     }
 
     @Test
-    public void testLoad() throws InterruptedException {
+    public void testLoadMore() {
+        server.initDispatcher(JsonStubs.getPostList(20));
         PostListModel model = new PostListModel(new Category(1, "cat", 10));
         presenter.initAndSubscribe(model, view);
-        assertThat(model.getItems().size()).isEqualTo(1);
+        server.initDispatcher(JsonStubs.getPostList(5));
+        presenter.loadNextPage();
+        assertThat(model.getItems().size()).isEqualTo(25);
         String lastUrl = server.getLastUrl();
         assertThat(lastUrl).startsWith(WordPressService.CATEGORY_POSTS_URL);
         assertThat(lastUrl).contains("id=1");
     }
 
-    @Module(injects = {CategoryPostListPresenterTest.class}, includes = MvpJUnitTestModule.class)
+    @Module(injects = {CategoryPostListPresenterLoadMoreTest.class}, includes = MvpJUnitTestModule.class)
     public static class TestModule {
     }
 
