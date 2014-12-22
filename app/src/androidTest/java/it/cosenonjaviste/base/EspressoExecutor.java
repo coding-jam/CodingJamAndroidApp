@@ -1,6 +1,6 @@
 package it.cosenonjaviste.base;
 
-import com.google.android.apps.common.testing.ui.espresso.IdlingResource;
+import android.support.test.espresso.IdlingResource;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.SynchronousQueue;

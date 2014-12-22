@@ -13,12 +13,12 @@ import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import rx.schedulers.Schedulers;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.registerIdlingResources;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.scrollTo;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.registerIdlingResources;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class BaseActivityTest<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
 
