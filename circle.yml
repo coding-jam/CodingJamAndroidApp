@@ -1,6 +1,6 @@
 machine:
   environment:
-    ANDROID_HOME: /usr/local/android-sdk-linux
+    ANDROID_HOME: /home/ubuntu/android
   java:
     version: oraclejdk8
 
@@ -8,9 +8,19 @@ dependencies:
   pre:
     - echo y | android update sdk --no-ui --all --filter "android-21,build-tools-21.1.1"
 
+  cache_directories:
+    - ~/.android
+    - ~/android
+
   override:
+    - ./install-dependencies.sh
     - ./gradlew dependencies
 
 test:
   override:
-    - ./gradlew build
+   - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
+      background: true
+      parallel: true
+   - ./wait.sh:
+      parallel: true
+   - ./gradlew mvp-test:build mvp-test:jacocoTestReport app:connectedAndroidTest --stacktrace
