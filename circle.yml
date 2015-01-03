@@ -11,7 +11,7 @@ dependencies:
 
   override:
     - sh ./install-dependencies.sh
-    - which java
+    - ls -l /usr/lib/jvm
     - ./gradlew dependencies
 
 test:
@@ -19,6 +19,6 @@ test:
    - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
       background: true
       parallel: true
-   - ./wait.sh:
+   - sh ./wait.sh:
       parallel: true
    - ./gradlew mvp-test:build mvp-test:jacocoTestReport app:connectedAndroidTest --stacktrace
