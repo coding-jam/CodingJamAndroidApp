@@ -1,3 +1,8 @@
+general:
+  artifacts:
+    - mvp-test/build/outputs
+    - mvp/build/outputs
+
 machine:
   environment:
     ANDROID_HOME: /home/ubuntu/android
