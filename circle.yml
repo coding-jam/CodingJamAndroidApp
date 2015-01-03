@@ -20,4 +20,4 @@ test:
       parallel: true
    - bash ./wait.sh:
       parallel: true
-   - ./gradlew mvp-test:build mvp-test:jacocoTestReport app:connectedAndroidTest --stacktrace
+   - ./gradlew mvp-test:build mvp-test:jacocoTestReport
