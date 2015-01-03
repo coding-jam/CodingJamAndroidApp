@@ -6,8 +6,6 @@ machine:
 
 dependencies:
   pre:
-    - which java
-    - which java | ls -l
     - #echo y | android update sdk --no-ui --all --filter "android-21,build-tools-21.1.1"
 
   cache_directories:
@@ -15,6 +13,7 @@ dependencies:
     - ~/android
 
   override:
+    - which java
     - sh ./install-dependencies.sh
     - ./gradlew dependencies
 
