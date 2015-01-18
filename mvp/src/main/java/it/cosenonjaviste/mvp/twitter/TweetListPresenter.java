@@ -24,7 +24,7 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
     public void reloadData() {
         Observable<List<Tweet>> observable = twitterService.loadTweets(1);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading(model.isEmpty());
@@ -50,7 +50,7 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
         int page = calcNextPage(model.size(), TwitterService.PAGE_SIZE);
         Observable<List<Tweet>> observable = twitterService.loadTweets(page);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> getView().startMoreItemsLoading(),
                 posts -> {
                     model.append(posts);

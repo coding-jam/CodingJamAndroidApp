@@ -1,20 +1,27 @@
 package it.cosenonjaviste.mvp.base;
 
 
-import it.cosenonjaviste.mvp.base.pausable.CompositePausableSubscription;
-import it.cosenonjaviste.mvp.base.pausable.PausableSubscriptions;
+import java.util.ArrayList;
+import java.util.List;
+
 import rx.Observable;
-import rx.Observer;
-import rx.Scheduler;
+import rx.Subscriber;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.observers.Observers;
+import rx.functions.Actions;
+import rx.functions.Func0;
+import rx.observables.ConnectableObservable;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
 
     private SchedulerManager schedulerManager;
 
-    protected final CompositePausableSubscription pausableSubscriptions = new CompositePausableSubscription();
+    private final CompositeSubscription connectableSubscriptions = new CompositeSubscription();
+
+    private CompositeSubscription subscriptions = new CompositeSubscription();
+
+    private final List<ObservableWithFactory> observables = new ArrayList<>();
 
     public RxMvpPresenter(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
@@ -22,43 +29,59 @@ public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
 
     public void pause() {
         super.pause();
-        pausableSubscriptions.pause();
+        subscriptions.unsubscribe();
+        subscriptions = new CompositeSubscription();
     }
 
     @Override public void subscribe(MvpView<M> view) {
         super.subscribe(view);
-        pausableSubscriptions.resume();
+        for (ObservableWithFactory<?> observableWithFactory : observables) {
+            subscribe(observableWithFactory);
+        }
     }
 
     public void destroy() {
-        pausableSubscriptions.destroy();
+        connectableSubscriptions.unsubscribe();
     }
 
-    protected <T> void subscribePausable(Observable<T> observable, Observer<T> observer) {
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), observer));
+    protected <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
+        ConnectableObservable<T> replay = schedulerManager.bindObservable(observable).replay();
+        connectableSubscriptions.add(replay.connect());
+        Func0<Subscriber<T>> factory = () -> new Subscriber<T>() {
+            @Override public void onStart() {
+                if (onAttach != null) {
+                    onAttach.call();
+                }
+            }
+
+            @Override public void onCompleted() {
+
+            }
+
+            @Override public void onError(Throwable e) {
+                if (onError != null) {
+                    onError.call(e);
+                }
+            }
+
+            @Override public void onNext(T t) {
+                if (onNext != null) {
+                    onNext.call(t);
+                }
+            }
+        };
+        ObservableWithFactory<T> observableWithFactory = new ObservableWithFactory<>(replay, factory);
+        observables.add(observableWithFactory);
+        subscribe(observableWithFactory);
     }
 
-    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), Observers.create(onNext, onError)));
-    }
-
-    protected <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), onAttach, Observers.create(onNext, onError)));
-    }
-
-    protected <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), onAttach, Observers.create(onNext, onError, onCompleted)));
-    }
-
-    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Scheduler scheduler) {
-        if (scheduler != null) {
-            observable = observable.subscribeOn(scheduler);
-        }
-        observable = schedulerManager.bindObservable(observable);
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(observable, Observers.create(onNext, onError)));
-    }
-
-    protected <T> void subscribePausable(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
-        pausableSubscriptions.add(PausableSubscriptions.subscribe(schedulerManager.bindObservable(observable), Observers.create(onNext, onError, onCompleted)));
+    private <T> void subscribe(ObservableWithFactory<T> observableWithFactory) {
+        Observable<T> observable = observableWithFactory.observable;
+        Subscriber<T> subscriber = observableWithFactory.subscriberFactory.call();
+        subscriptions.add(observable.subscribe(
+                Actions.empty(),
+                t -> observables.remove(observableWithFactory),
+                () -> observables.remove(observableWithFactory)));
+        subscriptions.add(observable.subscribe(subscriber));
     }
 }

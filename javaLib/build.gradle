@@ -4,6 +4,6 @@ apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     testCompile 'junit:junit:4.10'
-    compile project(':PausableSubscription')
+    compile 'io.reactivex:rxandroid:0.24.0'
     compile 'org.parceler:parceler-api:0.2.14'
 }

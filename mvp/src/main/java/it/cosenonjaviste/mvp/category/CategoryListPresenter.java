@@ -37,7 +37,7 @@ public class CategoryListPresenter extends RxMvpPresenter<OptionalList<Category>
                 .listCategories()
                 .map(CategoryResponse::getCategories);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading();

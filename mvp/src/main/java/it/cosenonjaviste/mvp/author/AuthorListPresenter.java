@@ -32,7 +32,7 @@ public class AuthorListPresenter extends RxMvpPresenter<OptionalList<Author>> {
                 .map(AuthorResponse::getAuthors)
                 .doOnNext(Collections::sort);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading();

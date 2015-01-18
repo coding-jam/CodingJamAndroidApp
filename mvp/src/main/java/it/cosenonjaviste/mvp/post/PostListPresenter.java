@@ -36,7 +36,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     public void reloadData() {
         Observable<List<Post>> observable = getObservable(0);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading(model.getItems().isEmpty());
@@ -59,7 +59,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
-        subscribePausable(observable,
+        subscribe(observable,
                 () -> getView().startMoreItemsLoading(),
                 posts -> {
                     model.getItems().append(posts);
