@@ -71,6 +71,7 @@ dependencies {
         exclude group: 'com.squareup.okhttp', module: 'okhttp'
     }
     compile project(':SuperListviewLibrary')
+    compile 'io.reactivex:rxandroid-framework:0.24.0'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup.picasso:picasso:2.4.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
