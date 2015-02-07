@@ -20,6 +20,11 @@ apply plugin: 'me.tatarka.retrolambda'
 
 apply plugin: 'com.neenbedankt.android-apt'
 
+retrolambda {
+    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
+//    oldJdk '/usr/lib/jvm/jdk1.7.0'
+}
+
 android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -70,6 +75,7 @@ dependencies {
         exclude group: 'io.reactivex'
         exclude group: 'com.squareup.okhttp', module: 'okhttp'
     }
+    testCompile project(':mvp-test')
     compile project(':SuperListviewLibrary')
     compile 'io.reactivex:rxandroid-framework:0.24.0'
     compile 'com.jakewharton:butterknife:5.1.2'
@@ -89,4 +95,9 @@ dependencies {
         exclude group: 'com.squareup', module: 'javawriter'
     }
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+
+    compile 'com.squareup.okhttp:mockwebserver:2.0.0'
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'org.assertj:assertj-core:1.7.0'
 }

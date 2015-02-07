@@ -14,6 +14,7 @@ import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
+import rx.functions.Action1;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,18 +33,20 @@ public class WordPressServiceTest {
 
     @Test
     public void testLoad() throws IOException {
-        service.listPosts(0).subscribe(repoResponse -> {
-            List<Post> posts = repoResponse.getPosts();
-            assertEquals(1, posts.size());
-            Post post = posts.get(0);
-            assertEquals(11213, post.getId());
-            assertNotNull(post.getDate());
-            assertNotNull(post.getTitle());
-            assertNotNull(post.getUrl());
-            assertNotNull(post.getAuthor());
-            assertNotNull(post.getAuthor().getImageUrl());
-            assertEquals(8, post.getAuthor().getId());
-            assertNotNull(post.getAuthor().getName());
+        service.listPosts(0).subscribe(new Action1<PostResponse>() {
+            @Override public void call(PostResponse repoResponse) {
+                List<Post> posts = repoResponse.getPosts();
+                assertEquals(1, posts.size());
+                Post post = posts.get(0);
+                assertEquals(11213, post.getId());
+                assertNotNull(post.getDate());
+                assertNotNull(post.getTitle());
+                assertNotNull(post.getUrl());
+                assertNotNull(post.getAuthor());
+                assertNotNull(post.getAuthor().getImageUrl());
+                assertEquals(8, post.getAuthor().getId());
+                assertNotNull(post.getAuthor().getName());
+            }
         });
     }
 
