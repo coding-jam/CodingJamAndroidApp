@@ -35,6 +35,8 @@ jacoco {
 
 }
 
+coveralls.jacocoReportPath = 'build/reports/jacoco/test/jacocoTestReport.xml'
+
 android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
