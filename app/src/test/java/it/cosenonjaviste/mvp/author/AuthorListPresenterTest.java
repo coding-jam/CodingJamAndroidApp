@@ -13,10 +13,9 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
-import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
@@ -44,14 +43,14 @@ public class AuthorListPresenterTest {
 
     @Test
     public void testLoad() {
-        presenter.initAndSubscribe(new OptionalList<>(), view);
-        OptionalList<Author> model = presenter.getModel();
+        presenter.initAndSubscribe(new AuthorListModel(), view);
+        AuthorListModel model = presenter.getModel();
         assertThat(model.size()).isEqualTo(2);
     }
 
     @Test
     public void testGoToDetail() {
-        presenter.initAndSubscribe(new OptionalList<>(), view);
+        presenter.initAndSubscribe(new AuthorListModel(), view);
         presenter.goToAuthorDetail(1);
 
         verify(view).open(any(), modelCaptor.capture());

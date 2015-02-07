@@ -1,11 +1,15 @@
-package it.cosenonjaviste.mvp.base.optional;
+package it.cosenonjaviste.lib.mvp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.parceler.Parcels;
 import org.parceler.Transient;
 
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-public class OptionalItem<T> {
+public class OptionalItem<T> implements Parcelable {
 
     @Transient
     T object;
@@ -73,4 +77,30 @@ public class OptionalItem<T> {
         }
         return this;
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeParcelable(Parcels.wrap(object), 0);
+        parcel.writeSerializable(throwable);
+    }
+
+    protected void readFromParcel(Parcel in) {
+        object = Parcels.unwrap(in.readParcelable(getClass().getClassLoader()));
+        throwable = (Throwable) in.readSerializable();
+    }
+
+    public static final Parcelable.Creator<OptionalItem> CREATOR = new Parcelable.Creator<OptionalItem>() {
+        public OptionalItem createFromParcel(Parcel in) {
+            OptionalItem person = new OptionalItem<>();
+            person.readFromParcel(in);
+            return person;
+        }
+
+        public OptionalItem[] newArray(int size) {
+            return new OptionalItem[size];
+        }
+    };
 }

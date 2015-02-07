@@ -13,10 +13,10 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
@@ -44,8 +44,8 @@ public class CategoryListPresenterTest {
 
     @Test
     public void testLoad() {
-        presenter.initAndSubscribe(new OptionalList<>(), view);
-        OptionalList<Category> model = presenter.getModel();
+        presenter.initAndSubscribe(new CategoryListModel(), view);
+        CategoryListModel model = presenter.getModel();
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(0);
         assertThat(category.getId()).isEqualTo(602);
@@ -55,7 +55,7 @@ public class CategoryListPresenterTest {
 
     @Test
     public void testGoToPosts() {
-        presenter.initAndSubscribe(new OptionalList<>(), view);
+        presenter.initAndSubscribe(new CategoryListModel(), view);
         presenter.goToPosts(1);
 
         verify(view).open(any(), modelCaptor.capture());

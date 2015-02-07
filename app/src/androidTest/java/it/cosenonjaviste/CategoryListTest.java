@@ -6,17 +6,16 @@ import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.category.CategoryListFragment;
-import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
-public class CategoryListTest extends CnjFragmentTest<OptionalList<Category>> {
+public class CategoryListTest extends CnjFragmentTest<CategoryListModel> {
 
     @Inject MockWebServerWrapper server;
 
     public CategoryListTest() {
-        super(CategoryListFragment.class, new OptionalList<>());
+        super(CategoryListFragment.class, new CategoryListModel());
     }
 
     @Override protected Object getTestModule() {

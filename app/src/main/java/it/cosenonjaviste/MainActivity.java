@@ -12,19 +12,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
-import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
-import it.cosenonjaviste.mvp.base.optional.OptionalItem;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
@@ -32,10 +27,6 @@ import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 
-@ParcelClasses({
-        @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
-        @ParcelClass(value = OptionalList.class, converter = OptionalListConverter.class)
-})
 public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @InjectView(R.id.left_drawer_menu) View mDrawerMenu;
@@ -95,9 +86,9 @@ public class MainActivity extends ActionBarActivity {
         //TODO activity title
         switch (position) {
             case 1:
-                return CnjFragment.createView(this, CategoryListFragment.class, new OptionalList<>());
+                return CnjFragment.createView(this, CategoryListFragment.class, new CategoryListModel());
             case 2:
-                return CnjFragment.createView(this, AuthorListFragment.class, new OptionalList<>());
+                return CnjFragment.createView(this, AuthorListFragment.class, new AuthorListModel());
             case 3:
                 return CnjFragment.createView(this, TweetListFragment.class, new TweetListModel());
             case 4:

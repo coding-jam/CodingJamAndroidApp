@@ -12,12 +12,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mvp.base.MvpListView;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends CnjFragment<AuthorListPresenter, OptionalList<Author>> implements MvpListView<Author> {
+public class AuthorListFragment extends CnjFragment<AuthorListPresenter, AuthorListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -45,14 +42,14 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, Optiona
         presenter.loadAuthors();
     }
 
-    @Override public void update(OptionalList<Author> model) {
+    @Override public void update(AuthorListModel model) {
         model.call(authors -> {
             grid.showList();
             adapter.reloadData(authors);
         }).whenError(t -> grid.showError()).whenEmpty(Actions.empty());
     }
 
-    @Override public void startLoading() {
+    public void startLoading() {
         grid.showProgress();
     }
 }

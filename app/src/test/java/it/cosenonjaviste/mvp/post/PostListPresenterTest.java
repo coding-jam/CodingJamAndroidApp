@@ -14,7 +14,7 @@ import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
+import it.cosenonjaviste.lib.mvp.OptionalList;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;

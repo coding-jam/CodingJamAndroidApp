@@ -10,12 +10,11 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
-public class CategoryListPresenter extends RxMvpPresenter<OptionalList<Category>> {
+public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
 
     @Inject WordPressService wordPressService;
 
@@ -25,7 +24,7 @@ public class CategoryListPresenter extends RxMvpPresenter<OptionalList<Category>
         super(schedulerManager);
     }
 
-    @Override public void subscribe(MvpView<OptionalList<Category>> view) {
+    @Override public void subscribe(MvpView<CategoryListModel> view) {
         super.subscribe(view);
         if (model.isEmpty() && !loadStarted) {
             loadData();

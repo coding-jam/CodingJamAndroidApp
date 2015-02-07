@@ -1,9 +1,12 @@
-package it.cosenonjaviste.mvp.base.optional;
+package it.cosenonjaviste.lib.mvp;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptionalList<T> extends OptionalItem<List<T>> {
+public class OptionalList<T> extends OptionalItem<List<T>> implements Parcelable {
     public OptionalList() {
         this(new ArrayList<>());
     }
@@ -40,4 +43,16 @@ public class OptionalList<T> extends OptionalItem<List<T>> {
         throwable = null;
         this.object.addAll(object);
     }
+
+    public static final Parcelable.Creator<OptionalList> CREATOR = new Parcelable.Creator<OptionalList>() {
+        public OptionalList createFromParcel(Parcel in) {
+            OptionalList person = new OptionalList<>();
+            person.readFromParcel(in);
+            return person;
+        }
+
+        public OptionalList[] newArray(int size) {
+            return new OptionalList[size];
+        }
+    };
 }

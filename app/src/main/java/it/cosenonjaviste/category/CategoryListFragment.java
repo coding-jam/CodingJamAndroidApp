@@ -12,12 +12,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.mvp.base.MvpListView;
-import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
-public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements MvpListView<Category> {
+public class CategoryListFragment extends CnjFragment<CategoryListPresenter, CategoryListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -47,7 +44,7 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
     }
 
 
-    @Override public void update(OptionalList<Category> model) {
+    @Override public void update(CategoryListModel model) {
         model.call(
                 categories -> {
                     grid.showList();
@@ -60,7 +57,7 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Opt
         );
     }
 
-    @Override public void startLoading() {
+    public void startLoading() {
         grid.showProgress();
     }
 }
