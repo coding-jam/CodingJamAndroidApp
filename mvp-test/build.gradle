@@ -31,7 +31,7 @@ retrolambda {
 }
 
 dependencies {
-    compile project(':mvp')
+    compile project(':javaLib')
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.okhttp:mockwebserver:2.0.0'
     testCompile 'junit:junit:4.10'
