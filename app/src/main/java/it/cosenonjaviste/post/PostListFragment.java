@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -15,12 +12,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.MvpView;
 import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
 public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements MvpView<PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;

@@ -1,10 +1,13 @@
 package it.cosenonjaviste.post;
 
+import org.parceler.Parcel;
+
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 
+@Parcel
 public class PostListModel {
 
     OptionalList items = new OptionalList<>();

@@ -1,7 +1,10 @@
 package it.cosenonjaviste.model;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
+@Parcel
 public class Post {
     long id;
     Author author;

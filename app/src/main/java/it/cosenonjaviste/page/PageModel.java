@@ -1,5 +1,8 @@
 package it.cosenonjaviste.page;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class PageModel {
 
     String url;

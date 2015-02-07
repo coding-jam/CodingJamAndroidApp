@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -15,11 +12,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.mvp.base.MvpView;
 import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(TweetListModel.class), @ParcelClass(Tweet.class)})
 public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements MvpView<TweetListModel> {
 
     @InjectView(R.id.list) SuperListview list;

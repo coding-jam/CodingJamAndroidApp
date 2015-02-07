@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -20,7 +17,6 @@ import it.cosenonjaviste.mvp.base.MvpListView;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
-@ParcelClasses({@ParcelClass(Category.class)})
 public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements MvpListView<Category> {
 
     @InjectView(R.id.grid) SuperGridview grid;
