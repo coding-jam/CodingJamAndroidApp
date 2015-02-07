@@ -35,7 +35,7 @@ jacoco {
 
 }
 
-coveralls.jacocoReportPath = 'build/reports/jacoco/test/jacocoTestReport.xml'
+coveralls.jacocoReportPath = 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
 
 android {
     compileOptions {
