@@ -6,7 +6,7 @@ import dagger.Module;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;

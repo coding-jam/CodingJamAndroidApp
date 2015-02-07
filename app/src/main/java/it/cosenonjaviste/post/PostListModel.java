@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.post;
+package it.cosenonjaviste.post;
 
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;

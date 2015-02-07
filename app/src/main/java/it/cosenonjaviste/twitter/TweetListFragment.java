@@ -16,13 +16,11 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Tweet;
-import it.cosenonjaviste.mvp.twitter.TweetListModel;
-import it.cosenonjaviste.mvp.twitter.TweetListPresenter;
-import it.cosenonjaviste.mvp.twitter.TweetListView;
+import it.cosenonjaviste.mvp.base.MvpView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(TweetListModel.class), @ParcelClass(Tweet.class)})
-public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements TweetListView {
+public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements MvpView<TweetListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -65,7 +63,7 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
         );
     }
 
-    @Override public void startLoading(boolean showMainLoading) {
+    public void startLoading(boolean showMainLoading) {
         if (showMainLoading) {
             list.showProgress();
         } else {
@@ -73,7 +71,7 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
         }
     }
 
-    @Override public void startMoreItemsLoading() {
+    public void startMoreItemsLoading() {
         list.showMoreProgress();
     }
 }

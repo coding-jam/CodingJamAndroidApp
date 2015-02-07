@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.category;
+package it.cosenonjaviste.category;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.post.PostListModel;
-import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 public class CategoryListPresenter extends RxMvpPresenter<OptionalList<Category>> {
@@ -53,10 +53,10 @@ public class CategoryListPresenter extends RxMvpPresenter<OptionalList<Category>
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        getView().open(PostListView.class, new PostListModel(category));
+        getView().open(PostListFragment.class, new PostListModel(category));
     }
 
-    @Override public CategoryListView getView() {
-        return (CategoryListView) super.getView();
+    @Override public CategoryListFragment getView() {
+        return (CategoryListFragment) super.getView();
     }
 }

@@ -7,8 +7,8 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.base.MvpEspressoTestModule;
-import it.cosenonjaviste.mvp.page.PageModel;
-import it.cosenonjaviste.mvp.page.PageUrlManager;
+import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.page.PageUrlManager;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 

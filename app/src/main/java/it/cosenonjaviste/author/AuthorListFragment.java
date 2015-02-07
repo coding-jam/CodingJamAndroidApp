@@ -13,12 +13,11 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mvp.author.AuthorListPresenter;
-import it.cosenonjaviste.mvp.author.AuthorListView;
+import it.cosenonjaviste.mvp.base.MvpListView;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends CnjFragment<AuthorListPresenter, OptionalList<Author>> implements AuthorListView {
+public class AuthorListFragment extends CnjFragment<AuthorListPresenter, OptionalList<Author>> implements MvpListView<Author> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 

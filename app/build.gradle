@@ -102,7 +102,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 
     compile 'com.squareup.okhttp:mockwebserver:2.0.0'
-    testCompile 'junit:junit:4.10'
+    testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.assertj:assertj-core:1.7.0'
 }

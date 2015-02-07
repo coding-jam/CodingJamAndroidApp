@@ -12,10 +12,12 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.category.CategoryListFragment;
+import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
@@ -30,7 +32,7 @@ public class CategoryListPresenterTest {
 
     @Inject CategoryListPresenter presenter;
 
-    @Mock CategoryListView view;
+    @Mock CategoryListFragment view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 

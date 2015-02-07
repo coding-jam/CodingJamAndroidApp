@@ -17,13 +17,11 @@ import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.post.PostListModel;
-import it.cosenonjaviste.mvp.post.PostListPresenter;
-import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.mvp.base.MvpView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(Post.class), @ParcelClass(Author.class), @ParcelClass(PostListModel.class)})
-public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements PostListView {
+public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements MvpView<PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -67,7 +65,7 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
         );
     }
 
-    @Override public void startLoading(boolean showMainLoading) {
+    public void startLoading(boolean showMainLoading) {
         if (showMainLoading) {
             list.showProgress();
         } else {
@@ -75,7 +73,7 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
         }
     }
 
-    @Override public void startMoreItemsLoading() {
+    public void startMoreItemsLoading() {
         list.showMoreProgress();
     }
 }

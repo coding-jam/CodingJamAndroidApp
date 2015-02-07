@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.post;
+package it.cosenonjaviste.post;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
-import it.cosenonjaviste.mvp.page.PageModel;
-import it.cosenonjaviste.mvp.page.PageView;
+import it.cosenonjaviste.page.PageFragment;
+import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
 
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
@@ -52,7 +52,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        getView().open(PageView.class, new PageModel(item.getUrl()));
+        getView().open(PageFragment.class, new PageModel(item.getUrl()));
     }
 
     public void loadNextPage() {
@@ -91,7 +91,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         return size / pageSize + 1;
     }
 
-    @Override public PostListView getView() {
-        return (PostListView) super.getView();
+    @Override public PostListFragment getView() {
+        return (PostListFragment) super.getView();
     }
 }

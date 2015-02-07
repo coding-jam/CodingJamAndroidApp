@@ -16,13 +16,12 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.mvp.base.MvpListView;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.category.CategoryListPresenter;
-import it.cosenonjaviste.mvp.category.CategoryListView;
 import rx.functions.Actions;
 
 @ParcelClasses({@ParcelClass(Category.class)})
-public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements CategoryListView {
+public class CategoryListFragment extends CnjFragment<CategoryListPresenter, OptionalList<Category>> implements MvpListView<Category> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 

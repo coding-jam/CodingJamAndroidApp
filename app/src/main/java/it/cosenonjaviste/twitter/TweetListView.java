@@ -1,8 +1,8 @@
-package it.cosenonjaviste.mvp.post;
+package it.cosenonjaviste.twitter;
 
 import it.cosenonjaviste.mvp.base.MvpView;
 
-public interface PostListView extends MvpView<PostListModel> {
+public interface TweetListView extends MvpView<TweetListModel> {
     void startLoading(boolean showMainLoading);
 
     void startMoreItemsLoading();

@@ -9,12 +9,14 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import dagger.ObjectGraph;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListPresenter;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public abstract class PostListPresenterBaseTest {
 
-    @Mock PostListView view;
+    @Mock PostListFragment view;
 
     @Inject PostListPresenter presenter;
 

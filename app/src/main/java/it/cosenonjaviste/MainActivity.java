@@ -17,20 +17,20 @@ import org.parceler.ParcelClasses;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalItemConverter;
 import it.cosenonjaviste.lib.mvp.parceler.OptionalListConverter;
-import it.cosenonjaviste.mvp.author.AuthorListView;
 import it.cosenonjaviste.mvp.base.optional.OptionalItem;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.category.CategoryListView;
-import it.cosenonjaviste.mvp.page.PageModel;
-import it.cosenonjaviste.mvp.page.PageView;
-import it.cosenonjaviste.mvp.post.PostListModel;
-import it.cosenonjaviste.mvp.post.PostListView;
-import it.cosenonjaviste.mvp.twitter.TweetListModel;
-import it.cosenonjaviste.mvp.twitter.TweetListView;
+import it.cosenonjaviste.page.PageFragment;
+import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
+import it.cosenonjaviste.twitter.TweetListFragment;
+import it.cosenonjaviste.twitter.TweetListModel;
 
 @ParcelClasses({
         @ParcelClass(value = OptionalItem.class, converter = OptionalItemConverter.class),
@@ -95,15 +95,15 @@ public class MainActivity extends ActionBarActivity {
         //TODO activity title
         switch (position) {
             case 1:
-                return CnjFragment.createView(this, CategoryListView.class, new OptionalList<>());
+                return CnjFragment.createView(this, CategoryListFragment.class, new OptionalList<>());
             case 2:
-                return CnjFragment.createView(this, AuthorListView.class, new OptionalList<>());
+                return CnjFragment.createView(this, AuthorListFragment.class, new OptionalList<>());
             case 3:
-                return CnjFragment.createView(this, TweetListView.class, new TweetListModel());
+                return CnjFragment.createView(this, TweetListFragment.class, new TweetListModel());
             case 4:
-                return CnjFragment.createView(this, PageView.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
+                return CnjFragment.createView(this, PageFragment.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
             default:
-                return CnjFragment.createView(this, PostListView.class, new PostListModel());
+                return CnjFragment.createView(this, PostListFragment.class, new PostListModel());
         }
     }
 

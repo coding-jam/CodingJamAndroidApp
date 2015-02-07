@@ -12,10 +12,12 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
@@ -26,7 +28,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorListPresenterTest {
 
-    @Mock AuthorListView view;
+    @Mock AuthorListFragment view;
 
     @Inject AuthorListPresenter presenter;
 

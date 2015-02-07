@@ -19,12 +19,10 @@ import javax.inject.Provider;
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.page.PageModel;
-import it.cosenonjaviste.mvp.page.PagePresenter;
-import it.cosenonjaviste.mvp.page.PageView;
+import it.cosenonjaviste.mvp.base.MvpView;
 
 @ParcelClasses({@ParcelClass(PageModel.class)})
-public class PageFragment extends CnjFragment<PagePresenter, PageModel> implements PageView {
+public class PageFragment extends CnjFragment<PagePresenter, PageModel> implements MvpView<PageModel> {
 
     @InjectView(R.id.web_view) WebView webView;
 

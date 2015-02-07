@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.twitter;
+package it.cosenonjaviste.twitter;
 
 import java.util.List;
 

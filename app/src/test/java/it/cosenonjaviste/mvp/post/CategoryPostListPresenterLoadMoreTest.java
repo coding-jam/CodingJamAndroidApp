@@ -13,6 +13,9 @@ import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
+import it.cosenonjaviste.post.PostListPresenter;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
@@ -21,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryPostListPresenterLoadMoreTest {
 
-    @Mock PostListView view;
+    @Mock PostListFragment view;
 
     @Inject PostListPresenter presenter;
 

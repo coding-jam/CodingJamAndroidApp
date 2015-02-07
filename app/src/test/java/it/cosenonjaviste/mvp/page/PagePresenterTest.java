@@ -13,7 +13,10 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.post.PostListModel;
+import it.cosenonjaviste.page.PageFragment;
+import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.page.PagePresenter;
+import it.cosenonjaviste.post.PostListModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +25,7 @@ public class PagePresenterTest {
 
     @Inject PagePresenter presenter;
 
-    @Mock PageView view;
+    @Mock PageFragment view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 

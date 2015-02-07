@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.page;
+package it.cosenonjaviste.page;
 
 public class PageModel {
 

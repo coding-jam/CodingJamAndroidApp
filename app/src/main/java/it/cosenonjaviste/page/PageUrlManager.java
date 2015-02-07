@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.page;
+package it.cosenonjaviste.page;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

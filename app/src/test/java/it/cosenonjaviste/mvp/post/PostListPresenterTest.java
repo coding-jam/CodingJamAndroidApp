@@ -15,7 +15,10 @@ import dagger.ObjectGraph;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.page.PageModel;
+import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
+import it.cosenonjaviste.post.PostListPresenter;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
@@ -26,7 +29,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest {
 
-    @Mock PostListView view;
+    @Mock PostListFragment view;
 
     @Inject PostListPresenter presenter;
 

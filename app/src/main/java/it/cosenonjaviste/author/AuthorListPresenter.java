@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.author;
+package it.cosenonjaviste.author;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +12,8 @@ import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.mvp.base.RxMvpPresenter;
 import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
-import it.cosenonjaviste.mvp.post.PostListModel;
-import it.cosenonjaviste.mvp.post.PostListView;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 public class AuthorListPresenter extends RxMvpPresenter<OptionalList<Author>> {
@@ -55,10 +55,10 @@ public class AuthorListPresenter extends RxMvpPresenter<OptionalList<Author>> {
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        getView().open(PostListView.class, new PostListModel(author));
+        getView().open(PostListFragment.class, new PostListModel(author));
     }
 
-    @Override public AuthorListView getView() {
-        return (AuthorListView) super.getView();
+    @Override public AuthorListFragment getView() {
+        return (AuthorListFragment) super.getView();
     }
 }

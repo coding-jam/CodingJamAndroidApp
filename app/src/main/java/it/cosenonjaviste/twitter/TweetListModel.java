@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.twitter;
+package it.cosenonjaviste.twitter;
 
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.mvp.base.optional.OptionalList;
