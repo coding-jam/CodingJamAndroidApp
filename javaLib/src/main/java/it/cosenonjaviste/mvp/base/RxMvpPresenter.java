@@ -84,4 +84,15 @@ public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
                 () -> observables.remove(observableWithFactory)));
         subscriptions.add(observable.subscribe(subscriber));
     }
+
+    public static class ObservableWithFactory<T> {
+        public final Observable<T> observable;
+
+        public final Func0<Subscriber<T>> subscriberFactory;
+
+        ObservableWithFactory(Observable<T> observable, Func0<Subscriber<T>> subscriberFactory) {
+            this.observable = observable;
+            this.subscriberFactory = subscriberFactory;
+        }
+    }
 }
