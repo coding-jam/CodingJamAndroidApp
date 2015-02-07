@@ -11,16 +11,16 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 import it.cosenonjaviste.twitter.TweetListPresenter;
-import it.cosenonjaviste.twitter.TweetListView;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TweetListPresenterTest {
 
-    @Mock TweetListView view;
+    @Mock TweetListFragment view;
 
     @Inject TweetListPresenter presenter;
 
