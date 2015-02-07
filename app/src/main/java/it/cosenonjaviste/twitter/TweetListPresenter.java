@@ -67,7 +67,7 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
         return size / pageSize + 1;
     }
 
-    @Override public TweetListView getView() {
-        return (TweetListView) super.getView();
+    @Override public TweetListFragment getView() {
+        return (TweetListFragment) super.getView();
     }
 }
