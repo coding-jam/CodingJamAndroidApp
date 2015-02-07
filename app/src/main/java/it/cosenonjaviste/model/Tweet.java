@@ -6,11 +6,11 @@ import java.util.Date;
 
 @Parcel
 public class Tweet {
-    private long id;
-    private String text;
-    private Date createdAt;
-    private String userImage;
-    private String author;
+    long id;
+    String text;
+    Date createdAt;
+    String userImage;
+    String author;
 
     public void setId(long id) {
         this.id = id;
