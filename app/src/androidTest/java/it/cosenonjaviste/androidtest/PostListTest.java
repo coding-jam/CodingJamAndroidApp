@@ -12,8 +12,12 @@ import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
@@ -35,12 +39,18 @@ public class PostListTest extends CnjFragmentTest<PostListModel> {
     }
 
     public void testPostList() throws InterruptedException {
-        showUi();
+        onView(withText("post title 1")).check(matches(isDisplayed()));
     }
 
     public void testGoToPostDetail() {
         onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
                 .atPosition(3).perform(click());
+    }
+
+    public void testLoadMore() {
+        onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
+                .atPosition(9).check(matches(isDisplayed()));
+        onView(withText("post title 12")).check(matches(isDisplayed()));
     }
 
     @Module(injects = {PostListTest.class}, includes = MvpEspressoTestModule.class)

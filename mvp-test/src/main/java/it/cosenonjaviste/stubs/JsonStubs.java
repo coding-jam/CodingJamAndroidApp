@@ -9,7 +9,7 @@ public class JsonStubs {
             "slug: \"decorator-patten-corretto-lambda-con-java-8\",\n" +
             "url: \"post-url/\",\n" +
             "status: \"publish\",\n" +
-            "title: \"Decorator patten corretto lambda con Java 8\",\n" +
+            "title: \"%TITLE%\",\n" +
             "date: \"2014-05-29 10:30:36\",\n" +
             "modified: \"2014-08-11 07:35:33\",\n" +
             "categories: [\n" +
@@ -68,12 +68,16 @@ public class JsonStubs {
             "}";
 
     public static String getPostList(int numberOfPost) {
+        return getPostList(0, numberOfPost);
+    }
+
+    public static String getPostList(int firstPost, int numberOfPost) {
         StringBuffer b = new StringBuffer();
         for (int i = 0; i < numberOfPost; i++) {
             if (i > 0) {
                 b.append(',');
             }
-            b.append(SINGLE_POST);
+            b.append(SINGLE_POST.replace("%TITLE%", "post title " + (firstPost + i)));
         }
         return String.format(POSTS, b.toString());
     }
@@ -141,8 +145,10 @@ public class JsonStubs {
     public static void initAllStubs() {
         MockWebServerWrapper.initDispatcher(req -> {
             String path = req.getPath();
-            if (path.matches("/\\?json=get_recent_posts.*page=0.*")) {
+            if (path.matches("/\\?json=get_recent_posts.*page=1.*")) {
                 return new MockResponse().setBody(getPostList(10));
+            } else if (path.matches("/\\?json=get_recent_posts.*page=2.*")) {
+                return new MockResponse().setBody(getPostList(10, 3));
             } else if (path.matches("/post-url/")) {
                 return new MockResponse().setBody("<html><body>CoseNonJaviste</body></html>");
             } else if (path.matches("/\\?json=get_category_index")) {

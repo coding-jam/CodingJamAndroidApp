@@ -34,7 +34,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     public void reloadData() {
-        Observable<List<Post>> observable = getObservable(0);
+        Observable<List<Post>> observable = getObservable(1);
 
         subscribe(observable,
                 () -> {
