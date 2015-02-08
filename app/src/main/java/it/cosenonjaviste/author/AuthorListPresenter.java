@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
@@ -55,6 +56,14 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
         getView().open(PostListFragment.class, new PostListModel(author));
+    }
+
+    public void testFromJUnit() {
+        System.out.println(123);
+    }
+
+    public void testFromFragment() {
+        System.out.println(123);
     }
 
     @Override public AuthorListFragment getView() {

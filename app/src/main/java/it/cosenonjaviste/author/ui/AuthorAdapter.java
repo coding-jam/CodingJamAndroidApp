@@ -1,4 +1,4 @@
-package it.cosenonjaviste.author;
+package it.cosenonjaviste.author.ui;
 
 import android.content.Context;
 import android.text.Html;

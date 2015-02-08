@@ -3,7 +3,7 @@ package it.cosenonjaviste;
 import javax.inject.Inject;
 
 import dagger.Module;
-import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.base.CnjFragmentTest;
 import it.cosenonjaviste.base.MvpEspressoTestModule;

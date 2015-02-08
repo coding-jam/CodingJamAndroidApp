@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;

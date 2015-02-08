@@ -133,7 +133,7 @@ def coverageSourceDirs = [
         'src/gen'
 ]
 
-task jacocoUnitTestReport(type: JacocoReport, dependsOn: "test") {
+task jacocoUnitTestReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
     reports {
@@ -147,6 +147,7 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: "test") {
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
             excludes: ['it/cosenonjaviste/R*.class',
+                       '**/ui/**',
                        '**/*$InjectAdapter.class',
                        '**/*$ModuleAdapter.class',
                        '**/*$ViewInjector*.class'
@@ -168,7 +169,14 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: "test") {
     }
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "connectedAndroidTest") {
+task mergeTestCodeCoverageResults(type: JacocoMerge) {
+    description = 'Merge test code coverage results from junit and instrumentation test'
+    destinationFile = file("build/outputs/code-coverage/merged-coverage.exec")
+    doFirst {delete destinationFile}
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec', 'build/jacoco/testDebug.exec')
+}
+
+task jacocoTestReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generates Jacoco coverage reports"
     reports {
@@ -185,7 +193,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "connectedAndroidTest") {
     )
     sourceDirectories = files(coverageSourceDirs)
     additionalSourceDirs = files(coverageSourceDirs)
-    executionData = files('build/outputs/code-coverage/connected/coverage.ec')
+    executionData = files('build/outputs/code-coverage/merged-coverage.exec')
     // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
     // We iterate through the compiled .class tree and rename $$ to $.
     doFirst {

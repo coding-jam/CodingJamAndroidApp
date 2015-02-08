@@ -12,9 +12,9 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
-import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
+import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
@@ -43,6 +43,7 @@ public class AuthorListPresenterTest {
 
     @Test
     public void testLoad() {
+        presenter.testFromJUnit();
         presenter.initAndSubscribe(new AuthorListModel(), view);
         AuthorListModel model = presenter.getModel();
         assertThat(model.size()).isEqualTo(2);
