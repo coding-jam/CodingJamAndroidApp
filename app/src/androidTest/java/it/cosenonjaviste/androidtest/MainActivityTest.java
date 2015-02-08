@@ -12,16 +12,22 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.MainActivity;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.ActivityRule;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
@@ -39,8 +45,18 @@ public class MainActivityTest {
     @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
 
     @Test public void showMainActivity() {
-        onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
-                .atPosition(3).perform(click());
+    }
+
+    @Test public void showCategories() {
+        clickOnDrawer(1);
+
+        onView(withText("Agile")).check(matches(isDisplayed()));
+    }
+
+    private void clickOnDrawer(int position) {
+        onView(withClassName(endsWith("ImageButton"))).perform(click());
+        onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
+                .atPosition(position).perform(click());
     }
 
     @Module(injects = MainActivityTest.class, includes = MvpEspressoTestModule.class, overrides = true, library = true)

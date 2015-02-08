@@ -145,6 +145,8 @@ public class JsonStubs {
                 return new MockResponse().setBody(getPostList(10));
             } else if (path.matches("/post-url/")) {
                 return new MockResponse().setBody("<html><body>CoseNonJaviste</body></html>");
+            } else if (path.matches("/\\?json=get_category_index")) {
+                return new MockResponse().setBody(CATEGORIES);
             }
             return null;
         });

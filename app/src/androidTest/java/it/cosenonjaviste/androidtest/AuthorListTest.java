@@ -35,11 +35,6 @@ public class AuthorListTest {
 
     @Test
     public void testAuthorList() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 //        showUi();
     }
 
