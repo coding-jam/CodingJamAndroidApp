@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.1.0'
     }
 }
 
