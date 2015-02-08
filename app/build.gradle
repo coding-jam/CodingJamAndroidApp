@@ -188,7 +188,12 @@ task jacocoTestReport(type: JacocoReport) {
             excludes: ['**/R.class',
                        '**/R$*.class',
                        '**/BuildConfig.*',
-                       '**/Manifest*.*'
+                       '**/Manifest*.*',
+                       '**/*$InjectAdapter.class',
+                       '**/*$ModuleAdapter.class',
+                       '**/*$ViewInjector*.class',
+                       '**/*Parceler*.class',
+                       '/org/parceler/*.class'
             ]
     )
     sourceDirectories = files(coverageSourceDirs)
