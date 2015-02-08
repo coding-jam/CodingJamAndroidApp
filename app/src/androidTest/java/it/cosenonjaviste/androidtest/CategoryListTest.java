@@ -1,10 +1,10 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.androidtest;
 
 import javax.inject.Inject;
 
 import dagger.Module;
-import it.cosenonjaviste.base.CnjFragmentTest;
-import it.cosenonjaviste.base.MvpEspressoTestModule;
+import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.stubs.JsonStubs;

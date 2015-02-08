@@ -1,4 +1,4 @@
-package it.cosenonjaviste.base;
+package it.cosenonjaviste.androidtest.base;
 
 import android.support.test.espresso.IdlingResource;
 

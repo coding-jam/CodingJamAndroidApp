@@ -1,13 +1,13 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.androidtest;
 
 import javax.inject.Inject;
 
 import dagger.Module;
-import it.cosenonjaviste.base.CnjFragmentTest;
-import it.cosenonjaviste.base.MvpEspressoTestModule;
+import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 

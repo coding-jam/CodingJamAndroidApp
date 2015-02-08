@@ -192,8 +192,9 @@ task jacocoTestReport(type: JacocoReport) {
                        '**/*$InjectAdapter.class',
                        '**/*$ModuleAdapter.class',
                        '**/*$ViewInjector*.class',
-                       '**/*Parceler*.class',
-                       '/org/parceler/*.class'
+                       '**/*Parceler$*.class',
+                       '**/*$Parcelable*.class',
+                       '**/androidtest/**/*.class'
             ]
     )
     sourceDirectories = files(coverageSourceDirs)

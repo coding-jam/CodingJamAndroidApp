@@ -1,10 +1,10 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.androidtest;
 
 import dagger.Module;
-import it.cosenonjaviste.base.CnjFragmentTest;
-import it.cosenonjaviste.base.MvpEspressoTestModule;
-import it.cosenonjaviste.twitter.TweetListModel;
+import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.twitter.TweetListFragment;
+import it.cosenonjaviste.twitter.TweetListModel;
 
 public class TweetListTest extends CnjFragmentTest<TweetListModel> {
 

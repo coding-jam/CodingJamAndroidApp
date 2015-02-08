@@ -1,4 +1,4 @@
-package it.cosenonjaviste.base;
+package it.cosenonjaviste.androidtest.base;
 
 import android.app.Activity;
 import android.content.Intent;
