@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;

@@ -14,7 +14,7 @@ import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
-import it.cosenonjaviste.author.ui.AuthorListFragment;
+import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;

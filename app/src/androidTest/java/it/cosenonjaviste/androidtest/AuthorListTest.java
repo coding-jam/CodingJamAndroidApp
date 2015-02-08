@@ -5,8 +5,8 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
+import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
-import it.cosenonjaviste.author.ui.AuthorListFragment;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 

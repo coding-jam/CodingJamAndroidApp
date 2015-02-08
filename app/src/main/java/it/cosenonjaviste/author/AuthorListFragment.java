@@ -1,4 +1,4 @@
-package it.cosenonjaviste.author.ui;
+package it.cosenonjaviste.author;
 
 import android.annotation.SuppressLint;
 import android.view.View;
@@ -12,8 +12,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.author.AuthorListModel;
-import it.cosenonjaviste.author.AuthorListPresenter;
 import rx.functions.Actions;
 
 public class AuthorListFragment extends CnjFragment<AuthorListPresenter, AuthorListModel> {

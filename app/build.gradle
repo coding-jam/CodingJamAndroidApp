@@ -147,7 +147,6 @@ task jacocoUnitTestReport(type: JacocoReport) {
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
             excludes: ['it/cosenonjaviste/R*.class',
-                       '**/ui/**',
                        '**/*$InjectAdapter.class',
                        '**/*$ModuleAdapter.class',
                        '**/*$ViewInjector*.class'
@@ -192,6 +191,7 @@ task jacocoTestReport(type: JacocoReport) {
                        '**/*$InjectAdapter.class',
                        '**/*$ModuleAdapter.class',
                        '**/*$ViewInjector*.class',
+                       '**/*$Provide*.class',
                        '**/*Parceler$*.class',
                        '**/*$Parcelable*.class',
                        '**/androidtest/**/*.class'
