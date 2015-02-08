@@ -49,8 +49,21 @@ public class MainActivityTest {
 
     @Test public void showCategories() {
         clickOnDrawer(1);
-
         onView(withText("Agile")).check(matches(isDisplayed()));
+    }
+
+    @Test public void showAuthors() {
+        clickOnDrawer(2);
+        onView(withText("Gabriele")).check(matches(isDisplayed()));
+    }
+
+    @Test public void showTweets() {
+        clickOnDrawer(3);
+        onView(withText("tweet text 1")).check(matches(isDisplayed()));
+    }
+
+    @Test public void showContactForm() {
+        clickOnDrawer(4);
     }
 
     private void clickOnDrawer(int position) {

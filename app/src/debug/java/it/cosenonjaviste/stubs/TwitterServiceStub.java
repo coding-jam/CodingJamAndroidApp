@@ -22,7 +22,7 @@ public class TwitterServiceStub implements TwitterService {
             tweet.setId(123);
             tweet.setAuthor("author");
             tweet.setCreatedAt(new Date());
-            tweet.setText("text");
+            tweet.setText("tweet text " + i);
             list.add(tweet);
         }
         return Observable.just(list);

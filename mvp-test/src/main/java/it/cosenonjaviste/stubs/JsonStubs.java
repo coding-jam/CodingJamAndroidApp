@@ -147,6 +147,10 @@ public class JsonStubs {
                 return new MockResponse().setBody("<html><body>CoseNonJaviste</body></html>");
             } else if (path.matches("/\\?json=get_category_index")) {
                 return new MockResponse().setBody(CATEGORIES);
+            } else if (path.matches("/\\?json=get_author_index.*")) {
+                return new MockResponse().setBody(AUTHORS);
+            } else if (path.matches(".*contatti.*")) {
+                return new MockResponse().setBody("<html><body>Contact form</body></html>");
             }
             return null;
         });
