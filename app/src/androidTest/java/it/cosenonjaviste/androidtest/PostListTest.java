@@ -50,7 +50,7 @@ public class PostListTest extends CnjFragmentTest<PostListModel> {
     public void testLoadMore() {
         onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
                 .atPosition(9).check(matches(isDisplayed()));
-        onView(withText("post title 12")).check(matches(isDisplayed()));
+        onView(withText("post title 10")).check(matches(isDisplayed()));
     }
 
     @Module(injects = {PostListTest.class}, includes = MvpEspressoTestModule.class)
