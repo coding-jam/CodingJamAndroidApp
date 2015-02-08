@@ -88,14 +88,13 @@ dependencies {
     compile project(':ObjectGraphHolder')
     compile project(':SuperListviewLibrary')
     compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.7.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'io.reactivex:rxandroid-framework:0.24.0'
-    compile 'com.jakewharton:butterknife:5.1.2'
-    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
     apt 'org.parceler:parceler:0.2.14'
 
