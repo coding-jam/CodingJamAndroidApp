@@ -16,10 +16,6 @@ public class CircleTransform implements Transformation {
     private int borderColor;
     private int imageSize;
 
-    public static CircleTransform create(Context context, int dimensionResource) {
-        return new CircleTransform(context, dimensionResource, false, 0, 0);
-    }
-
     public static CircleTransform createWithBorder(Context context, int dimensionResource, int colorRes, int borderSizeResource) {
         return new CircleTransform(context, dimensionResource, true, colorRes, borderSizeResource);
     }
