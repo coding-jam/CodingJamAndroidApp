@@ -14,10 +14,10 @@ import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.mvp.base.MvpPresenter;
-import it.cosenonjaviste.mvp.base.MvpView;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public abstract class CnjFragment<P extends MvpPresenter<M>, M> extends MvpFragment<P, M> {

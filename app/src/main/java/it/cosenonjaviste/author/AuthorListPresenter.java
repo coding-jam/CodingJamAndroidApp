@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.MvpView;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;

@@ -2,7 +2,7 @@ package it.cosenonjaviste.page;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.mvp.base.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
 
 public class PagePresenter extends MvpPresenter<PageModel> {
 

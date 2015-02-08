@@ -2,7 +2,7 @@ package it.cosenonjaviste.androidtest.base;
 
 import android.content.Intent;
 
-import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public abstract class BaseFragmentTest extends BaseActivityTest<SingleFragmentActivity> {

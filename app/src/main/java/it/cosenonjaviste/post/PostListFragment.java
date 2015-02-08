@@ -12,7 +12,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.lib.mvp.MvpView;
 import rx.functions.Actions;
 
 public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> implements MvpView<PostListModel> {

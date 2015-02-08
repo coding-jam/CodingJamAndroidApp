@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.lib.mvp.utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.cosenonjaviste.mvp.base.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
 
 public class PresenterSaverFragment extends Fragment {
 

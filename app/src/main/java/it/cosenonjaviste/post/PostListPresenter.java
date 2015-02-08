@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.base.MvpView;
-import it.cosenonjaviste.mvp.base.RxMvpPresenter;
-import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import rx.Observable;

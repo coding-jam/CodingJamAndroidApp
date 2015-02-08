@@ -4,8 +4,8 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
-import it.cosenonjaviste.lib.mvp.OptionalItem;
-import it.cosenonjaviste.lib.mvp.OptionalList;
+import it.cosenonjaviste.lib.mvp.utils.OptionalItem;
+import it.cosenonjaviste.lib.mvp.utils.OptionalList;
 import it.cosenonjaviste.model.Tweet;
 import rx.functions.Action1;
 

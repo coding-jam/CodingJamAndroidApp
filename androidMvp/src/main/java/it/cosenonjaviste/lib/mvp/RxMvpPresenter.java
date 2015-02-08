@@ -1,9 +1,10 @@
-package it.cosenonjaviste.mvp.base;
+package it.cosenonjaviste.lib.mvp;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action0;

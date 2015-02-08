@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.lib.mvp.MvpView;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 

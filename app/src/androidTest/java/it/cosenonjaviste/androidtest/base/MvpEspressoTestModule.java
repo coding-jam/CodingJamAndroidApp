@@ -5,9 +5,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.model.WordPressServiceFactory;
-import it.cosenonjaviste.mvp.base.SchedulerManager;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 @Module(library = true, overrides = true, includes = MvpTestModule.class)

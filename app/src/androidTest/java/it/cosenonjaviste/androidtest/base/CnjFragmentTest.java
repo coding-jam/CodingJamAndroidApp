@@ -5,7 +5,7 @@ import android.content.Intent;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.mvp.MvpFragment;
-import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.lib.mvp.MvpView;
 
 public abstract class CnjFragmentTest<M> extends BaseFragmentTest {
     private final M model;

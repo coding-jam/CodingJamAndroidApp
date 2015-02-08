@@ -3,7 +3,7 @@ package it.cosenonjaviste.stubs;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import it.cosenonjaviste.mvp.base.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 
 @Singleton

@@ -2,7 +2,7 @@ package it.cosenonjaviste.post;
 
 import org.parceler.Parcel;
 
-import it.cosenonjaviste.lib.mvp.OptionalList;
+import it.cosenonjaviste.lib.mvp.utils.OptionalList;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;

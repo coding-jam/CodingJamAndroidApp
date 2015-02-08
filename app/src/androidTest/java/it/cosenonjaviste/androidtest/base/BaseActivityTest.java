@@ -10,7 +10,7 @@ import dagger.ObjectGraph;
 import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphCreator;
 import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
-import it.cosenonjaviste.mvp.base.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.schedulers.Schedulers;
 
 import static android.support.test.espresso.Espresso.onView;

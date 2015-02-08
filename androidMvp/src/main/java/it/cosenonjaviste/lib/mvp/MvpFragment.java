@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.mvp.base.MvpPresenter;
-import it.cosenonjaviste.mvp.base.MvpView;
+import it.cosenonjaviste.lib.mvp.utils.PresenterSaverFragment;
 
 public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 

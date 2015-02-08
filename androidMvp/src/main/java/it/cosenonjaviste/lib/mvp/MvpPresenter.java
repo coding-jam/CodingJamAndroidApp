@@ -1,4 +1,4 @@
-package it.cosenonjaviste.mvp.base;
+package it.cosenonjaviste.lib.mvp;
 
 import java.util.concurrent.atomic.AtomicLong;
 
