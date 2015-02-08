@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.1.0'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
     }
 }
 
@@ -133,7 +133,7 @@ def coverageSourceDirs = [
         'src/gen'
 ]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
+task jacocoUnitTestReport(type: JacocoReport, dependsOn: "test") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
     reports {
@@ -165,5 +165,34 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
     afterEvaluate {
         // just clean up coveralls dashboard, following reports are not of interest
         testDebug.reports.junitXml.enabled = false
+    }
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "connectedAndroidTest") {
+    group = "Reporting"
+    description = "Generates Jacoco coverage reports"
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*'
+            ]
+    )
+    sourceDirectories = files(coverageSourceDirs)
+    additionalSourceDirs = files(coverageSourceDirs)
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec')
+    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
+    // We iterate through the compiled .class tree and rename $$ to $.
+    doFirst {
+        new File('app/build/intermediates/classes/').eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
     }
 }
