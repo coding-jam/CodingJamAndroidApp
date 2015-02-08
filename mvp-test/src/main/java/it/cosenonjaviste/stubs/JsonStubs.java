@@ -1,11 +1,13 @@
 package it.cosenonjaviste.stubs;
 
+import com.squareup.okhttp.mockwebserver.MockResponse;
+
 public class JsonStubs {
     private static final String SINGLE_POST = "{\n" +
             "id: 11213,\n" +
             "type: \"post\",\n" +
             "slug: \"decorator-patten-corretto-lambda-con-java-8\",\n" +
-            "url: \"http://www.cosenonjaviste.it/decorator-patten-corretto-lambda-con-java-8/\",\n" +
+            "url: \"post-url/\",\n" +
             "status: \"publish\",\n" +
             "title: \"Decorator patten corretto lambda con Java 8\",\n" +
             "date: \"2014-05-29 10:30:36\",\n" +
@@ -135,4 +137,16 @@ public class JsonStubs {
             "}" +
             "]" +
             "}";
+
+    public static void initAllStubs() {
+        MockWebServerWrapper.initDispatcher(req -> {
+            String path = req.getPath();
+            if (path.matches("/\\?json=get_recent_posts.*page=0.*")) {
+                return new MockResponse().setBody(getPostList(10));
+            } else if (path.matches("/post-url/")) {
+                return new MockResponse().setBody("<html><body>CoseNonJaviste</body></html>");
+            }
+            return null;
+        });
+    }
 }

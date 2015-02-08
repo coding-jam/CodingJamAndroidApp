@@ -15,15 +15,20 @@ public class SingleFragmentActivity extends ActionBarActivity {
 
     private static final String VIEW_CLASS = "viewClass";
 
+    public static Intent populateIntent(Intent intent, Class<? extends MvpView<?>> viewClass) {
+        intent.putExtra(VIEW_CLASS, viewClass.getName());
+        return intent;
+    }
+
     public static Intent createIntent(Context context, Class<? extends MvpView<?>> viewClass) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
-        intent.putExtra(VIEW_CLASS, viewClass.getName());
+        populateIntent(intent, viewClass);
         return intent;
     }
 
     public static Intent createIntent(Class<? extends MvpView<?>> viewClass) {
         Intent intent = new Intent();
-        intent.putExtra(VIEW_CLASS, viewClass.getName());
+        populateIntent(intent, viewClass);
         return intent;
     }
 

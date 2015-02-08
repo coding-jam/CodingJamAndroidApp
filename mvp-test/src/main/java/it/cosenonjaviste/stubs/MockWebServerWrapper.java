@@ -36,6 +36,10 @@ public class MockWebServerWrapper {
         }
     }
 
+    public static void initDispatcher(Func1<RecordedRequest, MockResponse> dispatchFunction) {
+        MockWebServerWrapper.dispatchFunction = dispatchFunction;
+    }
+
     public void initDispatcher(String responseBody) {
         dispatchFunction = recordedRequest -> new MockResponse().setBody(responseBody);
         requests = new LinkedList<>();

@@ -1,15 +1,12 @@
 package it.cosenonjaviste.androidtest;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.Module;
-import dagger.Provides;
 import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
-import it.cosenonjaviste.page.PageUrlManager;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public class PageTest extends CnjFragmentTest<PageModel> {
@@ -35,12 +32,5 @@ public class PageTest extends CnjFragmentTest<PageModel> {
 
     @Module(injects = {PageTest.class}, includes = MvpEspressoTestModule.class, library = true)
     public static class TestModule {
-        @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
-            return new PageUrlManager() {
-                @Override public String getUrl(String url) {
-                    return server.getUrl(true);
-                }
-            };
-        }
     }
 }
