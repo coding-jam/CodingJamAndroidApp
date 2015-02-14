@@ -1,23 +1,48 @@
 package it.cosenonjaviste.androidtest;
 
+import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
+import org.junit.runner.RunWith;
+
+import javax.inject.Inject;
+
 import dagger.Module;
-import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 
-public class TweetListTest extends CnjFragmentTest<TweetListModel> {
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
-    public TweetListTest() {
-        super(TweetListFragment.class, new TweetListModel());
-    }
+@RunWith(AndroidJUnit4.class)
+public class TweetListTest {
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
+    @Inject TwitterService twitterService;
 
-    public void testPostList() throws InterruptedException {
-        showUi();
+    private final FragmentRule fragmentRule = FragmentRule.create(TweetListFragment.class, new TweetListModel());
+
+    private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
+        objectGraph.inject(this);
+        when(twitterService.loadTweets(eq(1)))
+                .thenReturn(TestData.tweets());
+    });
+
+    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
+
+    @Test public void testPostList() {
+        onView(withText("tweet text 1")).check(matches(isDisplayed()));
     }
 
     @Module(injects = TweetListTest.class, includes = MvpEspressoTestModule.class)

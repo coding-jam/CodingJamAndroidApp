@@ -43,6 +43,10 @@ public class TweetListModel {
         return list.size();
     }
 
+    public boolean isError() {
+        return list.isError();
+    }
+
     public void append(List<Tweet> object) {
         list.append(object);
     }

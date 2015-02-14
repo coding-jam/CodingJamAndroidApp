@@ -6,12 +6,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.MvpTestModule;
+import it.cosenonjaviste.BaseModule;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageUrlManager;
 
-@Module(library = true, overrides = true, includes = MvpTestModule.class)
+@Module(library = true, overrides = true, includes = BaseModule.class)
 public class MvpEspressoTestModule {
 
     @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
@@ -28,5 +29,9 @@ public class MvpEspressoTestModule {
                 return server.getUrl(true) + url;
             }
         };
+    }
+
+    @Provides @Singleton TwitterService provideTwitterService() {
+        return Mockito.mock(TwitterService.class);
     }
 }

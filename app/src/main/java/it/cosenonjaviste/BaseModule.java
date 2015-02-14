@@ -10,7 +10,6 @@ import dagger.Provides;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.twitter.Twitter4JService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -34,7 +33,7 @@ public class BaseModule {
     }
 
     @Provides TwitterService provideTwitterService() {
-        return new Twitter4JService();
+        return new TwitterService();
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {

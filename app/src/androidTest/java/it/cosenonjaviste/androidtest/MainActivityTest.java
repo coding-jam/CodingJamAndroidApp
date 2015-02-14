@@ -18,6 +18,7 @@ import it.cosenonjaviste.androidtest.base.ActivityRule;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -42,6 +43,8 @@ public class MainActivityTest {
 
     @Inject MockWebServerWrapper server;
 
+    @Inject TwitterService twitterService;
+
     private final ActivityRule<MainActivity> fragmentRule = new ActivityRule<>(MainActivity.class);
 
     private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
@@ -55,6 +58,9 @@ public class MainActivityTest {
                 .thenReturn(TestData.authorResponse(2));
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
                 .thenReturn(TestData.postResponse(1));
+
+        when(twitterService.loadTweets(eq(1)))
+                .thenReturn(TestData.tweets());
 
         server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
     });

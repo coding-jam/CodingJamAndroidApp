@@ -10,6 +10,7 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
+import it.cosenonjaviste.model.Tweet;
 import rx.Observable;
 
 public class TestData {
@@ -48,5 +49,13 @@ public class TestData {
 
     private static Category createCategory(int i) {
         return new Category(i, "cat " + i, 10 + i);
+    }
+
+    public static Observable<List<Tweet>> tweets() {
+        List<Tweet> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new Tweet(123, "tweet text " + i, new Date(), "image", "author"));
+        }
+        return Observable.just(list);
     }
 }
