@@ -12,14 +12,15 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
-import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.post.PostListModel;
+import rx.Observable;
 
+import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -39,19 +40,39 @@ public class AuthorListPresenterTest {
     @Before
     public void setup() {
         ObjectGraph.create(new TestModule()).inject(this);
-        when(wordPressService.listAuthors()).thenReturn(TestData.authorResponse(2));
     }
 
     @Test
     public void testLoad() {
-        presenter.testFromJUnit();
-        presenter.initAndSubscribe(new AuthorListModel(), view);
-        AuthorListModel model = presenter.getModel();
+        when(wordPressService.listAuthors())
+                .thenReturn(authorResponse(2));
+
+        AuthorListModel model = new AuthorListModel();
+        presenter.initAndSubscribe(model, view);
+        assertThat(model.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void testRetryAfterError() {
+        when(wordPressService.listAuthors())
+                .thenReturn(Observable.error(new RuntimeException()));
+
+        AuthorListModel model = new AuthorListModel();
+        presenter.initAndSubscribe(model, view);
+
+        when(wordPressService.listAuthors())
+                .thenReturn(authorResponse(2));
+
+        presenter.loadAuthors();
+
         assertThat(model.size()).isEqualTo(2);
     }
 
     @Test
     public void testGoToDetail() {
+        when(wordPressService.listAuthors())
+                .thenReturn(authorResponse(2));
+
         presenter.initAndSubscribe(new AuthorListModel(), view);
         presenter.goToAuthorDetail(1);
 

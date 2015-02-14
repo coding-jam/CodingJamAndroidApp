@@ -19,6 +19,7 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.post.PostListModel;
+import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,14 +41,15 @@ public class CategoryListPresenterTest {
     @Before
     public void setup() {
         ObjectGraph.create(new TestModule()).inject(this);
-        when(wordPressService.listCategories())
-                .thenReturn(categoryResponse(3));
     }
 
     @Test
     public void testLoad() {
-        presenter.initAndSubscribe(new CategoryListModel(), view);
-        CategoryListModel model = presenter.getModel();
+        when(wordPressService.listCategories())
+                .thenReturn(categoryResponse(3));
+
+        CategoryListModel model = new CategoryListModel();
+        presenter.initAndSubscribe(model, view);
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(2);
         assertThat(category.getId()).isEqualTo(2);
@@ -56,7 +58,26 @@ public class CategoryListPresenterTest {
     }
 
     @Test
+    public void testRetryAfterError() {
+        when(wordPressService.listCategories())
+                .thenReturn(Observable.error(new RuntimeException()));
+
+        CategoryListModel model = new CategoryListModel();
+        presenter.initAndSubscribe(model, view);
+
+        when(wordPressService.listCategories())
+                .thenReturn(categoryResponse(3));
+
+        presenter.loadData();
+
+        assertThat(model.size()).isEqualTo(3);
+    }
+
+    @Test
     public void testGoToPosts() {
+        when(wordPressService.listCategories())
+                .thenReturn(categoryResponse(3));
+
         presenter.initAndSubscribe(new CategoryListModel(), view);
         presenter.goToPosts(1);
 

@@ -57,14 +57,6 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
         getView().open(PostListFragment.class, new PostListModel(author));
     }
 
-    public void testFromJUnit() {
-        System.out.println(123);
-    }
-
-    public void testFromFragment() {
-        System.out.println(123);
-    }
-
     @Override public AuthorListFragment getView() {
         return (AuthorListFragment) super.getView();
     }

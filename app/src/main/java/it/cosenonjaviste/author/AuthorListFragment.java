@@ -43,7 +43,6 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, AuthorL
     }
 
     @Override public void update(AuthorListModel model) {
-        presenter.testFromFragment();
         model.call(authors -> {
             grid.showList();
             adapter.reloadData(authors);

@@ -20,6 +20,7 @@ import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
+import rx.Observable;
 
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,6 +69,24 @@ public class PostListPresenterTest {
 
         OptionalList<Post> items = model.getItems();
         assertThat(items.size()).isEqualTo(16);
+    }
+
+    @Test
+    public void testRetryAfterError() {
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(Observable.error(new RuntimeException()));
+
+        PostListModel model = new PostListModel();
+        presenter.initAndSubscribe(model, view);
+        assertThat(model.getItems().isError()).isTrue();
+
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(postResponse(6));
+
+        presenter.reloadData();
+
+        assertThat(model.getItems().isError()).isFalse();
+        assertThat(model.getItems().size()).isEqualTo(6);
     }
 
     @Test
