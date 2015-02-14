@@ -9,6 +9,7 @@ public class AuthorResponse {
     }
 
     public AuthorResponse(List<Author> authors) {
+        this();
         this.authors = authors;
     }
 

@@ -9,6 +9,7 @@ public class CategoryResponse {
     }
 
     public CategoryResponse(List<Category> categories) {
+        this();
         this.categories = categories;
     }
 

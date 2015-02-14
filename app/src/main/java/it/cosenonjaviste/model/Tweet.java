@@ -16,6 +16,7 @@ public class Tweet {
     }
 
     public Tweet(long id, String text, Date createdAt, String userImage, String author) {
+        this();
         this.id = id;
         this.text = text;
         this.createdAt = createdAt;

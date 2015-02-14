@@ -9,6 +9,7 @@ public class PostResponse {
     }
 
     public PostResponse(List<Post> posts) {
+        this();
         this.posts = posts;
     }
 

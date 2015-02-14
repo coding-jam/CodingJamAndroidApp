@@ -17,6 +17,7 @@ public class Category {
     }
 
     public Category(long id, String title, int postCount) {
+        this();
         this.id = id;
         this.title = title;
         this.postCount = postCount;
