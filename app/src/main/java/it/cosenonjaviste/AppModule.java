@@ -2,20 +2,12 @@ package it.cosenonjaviste;
 
 import android.app.Application;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
-import dagger.Provides;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.category.CategoryListFragment;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
-import it.cosenonjaviste.model.TwitterService;
-import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.model.WordPressServiceFactory;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.twitter.TweetListFragment;
-import it.cosenonjaviste.twitter.Twitter4JService;
 
 @Module(injects = {
         MainActivity.class,
@@ -24,24 +16,12 @@ import it.cosenonjaviste.twitter.Twitter4JService;
         AuthorListFragment.class,
         CategoryListFragment.class,
         TweetListFragment.class
-}, library = true)
+}, library = true, includes = BaseModule.class)
 public class AppModule {
 
     private Application application;
 
     public AppModule(Application application) {
         this.application = application;
-    }
-
-    @Provides @Singleton WordPressService provideGitHubService() {
-        return WordPressServiceFactory.create("http://www.cosenonjaviste.it/", BuildConfig.DEBUG);
-    }
-
-    @Provides TwitterService provideTwitterService() {
-        return new Twitter4JService();
-    }
-
-    @Provides @Singleton SchedulerManager provideSchedulerManager() {
-        return new SchedulerManager();
     }
 }

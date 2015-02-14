@@ -13,6 +13,18 @@ public class Post {
     String url;
     String excerpt;
 
+    public Post() {
+    }
+
+    public Post(long id, Author author, String title, Date date, String url, String excerpt) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.date = date;
+        this.url = url;
+        this.excerpt = excerpt;
+    }
+
     public long getId() {
         return id;
     }

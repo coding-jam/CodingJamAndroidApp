@@ -12,19 +12,21 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
-import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.lib.mvp.utils.OptionalList;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
-import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
+import static it.cosenonjaviste.mvp.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest {
@@ -33,45 +35,46 @@ public class PostListPresenterTest {
 
     @Inject PostListPresenter presenter;
 
-    @Inject MockWebServerWrapper server;
+    @Inject WordPressService wordPressService;
 
     @Before
     public void setup() {
-        ObjectGraph.create(getTestModule()).inject(this);
+        ObjectGraph.create(new TestModule()).inject(this);
     }
 
     @Captor ArgumentCaptor<PageModel> modelCaptor;
 
-    protected Object getTestModule() {
-        return new TestModule();
-    }
-
     @Test
     public void testLoad() throws InterruptedException {
-        server.initDispatcher(JsonStubs.getPostList(1));
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(postResponse(1));
+
         PostListModel model = new PostListModel();
         presenter.initAndSubscribe(model, view);
+
         assertThat(model.getItems().size()).isEqualTo(1);
-        String lastUrl = server.getLastUrl();
-//        int requestCount = server.getRequestCount();
-//        System.out.println(recordedRequest);
     }
 
     @Test
     public void testLoadMore() {
-        server.initDispatcher(JsonStubs.getPostList(20));
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(postResponse(10));
+        when(wordPressService.listPosts(eq(2)))
+                .thenReturn(postResponse(6));
+
         PostListModel model = new PostListModel();
         presenter.initAndSubscribe(model, view);
-        server.initDispatcher(JsonStubs.getPostList(5));
         presenter.loadNextPage();
+
         OptionalList<Post> items = model.getItems();
-        int size = items.size();
-        assertThat(size).isEqualTo(25);
+        assertThat(items.size()).isEqualTo(16);
     }
 
     @Test
     public void testGoToDetails() {
-        server.initDispatcher(JsonStubs.getPostList(1));
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(postResponse(1));
+
         PostListModel model = new PostListModel();
         presenter.initAndSubscribe(model, view);
         Post firstPost = model.getItems().get(0);

@@ -10,16 +10,19 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
-import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
-import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorPostListPresenterTest {
@@ -28,12 +31,11 @@ public class AuthorPostListPresenterTest {
 
     @Inject PostListPresenter presenter;
 
-    @Inject MockWebServerWrapper server;
+    @Inject WordPressService wordPressService;
 
     @Before
     public void setup() {
         ObjectGraph.create(getTestModule()).inject(this);
-        server.initDispatcher(JsonStubs.getPostList(1));
     }
 
     protected Object getTestModule() {
@@ -42,14 +44,15 @@ public class AuthorPostListPresenterTest {
 
     @Test
     public void testLoad() throws InterruptedException {
-        PostListModel model = new PostListModel(new Author(145, "a", "b"));
+        when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
+                .thenReturn(TestData.postResponse(1));
+
+        PostListModel model = new PostListModel(TestData.createAuthor(145));
 
         presenter.initAndSubscribe(model, view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
-        String lastUrl = server.getLastUrl();
-        assertThat(lastUrl).startsWith(WordPressService.AUTHOR_POSTS_URL);
-        assertThat(lastUrl).contains("id=145");
+        verify(wordPressService).listAuthorPosts(eq(145L), eq(1));
     }
 
     @Module(injects = {AuthorPostListPresenterTest.class}, includes = MvpJUnitTestModule.class)

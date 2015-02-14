@@ -12,17 +12,18 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
-import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListModel;
-import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorListPresenterTest {
@@ -31,14 +32,14 @@ public class AuthorListPresenterTest {
 
     @Inject AuthorListPresenter presenter;
 
-    @Inject MockWebServerWrapper server;
+    @Inject WordPressService wordPressService;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
     @Before
     public void setup() {
         ObjectGraph.create(new TestModule()).inject(this);
-        server.initDispatcher(JsonStubs.AUTHORS);
+        when(wordPressService.listAuthors()).thenReturn(TestData.authorResponse(2));
     }
 
     @Test

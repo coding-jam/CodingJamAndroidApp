@@ -1,5 +1,6 @@
 package it.cosenonjaviste.post;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,7 +43,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
                     getView().startLoading(model.getItems().isEmpty());
                 },
                 posts -> {
-                    model.getItems().done(posts);
+                    model.getItems().done(new ArrayList<>(posts));
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                     view.update(model);
                 }, throwable -> {

@@ -16,19 +16,23 @@ import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.stubs.JsonStubs;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
+import static it.cosenonjaviste.mvp.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryListPresenterTest {
 
-    @Inject MockWebServerWrapper server;
+    @Inject WordPressService wordPressService;
 
     @Inject CategoryListPresenter presenter;
 
@@ -39,7 +43,8 @@ public class CategoryListPresenterTest {
     @Before
     public void setup() {
         ObjectGraph.create(new TestModule()).inject(this);
-        server.initDispatcher(JsonStubs.CATEGORIES);
+        when(wordPressService.listCategories())
+                .thenReturn(categoryResponse(3));
     }
 
     @Test
@@ -47,10 +52,10 @@ public class CategoryListPresenterTest {
         presenter.initAndSubscribe(new CategoryListModel(), view);
         CategoryListModel model = presenter.getModel();
         assertThat(model.size()).isEqualTo(3);
-        Category category = model.get(0);
-        assertThat(category.getId()).isEqualTo(602);
-        assertThat(category.getTitle()).isEqualTo("Agile");
-        assertThat(category.getPostCount()).isEqualTo(4);
+        Category category = model.get(2);
+        assertThat(category.getId()).isEqualTo(2);
+        assertThat(category.getTitle()).isEqualTo("cat 2");
+        assertThat(category.getPostCount()).isEqualTo(12);
     }
 
     @Test
