@@ -43,15 +43,7 @@ public class Twitter4JService implements TwitterService {
     }
 
     private Tweet createTweet(Status s) {
-        Tweet tweet = new Tweet();
-        tweet.setId(s.getId());
-        tweet.setText(s.getText());
-        tweet.setCreatedAt(s.getCreatedAt());
-
         User user = s.getUser();
-        tweet.setAuthor(user.getName());
-        tweet.setUserImage(user.getProfileImageURL());
-
-        return tweet;
+        return new Tweet(s.getId(), s.getText(), s.getCreatedAt(), user.getProfileImageURL(), user.getName());
     }
 }

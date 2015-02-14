@@ -18,12 +18,7 @@ public class TwitterServiceStub implements TwitterService {
     @Override public Observable<List<Tweet>> loadTweets(int page) {
         List<Tweet> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Tweet tweet = new Tweet();
-            tweet.setId(123);
-            tweet.setAuthor("author");
-            tweet.setCreatedAt(new Date());
-            tweet.setText("tweet text " + i);
-            list.add(tweet);
+            list.add(new Tweet(123, "tweet text " + i, new Date(), "image", "author"));
         }
         return Observable.just(list);
     }
