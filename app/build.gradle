@@ -7,13 +7,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
     }
 }
-
-apply plugin: 'android-sdk-manager'
 
 apply plugin: 'com.android.application'
 
@@ -98,6 +95,7 @@ dependencies {
     apt 'org.parceler:parceler:0.2.14'
 
     androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.2'
+    testCompile 'com.squareup.dagger:dagger-compiler:1.2.2'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
