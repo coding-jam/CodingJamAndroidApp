@@ -98,12 +98,6 @@ dependencies {
     apt 'org.parceler:parceler:0.2.14'
 
     androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.2'
-    androidTestCompile(project(':mvp-test')) {
-        exclude group: 'com.squareup.dagger'
-        exclude group: 'org.mockito'
-        exclude group: 'io.reactivex'
-        exclude group: 'com.squareup.okhttp', module: 'okhttp'
-    }
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
@@ -114,8 +108,8 @@ dependencies {
         exclude group: 'com.squareup', module: 'javawriter'
     }
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
 
-    testCompile project(':mvp-test')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.assertj:assertj-core:1.7.0'

@@ -1,1 +1,1 @@
-include ':androidMvp', ':SuperListviewLibrary', ':mvp-test', ':app', 'ObjectGraphHolder'
+include ':androidMvp', ':SuperListviewLibrary', ':app', 'ObjectGraphHolder'

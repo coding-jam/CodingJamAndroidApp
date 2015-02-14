@@ -16,9 +16,9 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.ActivityRule;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;

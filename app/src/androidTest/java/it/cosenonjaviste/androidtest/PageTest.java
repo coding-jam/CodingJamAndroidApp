@@ -4,10 +4,10 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 public class PageTest extends CnjFragmentTest<PageModel> {
 

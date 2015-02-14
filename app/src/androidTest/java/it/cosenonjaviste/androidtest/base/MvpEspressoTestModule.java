@@ -10,7 +10,6 @@ import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageUrlManager;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 @Module(library = true, overrides = true, includes = MvpTestModule.class)
 public class MvpEspressoTestModule {

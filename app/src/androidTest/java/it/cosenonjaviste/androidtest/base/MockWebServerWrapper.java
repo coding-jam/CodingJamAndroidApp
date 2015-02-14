@@ -1,4 +1,4 @@
-package it.cosenonjaviste.stubs;
+package it.cosenonjaviste.androidtest.base;
 
 import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
