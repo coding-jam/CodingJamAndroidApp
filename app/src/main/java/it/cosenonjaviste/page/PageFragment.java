@@ -16,9 +16,8 @@ import javax.inject.Provider;
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 
-public class PageFragment extends CnjFragment<PagePresenter, PageModel> implements MvpView<PageModel> {
+public class PageFragment extends CnjFragment<PagePresenter, PageModel> {
 
     @InjectView(R.id.web_view) WebView webView;
 

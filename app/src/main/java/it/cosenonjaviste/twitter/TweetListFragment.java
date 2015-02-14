@@ -12,10 +12,9 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CnjFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import rx.functions.Actions;
 
-public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> implements MvpView<TweetListModel> {
+public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
