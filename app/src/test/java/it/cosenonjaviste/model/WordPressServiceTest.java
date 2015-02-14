@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import dagger.Module;
 import dagger.ObjectGraph;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.stubs.JsonStubs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

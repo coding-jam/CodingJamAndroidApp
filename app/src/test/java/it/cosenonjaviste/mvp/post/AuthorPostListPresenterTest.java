@@ -10,9 +10,9 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;

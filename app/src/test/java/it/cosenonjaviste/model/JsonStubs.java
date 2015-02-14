@@ -1,6 +1,4 @@
-package it.cosenonjaviste.stubs;
-
-import com.squareup.okhttp.mockwebserver.MockResponse;
+package it.cosenonjaviste.model;
 
 public class JsonStubs {
     private static final String SINGLE_POST = "{\n" +
@@ -142,23 +140,4 @@ public class JsonStubs {
             "]" +
             "}";
 
-    public static void initAllStubs() {
-        MockWebServerWrapper.initDispatcher(req -> {
-            String path = req.getPath();
-            if (path.matches("/\\?json=get_recent_posts.*page=1.*")) {
-                return new MockResponse().setBody(getPostList(10));
-            } else if (path.matches("/\\?json=get_recent_posts.*page=2.*")) {
-                return new MockResponse().setBody(getPostList(10, 3));
-            } else if (path.matches("/post-url/")) {
-                return new MockResponse().setBody("<html><body>CoseNonJaviste</body></html>");
-            } else if (path.matches("/\\?json=get_category_index")) {
-                return new MockResponse().setBody(CATEGORIES);
-            } else if (path.matches("/\\?json=get_author_index.*")) {
-                return new MockResponse().setBody(AUTHORS);
-            } else if (path.matches(".*contatti.*")) {
-                return new MockResponse().setBody("<html><body>Contact form</body></html>");
-            }
-            return null;
-        });
-    }
 }

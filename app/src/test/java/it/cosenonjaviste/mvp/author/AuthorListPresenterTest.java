@@ -12,12 +12,12 @@ import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
