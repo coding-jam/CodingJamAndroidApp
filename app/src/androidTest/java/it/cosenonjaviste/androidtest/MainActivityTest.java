@@ -13,10 +13,11 @@ import javax.inject.Inject;
 import dagger.Module;
 import it.cosenonjaviste.MainActivity;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.ActivityRule;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
-import it.cosenonjaviste.stubs.JsonStubs;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -30,16 +31,32 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
+    @Inject WordPressService wordPressService;
+
     @Inject MockWebServerWrapper server;
 
     private final ActivityRule<MainActivity> fragmentRule = new ActivityRule<>(MainActivity.class);
 
     private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
         objectGraph.inject(this);
-        JsonStubs.initAllStubs();
+
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(TestData.postResponse(10));
+        when(wordPressService.listCategories())
+                .thenReturn(TestData.categoryResponse(3));
+        when(wordPressService.listAuthors())
+                .thenReturn(TestData.authorResponse(2));
+        when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
+                .thenReturn(TestData.postResponse(1));
+
+        server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
     });
 
     @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
@@ -49,12 +66,12 @@ public class MainActivityTest {
 
     @Test public void showCategories() {
         clickOnDrawer(1);
-        onView(withText("Agile")).check(matches(isDisplayed()));
+        onView(withText("cat 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showAuthors() {
         clickOnDrawer(2);
-        onView(withText("Gabriele")).check(matches(isDisplayed()));
+        onView(withText("name 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showTweets() {
@@ -68,6 +85,10 @@ public class MainActivityTest {
 
     private void clickOnDrawer(int position) {
         onView(withClassName(endsWith("ImageButton"))).perform(click());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+        }
         onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
                 .atPosition(position).perform(click());
     }

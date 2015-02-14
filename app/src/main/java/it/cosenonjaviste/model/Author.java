@@ -25,10 +25,11 @@ public class Author implements Comparable<Author> {
     public Author() {
     }
 
-    public Author(long id, String firstName, String lastName) {
+    public Author(long id, String firstName, String lastName, String description) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.description = description;
     }
 
     public long getId() {

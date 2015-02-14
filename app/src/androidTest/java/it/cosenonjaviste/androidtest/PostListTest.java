@@ -3,13 +3,13 @@ package it.cosenonjaviste.androidtest;
 import javax.inject.Inject;
 
 import dagger.Module;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
 import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
-import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -20,10 +20,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 public class PostListTest extends CnjFragmentTest<PostListModel> {
 
-    @Inject MockWebServerWrapper server;
+    @Inject WordPressService wordPressService;
 
     public PostListTest() {
         super(PostListFragment.class, new PostListModel());
@@ -35,7 +37,10 @@ public class PostListTest extends CnjFragmentTest<PostListModel> {
 
     @Override protected void initAfterInject() {
         super.initAfterInject();
-        JsonStubs.initAllStubs();
+        when(wordPressService.listPosts(eq(1)))
+                .thenReturn(TestData.postResponse(0, 10));
+        when(wordPressService.listPosts(eq(2)))
+                .thenReturn(TestData.postResponse(10, 10));
     }
 
     public void testPostList() throws InterruptedException {

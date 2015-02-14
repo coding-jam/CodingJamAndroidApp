@@ -1,6 +1,6 @@
 package it.cosenonjaviste.androidtest.base;
 
-import com.google.gson.GsonBuilder;
+import org.mockito.Mockito;
 
 import javax.inject.Singleton;
 
@@ -9,16 +9,14 @@ import dagger.Provides;
 import it.cosenonjaviste.MvpTestModule;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.model.WordPressServiceFactory;
 import it.cosenonjaviste.page.PageUrlManager;
 import it.cosenonjaviste.stubs.MockWebServerWrapper;
-import retrofit.converter.GsonConverter;
 
 @Module(library = true, overrides = true, includes = MvpTestModule.class)
 public class MvpEspressoTestModule {
 
     @Provides @Singleton WordPressService provideWordPressService(MockWebServerWrapper mockWebServer) {
-        return WordPressServiceFactory.create(mockWebServer.getUrl(true), true, new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()));
+        return Mockito.mock(WordPressService.class);
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {

@@ -18,10 +18,7 @@ import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.MvpJUnitTestModule;
-import it.cosenonjaviste.mvp.TestData;
 import it.cosenonjaviste.post.PostListModel;
-import it.cosenonjaviste.stubs.JsonStubs;
-import it.cosenonjaviste.stubs.MockWebServerWrapper;
 
 import static it.cosenonjaviste.mvp.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
