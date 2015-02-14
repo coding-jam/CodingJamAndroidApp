@@ -10,8 +10,8 @@ import dagger.Provides;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.model.WordPressServiceFactory;
 import it.cosenonjaviste.twitter.Twitter4JService;
+import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 @Module(library = true)
@@ -21,7 +21,16 @@ public class BaseModule {
     }
 
     @Provides @Singleton WordPressService provideGitHubService(Gson gson) {
-        return WordPressServiceFactory.create("http://www.cosenonjaviste.it/", BuildConfig.DEBUG, new GsonConverter(gson));
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://www.cosenonjaviste.it/")
+                        //http calls are executed in background thread using SchedulerManager
+                .setExecutors(Runnable::run, null)
+                .setConverter(new GsonConverter(gson))
+                .build();
+        if (BuildConfig.DEBUG) {
+            restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
+        }
+        return restAdapter.create(WordPressService.class);
     }
 
     @Provides TwitterService provideTwitterService() {
