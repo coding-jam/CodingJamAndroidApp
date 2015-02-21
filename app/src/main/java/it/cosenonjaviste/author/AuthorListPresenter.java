@@ -13,8 +13,10 @@ import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
+import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
+@PresenterScope
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
     @Inject WordPressService wordPressService;

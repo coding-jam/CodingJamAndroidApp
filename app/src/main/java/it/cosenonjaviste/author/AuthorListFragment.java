@@ -6,25 +6,33 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjFragment;
+import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends CnjFragment<AuthorListPresenter, AuthorListModel> {
+public class AuthorListFragment extends Dagger2CnjFragment<AuthorListPresenter, AuthorListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
+    @Inject AuthorListPresenter presenter;
+
     private AuthorAdapter adapter;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
-        getComponent().inject(this);
+    @Override public AuthorListPresenter getPresenter() {
+        return presenter;
     }
 
-    @Override protected AuthorListPresenter createPresenter() {
-        return getComponent().getAuthorListPresenter();
+    protected AuthorListComponent getPresenterComponent() {
+        return Dagger_AuthorListComponent.builder().applicationComponent(getComponent()).build();
+    }
+
+    @Override public void onCreate(Bundle state) {
+        getPresenterComponent().inject(this);
+        super.onCreate(state);
     }
 
     @Override protected int getLayoutId() {

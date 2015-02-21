@@ -3,10 +3,10 @@ package it.cosenonjaviste;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.author.AuthorListFragment;
-import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListPresenter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PagePresenter;
 import it.cosenonjaviste.post.PostListFragment;
@@ -24,8 +24,6 @@ public interface ApplicationComponent {
 
     void inject(PageFragment fragment);
 
-    void inject(AuthorListFragment fragment);
-
     void inject(CategoryListFragment fragment);
 
     void inject(TweetListFragment fragment);
@@ -38,5 +36,7 @@ public interface ApplicationComponent {
 
     CategoryListPresenter getCategoryListPresenter();
 
-    AuthorListPresenter getAuthorListPresenter();
+    SchedulerManager providesSchedulerManager();
+
+    WordPressService providesWordPressService();
 }
