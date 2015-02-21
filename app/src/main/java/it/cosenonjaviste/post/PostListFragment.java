@@ -6,20 +6,28 @@ import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjFragment;
+import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class PostListFragment extends CnjFragment<PostListPresenter, PostListModel> {
+public class PostListFragment extends Dagger2CnjFragment<PostListPresenter, PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
+    @Inject PostListPresenter presenter;
+
     private PostAdapter adapter;
 
-    @Override protected PostListPresenter createPresenter() {
-        return getComponent().getPostListProvider();
+    @Override public PostListPresenter getPresenter() {
+        return presenter;
+    }
+
+    protected PostListComponent getPresenterComponent() {
+        return Dagger_PostListComponent.builder().applicationComponent(getComponent()).build();
     }
 
     @Override protected int getLayoutId() {
@@ -27,8 +35,8 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
     }
 
     @Override public void onCreate(Bundle state) {
+        getPresenterComponent().inject(this);
         super.onCreate(state);
-        getComponent().inject(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {
