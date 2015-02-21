@@ -1,40 +1,34 @@
 package it.cosenonjaviste.androidtest;
 
+import org.junit.Rule;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
+
 import javax.inject.Inject;
 
-import dagger.Module;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
-import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
-import it.cosenonjaviste.category.CategoryListFragment;
-import it.cosenonjaviste.category.CategoryListModel;
+import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
+import it.cosenonjaviste.author.AuthorListFragment;
+import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.model.WordPressService;
 
 import static org.mockito.Mockito.when;
 
-public class CategoryListTest extends CnjFragmentTest<CategoryListModel> {
+public class CategoryListTest {
 
     @Inject WordPressService wordPressService;
 
-    public CategoryListTest() {
-        super(CategoryListFragment.class, new CategoryListModel());
-    }
+    private final FragmentRule fragmentRule = FragmentRule.create(AuthorListFragment.class, new AuthorListModel());
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
-
-    @Override protected void initAfterInject() {
-        super.initAfterInject();
+    private final DaggerRule daggerRule = new DaggerRule(component -> {
+        component.inject(this);
         when(wordPressService.listCategories())
                 .thenReturn(TestData.categoryResponse(3));
-    }
+    });
+
+    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
 
     public void testCategoryList() throws InterruptedException {
-        showUi();
-    }
-
-    @Module(injects = {CategoryListTest.class}, includes = MvpEspressoTestModule.class)
-    public static class TestModule {
     }
 }

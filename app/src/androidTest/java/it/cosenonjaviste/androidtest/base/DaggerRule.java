@@ -5,8 +5,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.mockito.MockitoAnnotations;
 
-import dagger.ObjectGraph;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -15,12 +14,9 @@ import static android.support.test.espresso.Espresso.registerIdlingResources;
 
 public class DaggerRule implements TestRule {
 
-    private Object testModule;
+    private Action1<TestComponent> afterInjectAction;
 
-    private Action1<ObjectGraph> afterInjectAction;
-
-    public DaggerRule(Object testModule, Action1<ObjectGraph> afterInjectAction) {
-        this.testModule = testModule;
+    public DaggerRule(Action1<TestComponent> afterInjectAction) {
         this.afterInjectAction = afterInjectAction;
     }
 
@@ -35,14 +31,20 @@ public class DaggerRule implements TestRule {
 
                 final EspressoExecutor espressoExecutor = EspressoExecutor.newCachedThreadPool();
 
-                ObjectGraphHolder.forceObjectGraphCreator(app -> {
-                    Object[] modules = mergeArrays(app.getModules(), new Object[]{testModule});
-                    ObjectGraph objectGraph = ObjectGraph.create(modules);
-                    if (afterInjectAction != null) {
-                        afterInjectAction.call(objectGraph);
-                    }
-                    return objectGraph;
-                });
+                TestComponent component = DaggerUtils.getComponent();
+                if (afterInjectAction != null) {
+                    afterInjectAction.call(component);
+                }
+                CoseNonJavisteApp.component = component;
+
+//                ObjectGraphHolder.forceObjectGraphCreator(app -> {
+//                    Object[] modules = mergeArrays(app.getModules(), new Object[]{testModule});
+//                    ObjectGraph objectGraph = ObjectGraph.create(modules);
+//                    if (afterInjectAction != null) {
+//                        afterInjectAction.call(objectGraph);
+//                    }
+//                    return objectGraph;
+//                });
 
                 registerIdlingResources(espressoExecutor);
 

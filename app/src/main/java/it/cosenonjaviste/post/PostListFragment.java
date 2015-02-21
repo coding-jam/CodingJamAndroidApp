@@ -1,12 +1,10 @@
 package it.cosenonjaviste.post;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -18,16 +16,19 @@ public class PostListFragment extends CnjFragment<PostListPresenter, PostListMod
 
     @InjectView(R.id.list) SuperListview list;
 
-    @Inject Provider<PostListPresenter> presenterProvider;
-
     private PostAdapter adapter;
 
     @Override protected PostListPresenter createPresenter() {
-        return presenterProvider.get();
+        return getComponent().getPostListProvider();
     }
 
     @Override protected int getLayoutId() {
         return R.layout.super_list;
+    }
+
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getComponent().inject(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {

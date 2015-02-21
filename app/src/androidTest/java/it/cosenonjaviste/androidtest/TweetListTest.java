@@ -10,11 +10,9 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import dagger.Module;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
@@ -33,7 +31,7 @@ public class TweetListTest {
 
     private final FragmentRule fragmentRule = FragmentRule.create(TweetListFragment.class, new TweetListModel());
 
-    private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
+    private final DaggerRule daggerRule = new DaggerRule(objectGraph -> {
         objectGraph.inject(this);
         when(twitterService.loadTweets(eq(1)))
                 .thenReturn(TestData.tweets());
@@ -43,9 +41,5 @@ public class TweetListTest {
 
     @Test public void testPostList() {
         onView(withText("tweet text 1")).check(matches(isDisplayed()));
-    }
-
-    @Module(injects = TweetListTest.class, includes = MvpEspressoTestModule.class)
-    public static class TestModule {
     }
 }

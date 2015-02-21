@@ -10,9 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.ObjectGraph;
-import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.DaggerUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +21,7 @@ public class WordPressServiceTest {
 
     @Before
     public void init() throws IOException {
-        ObjectGraph.create(new TestModule()).inject(this);
+        DaggerUtils.getComponent().inject(this);
     }
 
     @Test
@@ -40,9 +38,5 @@ public class WordPressServiceTest {
         assertNotNull(post.getAuthor().getImageUrl());
         assertEquals(8, post.getAuthor().getId());
         assertNotNull(post.getAuthor().getName());
-    }
-
-    @Module(injects = WordPressServiceTest.class, includes = MvpJUnitTestModule.class)
-    public static class TestModule {
     }
 }

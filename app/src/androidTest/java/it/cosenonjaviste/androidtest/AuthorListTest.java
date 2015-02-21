@@ -10,11 +10,9 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import dagger.Module;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.model.WordPressService;
@@ -28,8 +26,8 @@ public class AuthorListTest {
 
     private final FragmentRule fragmentRule = FragmentRule.create(AuthorListFragment.class, new AuthorListModel());
 
-    private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
-        objectGraph.inject(this);
+    private final DaggerRule daggerRule = new DaggerRule(component -> {
+        component.inject(this);
         when(wordPressService.listAuthors())
                 .thenReturn(TestData.authorResponse(2));
     });
@@ -39,9 +37,5 @@ public class AuthorListTest {
     @Test
     public void testAuthorList() {
 //        showUi();
-    }
-
-    @Module(injects = AuthorListTest.class, includes = MvpEspressoTestModule.class, overrides = true, library = true)
-    public static class TestModule {
     }
 }

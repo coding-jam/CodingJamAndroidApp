@@ -16,15 +16,12 @@ import butterknife.ButterKnife;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.lib.mvp.MvpPresenter;
 import it.cosenonjaviste.lib.mvp.MvpView;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public abstract class CnjFragment<P extends MvpPresenter<M>, M> extends MvpFragment<P, M> {
 
-    @Override public void onCreate(Bundle savedInstanceState) {
-        ObjectGraphHolder.inject((DaggerApplication) getActivity().getApplication(), this);
-        super.onCreate(savedInstanceState);
+    protected ApplicationComponent getComponent() {
+        return ((CoseNonJavisteApp) getActivity().getApplication()).getComponent();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

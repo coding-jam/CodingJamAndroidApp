@@ -8,11 +8,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.ObjectGraph;
+import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
@@ -35,11 +33,7 @@ public class AuthorPostListPresenterTest {
 
     @Before
     public void setup() {
-        ObjectGraph.create(getTestModule()).inject(this);
-    }
-
-    protected Object getTestModule() {
-        return new TestModule();
+        DaggerUtils.getComponent().inject(this);
     }
 
     @Test
@@ -53,9 +47,5 @@ public class AuthorPostListPresenterTest {
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));
-    }
-
-    @Module(injects = {AuthorPostListPresenterTest.class}, includes = MvpJUnitTestModule.class)
-    public static class TestModule {
     }
 }

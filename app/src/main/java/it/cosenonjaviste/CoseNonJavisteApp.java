@@ -1,11 +1,19 @@
 package it.cosenonjaviste;
 
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
+import android.app.Application;
 
-public class CoseNonJavisteApp extends DaggerApplication {
+public class CoseNonJavisteApp extends Application {
 
-    @Override public Object[] getModules() {
-        return new Object[]{new AppModule(this)};
+    public static ApplicationComponent component;
+
+    @Override public void onCreate() {
+        super.onCreate();
+        component = Dagger_ApplicationComponent.builder()
+                .appModule(new AppModule(this))
+                .build();
     }
 
+    public ApplicationComponent getComponent() {
+        return component;
+    }
 }

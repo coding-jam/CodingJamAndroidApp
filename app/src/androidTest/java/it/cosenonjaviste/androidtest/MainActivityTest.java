@@ -10,14 +10,12 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import dagger.Module;
 import it.cosenonjaviste.MainActivity;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.ActivityRule;
 import it.cosenonjaviste.androidtest.base.DaggerRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
-import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 
@@ -47,8 +45,8 @@ public class MainActivityTest {
 
     private final ActivityRule<MainActivity> fragmentRule = new ActivityRule<>(MainActivity.class);
 
-    private final DaggerRule daggerRule = new DaggerRule(new TestModule(), objectGraph -> {
-        objectGraph.inject(this);
+    private final DaggerRule daggerRule = new DaggerRule(component -> {
+        component.inject(this);
 
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(TestData.postResponse(10));
@@ -97,9 +95,5 @@ public class MainActivityTest {
         }
         onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
                 .atPosition(position).perform(click());
-    }
-
-    @Module(injects = MainActivityTest.class, includes = MvpEspressoTestModule.class, overrides = true, library = true)
-    public static class TestModule {
     }
 }

@@ -1,6 +1,7 @@
 package it.cosenonjaviste.page;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -9,9 +10,6 @@ import android.webkit.WebViewClient;
 
 import java.io.File;
 import java.io.IOException;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import it.cosenonjaviste.CnjFragment;
@@ -23,10 +21,13 @@ public class PageFragment extends CnjFragment<PagePresenter, PageModel> {
 
     @InjectView(R.id.progress_detail) View progressBar;
 
-    @Inject Provider<PagePresenter> presenterProvider;
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getComponent().inject(this);
+    }
 
     @Override protected PagePresenter createPresenter() {
-        return presenterProvider.get();
+        return getComponent().getPagePresenter();
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override protected void initView(View view) {

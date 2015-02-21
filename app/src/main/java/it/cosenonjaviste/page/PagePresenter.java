@@ -8,6 +8,9 @@ public class PagePresenter extends MvpPresenter<PageModel> {
 
     @Inject PageUrlManager pageUrlManager;
 
+    @Inject public PagePresenter() {
+    }
+
     public String getPostUrl() {
         return pageUrlManager.getUrl(model.getUrl());
     }

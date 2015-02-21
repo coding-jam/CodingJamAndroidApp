@@ -18,8 +18,6 @@ import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
-import it.cosenonjaviste.lib.mvp.dagger.DaggerApplication;
-import it.cosenonjaviste.lib.mvp.dagger.ObjectGraphHolder;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
@@ -36,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ObjectGraphHolder.inject((DaggerApplication) getApplication(), this);
+        ((CoseNonJavisteApp) getApplication()).getComponent().inject(this);
 
         setContentView(R.layout.activity_main);
 

@@ -81,21 +81,21 @@ android {
 
 dependencies {
     compile project(':androidMvp')
-    compile project(':ObjectGraphHolder')
     compile project(':SuperListviewLibrary')
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.google.dagger:dagger:2.0-SNAPSHOT'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'com.android.support:cardview-v7:21.0.3'
     compile 'io.reactivex:rxandroid-framework:0.24.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
-    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
+    compile 'org.glassfish:javax.annotation:10.0-b28'
+    apt 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
     apt 'org.parceler:parceler:0.2.14'
 
-    androidTestApt 'com.squareup.dagger:dagger-compiler:1.2.2'
-    testCompile 'com.squareup.dagger:dagger-compiler:1.2.2'
+    androidTestApt 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
+    testCompile 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'

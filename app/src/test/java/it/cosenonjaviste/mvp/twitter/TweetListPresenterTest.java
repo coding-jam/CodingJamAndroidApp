@@ -8,11 +8,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.ObjectGraph;
+import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.model.TwitterService;
-import it.cosenonjaviste.mvp.MvpJUnitTestModule;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 import it.cosenonjaviste.twitter.TweetListPresenter;
@@ -33,7 +31,7 @@ public class TweetListPresenterTest {
 
     @Before
     public void setup() {
-        ObjectGraph.create(new TestModule()).inject(this);
+        DaggerUtils.getComponent().inject(this);
     }
 
     @Test public void testLoadTweets() {
@@ -72,9 +70,5 @@ public class TweetListPresenterTest {
         presenter.loadNextPage();
 
         assertThat(presenter.getModel().size()).isEqualTo(20);
-    }
-
-    @Module(injects = {TweetListPresenterTest.class}, includes = MvpJUnitTestModule.class)
-    public static class TestModule {
     }
 }

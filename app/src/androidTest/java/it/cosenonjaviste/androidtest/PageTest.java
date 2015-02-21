@@ -1,36 +1,32 @@
 package it.cosenonjaviste.androidtest;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
+
 import javax.inject.Inject;
 
-import dagger.Module;
-import it.cosenonjaviste.androidtest.base.CnjFragmentTest;
+import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
-import it.cosenonjaviste.androidtest.base.MvpEspressoTestModule;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 
-public class PageTest extends CnjFragmentTest<PageModel> {
+public class PageTest {
 
     @Inject MockWebServerWrapper server;
 
-    public PageTest() {
-        super(PageFragment.class, new PageModel("url"));
-    }
+    private final FragmentRule fragmentRule = FragmentRule.create(PageFragment.class, new PageModel("url"));
 
-    @Override protected void initAfterInject() {
-        super.initAfterInject();
+    private final DaggerRule daggerRule = new DaggerRule(component -> {
+        component.inject(this);
         server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
-    }
+    });
 
-    @Override protected Object getTestModule() {
-        return new TestModule();
-    }
+    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
 
-    public void testDetailFragment() {
-        showUi();
-    }
-
-    @Module(injects = {PageTest.class}, includes = MvpEspressoTestModule.class, library = true)
-    public static class TestModule {
+    @Test public void testDetailFragment() {
+//        showUi();
     }
 }

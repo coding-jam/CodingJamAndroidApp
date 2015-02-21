@@ -1,12 +1,10 @@
 package it.cosenonjaviste.author;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -18,12 +16,15 @@ public class AuthorListFragment extends CnjFragment<AuthorListPresenter, AuthorL
 
     @InjectView(R.id.grid) SuperGridview grid;
 
-    @Inject Provider<AuthorListPresenter> presenterProvider;
-
     private AuthorAdapter adapter;
 
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getComponent().inject(this);
+    }
+
     @Override protected AuthorListPresenter createPresenter() {
-        return presenterProvider.get();
+        return getComponent().getAuthorListPresenter();
     }
 
     @Override protected int getLayoutId() {

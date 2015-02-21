@@ -10,9 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.ObjectGraph;
-import it.cosenonjaviste.mvp.MvpJUnitTestModule;
+import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.page.PagePresenter;
@@ -31,16 +29,12 @@ public class PagePresenterTest {
 
     @Before
     public void setup() {
-        ObjectGraph.create(new TestModule()).inject(this);
+        DaggerUtils.getComponent().inject(this);
         presenter.initAndSubscribe(new PageModel("url"), view);
     }
 
     @Test
     public void testLoad() {
         assertThat(presenter.getPostUrl()).isEqualTo("url");
-    }
-
-    @Module(injects = {PagePresenterTest.class}, includes = MvpJUnitTestModule.class)
-    public static class TestModule {
     }
 }

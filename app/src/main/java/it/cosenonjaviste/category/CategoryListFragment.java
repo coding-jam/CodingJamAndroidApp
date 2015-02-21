@@ -1,12 +1,10 @@
 package it.cosenonjaviste.category;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -18,12 +16,15 @@ public class CategoryListFragment extends CnjFragment<CategoryListPresenter, Cat
 
     @InjectView(R.id.grid) SuperGridview grid;
 
-    @Inject Provider<CategoryListPresenter> presenterProvider;
-
     private CategoryAdapter adapter;
 
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getComponent().inject(this);
+    }
+
     @Override protected CategoryListPresenter createPresenter() {
-        return presenterProvider.get();
+        return getComponent().getCategoryListPresenter();
     }
 
     @Override protected int getLayoutId() {

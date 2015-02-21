@@ -1,12 +1,10 @@
 package it.cosenonjaviste.twitter;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -18,12 +16,15 @@ public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetList
 
     @InjectView(R.id.list) SuperListview list;
 
-    @Inject Provider<TweetListPresenter> presenterProvider;
-
     private TweetAdapter adapter;
 
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getComponent().inject(this);
+    }
+
     @Override protected TweetListPresenter createPresenter() {
-        return presenterProvider.get();
+        return getComponent().getTweetListPresenter();
     }
 
     @Override protected int getLayoutId() {
