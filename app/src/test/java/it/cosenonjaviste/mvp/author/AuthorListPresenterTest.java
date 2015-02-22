@@ -8,13 +8,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
@@ -29,15 +27,15 @@ public class AuthorListPresenterTest {
 
     @Mock AuthorListFragment view;
 
-    @Inject AuthorListPresenter presenter;
+    private AuthorListPresenter presenter;
 
-    @Inject WordPressService wordPressService;
+    @Mock WordPressService wordPressService;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
     @Before
     public void setup() {
-        DaggerUtils.getComponent().inject(this);
+        presenter = new AuthorListPresenter(new TestSchedulerManager(), wordPressService);
     }
 
     @Test

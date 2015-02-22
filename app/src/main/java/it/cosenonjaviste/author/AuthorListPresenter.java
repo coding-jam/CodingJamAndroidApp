@@ -19,12 +19,13 @@ import rx.Observable;
 @PresenterScope
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
-    @Inject WordPressService wordPressService;
+    private WordPressService wordPressService;
 
     private boolean loadStarted;
 
-    @Inject public AuthorListPresenter(SchedulerManager schedulerManager) {
+    @Inject public AuthorListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
         super(schedulerManager);
+        this.wordPressService = wordPressService;
     }
 
     public void loadAuthors() {

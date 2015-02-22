@@ -1,4 +1,4 @@
-package it.cosenonjaviste.stubs;
+package it.cosenonjaviste.mvp;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

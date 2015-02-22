@@ -8,14 +8,12 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
@@ -28,9 +26,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryListPresenterTest {
 
-    @Inject WordPressService wordPressService;
+    @Mock WordPressService wordPressService;
 
-    @Inject CategoryListPresenter presenter;
+    private CategoryListPresenter presenter;
 
     @Mock CategoryListFragment view;
 
@@ -38,7 +36,7 @@ public class CategoryListPresenterTest {
 
     @Before
     public void setup() {
-        DaggerUtils.getComponent().inject(this);
+        presenter = new CategoryListPresenter(new TestSchedulerManager(), wordPressService);
     }
 
     @Test

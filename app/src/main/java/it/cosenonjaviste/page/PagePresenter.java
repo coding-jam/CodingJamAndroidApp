@@ -8,9 +8,10 @@ import it.cosenonjaviste.utils.PresenterScope;
 @PresenterScope
 public class PagePresenter extends MvpPresenter<PageModel> {
 
-    @Inject PageUrlManager pageUrlManager;
+    private PageUrlManager pageUrlManager;
 
-    @Inject public PagePresenter() {
+    @Inject public PagePresenter(PageUrlManager pageUrlManager) {
+        this.pageUrlManager = pageUrlManager;
     }
 
     public String getPostUrl() {

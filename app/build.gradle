@@ -95,7 +95,6 @@ dependencies {
     apt 'org.parceler:parceler:0.2.14'
 
     androidTestApt 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
-    testCompile 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'

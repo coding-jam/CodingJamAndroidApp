@@ -8,12 +8,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.page.PagePresenter;
+import it.cosenonjaviste.page.PageUrlManager;
 import it.cosenonjaviste.post.PostListModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class PagePresenterTest {
 
-    @Inject PagePresenter presenter;
+    private PagePresenter presenter;
 
     @Mock PageFragment view;
 
@@ -29,7 +27,7 @@ public class PagePresenterTest {
 
     @Before
     public void setup() {
-        DaggerUtils.getComponent().inject(this);
+        presenter = new PagePresenter(new PageUrlManager());
         presenter.initAndSubscribe(new PageModel("url"), view);
     }
 

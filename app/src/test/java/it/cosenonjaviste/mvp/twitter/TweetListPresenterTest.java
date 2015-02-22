@@ -6,11 +6,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.DaggerUtils;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.model.TwitterService;
+import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 import it.cosenonjaviste.twitter.TweetListPresenter;
@@ -25,13 +23,13 @@ public class TweetListPresenterTest {
 
     @Mock TweetListFragment view;
 
-    @Inject TweetListPresenter presenter;
+    @Mock TwitterService twitterService;
 
-    @Inject TwitterService twitterService;
+    private TweetListPresenter presenter;
 
     @Before
     public void setup() {
-        DaggerUtils.getComponent().inject(this);
+        presenter = new TweetListPresenter(new TestSchedulerManager(), twitterService);
     }
 
     @Test public void testLoadTweets() {

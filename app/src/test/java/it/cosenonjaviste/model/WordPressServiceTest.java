@@ -1,28 +1,19 @@
 package it.cosenonjaviste.model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import it.cosenonjaviste.DaggerUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class WordPressServiceTest {
 
-    @Inject Gson gson;
-
-    @Before
-    public void init() throws IOException {
-        DaggerUtils.getComponent().inject(this);
-    }
+    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     @Test
     public void testLoadPosts() throws IOException {

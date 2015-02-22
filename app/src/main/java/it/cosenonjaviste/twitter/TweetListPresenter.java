@@ -15,12 +15,13 @@ import rx.Observable;
 @PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
-    @Inject TwitterService twitterService;
+    private TwitterService twitterService;
 
     private boolean loadStarted;
 
-    @Inject public TweetListPresenter(SchedulerManager schedulerManager) {
+    @Inject public TweetListPresenter(SchedulerManager schedulerManager, TwitterService twitterService) {
         super(schedulerManager);
+        this.twitterService = twitterService;
     }
 
     public void reloadData() {
