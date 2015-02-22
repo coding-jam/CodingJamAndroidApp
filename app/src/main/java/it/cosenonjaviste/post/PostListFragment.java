@@ -24,7 +24,7 @@ public class PostListFragment extends Dagger2CnjFragment<PostListModel> {
 
     @Override protected PostListPresenter injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
-                getFragmentManager(),
+                getChildFragmentManager(),
                 PostListFragment.class.getName(),
                 () -> Dagger_PostListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);

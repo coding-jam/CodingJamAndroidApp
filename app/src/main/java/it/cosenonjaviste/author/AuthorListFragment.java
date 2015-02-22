@@ -24,7 +24,7 @@ public class AuthorListFragment extends Dagger2CnjFragment<AuthorListModel> {
 
     @Override protected AuthorListPresenter injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
-                getFragmentManager(),
+                getChildFragmentManager(),
                 AuthorListFragment.class.getName(),
                 () -> Dagger_AuthorListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);

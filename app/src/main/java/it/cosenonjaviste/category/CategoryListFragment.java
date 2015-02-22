@@ -24,7 +24,7 @@ public class CategoryListFragment extends Dagger2CnjFragment<CategoryListModel> 
 
     @Override protected CategoryListPresenter injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
-                getFragmentManager(),
+                getChildFragmentManager(),
                 CategoryListFragment.class.getName(),
                 () -> Dagger_CategoryListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);

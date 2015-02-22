@@ -28,7 +28,7 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
 
     @Override protected MvpPresenter<PageModel> injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
-                getFragmentManager(),
+                getChildFragmentManager(),
                 PageFragment.class.getName(),
                 () -> Dagger_PageComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);

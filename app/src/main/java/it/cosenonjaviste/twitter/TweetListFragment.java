@@ -25,7 +25,7 @@ public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
 
     @Override protected MvpPresenter<TweetListModel> injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
-                getFragmentManager(),
+                getChildFragmentManager(),
                 TweetListFragment.class.getName(),
                 () -> Dagger_TweetListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);
