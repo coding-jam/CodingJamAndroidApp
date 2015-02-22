@@ -15,8 +15,10 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
+@PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Inject WordPressService wordPressService;

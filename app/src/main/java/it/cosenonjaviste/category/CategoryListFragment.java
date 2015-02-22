@@ -1,30 +1,34 @@
 package it.cosenonjaviste.category;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjFragment;
+import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class CategoryListFragment extends CnjFragment<CategoryListPresenter, CategoryListModel> {
+public class CategoryListFragment extends Dagger2CnjFragment<CategoryListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
     private CategoryAdapter adapter;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
-        getComponent().inject(this);
-    }
+    @Inject CategoryListPresenter presenter;
 
-    @Override protected CategoryListPresenter createPresenter() {
-        return getComponent().getCategoryListPresenter();
+    @Override protected CategoryListPresenter injectAndCreatePresenter() {
+        ObjectsMapRetainedFragment.getOrCreate(
+                getFragmentManager(),
+                CategoryListFragment.class.getName(),
+                () -> Dagger_CategoryListComponent.builder().applicationComponent(getComponent()).build()
+        ).inject(this);
+        return presenter;
     }
 
     @Override protected int getLayoutId() {

@@ -1,7 +1,6 @@
 package it.cosenonjaviste.author;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperGridview;
@@ -11,10 +10,11 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends Dagger2CnjFragment<AuthorListPresenter, AuthorListModel> {
+public class AuthorListFragment extends Dagger2CnjFragment<AuthorListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -22,17 +22,13 @@ public class AuthorListFragment extends Dagger2CnjFragment<AuthorListPresenter, 
 
     private AuthorAdapter adapter;
 
-    @Override public AuthorListPresenter getPresenter() {
+    @Override protected AuthorListPresenter injectAndCreatePresenter() {
+        ObjectsMapRetainedFragment.getOrCreate(
+                getFragmentManager(),
+                AuthorListFragment.class.getName(),
+                () -> Dagger_AuthorListComponent.builder().applicationComponent(getComponent()).build()
+        ).inject(this);
         return presenter;
-    }
-
-    protected AuthorListComponent getPresenterComponent() {
-        return Dagger_AuthorListComponent.builder().applicationComponent(getComponent()).build();
-    }
-
-    @Override public void onCreate(Bundle state) {
-        getPresenterComponent().inject(this);
-        super.onCreate(state);
     }
 
     @Override protected int getLayoutId() {

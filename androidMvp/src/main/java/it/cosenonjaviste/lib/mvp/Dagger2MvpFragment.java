@@ -5,12 +5,10 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-public abstract class Dagger2MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
+public abstract class Dagger2MvpFragment<M> extends Fragment implements MvpView<M> {
 
     private static final String PRESENTER_ID = "presenterId";
     public static final String MODEL = "model";
-
-//    protected P presenter;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -34,7 +32,7 @@ public abstract class Dagger2MvpFragment<P extends MvpPresenter<M>, M> extends F
 //        PresenterSaverFragment.save(getFragmentManager(), presenter);
     }
 
-    public abstract P getPresenter();
+    public abstract MvpPresenter<M> getPresenter();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

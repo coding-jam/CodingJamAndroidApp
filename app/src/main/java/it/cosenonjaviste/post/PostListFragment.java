@@ -1,7 +1,6 @@
 package it.cosenonjaviste.post;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
@@ -11,10 +10,11 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class PostListFragment extends Dagger2CnjFragment<PostListPresenter, PostListModel> {
+public class PostListFragment extends Dagger2CnjFragment<PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -22,21 +22,17 @@ public class PostListFragment extends Dagger2CnjFragment<PostListPresenter, Post
 
     private PostAdapter adapter;
 
-    @Override public PostListPresenter getPresenter() {
+    @Override protected PostListPresenter injectAndCreatePresenter() {
+        ObjectsMapRetainedFragment.getOrCreate(
+                getFragmentManager(),
+                PostListFragment.class.getName(),
+                () -> Dagger_PostListComponent.builder().applicationComponent(getComponent()).build()
+        ).inject(this);
         return presenter;
-    }
-
-    protected PostListComponent getPresenterComponent() {
-        return Dagger_PostListComponent.builder().applicationComponent(getComponent()).build();
     }
 
     @Override protected int getLayoutId() {
         return R.layout.super_list;
-    }
-
-    @Override public void onCreate(Bundle state) {
-        getPresenterComponent().inject(this);
-        super.onCreate(state);
     }
 
     @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {

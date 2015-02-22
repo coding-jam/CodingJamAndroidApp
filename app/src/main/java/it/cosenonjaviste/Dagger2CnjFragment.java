@@ -18,11 +18,24 @@ import it.cosenonjaviste.lib.mvp.MvpPresenter;
 import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public abstract class Dagger2CnjFragment<P extends MvpPresenter<M>, M> extends Dagger2MvpFragment<P, M> {
+public abstract class Dagger2CnjFragment<M> extends Dagger2MvpFragment<M> {
+
+    private MvpPresenter<M> presenter;
+
+    @Override public final MvpPresenter<M> getPresenter() {
+        return presenter;
+    }
 
     protected ApplicationComponent getComponent() {
         return ((CoseNonJavisteApp) getActivity().getApplication()).getComponent();
     }
+
+    @Override public void onCreate(Bundle state) {
+        presenter = injectAndCreatePresenter();
+        super.onCreate(state);
+    }
+
+    protected abstract MvpPresenter<M> injectAndCreatePresenter();
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);

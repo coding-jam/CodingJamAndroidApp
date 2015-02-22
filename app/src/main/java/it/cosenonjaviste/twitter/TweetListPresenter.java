@@ -9,8 +9,10 @@ import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
+import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
+@PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
     @Inject TwitterService twitterService;

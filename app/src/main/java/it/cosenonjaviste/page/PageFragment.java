@@ -1,7 +1,6 @@
 package it.cosenonjaviste.page;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -11,23 +10,29 @@ import android.webkit.WebViewClient;
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.InjectView;
-import it.cosenonjaviste.CnjFragment;
-import it.cosenonjaviste.R;
+import javax.inject.Inject;
 
-public class PageFragment extends CnjFragment<PagePresenter, PageModel> {
+import butterknife.InjectView;
+import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.ObjectsMapRetainedFragment;
+import it.cosenonjaviste.R;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
+
+public class PageFragment extends Dagger2CnjFragment<PageModel> {
 
     @InjectView(R.id.web_view) WebView webView;
 
     @InjectView(R.id.progress_detail) View progressBar;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
-        getComponent().inject(this);
-    }
+    @Inject PagePresenter presenter;
 
-    @Override protected PagePresenter createPresenter() {
-        return getComponent().getPagePresenter();
+    @Override protected MvpPresenter<PageModel> injectAndCreatePresenter() {
+        ObjectsMapRetainedFragment.getOrCreate(
+                getFragmentManager(),
+                PageFragment.class.getName(),
+                () -> Dagger_PageComponent.builder().applicationComponent(getComponent()).build()
+        ).inject(this);
+        return presenter;
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override protected void initView(View view) {

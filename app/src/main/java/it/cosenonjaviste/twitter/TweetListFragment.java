@@ -1,30 +1,35 @@
 package it.cosenonjaviste.twitter;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.View;
 
 import com.quentindommerc.superlistview.SuperListview;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjFragment;
+import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
 import rx.functions.Actions;
 
-public class TweetListFragment extends CnjFragment<TweetListPresenter, TweetListModel> {
+public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
     private TweetAdapter adapter;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
-        getComponent().inject(this);
-    }
+    @Inject TweetListPresenter presenter;
 
-    @Override protected TweetListPresenter createPresenter() {
-        return getComponent().getTweetListPresenter();
+    @Override protected MvpPresenter<TweetListModel> injectAndCreatePresenter() {
+        ObjectsMapRetainedFragment.getOrCreate(
+                getFragmentManager(),
+                TweetListFragment.class.getName(),
+                () -> Dagger_TweetListComponent.builder().applicationComponent(getComponent()).build()
+        ).inject(this);
+        return presenter;
     }
 
     @Override protected int getLayoutId() {
