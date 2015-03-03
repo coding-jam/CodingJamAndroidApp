@@ -17,7 +17,7 @@ import it.cosenonjaviste.model.Category;
 
 public class CategoryAdapter extends BaseAdapter {
 
-    private List<Category> authors = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     private Context context;
 
@@ -26,11 +26,11 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override public int getCount() {
-        return authors.size();
+        return categories.size();
     }
 
     @Override public Category getItem(int position) {
-        return authors.get(position);
+        return categories.get(position);
     }
 
     @Override public long getItemId(int position) {
@@ -51,8 +51,8 @@ public class CategoryAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void reloadData(List<Category> posts) {
-        this.authors = posts;
+    public void reloadData(List<Category> categories) {
+        this.categories = categories;
         notifyDataSetChanged();
     }
 
