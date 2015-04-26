@@ -1,12 +1,17 @@
 package it.cosenonjaviste.twitter;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.quentindommerc.superlistview.SuperListview;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.Dagger2CnjFragment;
@@ -32,17 +37,15 @@ public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
         return presenter;
     }
 
-    @Override protected int getLayoutId() {
-        return R.layout.super_list;
-    }
-
-    @SuppressLint("ResourceAsColor") @Override protected void initView(View view) {
-        super.initView(view);
+    @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.super_list, container, false);
+        ButterKnife.inject(this, view);
         adapter = new TweetAdapter(getActivity());
         list.setAdapter(adapter);
         list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         list.setRefreshListener(presenter::reloadData);
         list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
+        return view;
     }
 
     @OnClick(R.id.error_retry) void retry() {

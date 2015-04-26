@@ -1,7 +1,11 @@
 package it.cosenonjaviste.page;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,6 +16,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
@@ -35,8 +40,9 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
         return presenter;
     }
 
-    @SuppressLint("SetJavaScriptEnabled") @Override protected void initView(View view) {
-        super.initView(view);
+    @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.post_detail, container, false);
+        ButterKnife.inject(this, view);
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -50,12 +56,12 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+            public boolean shouldOverrideUrlLoading(WebView view11, String url) {
+                view11.loadUrl(url);
                 return true;
             }
 
-            @Override public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            @Override public WebResourceResponse shouldInterceptRequest(WebView view11, String url) {
                 if (url.equalsIgnoreCase("http://www.cosenonjaviste.it/wp-content/themes/flexform/style.css")) {
                     return getCssWebResourceResponseFromAsset();
                 }
@@ -70,7 +76,7 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
                         ) {
                     return null;
                 }
-                return super.shouldInterceptRequest(view, url);
+                return super.shouldInterceptRequest(view11, url);
             }
 
             private WebResourceResponse getCssWebResourceResponseFromAsset() {
@@ -82,16 +88,13 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
             }
 
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
+            public void onPageFinished(WebView view11, String url) {
+                super.onPageFinished(view11, url);
                 webView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-    }
-
-    @Override protected int getLayoutId() {
-        return R.layout.post_detail;
+        return view;
     }
 
     @Override public void update(PageModel model) {
