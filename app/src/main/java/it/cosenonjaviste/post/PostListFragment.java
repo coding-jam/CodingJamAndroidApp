@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
@@ -31,7 +32,7 @@ public class PostListFragment extends Dagger2CnjFragment<PostListModel> {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 PostListFragment.class.getName(),
-                () -> DaggerPostListComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
         return presenter;
     }

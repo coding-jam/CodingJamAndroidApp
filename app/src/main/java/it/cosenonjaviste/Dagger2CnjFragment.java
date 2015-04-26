@@ -18,10 +18,6 @@ public abstract class Dagger2CnjFragment<M> extends Dagger2MvpFragment<M> {
         return presenter;
     }
 
-    protected ApplicationComponent getComponent() {
-        return ((CoseNonJavisteApp) getActivity().getApplication()).getComponent();
-    }
-
     @Override public void onCreate(Bundle state) {
         presenter = injectAndCreatePresenter();
         super.onCreate(state);

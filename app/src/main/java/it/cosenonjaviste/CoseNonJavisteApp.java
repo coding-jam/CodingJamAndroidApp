@@ -1,6 +1,7 @@
 package it.cosenonjaviste;
 
 import android.app.Application;
+import android.content.Context;
 
 public class CoseNonJavisteApp extends Application {
 
@@ -15,5 +16,9 @@ public class CoseNonJavisteApp extends Application {
 
     public ApplicationComponent getComponent() {
         return component;
+    }
+
+    public static ApplicationComponent getComponent(Context context) {
+        return ((CoseNonJavisteApp) context.getApplicationContext()).getComponent();
     }
 }

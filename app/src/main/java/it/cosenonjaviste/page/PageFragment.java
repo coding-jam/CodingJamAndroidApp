@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
@@ -35,7 +36,7 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 PageFragment.class.getName(),
-                () -> DaggerPageComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerPageComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
         return presenter;
     }

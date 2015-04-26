@@ -37,15 +37,6 @@ public class DaggerRule implements TestRule {
                 }
                 CoseNonJavisteApp.component = component;
 
-//                ObjectGraphHolder.forceObjectGraphCreator(app -> {
-//                    Object[] modules = mergeArrays(app.getModules(), new Object[]{testModule});
-//                    ObjectGraph objectGraph = ObjectGraph.create(modules);
-//                    if (afterInjectAction != null) {
-//                        afterInjectAction.call(objectGraph);
-//                    }
-//                    return objectGraph;
-//                });
-
                 registerIdlingResources(espressoExecutor);
 
                 SchedulerManager.setIo(Schedulers.from(espressoExecutor));
@@ -68,12 +59,4 @@ public class DaggerRule implements TestRule {
 //        final String dexCache = getInstrumentation().getTargetContext().getCacheDir().getPath();
 //        System.setProperty("dexmaker.dexcache", dexCache);
     }
-
-    private Object[] mergeArrays(Object[] appModules, Object[] testModules) {
-        Object[] modules = new Object[testModules.length + appModules.length];
-        System.arraycopy(appModules, 0, modules, 0, appModules.length);
-        System.arraycopy(testModules, 0, modules, appModules.length, testModules.length);
-        return modules;
-    }
-
 }
