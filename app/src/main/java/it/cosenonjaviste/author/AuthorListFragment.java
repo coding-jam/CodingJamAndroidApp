@@ -26,7 +26,7 @@ public class AuthorListFragment extends Dagger2CnjFragment<AuthorListModel> {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 AuthorListFragment.class.getName(),
-                () -> Dagger_AuthorListComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerAuthorListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);
         return presenter;
     }

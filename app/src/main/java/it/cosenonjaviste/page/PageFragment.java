@@ -30,7 +30,7 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 PageFragment.class.getName(),
-                () -> Dagger_PageComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerPageComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);
         return presenter;
     }

@@ -8,7 +8,7 @@ public class CoseNonJavisteApp extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        component = Dagger_ApplicationComponent.builder()
+        component = DaggerApplicationComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
     }

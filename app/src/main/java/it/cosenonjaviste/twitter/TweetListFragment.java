@@ -27,7 +27,7 @@ public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 TweetListFragment.class.getName(),
-                () -> Dagger_TweetListComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerTweetListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);
         return presenter;
     }

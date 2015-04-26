@@ -26,7 +26,7 @@ public class CategoryListFragment extends Dagger2CnjFragment<CategoryListModel> 
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 CategoryListFragment.class.getName(),
-                () -> Dagger_CategoryListComponent.builder().applicationComponent(getComponent()).build()
+                () -> DaggerCategoryListComponent.builder().applicationComponent(getComponent()).build()
         ).inject(this);
         return presenter;
     }

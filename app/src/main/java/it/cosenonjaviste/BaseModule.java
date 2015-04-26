@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(library = true)
+@Module
 public class BaseModule {
     @Provides @Singleton Gson provideGson() {
         return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();

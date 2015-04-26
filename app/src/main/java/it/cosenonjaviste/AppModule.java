@@ -14,7 +14,7 @@ import it.cosenonjaviste.model.WordPressService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library = true, includes = BaseModule.class)
+@Module(includes = BaseModule.class)
 public class AppModule {
 
     private Application application;
