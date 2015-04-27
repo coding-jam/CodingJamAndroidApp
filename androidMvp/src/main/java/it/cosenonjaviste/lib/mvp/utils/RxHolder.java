@@ -29,7 +29,11 @@ public class RxHolder {
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_ALL, this::destroy);
     }
 
-    public <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
+    public <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
+        subscribe(observable, onAttach, onNext, onError, null);
+    }
+
+    public <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
         ConnectableObservable<T> replay = schedulerManager.bindObservable(observable).replay();
         connectableSubscriptions.add(replay.connect());
         Func0<Subscriber<T>> factory = () -> new Subscriber<T>() {

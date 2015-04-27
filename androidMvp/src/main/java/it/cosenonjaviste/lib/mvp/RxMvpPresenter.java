@@ -27,7 +27,7 @@ public abstract class RxMvpPresenter<M> {
     }
 
     protected <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribePausable(observable, onAttach, onNext, onError, null);
+        rxHolder.subscribe(observable, onAttach, onNext, onError);
     }
 
     public void init(M model, MvpView<M> view) {
