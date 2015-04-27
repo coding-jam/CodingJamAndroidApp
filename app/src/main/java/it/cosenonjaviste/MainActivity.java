@@ -104,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
     public static <T, M> T createView(@NonNull Context context, @NonNull Class<? extends MvpView<M>> viewClass, @NonNull M model) {
         Fragment fragment = Fragment.instantiate(context, viewClass.getName());
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Dagger2CnjFragment.MODEL, Parcels.wrap(model));
+        bundle.putParcelable(CnjRxFragment.MODEL, Parcels.wrap(model));
         fragment.setArguments(bundle);
         return (T) fragment;
     }

@@ -14,13 +14,13 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends Dagger2CnjFragment<AuthorListModel> {
+public class AuthorListFragment extends CnjRxFragment<AuthorListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 

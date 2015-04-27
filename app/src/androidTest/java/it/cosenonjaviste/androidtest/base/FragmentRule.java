@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.Dagger2CnjFragment;
+import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
@@ -26,7 +26,7 @@ public class FragmentRule extends ActivityRule<SingleFragmentActivity> {
 
     @Override protected Intent getLaunchIntent(String targetPackage, Class<SingleFragmentActivity> activityClass) {
         Intent intent = SingleFragmentActivity.populateIntent(super.getLaunchIntent(targetPackage, activityClass), viewClass);
-        intent.putExtra(Dagger2CnjFragment.MODEL, Parcels.wrap(model));
+        intent.putExtra(CnjRxFragment.MODEL, Parcels.wrap(model));
         return intent;
     }
 }

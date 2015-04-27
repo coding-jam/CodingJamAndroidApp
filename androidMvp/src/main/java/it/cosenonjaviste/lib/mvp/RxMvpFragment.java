@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-public abstract class Dagger2MvpFragment<M> extends Fragment implements MvpView<M> {
+public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     public static final String MODEL = "model";
 

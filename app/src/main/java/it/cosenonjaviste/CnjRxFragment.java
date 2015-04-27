@@ -5,12 +5,12 @@ import android.os.Bundle;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.lib.mvp.Dagger2MvpFragment;
 import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public abstract class Dagger2CnjFragment<M> extends Dagger2MvpFragment<M> {
+public abstract class CnjRxFragment<M> extends RxMvpFragment<M> {
 
     private RxMvpPresenter<M> presenter;
 

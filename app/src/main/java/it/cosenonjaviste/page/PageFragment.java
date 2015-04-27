@@ -18,13 +18,13 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
-public class PageFragment extends Dagger2CnjFragment<PageModel> {
+public class PageFragment extends CnjRxFragment<PageModel> {
 
     @InjectView(R.id.web_view) WebView webView;
 

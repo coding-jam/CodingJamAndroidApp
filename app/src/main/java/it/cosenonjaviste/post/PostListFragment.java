@@ -14,13 +14,13 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import rx.functions.Actions;
 
-public class PostListFragment extends Dagger2CnjFragment<PostListModel> {
+public class PostListFragment extends CnjRxFragment<PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
