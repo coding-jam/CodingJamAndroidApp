@@ -7,21 +7,24 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
+public abstract class RxMvpPresenter<M> {
 
     private final RxHolder rxHolder;
+    protected M model;
+    protected MvpView<M> view;
 
     public RxMvpPresenter(SchedulerManager schedulerManager) {
         rxHolder = new RxHolder(schedulerManager);
     }
 
     public void pause() {
-        super.pause();
+        view = null;
         rxHolder.pause();
     }
 
-    @Override public void subscribe(MvpView<M> view) {
-        super.subscribe(view);
+    public void subscribe(MvpView<M> view) {
+        this.view = view;
+        view.update(model);
         rxHolder.resubscribePendingObservable();
     }
 
@@ -31,5 +34,22 @@ public abstract class RxMvpPresenter<M> extends MvpPresenter<M> {
 
     protected <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
         rxHolder.subscribePausable(observable, onAttach, onNext, onError, null);
+    }
+
+    public void init(M model) {
+        this.model = model;
+    }
+
+    public void initAndSubscribe(M model, MvpView<M> view) {
+        init(model);
+        subscribe(view);
+    }
+
+    public M getModel() {
+        return model;
+    }
+
+    public MvpView<M> getView() {
+        return view;
     }
 }

@@ -22,7 +22,7 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 public class PageFragment extends Dagger2CnjFragment<PageModel> {
 
@@ -32,7 +32,7 @@ public class PageFragment extends Dagger2CnjFragment<PageModel> {
 
     @Inject PagePresenter presenter;
 
-    @Override protected MvpPresenter<PageModel> injectAndCreatePresenter() {
+    @Override protected RxMvpPresenter<PageModel> injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 PageFragment.class.getName(),

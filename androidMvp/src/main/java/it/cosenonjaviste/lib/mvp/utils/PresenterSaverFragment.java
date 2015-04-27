@@ -3,19 +3,20 @@ package it.cosenonjaviste.lib.mvp.utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import it.cosenonjaviste.lib.mvp.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+
 
 public class PresenterSaverFragment extends Fragment {
 
     private static final String TAG = PresenterSaverFragment.class.getName();
 
-    private MvpPresenter<?> presenter;
+    private RxMvpPresenter<?> presenter;
 
     public PresenterSaverFragment() {
         setRetainInstance(true);
     }
 
-    public static void save(FragmentManager fragmentManager, MvpPresenter<?> presenter) {
+    public static void save(FragmentManager fragmentManager, RxMvpPresenter<?> presenter) {
         PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
         fragment.presenter = presenter;
     }
@@ -29,7 +30,7 @@ public class PresenterSaverFragment extends Fragment {
         return fragment;
     }
 
-    public static <P extends MvpPresenter<?>> P load(FragmentManager fragmentManager) {
+    public static <P extends RxMvpPresenter<?>> P load(FragmentManager fragmentManager) {
         PresenterSaverFragment fragment = getPresenterSaverFragment(fragmentManager);
         return (P) fragment.presenter;
     }

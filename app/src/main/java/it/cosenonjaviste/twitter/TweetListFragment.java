@@ -18,7 +18,7 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.Dagger2CnjFragment;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import rx.functions.Actions;
 
 public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
@@ -29,7 +29,7 @@ public class TweetListFragment extends Dagger2CnjFragment<TweetListModel> {
 
     @Inject TweetListPresenter presenter;
 
-    @Override protected MvpPresenter<TweetListModel> injectAndCreatePresenter() {
+    @Override protected RxMvpPresenter<TweetListModel> injectAndCreatePresenter() {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
                 TweetListFragment.class.getName(),

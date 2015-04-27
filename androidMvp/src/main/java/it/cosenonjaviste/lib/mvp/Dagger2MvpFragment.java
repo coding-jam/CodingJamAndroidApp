@@ -23,7 +23,7 @@ public abstract class Dagger2MvpFragment<M> extends Fragment implements MvpView<
         getPresenter().init(restoredModel);
     }
 
-    public abstract MvpPresenter<M> getPresenter();
+    public abstract RxMvpPresenter<M> getPresenter();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

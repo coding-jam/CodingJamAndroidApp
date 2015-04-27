@@ -14,11 +14,11 @@ import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
-import it.cosenonjaviste.lib.mvp.MvpPresenter;
 import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public abstract class CnjFragment<P extends MvpPresenter<M>, M> extends MvpFragment<P, M> {
+public abstract class CnjFragment<P extends RxMvpPresenter<M>, M> extends MvpFragment<P, M> {
 
     protected ApplicationComponent getComponent() {
         return ((CoseNonJavisteApp) getActivity().getApplication()).getComponent();

@@ -7,7 +7,7 @@ import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.mvp.utils.PresenterSaverFragment;
 
-public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
+public abstract class MvpFragment<P extends RxMvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
     public static final String MODEL = "model";
 

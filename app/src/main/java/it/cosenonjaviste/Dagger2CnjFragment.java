@@ -6,15 +6,15 @@ import android.os.Bundle;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.mvp.Dagger2MvpFragment;
-import it.cosenonjaviste.lib.mvp.MvpPresenter;
 import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public abstract class Dagger2CnjFragment<M> extends Dagger2MvpFragment<M> {
 
-    private MvpPresenter<M> presenter;
+    private RxMvpPresenter<M> presenter;
 
-    @Override public final MvpPresenter<M> getPresenter() {
+    @Override public final RxMvpPresenter<M> getPresenter() {
         return presenter;
     }
 
@@ -23,7 +23,7 @@ public abstract class Dagger2CnjFragment<M> extends Dagger2MvpFragment<M> {
         super.onCreate(state);
     }
 
-    protected abstract MvpPresenter<M> injectAndCreatePresenter();
+    protected abstract RxMvpPresenter<M> injectAndCreatePresenter();
 
     @Override public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
         Intent intent = SingleFragmentActivity.createIntent(getActivity(), viewClass);
