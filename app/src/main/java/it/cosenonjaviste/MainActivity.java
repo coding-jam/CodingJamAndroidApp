@@ -1,7 +1,9 @@
 package it.cosenonjaviste;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,12 +14,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.parceler.Parcels;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
@@ -84,16 +89,24 @@ public class MainActivity extends ActionBarActivity {
         //TODO activity title
         switch (position) {
             case 1:
-                return CnjFragment.createView(this, CategoryListFragment.class, new CategoryListModel());
+                return createView(this, CategoryListFragment.class, new CategoryListModel());
             case 2:
-                return CnjFragment.createView(this, AuthorListFragment.class, new AuthorListModel());
+                return createView(this, AuthorListFragment.class, new AuthorListModel());
             case 3:
-                return CnjFragment.createView(this, TweetListFragment.class, new TweetListModel());
+                return createView(this, TweetListFragment.class, new TweetListModel());
             case 4:
-                return CnjFragment.createView(this, PageFragment.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
+                return createView(this, PageFragment.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
             default:
-                return CnjFragment.createView(this, PostListFragment.class, new PostListModel());
+                return createView(this, PostListFragment.class, new PostListModel());
         }
+    }
+
+    public static <T, M> T createView(@NonNull Context context, @NonNull Class<? extends MvpView<M>> viewClass, @NonNull M model) {
+        Fragment fragment = Fragment.instantiate(context, viewClass.getName());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Dagger2CnjFragment.MODEL, Parcels.wrap(model));
+        fragment.setArguments(bundle);
+        return (T) fragment;
     }
 
     @Override
