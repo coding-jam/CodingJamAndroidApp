@@ -9,7 +9,6 @@ import it.cosenonjaviste.lib.mvp.utils.PresenterSaverFragment;
 
 public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment implements MvpView<M> {
 
-    private static final String PRESENTER_ID = "presenterId";
     public static final String MODEL = "model";
 
     protected P presenter;
@@ -17,29 +16,26 @@ public abstract class MvpFragment<P extends MvpPresenter<M>, M> extends Fragment
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
 
-        long presenterId = 0;
         M restoredModel = null;
         if (state != null) {
-            presenterId = state.getLong(PRESENTER_ID, 0);
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
         }
         if (restoredModel == null && getArguments() != null) {
             restoredModel = Parcels.unwrap(getArguments().getParcelable(MODEL));
         }
 
-        presenter = PresenterSaverFragment.<P>load(getFragmentManager(), presenterId);
+        presenter = PresenterSaverFragment.<P>load(getChildFragmentManager());
         if (presenter == null) {
             presenter = createPresenter();
         }
         presenter.init(restoredModel);
 
-        PresenterSaverFragment.save(getFragmentManager(), presenter);
+        PresenterSaverFragment.save(getChildFragmentManager(), presenter);
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(MODEL, Parcels.wrap(presenter.getModel()));
-        outState.putLong(PRESENTER_ID, presenter.getId());
     }
 
     @Override public void onStart() {

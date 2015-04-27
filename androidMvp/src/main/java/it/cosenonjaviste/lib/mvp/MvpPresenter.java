@@ -1,19 +1,9 @@
 package it.cosenonjaviste.lib.mvp;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public abstract class MvpPresenter<M> {
     protected M model;
 
     protected MvpView<M> view;
-
-    private long id;
-
-    private static AtomicLong sequence = new AtomicLong(1);
-
-    protected MvpPresenter() {
-        id = sequence.getAndIncrement();
-    }
 
     public void init(M model) {
         this.model = model;
@@ -22,10 +12,6 @@ public abstract class MvpPresenter<M> {
     public void initAndSubscribe(M model, MvpView<M> view) {
         init(model);
         subscribe(view);
-    }
-
-    public long getId() {
-        return id;
     }
 
     public M getModel() {
