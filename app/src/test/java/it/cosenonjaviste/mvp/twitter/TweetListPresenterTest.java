@@ -63,10 +63,11 @@ public class TweetListPresenterTest {
         when(twitterService.loadTweets(eq(1)))
                 .thenReturn(TestData.tweets());
 
-        presenter.initAndSubscribe(new TweetListModel(), view);
+        TweetListModel tweetListModel = new TweetListModel();
+        presenter.initAndSubscribe(tweetListModel, view);
 
         presenter.loadNextPage();
 
-        assertThat(presenter.getModel().size()).isEqualTo(20);
+        assertThat(tweetListModel.size()).isEqualTo(20);
     }
 }

@@ -3,6 +3,7 @@ package it.cosenonjaviste.lib.mvp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.ObservableWithFactory;
 import rx.Observable;
 import rx.Subscriber;
@@ -22,8 +23,10 @@ public class RxHolder {
 
     protected final List<ObservableWithFactory> observables = new ArrayList<>();
 
-    public RxHolder(SchedulerManager schedulerManager) {
+    public RxHolder(SchedulerManager schedulerManager, LifeCycle lifeCycle) {
         this.schedulerManager = schedulerManager;
+        lifeCycle.subscribe(LifeCycle.EventType.PAUSE, this::pause);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_ALL, this::destroy);
     }
 
     public <T> void subscribePausable(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {

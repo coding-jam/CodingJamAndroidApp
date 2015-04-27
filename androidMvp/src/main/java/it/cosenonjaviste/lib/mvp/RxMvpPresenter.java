@@ -12,22 +12,18 @@ public abstract class RxMvpPresenter<M> {
     private final RxHolder rxHolder;
     protected M model;
     protected MvpView<M> view;
+    private LifeCycle lifeCycle = new LifeCycle();
 
     public RxMvpPresenter(SchedulerManager schedulerManager) {
-        rxHolder = new RxHolder(schedulerManager);
-    }
-
-    public void pause() {
-        rxHolder.pause();
+        rxHolder = new RxHolder(schedulerManager, lifeCycle);
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::subscribe);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
+        lifeCycle.subscribeOnSaveInstanceState(() -> model);
     }
 
     public void subscribe() {
         view.update(model);
         rxHolder.resubscribePendingObservable();
-    }
-
-    public void destroy() {
-        rxHolder.destroy();
     }
 
     protected <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
@@ -44,11 +40,11 @@ public abstract class RxMvpPresenter<M> {
         subscribe();
     }
 
-    public M getModel() {
-        return model;
-    }
-
     public MvpView<M> getView() {
         return view;
+    }
+
+    public LifeCycle getLifeCycle() {
+        return lifeCycle;
     }
 }

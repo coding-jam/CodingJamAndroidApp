@@ -8,6 +8,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.page.PagePresenter;
@@ -27,7 +28,7 @@ public class PagePresenterTest {
 
     @Before
     public void setup() {
-        presenter = new PagePresenter(new PageUrlManager());
+        presenter = new PagePresenter(new TestSchedulerManager(), new PageUrlManager());
         presenter.initAndSubscribe(new PageModel("url"), view);
     }
 

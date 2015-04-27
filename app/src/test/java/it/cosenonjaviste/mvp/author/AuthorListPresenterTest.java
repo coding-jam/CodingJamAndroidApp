@@ -69,12 +69,13 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        presenter.initAndSubscribe(new AuthorListModel(), view);
+        AuthorListModel authorListModel = new AuthorListModel();
+        presenter.initAndSubscribe(authorListModel, view);
         presenter.goToAuthorDetail(1);
 
         verify(view).open(any(), modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
-        assertThat(model.getAuthor()).isEqualTo(presenter.getModel().get(1));
+        assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));
     }
 }

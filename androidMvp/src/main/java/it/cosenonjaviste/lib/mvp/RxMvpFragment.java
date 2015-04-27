@@ -8,6 +8,7 @@ import org.parceler.Parcels;
 public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     public static final String MODEL = "model";
+    private LifeCycle lifeCycle;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -21,31 +22,27 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
         }
 
         getPresenter().init(restoredModel, this);
+        lifeCycle = getPresenter().getLifeCycle();
     }
 
     public abstract RxMvpPresenter<M> getPresenter();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(MODEL, Parcels.wrap(getPresenter().getModel()));
+        lifeCycle.saveInstanceState(obj -> {
+            if (obj != null) {
+                outState.putParcelable(MODEL, Parcels.wrap(obj));
+            }
+        });
     }
 
     @Override public void onResume() {
         super.onResume();
+        lifeCycle.emit(LifeCycle.EventType.RESUME);
     }
 
     @Override public void onPause() {
         super.onPause();
+        lifeCycle.emit(LifeCycle.EventType.PAUSE);
     }
-
-    @Override public void onStart() {
-        super.onStart();
-        getPresenter().subscribe();
-    }
-
-    @Override public void onStop() {
-        getPresenter().pause();
-        super.onStop();
-    }
-
 }

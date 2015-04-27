@@ -74,11 +74,12 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        presenter.initAndSubscribe(new CategoryListModel(), view);
+        CategoryListModel categoryListModel = new CategoryListModel();
+        presenter.initAndSubscribe(categoryListModel, view);
         presenter.goToPosts(1);
 
         verify(view).open(any(), modelCaptor.capture());
 
-        assertThat(modelCaptor.getValue().getCategory()).isEqualTo(presenter.getModel().get(1));
+        assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }
 }
