@@ -14,13 +14,15 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class CategoryListFragment extends CnjRxFragment<CategoryListModel> {
+public class CategoryListFragment extends RxMvpFragment<CategoryListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -28,12 +30,15 @@ public class CategoryListFragment extends CnjRxFragment<CategoryListModel> {
 
     @Inject CategoryListPresenter presenter;
 
-    @Override protected CategoryListPresenter injectAndCreatePresenter() {
+    @Override public void onCreate(Bundle state) {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
-                CategoryListFragment.class.getName(),
                 () -> DaggerCategoryListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
+        super.onCreate(state);
+    }
+
+    @Override public CategoryListPresenter getPresenter() {
         return presenter;
     }
 
@@ -68,5 +73,9 @@ public class CategoryListFragment extends CnjRxFragment<CategoryListModel> {
 
     public void startLoading() {
         grid.showProgress();
+    }
+
+    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+        SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 }

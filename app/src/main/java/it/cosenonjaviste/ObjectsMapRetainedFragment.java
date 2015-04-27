@@ -3,24 +3,21 @@ package it.cosenonjaviste;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import rx.functions.Func0;
 
 public class ObjectsMapRetainedFragment extends Fragment {
 
     private static final String TAG = ObjectsMapRetainedFragment.class.getName();
 
-    private Map<String, Object> map = new HashMap<>();
+    private Object object;
 
     public ObjectsMapRetainedFragment() {
         setRetainInstance(true);
     }
 
-    public static void save(FragmentManager fragmentManager, String key, Object obj) {
+    public static void save(FragmentManager fragmentManager, Object obj) {
         ObjectsMapRetainedFragment fragment = getSaverFragment(fragmentManager);
-        fragment.map.put(key, obj);
+        fragment.object = obj;
     }
 
     private static ObjectsMapRetainedFragment getSaverFragment(FragmentManager fragmentManager) {
@@ -32,27 +29,23 @@ public class ObjectsMapRetainedFragment extends Fragment {
         return fragment;
     }
 
-    public static <P> P load(FragmentManager fragmentManager, String key) {
-        if (key != null) {
-            ObjectsMapRetainedFragment fragment = getSaverFragment(fragmentManager);
-            return (P) fragment.map.get(key);
-        } else {
-            return null;
-        }
+    public static <P> P load(FragmentManager fragmentManager) {
+        ObjectsMapRetainedFragment fragment = getSaverFragment(fragmentManager);
+        return (P) fragment.object;
     }
 
-    public static <C> C getOrCreate(FragmentManager fragmentManager, String key, Func0<C> componentFactory) {
-        C component = ObjectsMapRetainedFragment.load(fragmentManager, key);
+    public static <C> C getOrCreate(FragmentManager fragmentManager, Func0<C> componentFactory) {
+        C component = ObjectsMapRetainedFragment.load(fragmentManager);
         if (component == null) {
             component = componentFactory.call();
-            ObjectsMapRetainedFragment.save(fragmentManager, key, component);
+            ObjectsMapRetainedFragment.save(fragmentManager, component);
         }
         return component;
     }
 
     @Override public void onDestroy() {
         super.onDestroy();
-//        for (MvpPresenter<?> presenter : map.values()) {
+//        for (MvpPresenter<?> presenter : object.values()) {
 //            presenter.destroy();
 //        }
     }

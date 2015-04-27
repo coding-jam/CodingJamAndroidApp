@@ -18,13 +18,12 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
-public class PageFragment extends CnjRxFragment<PageModel> {
+public class PageFragment extends RxMvpFragment<PageModel> {
 
     @InjectView(R.id.web_view) WebView webView;
 
@@ -32,12 +31,15 @@ public class PageFragment extends CnjRxFragment<PageModel> {
 
     @Inject PagePresenter presenter;
 
-    @Override protected RxMvpPresenter<PageModel> injectAndCreatePresenter() {
+    @Override public void onCreate(Bundle state) {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
-                PageFragment.class.getName(),
                 () -> DaggerPageComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
+        super.onCreate(state);
+    }
+
+    @Override public PagePresenter getPresenter() {
         return presenter;
     }
 

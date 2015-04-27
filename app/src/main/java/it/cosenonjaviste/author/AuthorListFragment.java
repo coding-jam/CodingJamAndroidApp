@@ -14,13 +14,15 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends CnjRxFragment<AuthorListModel> {
+public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -28,12 +30,15 @@ public class AuthorListFragment extends CnjRxFragment<AuthorListModel> {
 
     private AuthorAdapter adapter;
 
-    @Override protected AuthorListPresenter injectAndCreatePresenter() {
+    @Override public void onCreate(Bundle state) {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
-                AuthorListFragment.class.getName(),
                 () -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
+        super.onCreate(state);
+    }
+
+    @Override public AuthorListPresenter getPresenter() {
         return presenter;
     }
 
@@ -60,5 +65,9 @@ public class AuthorListFragment extends CnjRxFragment<AuthorListModel> {
 
     public void startLoading() {
         grid.showProgress();
+    }
+
+    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+        SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 }

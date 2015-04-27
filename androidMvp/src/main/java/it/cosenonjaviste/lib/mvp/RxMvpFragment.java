@@ -30,6 +30,14 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
         outState.putParcelable(MODEL, Parcels.wrap(getPresenter().getModel()));
     }
 
+    @Override public void onResume() {
+        super.onResume();
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+    }
+
     @Override public void onStart() {
         super.onStart();
         getPresenter().subscribe(this);

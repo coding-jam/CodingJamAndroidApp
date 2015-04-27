@@ -14,14 +14,13 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import rx.functions.Actions;
 
-public class TweetListFragment extends CnjRxFragment<TweetListModel> {
+public class TweetListFragment extends RxMvpFragment<TweetListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -29,12 +28,15 @@ public class TweetListFragment extends CnjRxFragment<TweetListModel> {
 
     @Inject TweetListPresenter presenter;
 
-    @Override protected RxMvpPresenter<TweetListModel> injectAndCreatePresenter() {
+    @Override public void onCreate(Bundle state) {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
-                TweetListFragment.class.getName(),
                 () -> DaggerTweetListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
+        super.onCreate(state);
+    }
+
+    @Override public TweetListPresenter getPresenter() {
         return presenter;
     }
 

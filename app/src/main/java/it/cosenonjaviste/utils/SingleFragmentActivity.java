@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import org.parceler.Parcels;
+
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
@@ -30,6 +34,12 @@ public class SingleFragmentActivity extends ActionBarActivity {
         Intent intent = new Intent();
         populateIntent(intent, viewClass);
         return intent;
+    }
+
+    public static <MM> void open(FragmentActivity activity, Class<? extends MvpView<MM>> viewClass, MM model) {
+        Intent intent = createIntent(activity, viewClass);
+        intent.putExtra(RxMvpFragment.MODEL, Parcels.wrap(model));
+        activity.startActivity(intent);
     }
 
     @Override protected void onCreate(Bundle savedInstanceState) {

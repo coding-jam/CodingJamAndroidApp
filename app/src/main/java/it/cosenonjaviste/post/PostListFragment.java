@@ -14,13 +14,15 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import it.cosenonjaviste.CnjRxFragment;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class PostListFragment extends CnjRxFragment<PostListModel> {
+public class PostListFragment extends RxMvpFragment<PostListModel> {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -28,12 +30,15 @@ public class PostListFragment extends CnjRxFragment<PostListModel> {
 
     private PostAdapter adapter;
 
-    @Override protected PostListPresenter injectAndCreatePresenter() {
+    @Override public void onCreate(Bundle state) {
         ObjectsMapRetainedFragment.getOrCreate(
                 getChildFragmentManager(),
-                PostListFragment.class.getName(),
                 () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
+        super.onCreate(state);
+    }
+
+    @Override public PostListPresenter getPresenter() {
         return presenter;
     }
 
@@ -77,5 +82,9 @@ public class PostListFragment extends CnjRxFragment<PostListModel> {
 
     public void startMoreItemsLoading() {
         list.showMoreProgress();
+    }
+
+    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+        SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 }
