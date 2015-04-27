@@ -20,7 +20,7 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
             restoredModel = Parcels.unwrap(getArguments().getParcelable(MODEL));
         }
 
-        getPresenter().init(restoredModel);
+        getPresenter().init(restoredModel, this);
     }
 
     public abstract RxMvpPresenter<M> getPresenter();
@@ -40,7 +40,7 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     @Override public void onStart() {
         super.onStart();
-        getPresenter().subscribe(this);
+        getPresenter().subscribe();
     }
 
     @Override public void onStop() {

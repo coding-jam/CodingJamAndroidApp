@@ -18,12 +18,10 @@ public abstract class RxMvpPresenter<M> {
     }
 
     public void pause() {
-        view = null;
         rxHolder.pause();
     }
 
-    public void subscribe(MvpView<M> view) {
-        this.view = view;
+    public void subscribe() {
         view.update(model);
         rxHolder.resubscribePendingObservable();
     }
@@ -36,13 +34,14 @@ public abstract class RxMvpPresenter<M> {
         rxHolder.subscribePausable(observable, onAttach, onNext, onError, null);
     }
 
-    public void init(M model) {
+    public void init(M model, MvpView<M> view) {
         this.model = model;
+        this.view = view;
     }
 
     public void initAndSubscribe(M model, MvpView<M> view) {
-        init(model);
-        subscribe(view);
+        init(model, view);
+        subscribe();
     }
 
     public M getModel() {

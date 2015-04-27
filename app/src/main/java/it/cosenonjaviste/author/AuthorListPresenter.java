@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
@@ -48,8 +47,8 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
                 });
     }
 
-    @Override public void subscribe(MvpView<AuthorListModel> view) {
-        super.subscribe(view);
+    @Override public void subscribe() {
+        super.subscribe();
         if (model.isEmpty() && !loadStarted) {
             loadAuthors();
         }

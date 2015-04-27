@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Category;
@@ -27,8 +26,8 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
         this.wordPressService = wordPressService;
     }
 
-    @Override public void subscribe(MvpView<CategoryListModel> view) {
-        super.subscribe(view);
+    @Override public void subscribe() {
+        super.subscribe();
         if (model.isEmpty() && !loadStarted) {
             loadData();
         }
