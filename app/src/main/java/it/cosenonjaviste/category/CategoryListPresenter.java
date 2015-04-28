@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Category;
@@ -11,7 +12,6 @@ import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
-import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
 @PresenterScope
@@ -22,7 +22,7 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
     private boolean loadStarted;
 
     @Inject public CategoryListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
-        super(schedulerManager);
+        super();
         this.wordPressService = wordPressService;
     }
 

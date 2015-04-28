@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
@@ -14,7 +15,6 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
-import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
 @PresenterScope
@@ -25,7 +25,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     private boolean loadStarted;
 
     @Inject public PostListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
-        super(schedulerManager);
+        super();
         this.wordPressService = wordPressService;
     }
 

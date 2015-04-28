@@ -1,4 +1,4 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.lib.mvp.utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

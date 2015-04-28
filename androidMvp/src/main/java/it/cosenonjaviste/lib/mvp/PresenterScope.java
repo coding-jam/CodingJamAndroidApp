@@ -1,4 +1,4 @@
-package it.cosenonjaviste.utils;
+package it.cosenonjaviste.lib.mvp;
 
 import java.lang.annotation.Retention;
 

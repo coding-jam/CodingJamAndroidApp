@@ -1,5 +1,7 @@
 package it.cosenonjaviste.lib.mvp;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action0;
@@ -7,6 +9,7 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.subjects.PublishSubject;
 
+@PresenterScope
 public class LifeCycle {
 
     private Func0<Object> saveObjectFunc;
@@ -16,6 +19,9 @@ public class LifeCycle {
     }
 
     private PublishSubject<EventType> subject = PublishSubject.create();
+
+    @Inject public LifeCycle() {
+    }
 
     public void emit(EventType eventType) {
         subject.onNext(eventType);
@@ -35,7 +41,10 @@ public class LifeCycle {
 
     public void saveInstanceState(Action1<Object> saver) {
         if (saveObjectFunc != null) {
-            saver.call(saveObjectFunc.call());
+            Object obj = saveObjectFunc.call();
+            if (obj != null) {
+                saver.call(obj);
+            }
         }
     }
 }

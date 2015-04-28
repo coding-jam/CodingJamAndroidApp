@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
@@ -31,15 +30,12 @@ public class CategoryListFragment extends RxMvpFragment<CategoryListModel> {
     @Inject CategoryListPresenter presenter;
 
     @Override public void onCreate(Bundle state) {
-        ObjectsMapRetainedFragment.getOrCreate(
-                getChildFragmentManager(),
+        super.onCreate(state);
+        createComponent(
                 () -> DaggerCategoryListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
-        super.onCreate(state);
-    }
 
-    @Override public CategoryListPresenter getPresenter() {
-        return presenter;
+        presenter.init(getRestoredModel(state, getArguments()), this);
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

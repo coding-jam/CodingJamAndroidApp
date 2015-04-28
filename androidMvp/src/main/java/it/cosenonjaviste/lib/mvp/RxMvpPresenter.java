@@ -1,21 +1,22 @@
 package it.cosenonjaviste.lib.mvp;
 
 
+import javax.inject.Inject;
+
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
 public abstract class RxMvpPresenter<M> {
 
-    private final RxHolder rxHolder;
+    @Inject RxHolder rxHolder;
     protected M model;
     protected MvpView<M> view;
-    private LifeCycle lifeCycle = new LifeCycle();
+    private LifeCycle lifeCycle;
 
-    public RxMvpPresenter(SchedulerManager schedulerManager) {
-        rxHolder = new RxHolder(schedulerManager, lifeCycle);
+    @Inject void initLifeCycle(LifeCycle lifeCycle) {
+        this.lifeCycle = lifeCycle;
         lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::subscribe);
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
         lifeCycle.subscribeOnSaveInstanceState(() -> model);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
@@ -12,7 +13,6 @@ import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
-import it.cosenonjaviste.utils.PresenterScope;
 import rx.Observable;
 
 @PresenterScope
@@ -23,7 +23,7 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
     private boolean loadStarted;
 
     @Inject public AuthorListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
-        super(schedulerManager);
+        super();
         this.wordPressService = wordPressService;
     }
 
@@ -49,6 +49,9 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
     @Override public void subscribe() {
         super.subscribe();
+        //TODO unsubscribe
+        getView().retry().subscribe(t -> loadAuthors());
+        getView().onItemClick().subscribe(this::goToAuthorDetail);
         if (model.isEmpty() && !loadStarted) {
             loadAuthors();
         }

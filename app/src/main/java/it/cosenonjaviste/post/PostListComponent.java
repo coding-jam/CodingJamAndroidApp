@@ -2,7 +2,7 @@ package it.cosenonjaviste.post;
 
 import dagger.Component;
 import it.cosenonjaviste.ApplicationComponent;
-import it.cosenonjaviste.utils.PresenterScope;
+import it.cosenonjaviste.lib.mvp.PresenterScope;
 
 @PresenterScope
 @Component(dependencies = ApplicationComponent.class)

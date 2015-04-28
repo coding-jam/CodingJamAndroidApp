@@ -3,8 +3,11 @@ package it.cosenonjaviste.lib.mvp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.ObservableWithFactory;
+import it.cosenonjaviste.lib.mvp.PresenterScope;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action0;
@@ -14,6 +17,7 @@ import rx.functions.Func0;
 import rx.observables.ConnectableObservable;
 import rx.subscriptions.CompositeSubscription;
 
+@PresenterScope
 public class RxHolder {
     private SchedulerManager schedulerManager;
 
@@ -23,7 +27,7 @@ public class RxHolder {
 
     protected final List<ObservableWithFactory> observables = new ArrayList<>();
 
-    public RxHolder(SchedulerManager schedulerManager, LifeCycle lifeCycle) {
+    @Inject public RxHolder(SchedulerManager schedulerManager, LifeCycle lifeCycle) {
         this.schedulerManager = schedulerManager;
         lifeCycle.subscribe(LifeCycle.EventType.PAUSE, this::pause);
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_ALL, this::destroy);

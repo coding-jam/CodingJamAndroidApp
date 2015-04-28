@@ -5,35 +5,31 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
+import javax.inject.Inject;
+
+import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
+import rx.functions.Func0;
+
 public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     public static final String MODEL = "model";
-    private LifeCycle lifeCycle;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
+    @Inject LifeCycle lifeCycle;
 
+    protected static <M> M getRestoredModel(Bundle state, Bundle arguments) {
         M restoredModel = null;
         if (state != null) {
             restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
         }
-        if (restoredModel == null && getArguments() != null) {
-            restoredModel = Parcels.unwrap(getArguments().getParcelable(MODEL));
+        if (restoredModel == null && arguments != null) {
+            restoredModel = Parcels.unwrap(arguments.getParcelable(MODEL));
         }
-
-        getPresenter().init(restoredModel, this);
-        lifeCycle = getPresenter().getLifeCycle();
+        return restoredModel;
     }
-
-    public abstract RxMvpPresenter<M> getPresenter();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        lifeCycle.saveInstanceState(obj -> {
-            if (obj != null) {
-                outState.putParcelable(MODEL, Parcels.wrap(obj));
-            }
-        });
+        lifeCycle.saveInstanceState(obj -> outState.putParcelable(MODEL, Parcels.wrap(obj)));
     }
 
     @Override public void onResume() {
@@ -44,5 +40,12 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
     @Override public void onPause() {
         super.onPause();
         lifeCycle.emit(LifeCycle.EventType.PAUSE);
+    }
+
+    protected <T> T createComponent(Func0<T> componentFactory) {
+        return ObjectsMapRetainedFragment.getOrCreate(
+                getChildFragmentManager(),
+                componentFactory
+        );
     }
 }
