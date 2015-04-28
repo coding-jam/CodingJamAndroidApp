@@ -26,8 +26,8 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
         this.wordPressService = wordPressService;
     }
 
-    @Override public void subscribe() {
-        super.subscribe();
+    @Override public void resume() {
+        super.resume();
         if (model.isEmpty() && !loadStarted) {
             loadData();
         }

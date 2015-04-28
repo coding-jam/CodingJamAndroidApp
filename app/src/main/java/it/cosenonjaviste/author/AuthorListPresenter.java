@@ -47,8 +47,8 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
                 });
     }
 
-    @Override public void subscribe() {
-        super.subscribe();
+    @Override public void resume() {
+        super.resume();
         //TODO unsubscribe
         getView().retry().subscribe(t -> loadAuthors());
         getView().onItemClick().subscribe(this::goToAuthorDetail);

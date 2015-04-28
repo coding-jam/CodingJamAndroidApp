@@ -29,8 +29,8 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         this.wordPressService = wordPressService;
     }
 
-    @Override public void subscribe() {
-        super.subscribe();
+    @Override public void resume() {
+        super.resume();
         if (model.getItems().isEmpty() && !loadStarted) {
             reloadData();
         }

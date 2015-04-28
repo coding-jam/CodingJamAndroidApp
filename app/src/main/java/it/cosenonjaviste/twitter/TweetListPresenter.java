@@ -41,8 +41,8 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
                 });
     }
 
-    @Override public void subscribe() {
-        super.subscribe();
+    @Override public void resume() {
+        super.resume();
         if (model.isEmpty() && !loadStarted) {
             reloadData();
         }

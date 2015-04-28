@@ -13,16 +13,14 @@ public abstract class RxMvpPresenter<M> {
     @Inject RxHolder rxHolder;
     protected M model;
     protected MvpView<M> view;
-    private LifeCycle lifeCycle;
 
     @Inject void initLifeCycle(LifeCycle lifeCycle) {
-        this.lifeCycle = lifeCycle;
-        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::subscribe);
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
         lifeCycle.subscribeOnSaveInstanceState(() -> model);
     }
 
-    public void subscribe() {
+    public void resume() {
         view.update(model);
         rxHolder.resubscribePendingObservable();
     }
@@ -38,14 +36,10 @@ public abstract class RxMvpPresenter<M> {
 
     public void initAndSubscribe(M model, MvpView<M> view) {
         init(model, view);
-        subscribe();
+        resume();
     }
 
     public MvpView<M> getView() {
         return view;
-    }
-
-    public LifeCycle getLifeCycle() {
-        return lifeCycle;
     }
 }
