@@ -14,7 +14,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 @PresenterScope
-public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
+public class TweetListPresenter extends RxMvpPresenter {
 
     protected TweetListFragment view;
     private TweetListModel model;
