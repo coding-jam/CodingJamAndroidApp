@@ -4,9 +4,6 @@ package it.cosenonjaviste.lib.mvp;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
-import rx.Observable;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 public abstract class RxMvpPresenter<M> {
 
@@ -19,10 +16,6 @@ public abstract class RxMvpPresenter<M> {
     }
 
     public abstract void resume();
-
-    protected <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribe(observable, onAttach, onNext, onError);
-    }
 
     public MvpView<M> getView() {
         return view;

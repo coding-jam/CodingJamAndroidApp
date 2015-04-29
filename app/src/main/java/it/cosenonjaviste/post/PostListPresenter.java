@@ -16,6 +16,8 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 @PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
@@ -40,7 +42,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     public void reloadData() {
         Observable<List<Post>> observable = getObservable(1);
 
-        subscribe(observable,
+        rxHolder.subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading(model.getItems().isEmpty());
@@ -63,16 +65,16 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
-        subscribe(observable,
-                () -> getView().startMoreItemsLoading(),
-                posts -> {
-                    model.getItems().append(posts);
-                    model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    view.update(model);
-                }, throwable -> {
-                    model.getItems().error(throwable);
-                    view.update(model);
-                });
+        Action0 onAttach = () -> getView().startMoreItemsLoading();Action1<? super List<Post>> onNext = posts -> {
+            model.getItems().append(posts);
+            model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+            view.update(model);
+        };
+        Action1<Throwable> onError = throwable -> {
+            model.getItems().error(throwable);
+            view.update(model);
+        };
+        rxHolder.subscribe(observable, onAttach, onNext, onError);
     }
 
     private Observable<List<Post>> getObservable(int page) {

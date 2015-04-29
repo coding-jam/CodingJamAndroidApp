@@ -10,6 +10,8 @@ import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 @PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
@@ -26,7 +28,7 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
     public void reloadData() {
         Observable<List<Tweet>> observable = twitterService.loadTweets(1);
 
-        subscribe(observable,
+        rxHolder.subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading(model.isEmpty());
@@ -53,16 +55,16 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
         int page = calcNextPage(model.size(), TwitterService.PAGE_SIZE);
         Observable<List<Tweet>> observable = twitterService.loadTweets(page);
 
-        subscribe(observable,
-                () -> getView().startMoreItemsLoading(),
-                posts -> {
-                    model.append(posts);
-                    model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                    view.update(model);
-                }, throwable -> {
-                    model.error(throwable);
-                    view.update(model);
-                });
+        Action0 onAttach = () -> getView().startMoreItemsLoading();Action1<? super List<Tweet>> onNext = posts -> {
+            model.append(posts);
+            model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
+            view.update(model);
+        };
+        Action1<Throwable> onError = throwable -> {
+            model.error(throwable);
+            view.update(model);
+        };
+        rxHolder.subscribe(observable, onAttach, onNext, onError);
 
     }
 

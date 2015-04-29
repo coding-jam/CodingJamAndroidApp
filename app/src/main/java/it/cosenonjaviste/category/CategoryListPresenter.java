@@ -39,7 +39,7 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
                 .listCategories()
                 .map(CategoryResponse::getCategories);
 
-        subscribe(observable,
+        rxHolder.subscribe(observable,
                 () -> {
                     loadStarted = true;
                     getView().startLoading();
