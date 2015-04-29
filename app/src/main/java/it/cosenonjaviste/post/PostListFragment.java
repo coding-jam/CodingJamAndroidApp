@@ -16,7 +16,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
@@ -30,7 +29,6 @@ public class PostListFragment extends RxMvpFragment<PostListModel> {
     private PostAdapter adapter;
 
     @Override public Object init(Bundle state) {
-        super.onCreate(state);
         createComponent(
                 () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
@@ -56,7 +54,7 @@ public class PostListFragment extends RxMvpFragment<PostListModel> {
         presenter.reloadData();
     }
 
-    @Override public void update(PostListModel model) {
+    public void update(PostListModel model) {
         model.getItems().call(
                 posts -> {
                     list.showList();
@@ -82,7 +80,7 @@ public class PostListFragment extends RxMvpFragment<PostListModel> {
         list.showMoreProgress();
     }
 
-    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+    public <MM> void open(Class<?> viewClass, MM model) {
         SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 }

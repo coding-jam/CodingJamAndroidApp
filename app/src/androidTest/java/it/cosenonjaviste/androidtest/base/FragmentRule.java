@@ -4,21 +4,20 @@ import android.content.Intent;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityRule<SingleFragmentActivity> {
 
-    private final Class<? extends MvpView<?>> viewClass;
+    private final Class<?> viewClass;
 
     private Object model;
 
-    public static <M> FragmentRule create(Class<? extends MvpView<M>> viewClass, M model) {
+    public static <M> FragmentRule create(Class<?> viewClass, M model) {
         return new FragmentRule(viewClass, model);
     }
 
-    private FragmentRule(Class<? extends MvpView<?>> viewClass, Object model) {
+    private FragmentRule(Class<?> viewClass, Object model) {
         super(SingleFragmentActivity.class);
         this.viewClass = viewClass;
         this.model = model;

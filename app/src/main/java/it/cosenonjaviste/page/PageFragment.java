@@ -97,7 +97,7 @@ public class PageFragment extends RxMvpFragment<PageModel> {
         return view;
     }
 
-    @Override public void update(PageModel model) {
+    public void update(PageModel model) {
         webView.loadUrl(presenter.getPostUrl());
     }
 }

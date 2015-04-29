@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Author;
@@ -22,6 +22,7 @@ import rx.functions.Action1;
 @PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
+    protected PostListFragment view;
     private PostListModel model;
 
     @Inject WordPressService wordPressService;
@@ -32,7 +33,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
     }
 
     @Override public void resume() {
-        view.update(model);
+        getView().update(model);
         rxHolder.resubscribePendingObservable();
         if (model.getItems().isEmpty() && !loadStarted) {
             reloadData();
@@ -50,10 +51,10 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
                 posts -> {
                     model.getItems().done(new ArrayList<>(posts));
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    view.update(model);
+                    getView().update(model);
                 }, throwable -> {
                     model.getItems().error(throwable);
-                    view.update(model);
+                    getView().update(model);
                 });
     }
 
@@ -65,14 +66,15 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
-        Action0 onAttach = () -> getView().startMoreItemsLoading();Action1<? super List<Post>> onNext = posts -> {
+        Action0 onAttach = () -> getView().startMoreItemsLoading();
+        Action1<? super List<Post>> onNext = posts -> {
             model.getItems().append(posts);
             model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-            view.update(model);
+            getView().update(model);
         };
         Action1<Throwable> onError = throwable -> {
             model.getItems().error(throwable);
-            view.update(model);
+            getView().update(model);
         };
         rxHolder.subscribe(observable, onAttach, onNext, onError);
     }
@@ -97,12 +99,17 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
         return size / pageSize + 1;
     }
 
-    @Override public PostListFragment getView() {
-        return (PostListFragment) super.getView();
+    public PostListFragment getView() {
+        return view;
     }
 
-    public void init(it.cosenonjaviste.post.PostListModel model, MvpView<PostListModel> view) {
+    public void init(it.cosenonjaviste.post.PostListModel model, PostListFragment view) {
         this.model = model;
         this.view = view;
+    }
+
+    @Inject public void initLifeCycle(LifeCycle lifeCycle) {
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

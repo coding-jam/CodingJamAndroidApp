@@ -22,7 +22,6 @@ import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
@@ -102,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public static <T, M> T createView(@NonNull Context context, @NonNull Class<? extends MvpView<M>> viewClass, @NonNull M model) {
+    public static <T, M> T createView(@NonNull Context context, @NonNull Class<?> viewClass, @NonNull M model) {
         Fragment fragment = Fragment.instantiate(context, viewClass.getName());
         Bundle bundle = new Bundle();
         bundle.putParcelable(RxMvpFragment.MODEL, Parcels.wrap(model));

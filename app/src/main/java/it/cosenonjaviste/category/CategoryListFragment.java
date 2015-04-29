@@ -16,7 +16,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
@@ -55,7 +54,7 @@ public class CategoryListFragment extends RxMvpFragment<CategoryListModel> {
     }
 
 
-    @Override public void update(CategoryListModel model) {
+    public void update(CategoryListModel model) {
         model.call(
                 categories -> {
                     grid.showList();
@@ -72,7 +71,7 @@ public class CategoryListFragment extends RxMvpFragment<CategoryListModel> {
         grid.showProgress();
     }
 
-    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+    public <MM> void open(Class<?> viewClass, MM model) {
         SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 }

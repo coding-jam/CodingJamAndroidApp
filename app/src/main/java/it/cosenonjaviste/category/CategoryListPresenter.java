@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Category;
@@ -17,6 +17,7 @@ import rx.Observable;
 @PresenterScope
 public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
 
+    private CategoryListFragment view;
     private CategoryListModel model;
 
     @Inject WordPressService wordPressService;
@@ -27,7 +28,7 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
     }
 
     @Override public void resume() {
-        view.update(model);
+        getView().update(model);
         rxHolder.resubscribePendingObservable();
         if (model.isEmpty() && !loadStarted) {
             loadData();
@@ -46,10 +47,10 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
                 },
                 posts -> {
                     model.done(posts);
-                    view.update(model);
+                    getView().update(model);
                 }, throwable -> {
                     model.error(throwable);
-                    view.update(model);
+                    getView().update(model);
                 });
     }
 
@@ -58,12 +59,17 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel> {
         getView().open(PostListFragment.class, new PostListModel(category));
     }
 
-    @Override public CategoryListFragment getView() {
-        return (CategoryListFragment) super.getView();
+    public CategoryListFragment getView() {
+        return view;
     }
 
-    public void init(it.cosenonjaviste.category.CategoryListModel model, MvpView<CategoryListModel> view) {
+    public void init(it.cosenonjaviste.category.CategoryListModel model, CategoryListFragment view) {
         this.model = model;
         this.view = view;
+    }
+
+    @Override @Inject public void initLifeCycle(LifeCycle lifeCycle) {
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

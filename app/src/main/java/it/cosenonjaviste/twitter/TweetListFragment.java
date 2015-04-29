@@ -28,7 +28,6 @@ public class TweetListFragment extends RxMvpFragment<TweetListModel> {
     @Inject TweetListPresenter presenter;
 
     @Override public Object init(Bundle state) {
-        super.onCreate(state);
         createComponent(
                 () -> DaggerTweetListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
@@ -52,7 +51,7 @@ public class TweetListFragment extends RxMvpFragment<TweetListModel> {
         presenter.reloadData();
     }
 
-    @Override public void update(TweetListModel model) {
+    public void update(TweetListModel model) {
         model.call(
                 items -> {
                     list.showList();

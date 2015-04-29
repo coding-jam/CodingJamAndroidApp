@@ -12,31 +12,30 @@ import android.view.MenuItem;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
     private static final String VIEW_CLASS = "viewClass";
 
-    public static Intent populateIntent(Intent intent, Class<? extends MvpView<?>> viewClass) {
+    public static Intent populateIntent(Intent intent, Class<?> viewClass) {
         intent.putExtra(VIEW_CLASS, viewClass.getName());
         return intent;
     }
 
-    public static Intent createIntent(Context context, Class<? extends MvpView<?>> viewClass) {
+    public static Intent createIntent(Context context, Class<?> viewClass) {
         Intent intent = new Intent(context, SingleFragmentActivity.class);
         populateIntent(intent, viewClass);
         return intent;
     }
 
-    public static Intent createIntent(Class<? extends MvpView<?>> viewClass) {
+    public static Intent createIntent(Class<?> viewClass) {
         Intent intent = new Intent();
         populateIntent(intent, viewClass);
         return intent;
     }
 
-    public static <MM> void open(FragmentActivity activity, Class<? extends MvpView<MM>> viewClass, MM model) {
+    public static <MM> void open(FragmentActivity activity, Class<?> viewClass, MM model) {
         Intent intent = createIntent(activity, viewClass);
         intent.putExtra(RxMvpFragment.MODEL, Parcels.wrap(model));
         activity.startActivity(intent);

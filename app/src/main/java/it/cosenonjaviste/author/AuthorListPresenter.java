@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Author;
@@ -19,6 +19,7 @@ import rx.Observable;
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
     protected AuthorListModel model;
+    protected AuthorListFragment view;
 
     @Inject WordPressService wordPressService;
 
@@ -40,18 +41,19 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
                 },
                 posts -> {
                     model.done(posts);
-                    view.update(model);
+                    getView().update(model);
                 }, throwable -> {
                     model.error(throwable);
-                    view.update(model);
+                    getView().update(model);
                 });
     }
 
     @Override public void resume() {
-        view.update(model);
         rxHolder.resubscribePendingObservable();
         if (model.isEmpty() && !loadStarted) {
             loadAuthors();
+        } else {
+            getView().update(model);
         }
     }
 
@@ -60,12 +62,17 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
         getView().open(PostListFragment.class, new PostListModel(author));
     }
 
-    @Override public AuthorListFragment getView() {
-        return (AuthorListFragment) super.getView();
+    public AuthorListFragment getView() {
+        return view;
     }
 
-    public void init(it.cosenonjaviste.author.AuthorListModel model, MvpView<AuthorListModel> view) {
+    public void init(AuthorListModel model, AuthorListFragment view) {
         this.model = model;
         this.view = view;
+    }
+
+    @Inject public void initLifeCycle(LifeCycle lifeCycle) {
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.MvpView;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Tweet;
@@ -16,6 +16,7 @@ import rx.functions.Action1;
 @PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
+    protected TweetListFragment view;
     private TweetListModel model;
 
     @Inject TwitterService twitterService;
@@ -36,15 +37,15 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
                 posts -> {
                     model.done(posts);
                     model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                    view.update(model);
+                    getView().update(model);
                 }, throwable -> {
                     model.error(throwable);
-                    view.update(model);
+                    getView().update(model);
                 });
     }
 
     @Override public void resume() {
-        view.update(model);
+        getView().update(model);
         rxHolder.resubscribePendingObservable();
         if (model.isEmpty() && !loadStarted) {
             reloadData();
@@ -55,14 +56,15 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
         int page = calcNextPage(model.size(), TwitterService.PAGE_SIZE);
         Observable<List<Tweet>> observable = twitterService.loadTweets(page);
 
-        Action0 onAttach = () -> getView().startMoreItemsLoading();Action1<? super List<Tweet>> onNext = posts -> {
+        Action0 onAttach = () -> getView().startMoreItemsLoading();
+        Action1<? super List<Tweet>> onNext = posts -> {
             model.append(posts);
             model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-            view.update(model);
+            getView().update(model);
         };
         Action1<Throwable> onError = throwable -> {
             model.error(throwable);
-            view.update(model);
+            getView().update(model);
         };
         rxHolder.subscribe(observable, onAttach, onNext, onError);
 
@@ -72,12 +74,17 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
         return size / pageSize + 1;
     }
 
-    @Override public TweetListFragment getView() {
-        return (TweetListFragment) super.getView();
+    public TweetListFragment getView() {
+        return view;
     }
 
-    public void init(it.cosenonjaviste.twitter.TweetListModel model, MvpView<TweetListModel> view) {
+    public void init(TweetListModel model, TweetListFragment view) {
         this.model = model;
         this.view = view;
+    }
+
+    @Inject public void initLifeCycle(LifeCycle lifeCycle) {
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

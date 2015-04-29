@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
 import rx.functions.Func0;
 
-public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
+public abstract class RxMvpFragment<M> extends Fragment {
 
     public static final String MODEL = "model";
 

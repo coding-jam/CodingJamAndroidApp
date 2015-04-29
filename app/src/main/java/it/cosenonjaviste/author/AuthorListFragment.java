@@ -14,10 +14,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
@@ -43,20 +41,17 @@ public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
         View view = inflater.inflate(R.layout.super_grid, container, false);
         ButterKnife.inject(this, view);
         adapter = new AuthorAdapter(getActivity());
+        grid.getList().setOnItemClickListener((parent, view1, position, id) -> presenter.goToAuthorDetail(position));
         grid.getList().setNumColumns(2);
         grid.setAdapter(adapter);
         return view;
-    }
-
-    @OnItemClick(R.id.grid) void goToDetails(int position) {
-        presenter.goToAuthorDetail(position);
     }
 
     @OnClick(R.id.error_retry) void retry() {
         presenter.loadAuthors();
     }
 
-    @Override public void update(AuthorListModel model) {
+    public void update(AuthorListModel model) {
         model.call(authors -> {
             grid.showList();
             adapter.reloadData(authors);
@@ -67,7 +62,7 @@ public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
         grid.showProgress();
     }
 
-    public <MM> void open(Class<? extends MvpView<MM>> viewClass, MM model) {
+    public <MM> void open(Class<?> viewClass, MM model) {
         SingleFragmentActivity.open(getActivity(), viewClass, model);
     }
 
