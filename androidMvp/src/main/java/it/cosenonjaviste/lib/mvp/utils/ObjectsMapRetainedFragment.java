@@ -35,7 +35,7 @@ public class ObjectsMapRetainedFragment extends Fragment {
     }
 
     public static <C> C getOrCreate(FragmentManager fragmentManager, Func0<C> componentFactory) {
-        C component = ObjectsMapRetainedFragment.load(fragmentManager);
+        C component = load(fragmentManager);
         if (component == null) {
             component = componentFactory.call();
             ObjectsMapRetainedFragment.save(fragmentManager, component);

@@ -5,9 +5,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.lib.mvp.LifeCycle;
+import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
@@ -20,16 +24,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class PagePresenterTest {
 
-    private PagePresenter presenter;
-
     @Mock PageFragment view;
+
+    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+
+    @Spy PageUrlManager pageUrlManager = new PageUrlManager();
+
+    @InjectMocks PagePresenter presenter;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
     @Before
     public void setup() {
-        presenter = new PagePresenter(new TestSchedulerManager(), new PageUrlManager());
-        presenter.initAndSubscribe(new PageModel("url"), view);
+        presenter.init(new PageModel("url"), view);
+        presenter.resume();
     }
 
     @Test

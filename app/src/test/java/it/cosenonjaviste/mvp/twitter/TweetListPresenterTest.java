@@ -1,12 +1,15 @@
 package it.cosenonjaviste.mvp.twitter;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
+import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.twitter.TweetListFragment;
@@ -23,21 +26,19 @@ public class TweetListPresenterTest {
 
     @Mock TweetListFragment view;
 
+    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+
     @Mock TwitterService twitterService;
 
-    private TweetListPresenter presenter;
-
-    @Before
-    public void setup() {
-        presenter = new TweetListPresenter(new TestSchedulerManager(), twitterService);
-    }
+    @InjectMocks TweetListPresenter presenter;
 
     @Test public void testLoadTweets() {
         when(twitterService.loadTweets(eq(1)))
                 .thenReturn(TestData.tweets());
 
         TweetListModel model = new TweetListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
         assertThat(model.size()).isEqualTo(10);
     }
 
@@ -46,7 +47,8 @@ public class TweetListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         TweetListModel model = new TweetListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
 
         assertThat(model.isError()).isTrue();
 
@@ -64,7 +66,8 @@ public class TweetListPresenterTest {
                 .thenReturn(TestData.tweets());
 
         TweetListModel tweetListModel = new TweetListModel();
-        presenter.initAndSubscribe(tweetListModel, view);
+        presenter.init(tweetListModel, view);
+        presenter.resume();
 
         presenter.loadNextPage();
 

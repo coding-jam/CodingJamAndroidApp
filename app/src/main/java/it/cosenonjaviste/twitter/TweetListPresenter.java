@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
@@ -14,13 +14,13 @@ import rx.Observable;
 @PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
-    private TwitterService twitterService;
+    private TweetListModel model;
+
+    @Inject TwitterService twitterService;
 
     private boolean loadStarted;
 
-    @Inject public TweetListPresenter(SchedulerManager schedulerManager, TwitterService twitterService) {
-        super();
-        this.twitterService = twitterService;
+    @Inject public TweetListPresenter() {
     }
 
     public void reloadData() {
@@ -42,7 +42,8 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
     }
 
     @Override public void resume() {
-        super.resume();
+        view.update(model);
+        rxHolder.resubscribePendingObservable();
         if (model.isEmpty() && !loadStarted) {
             reloadData();
         }
@@ -71,5 +72,10 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel> {
 
     @Override public TweetListFragment getView() {
         return (TweetListFragment) super.getView();
+    }
+
+    public void init(it.cosenonjaviste.twitter.TweetListModel model, MvpView<TweetListModel> view) {
+        this.model = model;
+        this.view = view;
     }
 }

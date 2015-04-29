@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
@@ -20,17 +20,18 @@ import rx.Observable;
 @PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
-    private WordPressService wordPressService;
+    private PostListModel model;
+
+    @Inject WordPressService wordPressService;
 
     private boolean loadStarted;
 
-    @Inject public PostListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
-        super();
-        this.wordPressService = wordPressService;
+    @Inject public PostListPresenter() {
     }
 
     @Override public void resume() {
-        super.resume();
+        view.update(model);
+        rxHolder.resubscribePendingObservable();
         if (model.getItems().isEmpty() && !loadStarted) {
             reloadData();
         }
@@ -96,5 +97,10 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel> {
 
     @Override public PostListFragment getView() {
         return (PostListFragment) super.getView();
+    }
+
+    public void init(it.cosenonjaviste.post.PostListModel model, MvpView<PostListModel> view) {
+        this.model = model;
+        this.view = view;
     }
 }

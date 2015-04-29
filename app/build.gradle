@@ -44,13 +44,13 @@ android {
         version = '0.7.2.201409121644'
     }
 
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "it.cosenonjaviste"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 11
         versionName "2.0"
         buildConfigField "String", "CONSUMER_KEY", project.oauth_consumerKey

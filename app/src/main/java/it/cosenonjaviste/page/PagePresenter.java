@@ -2,20 +2,31 @@ package it.cosenonjaviste.page;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 
 @PresenterScope
 public class PagePresenter extends RxMvpPresenter<PageModel> {
 
-    private PageUrlManager pageUrlManager;
+    private PageModel model;
 
-    @Inject public PagePresenter(SchedulerManager schedulerManager, PageUrlManager pageUrlManager) {
-        this.pageUrlManager = pageUrlManager;
+    @Inject PageUrlManager pageUrlManager;
+
+    @Inject public PagePresenter() {
     }
 
     public String getPostUrl() {
         return pageUrlManager.getUrl(model.getUrl());
+    }
+
+    @Override public void resume() {
+        view.update(model);
+        rxHolder.resubscribePendingObservable();
+    }
+
+    public void init(it.cosenonjaviste.page.PageModel model, MvpView<PageModel> view) {
+        this.model = model;
+        this.view = view;
     }
 }

@@ -1,16 +1,19 @@
 package it.cosenonjaviste.mvp.category;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.category.CategoryListPresenter;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
+import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
@@ -28,16 +31,13 @@ public class CategoryListPresenterTest {
 
     @Mock WordPressService wordPressService;
 
-    private CategoryListPresenter presenter;
+    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+
+    @InjectMocks CategoryListPresenter presenter;
 
     @Mock CategoryListFragment view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
-
-    @Before
-    public void setup() {
-        presenter = new CategoryListPresenter(new TestSchedulerManager(), wordPressService);
-    }
 
     @Test
     public void testLoad() {
@@ -45,7 +45,8 @@ public class CategoryListPresenterTest {
                 .thenReturn(categoryResponse(3));
 
         CategoryListModel model = new CategoryListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(2);
         assertThat(category.getId()).isEqualTo(2);
@@ -59,7 +60,8 @@ public class CategoryListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         CategoryListModel model = new CategoryListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
 
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
@@ -75,7 +77,8 @@ public class CategoryListPresenterTest {
                 .thenReturn(categoryResponse(3));
 
         CategoryListModel categoryListModel = new CategoryListModel();
-        presenter.initAndSubscribe(categoryListModel, view);
+        presenter.init(categoryListModel, view);
+        presenter.resume();
         presenter.goToPosts(1);
 
         verify(view).open(any(), modelCaptor.capture());

@@ -1,16 +1,19 @@
 package it.cosenonjaviste.mvp.author;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
+import it.cosenonjaviste.lib.mvp.LifeCycle;
+import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListModel;
@@ -27,16 +30,13 @@ public class AuthorListPresenterTest {
 
     @Mock AuthorListFragment view;
 
-    private AuthorListPresenter presenter;
+    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+
+    @InjectMocks AuthorListPresenter presenter;
 
     @Mock WordPressService wordPressService;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
-
-    @Before
-    public void setup() {
-        presenter = new AuthorListPresenter(new TestSchedulerManager(), wordPressService);
-    }
 
     @Test
     public void testLoad() {
@@ -44,7 +44,8 @@ public class AuthorListPresenterTest {
                 .thenReturn(authorResponse(2));
 
         AuthorListModel model = new AuthorListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
         assertThat(model.size()).isEqualTo(2);
     }
 
@@ -54,7 +55,8 @@ public class AuthorListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         AuthorListModel model = new AuthorListModel();
-        presenter.initAndSubscribe(model, view);
+        presenter.init(model, view);
+        presenter.resume();
 
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
@@ -70,7 +72,8 @@ public class AuthorListPresenterTest {
                 .thenReturn(authorResponse(2));
 
         AuthorListModel authorListModel = new AuthorListModel();
-        presenter.initAndSubscribe(authorListModel, view);
+        presenter.init(authorListModel, view);
+        presenter.resume();
         presenter.goToAuthorDetail(1);
 
         verify(view).open(any(), modelCaptor.capture());

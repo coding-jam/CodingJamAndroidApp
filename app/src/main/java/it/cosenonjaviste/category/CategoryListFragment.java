@@ -29,13 +29,14 @@ public class CategoryListFragment extends RxMvpFragment<CategoryListModel> {
 
     @Inject CategoryListPresenter presenter;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
+    @Override public Object init(Bundle state) {
         createComponent(
                 () -> DaggerCategoryListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
 
-        presenter.init(getRestoredModel(state, getArguments()), this);
+        CategoryListModel model = getRestoredModel(state, getArguments());
+        presenter.init(model, this);
+        return model;
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

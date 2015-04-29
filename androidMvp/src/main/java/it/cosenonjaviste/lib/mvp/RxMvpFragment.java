@@ -16,6 +16,15 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     @Inject LifeCycle lifeCycle;
 
+    private Object model;
+
+    @Override public final void onCreate(Bundle state) {
+        super.onCreate(state);
+        model = init(state);
+    }
+
+    protected abstract Object init(Bundle state);
+
     protected static <M> M getRestoredModel(Bundle state, Bundle arguments) {
         M restoredModel = null;
         if (state != null) {
@@ -29,7 +38,9 @@ public abstract class RxMvpFragment<M> extends Fragment implements MvpView<M> {
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        lifeCycle.saveInstanceState(obj -> outState.putParcelable(MODEL, Parcels.wrap(obj)));
+        if (model != null) {
+            outState.putParcelable(MODEL, Parcels.wrap(model));
+        }
     }
 
     @Override public void onResume() {

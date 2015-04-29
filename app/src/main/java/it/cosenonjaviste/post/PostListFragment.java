@@ -29,13 +29,15 @@ public class PostListFragment extends RxMvpFragment<PostListModel> {
 
     private PostAdapter adapter;
 
-    @Override public void onCreate(Bundle state) {
+    @Override public Object init(Bundle state) {
         super.onCreate(state);
         createComponent(
                 () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
 
-        presenter.init(getRestoredModel(state, getArguments()), this);
+        PostListModel model = getRestoredModel(state, getArguments());
+        presenter.init(model, this);
+        return model;
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

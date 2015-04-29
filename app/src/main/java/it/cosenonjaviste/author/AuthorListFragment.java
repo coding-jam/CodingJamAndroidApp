@@ -13,15 +13,13 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
-import rx.Observable;
-import rx.android.view.ViewObservable;
-import rx.android.widget.OnItemClickEvent;
-import rx.android.widget.WidgetObservable;
 import rx.functions.Actions;
 
 public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
@@ -32,13 +30,13 @@ public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
 
     private AuthorAdapter adapter;
 
-    @Override public void onCreate(Bundle state) {
-        super.onCreate(state);
-
+    @Override public Object init(Bundle state) {
         createComponent(() -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build())
                 .inject(this);
 
-        presenter.init(getRestoredModel(state, getArguments()), this);
+        AuthorListModel model = getRestoredModel(state, getArguments());
+        presenter.init(model, this);
+        return model;
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,12 +48,12 @@ public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
         return view;
     }
 
-    public Observable<Integer> onItemClick() {
-        return WidgetObservable.itemClicks(grid.getList()).map(OnItemClickEvent::position);
+    @OnItemClick(R.id.grid) void goToDetails(int position) {
+        presenter.goToAuthorDetail(position);
     }
 
-    public Observable<Void> retry() {
-        return ViewObservable.clicks(getView().findViewById(R.id.error_retry)).map(e -> null);
+    @OnClick(R.id.error_retry) void retry() {
+        presenter.loadAuthors();
     }
 
     @Override public void update(AuthorListModel model) {

@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.lib.mvp.MvpView;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
@@ -18,13 +18,13 @@ import rx.Observable;
 @PresenterScope
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
-    private WordPressService wordPressService;
+    protected AuthorListModel model;
+
+    @Inject WordPressService wordPressService;
 
     private boolean loadStarted;
 
-    @Inject public AuthorListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
-        super();
-        this.wordPressService = wordPressService;
+    @Inject public AuthorListPresenter() {
     }
 
     public void loadAuthors() {
@@ -48,10 +48,8 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
     }
 
     @Override public void resume() {
-        super.resume();
-        //TODO unsubscribe
-        getView().retry().subscribe(t -> loadAuthors());
-        getView().onItemClick().subscribe(this::goToAuthorDetail);
+        view.update(model);
+        rxHolder.resubscribePendingObservable();
         if (model.isEmpty() && !loadStarted) {
             loadAuthors();
         }
@@ -64,5 +62,10 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel> {
 
     @Override public AuthorListFragment getView() {
         return (AuthorListFragment) super.getView();
+    }
+
+    public void init(it.cosenonjaviste.author.AuthorListModel model, MvpView<AuthorListModel> view) {
+        this.model = model;
+        this.view = view;
     }
 }
