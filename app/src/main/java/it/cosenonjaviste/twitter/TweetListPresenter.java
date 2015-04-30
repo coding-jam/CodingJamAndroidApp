@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Tweet;
@@ -69,15 +68,5 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
 
     private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
-    }
-
-    public void init(TweetListModel model, TweetListFragment view) {
-        this.model = model;
-        this.view = view;
-    }
-
-    @Inject public void initLifeCycle(LifeCycle lifeCycle) {
-        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
-        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

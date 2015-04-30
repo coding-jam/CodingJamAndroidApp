@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Category;
@@ -54,15 +53,5 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
     public void goToPosts(int position) {
         Category category = model.get(position);
         getView().open(PostListFragment.class, new PostListModel(category));
-    }
-
-    public void init(it.cosenonjaviste.category.CategoryListModel model, CategoryListFragment view) {
-        this.model = model;
-        this.view = view;
-    }
-
-    @Override @Inject public void initLifeCycle(LifeCycle lifeCycle) {
-        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
-        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
     }
 }

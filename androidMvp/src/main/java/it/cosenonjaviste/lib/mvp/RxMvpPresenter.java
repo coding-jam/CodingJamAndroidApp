@@ -15,7 +15,15 @@ public abstract class RxMvpPresenter<M, V> {
 
     public abstract void resume();
 
-    @Inject public abstract void initLifeCycle(LifeCycle lifeCycle);
+    public final void init(M model, V view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    @Inject public final void initLifeCycle(LifeCycle lifeCycle) {
+        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
+    }
 
     public final V getView() {
         return view;
