@@ -22,9 +22,6 @@ import rx.functions.Action1;
 @PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFragment> {
 
-    protected PostListFragment view;
-    private PostListModel model;
-
     @Inject WordPressService wordPressService;
 
     private boolean loadStarted;
@@ -97,10 +94,6 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFra
 
     private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
-    }
-
-    public PostListFragment getView() {
-        return view;
     }
 
     public void init(it.cosenonjaviste.post.PostListModel model, PostListFragment view) {

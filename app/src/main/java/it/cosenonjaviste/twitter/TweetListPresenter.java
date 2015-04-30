@@ -16,9 +16,6 @@ import rx.functions.Action1;
 @PresenterScope
 public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetListFragment> {
 
-    protected TweetListFragment view;
-    private TweetListModel model;
-
     @Inject TwitterService twitterService;
 
     private boolean loadStarted;
@@ -72,10 +69,6 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
 
     private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
-    }
-
-    public TweetListFragment getView() {
-        return view;
     }
 
     public void init(TweetListModel model, TweetListFragment view) {

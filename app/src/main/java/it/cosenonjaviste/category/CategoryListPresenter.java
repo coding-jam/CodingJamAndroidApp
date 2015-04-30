@@ -17,9 +17,6 @@ import rx.Observable;
 @PresenterScope
 public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, CategoryListFragment> {
 
-    private CategoryListFragment view;
-    private CategoryListModel model;
-
     @Inject WordPressService wordPressService;
 
     private boolean loadStarted;
@@ -57,10 +54,6 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
     public void goToPosts(int position) {
         Category category = model.get(position);
         getView().open(PostListFragment.class, new PostListModel(category));
-    }
-
-    public CategoryListFragment getView() {
-        return view;
     }
 
     public void init(it.cosenonjaviste.category.CategoryListModel model, CategoryListFragment view) {

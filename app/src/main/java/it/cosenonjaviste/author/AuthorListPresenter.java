@@ -18,9 +18,6 @@ import rx.Observable;
 @PresenterScope
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorListFragment> {
 
-    protected AuthorListModel model;
-    protected AuthorListFragment view;
-
     @Inject WordPressService wordPressService;
 
     private boolean loadStarted;
@@ -60,10 +57,6 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
         getView().open(PostListFragment.class, new PostListModel(author));
-    }
-
-    public AuthorListFragment getView() {
-        return view;
     }
 
     public void init(AuthorListModel model, AuthorListFragment view) {

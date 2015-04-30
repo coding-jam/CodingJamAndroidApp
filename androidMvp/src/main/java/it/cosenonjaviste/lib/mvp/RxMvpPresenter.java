@@ -9,7 +9,15 @@ public abstract class RxMvpPresenter<M, V> {
 
     @Inject protected RxHolder rxHolder;
 
+    protected M model;
+
+    protected V view;
+
     public abstract void resume();
 
     @Inject public abstract void initLifeCycle(LifeCycle lifeCycle);
+
+    public final V getView() {
+        return view;
+    }
 }
