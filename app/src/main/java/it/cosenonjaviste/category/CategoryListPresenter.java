@@ -18,16 +18,15 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
 
     @Inject WordPressService wordPressService;
 
-    private boolean loadStarted;
-
     @Inject public CategoryListPresenter() {
     }
 
     @Override public void resume() {
-        getView().update(model);
-        rxHolder.resubscribePendingObservable();
-        if (model.isEmpty() && !loadStarted) {
+        super.resume();
+        if (getModel().isEmpty() && !isTaskRunning()) {
             loadData();
+        } else {
+            getView().update(getModel());
         }
     }
 
@@ -36,22 +35,21 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
                 .listCategories()
                 .map(CategoryResponse::getCategories);
 
-        rxHolder.subscribe(observable,
+        subscribe(observable,
                 () -> {
-                    loadStarted = true;
                     getView().startLoading();
                 },
                 posts -> {
-                    model.done(posts);
-                    getView().update(model);
+                    getModel().done(posts);
+                    getView().update(getModel());
                 }, throwable -> {
-                    model.error(throwable);
-                    getView().update(model);
+                    getModel().error(throwable);
+                    getView().update(getModel());
                 });
     }
 
     public void goToPosts(int position) {
-        Category category = model.get(position);
+        Category category = getModel().get(position);
         getView().open(PostListFragment.class, new PostListModel(category));
     }
 }

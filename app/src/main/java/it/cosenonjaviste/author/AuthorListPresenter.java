@@ -19,8 +19,6 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
 
     @Inject WordPressService wordPressService;
 
-    private boolean loadStarted;
-
     @Inject public AuthorListPresenter() {
     }
 
@@ -30,31 +28,30 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
                 .map(AuthorResponse::getAuthors)
                 .doOnNext(Collections::sort);
 
-        rxHolder.subscribe(observable,
+        subscribe(observable,
                 () -> {
-                    loadStarted = true;
                     getView().startLoading();
                 },
                 posts -> {
-                    model.done(posts);
-                    getView().update(model);
+                    getModel().done(posts);
+                    getView().update(getModel());
                 }, throwable -> {
-                    model.error(throwable);
-                    getView().update(model);
+                    getModel().error(throwable);
+                    getView().update(getModel());
                 });
     }
 
     @Override public void resume() {
-        rxHolder.resubscribePendingObservable();
-        if (model.isEmpty() && !loadStarted) {
+        super.resume();
+        if (getModel().isEmpty() && !isTaskRunning()) {
             loadAuthors();
         } else {
-            getView().update(model);
+            getView().update(getModel());
         }
     }
 
     public void goToAuthorDetail(int position) {
-        Author author = model.get(position);
+        Author author = getModel().get(position);
         getView().open(PostListFragment.class, new PostListModel(author));
     }
 }

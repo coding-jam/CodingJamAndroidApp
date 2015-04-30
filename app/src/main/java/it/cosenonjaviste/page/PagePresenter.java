@@ -14,11 +14,11 @@ public class PagePresenter extends RxMvpPresenter<PageModel, PageFragment> {
     }
 
     public String getPostUrl() {
-        return pageUrlManager.getUrl(model.getUrl());
+        return pageUrlManager.getUrl(getModel().getUrl());
     }
 
     @Override public void resume() {
-        getView().update(model);
-        rxHolder.resubscribePendingObservable();
+        getView().update(getModel());
+        super.resume();
     }
 }

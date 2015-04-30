@@ -23,34 +23,30 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFra
 
     @Inject WordPressService wordPressService;
 
-    private boolean loadStarted;
-
     @Inject public PostListPresenter() {
     }
 
     @Override public void resume() {
-        getView().update(model);
-        rxHolder.resubscribePendingObservable();
-        if (model.getItems().isEmpty() && !loadStarted) {
+        super.resume();
+        if (getModel().getItems().isEmpty() && !isTaskRunning()) {
             reloadData();
+        } else {
+            getView().update(getModel());
         }
     }
 
     public void reloadData() {
         Observable<List<Post>> observable = getObservable(1);
 
-        rxHolder.subscribe(observable,
-                () -> {
-                    loadStarted = true;
-                    getView().startLoading(model.getItems().isEmpty());
-                },
+        subscribe(observable,
+                () -> getView().startLoading(getModel().getItems().isEmpty()),
                 posts -> {
-                    model.getItems().done(new ArrayList<>(posts));
-                    model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    getView().update(model);
+                    getModel().getItems().done(new ArrayList<>(posts));
+                    getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+                    getView().update(getModel());
                 }, throwable -> {
-                    model.getItems().error(throwable);
-                    getView().update(model);
+                    getModel().getItems().error(throwable);
+                    getView().update(getModel());
                 });
     }
 
@@ -59,29 +55,29 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFra
     }
 
     public void loadNextPage() {
-        int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
+        int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
         Action0 onAttach = () -> getView().startMoreItemsLoading();
         Action1<? super List<Post>> onNext = posts -> {
-            model.getItems().append(posts);
-            model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-            getView().update(model);
+            getModel().getItems().append(posts);
+            getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+            getView().update(getModel());
         };
         Action1<Throwable> onError = throwable -> {
-            model.getItems().error(throwable);
-            getView().update(model);
+            getModel().getItems().error(throwable);
+            getView().update(getModel());
         };
-        rxHolder.subscribe(observable, onAttach, onNext, onError);
+        subscribe(observable, onAttach, onNext, onError);
     }
 
     private Observable<List<Post>> getObservable(int page) {
         Observable<PostResponse> observable;
-        Category category = model.getCategory();
+        Category category = getModel().getCategory();
         if (category != null) {
             observable = wordPressService.listCategoryPosts(category.getId(), page);
         } else {
-            Author author = model.getAuthor();
+            Author author = getModel().getAuthor();
             if (author != null) {
                 observable = wordPressService.listAuthorPosts(author.getId(), page);
             } else {

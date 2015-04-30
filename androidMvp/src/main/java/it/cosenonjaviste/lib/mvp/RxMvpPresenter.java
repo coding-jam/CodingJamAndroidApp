@@ -4,16 +4,21 @@ package it.cosenonjaviste.lib.mvp;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
+import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 public abstract class RxMvpPresenter<M, V> {
 
-    @Inject protected RxHolder rxHolder;
+    @Inject RxHolder rxHolder;
 
-    protected M model;
+    private M model;
 
-    protected V view;
+    private V view;
 
-    public abstract void resume();
+    public void resume() {
+        rxHolder.resubscribePendingObservable();
+    }
 
     public final void init(M model, V view) {
         this.model = model;
@@ -27,5 +32,17 @@ public abstract class RxMvpPresenter<M, V> {
 
     public final V getView() {
         return view;
+    }
+
+    public M getModel() {
+        return model;
+    }
+
+    public <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
+        rxHolder.subscribe(observable, onAttach, onNext, onError);
+    }
+
+    public boolean isTaskRunning() {
+        return rxHolder.isTaskRunning();
     }
 }
