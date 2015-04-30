@@ -7,7 +7,7 @@ import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 @PresenterScope
-public class PagePresenter extends RxMvpPresenter {
+public class PagePresenter extends RxMvpPresenter<PageModel, PageFragment> {
 
     protected PageFragment view;
     private PageModel model;

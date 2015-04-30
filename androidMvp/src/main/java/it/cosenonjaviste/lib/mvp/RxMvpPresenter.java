@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 
-public abstract class RxMvpPresenter {
+public abstract class RxMvpPresenter<M, V> {
 
     @Inject protected RxHolder rxHolder;
 

@@ -15,7 +15,7 @@ import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 @PresenterScope
-public class CategoryListPresenter extends RxMvpPresenter {
+public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, CategoryListFragment> {
 
     private CategoryListFragment view;
     private CategoryListModel model;

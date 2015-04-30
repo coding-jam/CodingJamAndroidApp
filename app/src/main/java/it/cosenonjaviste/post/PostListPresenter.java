@@ -20,7 +20,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 @PresenterScope
-public class PostListPresenter extends RxMvpPresenter {
+public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFragment> {
 
     protected PostListFragment view;
     private PostListModel model;
