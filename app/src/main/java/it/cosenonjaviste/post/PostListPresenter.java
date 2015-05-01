@@ -12,14 +12,13 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
 @PresenterScope
-public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFragment> {
+public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -51,7 +50,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListFra
     }
 
     public void goToDetail(Post item) {
-        getView().open(PageFragment.class, new PageModel(item.getUrl()));
+        getView().openDetail(new PageModel(item.getUrl()));
     }
 
     public void loadNextPage() {

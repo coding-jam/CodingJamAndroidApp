@@ -10,12 +10,11 @@ import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 @PresenterScope
-public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorListFragment> {
+public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -52,6 +51,6 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
 
     public void goToAuthorDetail(int position) {
         Author author = getModel().get(position);
-        getView().open(PostListFragment.class, new PostListModel(author));
+        getView().openPostList(new PostListModel(author));
     }
 }

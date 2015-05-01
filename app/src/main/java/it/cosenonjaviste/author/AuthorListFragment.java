@@ -17,10 +17,12 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends RxMvpFragment {
+public class AuthorListFragment extends RxMvpFragment implements AuthorListView {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -47,19 +49,19 @@ public class AuthorListFragment extends RxMvpFragment {
         presenter.loadAuthors();
     }
 
-    public void update(AuthorListModel model) {
+    @Override public void update(AuthorListModel model) {
         model.call(authors -> {
             grid.showList();
             adapter.reloadData(authors);
         }).whenError(t -> grid.showError()).whenEmpty(Actions.empty());
     }
 
-    public void startLoading() {
+    @Override public void startLoading() {
         grid.showProgress();
     }
 
-    public <MM> void open(Class<?> viewClass, MM model) {
-        SingleFragmentActivity.open(getActivity(), viewClass, model);
+    @Override public void openPostList(PostListModel model) {
+        SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }
 
 }

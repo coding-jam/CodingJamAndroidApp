@@ -9,12 +9,11 @@ import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 @PresenterScope
-public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, CategoryListFragment> {
+public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, CategoryListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -50,6 +49,6 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
 
     public void goToPosts(int position) {
         Category category = getModel().get(position);
-        getView().open(PostListFragment.class, new PostListModel(category));
+        getView().openPostList(new PostListModel(category));
     }
 }

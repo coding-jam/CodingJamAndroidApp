@@ -2,7 +2,6 @@ package it.cosenonjaviste.model;
 
 import java.util.List;
 
-import it.cosenonjaviste.BuildConfig;
 import rx.Observable;
 import rx.Subscriber;
 import twitter4j.Paging;
@@ -19,13 +18,13 @@ public class TwitterService {
 
     private final Twitter twitter;
 
-    public TwitterService() {
+    public TwitterService(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(BuildConfig.CONSUMER_KEY)
-                .setOAuthConsumerSecret(BuildConfig.CONSUMER_SECRET)
-                .setOAuthAccessToken(BuildConfig.ACCESS_TOKEN)
-                .setOAuthAccessTokenSecret(BuildConfig.ACCESS_TOKEN_SECRET);
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret);
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
     }

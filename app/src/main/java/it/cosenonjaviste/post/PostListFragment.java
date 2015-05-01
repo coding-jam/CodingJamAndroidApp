@@ -17,10 +17,12 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.page.PageFragment;
+import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class PostListFragment extends RxMvpFragment {
+public class PostListFragment extends RxMvpFragment implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -50,7 +52,7 @@ public class PostListFragment extends RxMvpFragment {
         presenter.reloadData();
     }
 
-    public void update(PostListModel model) {
+    @Override public void update(PostListModel model) {
         model.getItems().call(
                 posts -> {
                     list.showList();
@@ -64,7 +66,7 @@ public class PostListFragment extends RxMvpFragment {
         );
     }
 
-    public void startLoading(boolean showMainLoading) {
+    @Override public void startLoading(boolean showMainLoading) {
         if (showMainLoading) {
             list.showProgress();
         } else {
@@ -72,11 +74,11 @@ public class PostListFragment extends RxMvpFragment {
         }
     }
 
-    public void startMoreItemsLoading() {
+    @Override public void startMoreItemsLoading() {
         list.showMoreProgress();
     }
 
-    public <MM> void open(Class<?> viewClass, MM model) {
-        SingleFragmentActivity.open(getActivity(), viewClass, model);
+    @Override public void openDetail(PageModel model) {
+        SingleFragmentActivity.open(getActivity(), PageFragment.class, model);
     }
 }

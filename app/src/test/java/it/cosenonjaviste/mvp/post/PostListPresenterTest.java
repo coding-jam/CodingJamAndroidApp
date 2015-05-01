@@ -6,25 +6,20 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.OptionalList;
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
-import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.page.PageModel;
-import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
+import it.cosenonjaviste.post.PostListView;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,7 +27,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest {
 
-    @Mock PostListFragment view;
+    @Mock PostListView view;
 
     private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
@@ -97,7 +92,7 @@ public class PostListPresenterTest {
 
         presenter.goToDetail(firstPost);
 
-        verify(view).open(any(), modelCaptor.capture());
+        verify(view).openDetail(modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getUrl();

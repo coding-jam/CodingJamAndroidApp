@@ -4,18 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.lib.mvp.LifeCycle;
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
-import it.cosenonjaviste.mvp.TestSchedulerManager;
-import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 import it.cosenonjaviste.twitter.TweetListPresenter;
+import it.cosenonjaviste.twitter.TweetListView;
 import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TweetListPresenterTest {
 
-    @Mock TweetListFragment view;
+    @Mock TweetListView view;
 
     private TestLifeCycle testLifeCycle = new TestLifeCycle();
 

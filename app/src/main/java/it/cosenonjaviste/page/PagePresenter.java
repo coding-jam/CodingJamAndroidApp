@@ -6,7 +6,7 @@ import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 @PresenterScope
-public class PagePresenter extends RxMvpPresenter<PageModel, PageFragment> {
+public class PagePresenter extends RxMvpPresenter<PageModel, PageView> {
 
     @Inject PageUrlManager pageUrlManager;
 
@@ -18,7 +18,7 @@ public class PagePresenter extends RxMvpPresenter<PageModel, PageFragment> {
     }
 
     @Override public void resume() {
-        getView().update(getModel());
         super.resume();
+        getView().update(getModel());
     }
 }

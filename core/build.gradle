@@ -4,4 +4,6 @@ apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     compile project(':coremvp')
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'org.twitter4j:twitter4j-core:4.0.2'
 }

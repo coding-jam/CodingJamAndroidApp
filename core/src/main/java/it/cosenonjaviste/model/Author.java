@@ -2,11 +2,8 @@ package it.cosenonjaviste.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
-
 import it.cosenonjaviste.utils.Md5Utils;
 
-@Parcel
 public class Author implements Comparable<Author> {
     long id;
 

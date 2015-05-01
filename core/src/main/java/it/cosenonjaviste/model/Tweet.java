@@ -1,10 +1,7 @@
 package it.cosenonjaviste.model;
 
-import org.parceler.Parcel;
-
 import java.util.Date;
 
-@Parcel
 public class Tweet {
     long id;
     String text;

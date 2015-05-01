@@ -22,7 +22,7 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
-public class PageFragment extends RxMvpFragment {
+public class PageFragment extends RxMvpFragment implements PageView {
 
     @InjectView(R.id.web_view) WebView webView;
 
@@ -93,7 +93,7 @@ public class PageFragment extends RxMvpFragment {
         return view;
     }
 
-    public void update(PageModel model) {
+    @Override public void update(PageModel model) {
         webView.loadUrl(presenter.getPostUrl());
     }
 }

@@ -17,10 +17,12 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.post.PostListFragment;
+import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class CategoryListFragment extends RxMvpFragment {
+public class CategoryListFragment extends RxMvpFragment implements CategoryListView {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -50,7 +52,7 @@ public class CategoryListFragment extends RxMvpFragment {
     }
 
 
-    public void update(CategoryListModel model) {
+    @Override public void update(CategoryListModel model) {
         model.call(
                 categories -> {
                     grid.showList();
@@ -63,11 +65,11 @@ public class CategoryListFragment extends RxMvpFragment {
         );
     }
 
-    public void startLoading() {
+    @Override public void startLoading() {
         grid.showProgress();
     }
 
-    public <MM> void open(Class<?> viewClass, MM model) {
-        SingleFragmentActivity.open(getActivity(), viewClass, model);
+    @Override public void openPostList(PostListModel model) {
+        SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }
 }

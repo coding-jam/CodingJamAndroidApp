@@ -6,24 +6,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.category.CategoryListPresenter;
-import it.cosenonjaviste.lib.mvp.LifeCycle;
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
+import it.cosenonjaviste.category.CategoryListView;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
-import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +31,7 @@ public class CategoryListPresenterTest {
 
     @InjectMocks CategoryListPresenter presenter;
 
-    @Mock CategoryListFragment view;
+    @Mock CategoryListView view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
@@ -81,7 +76,7 @@ public class CategoryListPresenterTest {
 
         presenter.goToPosts(1);
 
-        verify(view).open(any(), modelCaptor.capture());
+        verify(view).openPostList(modelCaptor.capture());
 
         assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }

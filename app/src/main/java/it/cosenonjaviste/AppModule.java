@@ -37,7 +37,7 @@ public class AppModule {
     }
 
     @Provides TwitterService provideTwitterService() {
-        return new TwitterService();
+        return new TwitterService(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET, BuildConfig.ACCESS_TOKEN, BuildConfig.ACCESS_TOKEN_SECRET);
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {

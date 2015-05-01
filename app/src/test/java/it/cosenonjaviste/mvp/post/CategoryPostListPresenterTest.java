@@ -4,19 +4,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.lib.mvp.LifeCycle;
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
-import it.cosenonjaviste.mvp.TestSchedulerManager;
-import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
+import it.cosenonjaviste.post.PostListView;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
@@ -25,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryPostListPresenterTest {
 
-    @Mock PostListFragment view;
+    @Mock PostListView view;
 
     private TestLifeCycle testLifeCycle = new TestLifeCycle();
 

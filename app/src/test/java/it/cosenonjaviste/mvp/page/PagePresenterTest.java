@@ -10,14 +10,11 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.lib.mvp.LifeCycle;
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.mvp.TestLifeCycle;
-import it.cosenonjaviste.mvp.TestSchedulerManager;
-import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.page.PagePresenter;
 import it.cosenonjaviste.page.PageUrlManager;
+import it.cosenonjaviste.page.PageView;
 import it.cosenonjaviste.post.PostListModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class PagePresenterTest {
 
-    @Mock PageFragment view;
+    @Mock PageView view;
 
     private TestLifeCycle testLifeCycle = new TestLifeCycle();
 

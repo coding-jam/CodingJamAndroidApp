@@ -8,9 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
+import it.cosenonjaviste.author.AuthorListView;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.post.PostListModel;
@@ -18,14 +18,13 @@ import rx.Observable;
 
 import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorListPresenterTest {
 
-    @Mock AuthorListFragment view;
+    @Mock AuthorListView view;
 
     @InjectMocks AuthorListPresenter presenter;
 
@@ -71,7 +70,7 @@ public class AuthorListPresenterTest {
 
         presenter.goToAuthorDetail(1);
 
-        verify(view).open(any(), modelCaptor.capture());
+        verify(view).openPostList(modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));

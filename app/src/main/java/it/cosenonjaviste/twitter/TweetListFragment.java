@@ -19,7 +19,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import rx.functions.Actions;
 
-public class TweetListFragment extends RxMvpFragment {
+public class TweetListFragment extends RxMvpFragment implements TweetListView {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -48,7 +48,7 @@ public class TweetListFragment extends RxMvpFragment {
         presenter.reloadData();
     }
 
-    public void update(TweetListModel model) {
+    @Override public void update(TweetListModel model) {
         model.call(
                 items -> {
                     list.showList();
@@ -62,7 +62,7 @@ public class TweetListFragment extends RxMvpFragment {
         );
     }
 
-    public void startLoading(boolean showMainLoading) {
+    @Override public void startLoading(boolean showMainLoading) {
         if (showMainLoading) {
             list.showProgress();
         } else {
@@ -70,7 +70,7 @@ public class TweetListFragment extends RxMvpFragment {
         }
     }
 
-    public void startMoreItemsLoading() {
+    @Override public void startMoreItemsLoading() {
         list.showMoreProgress();
     }
 }
