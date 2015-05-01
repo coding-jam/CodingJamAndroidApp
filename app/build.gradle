@@ -80,13 +80,13 @@ android {
 }
 
 dependencies {
+    compile project(':core')
     compile project(':androidMvp')
     compile project(':SuperListviewLibrary')
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'com.android.support:cardview-v7:21.0.3'
-    compile 'io.reactivex:rxandroid-framework:0.24.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
     apt 'com.google.dagger:dagger-compiler:2.0'
