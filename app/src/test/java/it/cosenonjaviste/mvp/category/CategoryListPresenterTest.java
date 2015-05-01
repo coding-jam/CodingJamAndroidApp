@@ -16,6 +16,7 @@ import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
@@ -31,7 +32,7 @@ public class CategoryListPresenterTest {
 
     @Mock WordPressService wordPressService;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @InjectMocks CategoryListPresenter presenter;
 
@@ -45,8 +46,8 @@ public class CategoryListPresenterTest {
                 .thenReturn(categoryResponse(3));
 
         CategoryListModel model = new CategoryListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
+
         assertThat(model.size()).isEqualTo(3);
         Category category = model.get(2);
         assertThat(category.getId()).isEqualTo(2);
@@ -60,8 +61,7 @@ public class CategoryListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         CategoryListModel model = new CategoryListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
 
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
@@ -77,8 +77,8 @@ public class CategoryListPresenterTest {
                 .thenReturn(categoryResponse(3));
 
         CategoryListModel categoryListModel = new CategoryListModel();
-        presenter.init(categoryListModel, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(categoryListModel, presenter, view);
+
         presenter.goToPosts(1);
 
         verify(view).open(any(), modelCaptor.capture());

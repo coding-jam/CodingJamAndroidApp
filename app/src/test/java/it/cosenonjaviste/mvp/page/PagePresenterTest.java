@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
@@ -26,7 +27,7 @@ public class PagePresenterTest {
 
     @Mock PageFragment view;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @Spy PageUrlManager pageUrlManager = new PageUrlManager();
 
@@ -36,8 +37,7 @@ public class PagePresenterTest {
 
     @Before
     public void setup() {
-        presenter.init(new PageModel("url"), view);
-        presenter.resume();
+        testLifeCycle.initAndResume(new PageModel("url"), presenter, view);
     }
 
     @Test

@@ -22,7 +22,7 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
-public class PageFragment extends RxMvpFragment<PageModel> {
+public class PageFragment extends RxMvpFragment {
 
     @InjectView(R.id.web_view) WebView webView;
 
@@ -30,14 +30,12 @@ public class PageFragment extends RxMvpFragment<PageModel> {
 
     @Inject PagePresenter presenter;
 
-    @Override public Object init(Bundle state) {
+    @Override public void init(Bundle state) {
         createComponent(
                 () -> DaggerPageComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
 
-        PageModel model = getRestoredModel(state, getArguments());
-        presenter.init(model, this);
-        return model;
+        presenter.init(this);
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

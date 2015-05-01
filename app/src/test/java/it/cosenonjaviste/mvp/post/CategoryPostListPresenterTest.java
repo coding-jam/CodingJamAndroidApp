@@ -12,6 +12,7 @@ import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
@@ -26,7 +27,7 @@ public class CategoryPostListPresenterTest {
 
     @Mock PostListFragment view;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @Mock WordPressService wordPressService;
 
@@ -37,8 +38,7 @@ public class CategoryPostListPresenterTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
                 .thenReturn(TestData.postResponse(1));
         PostListModel model = new PostListModel(new Category(1, "cat", 10));
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         assertThat(model.getItems().size()).isEqualTo(1);
     }
 
@@ -50,8 +50,7 @@ public class CategoryPostListPresenterTest {
                 .thenReturn(TestData.postResponse(5));
 
         PostListModel model = new PostListModel(new Category(1, "cat", 10));
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         presenter.loadNextPage();
         assertThat(model.getItems().size()).isEqualTo(15);
     }

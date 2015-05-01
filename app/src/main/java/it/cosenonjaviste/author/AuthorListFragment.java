@@ -20,7 +20,7 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
+public class AuthorListFragment extends RxMvpFragment {
 
     @InjectView(R.id.grid) SuperGridview grid;
 
@@ -28,13 +28,11 @@ public class AuthorListFragment extends RxMvpFragment<AuthorListModel> {
 
     private AuthorAdapter adapter;
 
-    @Override public Object init(Bundle state) {
+    @Override public void init(Bundle state) {
         createComponent(() -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build())
                 .inject(this);
 
-        AuthorListModel model = getRestoredModel(state, getArguments());
-        presenter.init(model, this);
-        return model;
+        presenter.init(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

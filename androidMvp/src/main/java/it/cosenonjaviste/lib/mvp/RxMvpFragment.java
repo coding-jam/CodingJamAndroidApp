@@ -10,37 +10,30 @@ import javax.inject.Inject;
 import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
 import rx.functions.Func0;
 
-public abstract class RxMvpFragment<M> extends Fragment {
-
-    public static final String MODEL = "model";
+public abstract class RxMvpFragment extends Fragment {
 
     @Inject LifeCycle lifeCycle;
 
-    private Object model;
-
     @Override public final void onCreate(Bundle state) {
         super.onCreate(state);
-        model = init(state);
+        init(state);
+        lifeCycle.loadState(key -> {
+            Object restoredModel = null;
+            if (state != null) {
+                restoredModel = Parcels.unwrap(state.getParcelable(key));
+            }
+            if (restoredModel == null && getArguments() != null) {
+                restoredModel = Parcels.unwrap(getArguments().getParcelable(key));
+            }
+            return restoredModel;
+        });
     }
 
-    protected abstract Object init(Bundle state);
-
-    protected static <M> M getRestoredModel(Bundle state, Bundle arguments) {
-        M restoredModel = null;
-        if (state != null) {
-            restoredModel = Parcels.unwrap(state.getParcelable(MODEL));
-        }
-        if (restoredModel == null && arguments != null) {
-            restoredModel = Parcels.unwrap(arguments.getParcelable(MODEL));
-        }
-        return restoredModel;
-    }
+    protected abstract void init(Bundle state);
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (model != null) {
-            outState.putParcelable(MODEL, Parcels.wrap(model));
-        }
+        lifeCycle.saveState((key, obj) -> outState.putParcelable(key, Parcels.wrap(obj)));
     }
 
     @Override public void onResume() {

@@ -11,6 +11,7 @@ import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.TwitterService;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
@@ -26,7 +27,7 @@ public class TweetListPresenterTest {
 
     @Mock TweetListFragment view;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @Mock TwitterService twitterService;
 
@@ -37,8 +38,7 @@ public class TweetListPresenterTest {
                 .thenReturn(TestData.tweets());
 
         TweetListModel model = new TweetListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         assertThat(model.size()).isEqualTo(10);
     }
 
@@ -47,8 +47,7 @@ public class TweetListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         TweetListModel model = new TweetListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
 
         assertThat(model.isError()).isTrue();
 
@@ -66,8 +65,7 @@ public class TweetListPresenterTest {
                 .thenReturn(TestData.tweets());
 
         TweetListModel tweetListModel = new TweetListModel();
-        presenter.init(tweetListModel, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(tweetListModel, presenter, view);
 
         presenter.loadNextPage();
 

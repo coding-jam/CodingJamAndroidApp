@@ -11,6 +11,7 @@ import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
@@ -28,7 +29,7 @@ public class AuthorPostListPresenterTest {
 
     @Mock PostListFragment view;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @Mock WordPressService wordPressService;
 
@@ -41,8 +42,7 @@ public class AuthorPostListPresenterTest {
 
         PostListModel model = new PostListModel(TestData.createAuthor(145));
 
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

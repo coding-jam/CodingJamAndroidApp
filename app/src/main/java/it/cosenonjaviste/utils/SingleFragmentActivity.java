@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 public class SingleFragmentActivity extends ActionBarActivity {
 
@@ -37,7 +37,7 @@ public class SingleFragmentActivity extends ActionBarActivity {
 
     public static <MM> void open(FragmentActivity activity, Class<?> viewClass, MM model) {
         Intent intent = createIntent(activity, viewClass);
-        intent.putExtra(RxMvpFragment.MODEL, Parcels.wrap(model));
+        intent.putExtra(RxMvpPresenter.MODEL, Parcels.wrap(model));
         activity.startActivity(intent);
     }
 

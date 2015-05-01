@@ -6,13 +6,15 @@ import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.functions.Func0;
+import rx.functions.Action2;
+import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
 @PresenterScope
 public class LifeCycle {
 
-    private Func0<Object> saveObjectFunc;
+    private Action1<Action2<String, Object>> saveObjectFunc;
+    private Action1<Func1<String, Object>> loadAction;
 
     public enum EventType {
         RESUME, PAUSE, DESTROY_VIEW, DESTROY_ALL;
@@ -35,16 +37,18 @@ public class LifeCycle {
         return subject.asObservable().filter(t -> t == eventType).subscribe(t -> callback.call());
     }
 
-    public void subscribeOnSaveInstanceState(Func0<Object> saveObjectFunc) {
+    public void subscribeState(Action1<Action2<String, Object>> saveObjectFunc, Action1<Func1<String, Object>> loadAction) {
         this.saveObjectFunc = saveObjectFunc;
+        this.loadAction = loadAction;
     }
 
-    public void saveInstanceState(Action1<Object> saver) {
+    public void saveState(Action2<String, Object> saver) {
         if (saveObjectFunc != null) {
-            Object obj = saveObjectFunc.call();
-            if (obj != null) {
-                saver.call(obj);
-            }
+            saveObjectFunc.call(saver);
         }
+    }
+
+    public void loadState(Func1<String, Object> loader) {
+        loadAction.call(loader);
     }
 }

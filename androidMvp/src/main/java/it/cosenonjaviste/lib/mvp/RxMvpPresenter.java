@@ -4,13 +4,16 @@ package it.cosenonjaviste.lib.mvp;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
 public abstract class RxMvpPresenter<M, V> {
 
-    @Inject RxHolder rxHolder;
+    public static final String MODEL = "model";
+
+    private RxHolder rxHolder;
 
     private M model;
 
@@ -20,14 +23,16 @@ public abstract class RxMvpPresenter<M, V> {
         rxHolder.resubscribePendingObservable();
     }
 
-    public final void init(M model, V view) {
-        this.model = model;
+    public final void init(V view) {
         this.view = view;
     }
 
-    @Inject public final void initLifeCycle(LifeCycle lifeCycle) {
+    @Inject public final void initLifeCycle(LifeCycle lifeCycle, SchedulerManager schedulerManager) {
         lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
+        lifeCycle.subscribeState(saver -> saver.call(MODEL, getModel()), loader -> model = (M) loader.call(MODEL));
+
+        rxHolder = new RxHolder(schedulerManager, lifeCycle);
     }
 
     public final V getView() {

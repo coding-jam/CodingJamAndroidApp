@@ -19,7 +19,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import rx.functions.Actions;
 
-public class TweetListFragment extends RxMvpFragment<TweetListModel> {
+public class TweetListFragment extends RxMvpFragment {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -27,13 +27,11 @@ public class TweetListFragment extends RxMvpFragment<TweetListModel> {
 
     @Inject TweetListPresenter presenter;
 
-    @Override public Object init(Bundle state) {
+    @Override public void init(Bundle state) {
         createComponent(
                 () -> DaggerTweetListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
-        TweetListModel model = getRestoredModel(state, getArguments());
-        presenter.init(model, this);
-        return model;
+        presenter.init(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

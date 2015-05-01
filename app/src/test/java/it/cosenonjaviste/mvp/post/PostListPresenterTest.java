@@ -14,6 +14,7 @@ import it.cosenonjaviste.lib.mvp.utils.OptionalList;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mvp.TestLifeCycle;
 import it.cosenonjaviste.mvp.TestSchedulerManager;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
@@ -33,7 +34,7 @@ public class PostListPresenterTest {
 
     @Mock PostListFragment view;
 
-    @Spy RxHolder rxHolder = new RxHolder(new TestSchedulerManager(), new LifeCycle());
+    private TestLifeCycle testLifeCycle = new TestLifeCycle();
 
     @Mock WordPressService wordPressService;
 
@@ -47,8 +48,7 @@ public class PostListPresenterTest {
                 .thenReturn(postResponse(1));
 
         PostListModel model = new PostListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -61,8 +61,7 @@ public class PostListPresenterTest {
                 .thenReturn(postResponse(6));
 
         PostListModel model = new PostListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         presenter.loadNextPage();
 
         OptionalList<Post> items = model.getItems();
@@ -75,8 +74,7 @@ public class PostListPresenterTest {
                 .thenReturn(Observable.error(new RuntimeException()));
 
         PostListModel model = new PostListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         assertThat(model.getItems().isError()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
@@ -94,8 +92,7 @@ public class PostListPresenterTest {
                 .thenReturn(postResponse(1));
 
         PostListModel model = new PostListModel();
-        presenter.init(model, view);
-        presenter.resume();
+        testLifeCycle.initAndResume(model, presenter, view);
         Post firstPost = model.getItems().get(0);
 
         presenter.goToDetail(firstPost);

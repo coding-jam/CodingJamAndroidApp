@@ -20,7 +20,7 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 import rx.functions.Actions;
 
-public class PostListFragment extends RxMvpFragment<PostListModel> {
+public class PostListFragment extends RxMvpFragment {
 
     @InjectView(R.id.list) SuperListview list;
 
@@ -28,14 +28,12 @@ public class PostListFragment extends RxMvpFragment<PostListModel> {
 
     private PostAdapter adapter;
 
-    @Override public Object init(Bundle state) {
+    @Override public void init(Bundle state) {
         createComponent(
                 () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);
 
-        PostListModel model = getRestoredModel(state, getArguments());
-        presenter.init(model, this);
-        return model;
+        presenter.init(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
