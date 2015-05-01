@@ -31,8 +31,6 @@ public class AuthorListFragment extends RxMvpFragment {
     @Override public void init(Bundle state) {
         createComponent(() -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build())
                 .inject(this);
-
-        presenter.init(this);
     }
 
     @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

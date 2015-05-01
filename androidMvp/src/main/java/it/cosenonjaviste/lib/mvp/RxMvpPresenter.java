@@ -23,12 +23,13 @@ public abstract class RxMvpPresenter<M, V> {
         rxHolder.resubscribePendingObservable();
     }
 
-    public final void init(V view) {
-        this.view = view;
-    }
-
     @Inject public final void initLifeCycle(LifeCycle lifeCycle, SchedulerManager schedulerManager) {
-        lifeCycle.subscribe(LifeCycle.EventType.RESUME, this::resume);
+        lifeCycle.asObservable()
+                .filter(e -> e.getType() == LifeCycle.EventType.RESUME)
+                .subscribe(e -> {
+                    view = (V) e.getSource();
+                    resume();
+                });
         lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
         lifeCycle.subscribeState(saver -> saver.call(MODEL, getModel()), loader -> model = (M) loader.call(MODEL));
 

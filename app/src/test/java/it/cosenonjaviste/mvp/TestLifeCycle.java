@@ -10,7 +10,6 @@ public class TestLifeCycle extends LifeCycle {
     public <M, V> void initAndResume(M model, RxMvpPresenter<M, V> presenter, V view) {
         presenter.initLifeCycle(this, schedulerManager);
         loadState(key -> model);
-        presenter.init(view);
-        presenter.resume();
+        emit(view, EventType.RESUME);
     }
 }

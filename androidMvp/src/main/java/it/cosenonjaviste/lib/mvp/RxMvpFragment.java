@@ -38,12 +38,12 @@ public abstract class RxMvpFragment extends Fragment {
 
     @Override public void onResume() {
         super.onResume();
-        lifeCycle.emit(LifeCycle.EventType.RESUME);
+        lifeCycle.emit(this, LifeCycle.EventType.RESUME);
     }
 
     @Override public void onPause() {
         super.onPause();
-        lifeCycle.emit(LifeCycle.EventType.PAUSE);
+        lifeCycle.emit(this, LifeCycle.EventType.PAUSE);
     }
 
     protected <T> T createComponent(Func0<T> componentFactory) {
