@@ -1,6 +1,12 @@
 apply plugin: 'java'
 
+apply plugin: "jacoco"
+
 apply plugin: 'me.tatarka.retrolambda'
+
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+}
 
 dependencies {
     compile project(':coremvp')
