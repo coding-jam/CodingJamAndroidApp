@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest.base;
+package it.cosenonjaviste.androidtest.dagger;
 
 import org.mockito.Mockito;
 
@@ -6,6 +6,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.androidtest.base.EspressoSchedulerManager;
+import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;

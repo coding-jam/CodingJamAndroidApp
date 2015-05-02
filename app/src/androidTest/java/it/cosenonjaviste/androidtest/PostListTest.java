@@ -1,19 +1,14 @@
 package it.cosenonjaviste.androidtest;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.base.TestComponent;
+import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
@@ -37,13 +32,8 @@ public class PostListTest {
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(PostListFragment.class);
 
-    @Before
-    public void setUp() {
-        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        TestComponent component = DaggerTestComponent.builder().build();
-        ((CoseNonJavisteApp) app).setComponent(component);
-
-        component.inject(this);
+    @Before public void setUp() {
+        DaggerUtils.createTestComponent().inject(this);
 
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(TestData.postResponse(0, 10));

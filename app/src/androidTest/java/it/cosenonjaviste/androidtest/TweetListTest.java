@@ -1,7 +1,5 @@
 package it.cosenonjaviste.androidtest;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
@@ -11,11 +9,9 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.base.TestComponent;
+import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
@@ -34,19 +30,14 @@ public class TweetListTest {
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(TweetListFragment.class);
 
-    @Before
-    public void setUp() {
-        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        TestComponent component = DaggerTestComponent.builder().build();
-        ((CoseNonJavisteApp) app).setComponent(component);
-
-        component.inject(this);
-
-        when(twitterService.loadTweets(eq(1)))
-                .thenReturn(TestData.tweets());
+    @Before public void setUp() {
+        DaggerUtils.createTestComponent().inject(this);
     }
 
     @Test public void testPostList() {
+        when(twitterService.loadTweets(eq(1)))
+                .thenReturn(TestData.tweets());
+
         fragmentRule.launchFragment(new TweetListModel());
 
         onView(withText("tweet text 1")).check(matches(isDisplayed()));

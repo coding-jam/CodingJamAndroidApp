@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest.base;
+package it.cosenonjaviste.androidtest.dagger;
 
 import javax.inject.Singleton;
 

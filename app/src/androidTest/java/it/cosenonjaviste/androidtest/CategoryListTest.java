@@ -1,19 +1,14 @@
 package it.cosenonjaviste.androidtest;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.base.TestComponent;
+import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.model.WordPressService;
@@ -30,13 +25,8 @@ public class CategoryListTest {
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(CategoryListFragment.class);
 
-    @Before
-    public void setUp() {
-        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        TestComponent component = DaggerTestComponent.builder().build();
-        ((CoseNonJavisteApp) app).setComponent(component);
-
-        component.inject(this);
+    @Before public void setUp() {
+        DaggerUtils.createTestComponent().inject(this);
     }
 
     @Test public void testCategoryList() {

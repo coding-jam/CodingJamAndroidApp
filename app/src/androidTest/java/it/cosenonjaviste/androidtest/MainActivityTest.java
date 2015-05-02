@@ -1,7 +1,5 @@
 package it.cosenonjaviste.androidtest;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,13 +10,11 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.MainActivity;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
-import it.cosenonjaviste.androidtest.base.TestComponent;
+import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 
@@ -48,13 +44,8 @@ public class MainActivityTest {
 
     @Rule public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class, false, false);
 
-    @Before
-    public void setUp() throws Exception {
-        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        TestComponent component = DaggerTestComponent.builder().build();
-        ((CoseNonJavisteApp) app).setComponent(component);
-
-        component.inject(this);
+    @Before public void setUp() {
+        DaggerUtils.createTestComponent().inject(this);
 
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(TestData.postResponse(10));
