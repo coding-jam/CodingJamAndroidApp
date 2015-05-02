@@ -8,6 +8,11 @@ jacoco {
     toolVersion = "0.7.2.201409121644"
 }
 
+retrolambda {
+    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
+//    oldJdk '/usr/lib/jvm/jdk1.7.0'
+}
+
 dependencies {
     compile project(':coremvp')
     compile 'com.squareup.retrofit:retrofit:1.9.0'
