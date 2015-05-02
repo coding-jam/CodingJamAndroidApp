@@ -8,7 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.lib.mvp.utils.OptionalList;
+import java.util.List;
+
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mvp.TestLifeCycle;
@@ -59,7 +60,7 @@ public class PostListPresenterTest {
         testLifeCycle.initAndResume(model, presenter, view);
         presenter.loadNextPage();
 
-        OptionalList<Post> items = model.getItems();
+        List<Post> items = model.getItems();
         assertThat(items.size()).isEqualTo(16);
     }
 
@@ -70,14 +71,14 @@ public class PostListPresenterTest {
 
         PostListModel model = new PostListModel();
         testLifeCycle.initAndResume(model, presenter, view);
-        assertThat(model.getItems().isError()).isTrue();
+        assertThat(model.isError()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(6));
 
         presenter.reloadData();
 
-        assertThat(model.getItems().isError()).isFalse();
+        assertThat(model.isError()).isFalse();
         assertThat(model.getItems().size()).isEqualTo(6);
     }
 

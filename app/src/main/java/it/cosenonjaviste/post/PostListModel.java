@@ -1,20 +1,20 @@
 package it.cosenonjaviste.post;
 
-import org.parceler.Parcel;
+import java.util.List;
 
-import it.cosenonjaviste.lib.mvp.utils.OptionalList;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 
-@Parcel
 public class PostListModel {
 
-    OptionalList<Post> items = new OptionalList<>();
+    List<Post> items;
 
     Category category;
 
     boolean moreDataAvailable;
+
+    boolean errorLoading;
 
     Author author;
 
@@ -45,7 +45,33 @@ public class PostListModel {
         return author;
     }
 
-    public OptionalList<Post> getItems() {
+    public List<Post> getItems() {
         return items;
+    }
+
+    public void done(List<Post> items) {
+        this.items = items;
+        errorLoading = false;
+    }
+
+    public void error() {
+        items = null;
+        errorLoading = true;
+    }
+
+    public boolean isError() {
+        return errorLoading;
+    }
+
+    public void append(List<Post> object) {
+        items.addAll(object);
+    }
+
+    public int size() {
+        return items.size();
+    }
+
+    public boolean isEmpty() {
+        return items == null || items.isEmpty();
     }
 }

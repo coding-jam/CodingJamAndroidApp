@@ -5,6 +5,8 @@ import it.cosenonjaviste.page.PageModel;
 public interface PostListView {
     void update(PostListModel model);
 
+    void showError();
+
     void startLoading(boolean showMainLoading);
 
     void startMoreItemsLoading();

@@ -14,8 +14,6 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 @PresenterScope
 public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListView> {
@@ -27,8 +25,10 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
 
     @Override public void resume() {
         super.resume();
-        if (getModel().getItems().isEmpty() && !isTaskRunning()) {
+        if (getModel().isEmpty() && !isTaskRunning()) {
             reloadData();
+        } else if (getModel().isError()) {
+            getView().showError();
         } else {
             getView().update(getModel());
         }
@@ -38,14 +38,14 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
         Observable<List<Post>> observable = getObservable(1);
 
         subscribe(observable,
-                () -> getView().startLoading(getModel().getItems().isEmpty()),
+                () -> getView().startLoading(getModel().isEmpty()),
                 posts -> {
-                    getModel().getItems().done(new ArrayList<>(posts));
+                    getModel().done(new ArrayList<>(posts));
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                     getView().update(getModel());
                 }, throwable -> {
-                    getModel().getItems().error(throwable);
-                    getView().update(getModel());
+                    getModel().error();
+                    getView().showError();
                 });
     }
 
@@ -57,17 +57,14 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
         int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page);
 
-        Action0 onAttach = () -> getView().startMoreItemsLoading();
-        Action1<? super List<Post>> onNext = posts -> {
-            getModel().getItems().append(posts);
+        subscribe(observable, () -> getView().startMoreItemsLoading(), posts -> {
+            getModel().append(posts);
             getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
             getView().update(getModel());
-        };
-        Action1<Throwable> onError = throwable -> {
-            getModel().getItems().error(throwable);
-            getView().update(getModel());
-        };
-        subscribe(observable, onAttach, onNext, onError);
+        }, throwable -> {
+            getModel().error();
+            getView().showError();
+        });
     }
 
     private Observable<List<Post>> getObservable(int page) {

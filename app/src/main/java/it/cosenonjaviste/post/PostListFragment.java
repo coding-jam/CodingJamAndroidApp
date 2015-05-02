@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.quentindommerc.superlistview.SuperListview;
 
+import org.parceler.ParcelClass;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -20,8 +22,8 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
-import rx.functions.Actions;
 
+@ParcelClass(PostListModel.class)
 public class PostListFragment extends RxMvpFragment implements PostListView {
 
     @InjectView(R.id.list) SuperListview list;
@@ -53,17 +55,13 @@ public class PostListFragment extends RxMvpFragment implements PostListView {
     }
 
     @Override public void update(PostListModel model) {
-        model.getItems().call(
-                posts -> {
-                    list.showList();
-                    list.hideMoreProgress(model.isMoreDataAvailable());
-                    adapter.reloadData(posts);
-                }
-        ).whenError(
-                t -> list.showError()
-        ).whenEmpty(
-                Actions.empty()
-        );
+        list.showList();
+        list.hideMoreProgress(model.isMoreDataAvailable());
+        adapter.reloadData(model.getItems());
+    }
+
+    @Override public void showError() {
+        list.showError();
     }
 
     @Override public void startLoading(boolean showMainLoading) {
