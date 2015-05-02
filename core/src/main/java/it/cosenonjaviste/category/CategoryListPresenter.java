@@ -24,6 +24,8 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
         super.resume();
         if (getModel().isEmpty() && !isTaskRunning()) {
             loadData();
+        } else if (getModel().isError()) {
+            getView().showError();
         } else {
             getView().update(getModel());
         }
@@ -35,15 +37,13 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
                 .map(CategoryResponse::getCategories);
 
         subscribe(observable,
-                () -> {
-                    getView().startLoading();
-                },
+                () -> getView().startLoading(),
                 posts -> {
                     getModel().done(posts);
                     getView().update(getModel());
                 }, throwable -> {
-                    getModel().error(throwable);
-                    getView().update(getModel());
+                    getModel().error();
+                    getView().showError();
                 });
     }
 

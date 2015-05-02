@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.quentindommerc.superlistview.SuperGridview;
 
+import org.parceler.ParcelClass;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -20,8 +22,8 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
-import rx.functions.Actions;
 
+@ParcelClass(CategoryListModel.class)
 public class CategoryListFragment extends RxMvpFragment implements CategoryListView {
 
     @InjectView(R.id.grid) SuperGridview grid;
@@ -53,16 +55,12 @@ public class CategoryListFragment extends RxMvpFragment implements CategoryListV
 
 
     @Override public void update(CategoryListModel model) {
-        model.call(
-                categories -> {
-                    grid.showList();
-                    adapter.reloadData(categories);
-                }
-        ).whenError(
-                t -> grid.showError()
-        ).whenEmpty(
-                Actions.empty()
-        );
+        grid.showList();
+        adapter.reloadData(model.getItems());
+    }
+
+    @Override public void showError() {
+        grid.showError();
     }
 
     @Override public void startLoading() {

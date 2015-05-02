@@ -28,15 +28,13 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
                 .doOnNext(Collections::sort);
 
         subscribe(observable,
-                () -> {
-                    getView().startLoading();
-                },
+                () -> getView().startLoading(),
                 posts -> {
                     getModel().done(posts);
                     getView().update(getModel());
                 }, throwable -> {
-                    getModel().error(throwable);
-                    getView().update(getModel());
+                    getModel().error();
+                    getView().showError();
                 });
     }
 
@@ -44,6 +42,8 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
         super.resume();
         if (getModel().isEmpty() && !isTaskRunning()) {
             loadAuthors();
+        } else if (getModel().isError()) {
+            getView().showError();
         } else {
             getView().update(getModel());
         }
