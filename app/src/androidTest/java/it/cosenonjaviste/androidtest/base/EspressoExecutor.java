@@ -7,6 +7,8 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static android.support.test.espresso.Espresso.registerIdlingResources;
+
 public class EspressoExecutor extends ThreadPoolExecutor implements IdlingResource {
 
     private int runningTasks;
@@ -22,7 +24,8 @@ public class EspressoExecutor extends ThreadPoolExecutor implements IdlingResour
         if (singleton == null) {
             singleton = new EspressoExecutor(0, Integer.MAX_VALUE,
                     60L, TimeUnit.SECONDS,
-                    new SynchronousQueue<Runnable>());
+                    new SynchronousQueue<>());
+            registerIdlingResources(singleton);
         }
         return singleton;
     }

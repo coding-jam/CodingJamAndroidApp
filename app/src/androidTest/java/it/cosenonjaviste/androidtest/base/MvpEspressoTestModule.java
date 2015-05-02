@@ -19,7 +19,7 @@ public class MvpEspressoTestModule {
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {
-        return new SchedulerManager();
+        return new EspressoSchedulerManager();
     }
 
     @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
