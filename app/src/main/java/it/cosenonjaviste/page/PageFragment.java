@@ -11,6 +11,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import org.parceler.ParcelClass;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -22,6 +24,7 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 
+@ParcelClass(PageModel.class)
 public class PageFragment extends RxMvpFragment implements PageView {
 
     @InjectView(R.id.web_view) WebView webView;
