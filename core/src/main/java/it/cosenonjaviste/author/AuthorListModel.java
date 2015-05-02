@@ -10,7 +10,7 @@ public class AuthorListModel {
     boolean errorLoading;
 
     public boolean isEmpty() {
-        return items.isEmpty();
+        return items == null || items.isEmpty();
     }
 
     public int size() {
