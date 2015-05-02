@@ -1,5 +1,8 @@
 package it.cosenonjaviste.androidtest.base;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -18,14 +21,15 @@ public class DaggerRule implements TestRule {
     @Override public Statement apply(Statement base, Description description) {
         return new Statement() {
             @Override public void evaluate() throws Throwable {
-                TestComponent component = DaggerUtils.getComponent();
+
+                Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+                TestComponent component = DaggerTestComponent.builder().build();
+                ((CoseNonJavisteApp) app).setComponent(component);
                 if (afterInjectAction != null) {
                     afterInjectAction.call(component);
                 }
-                CoseNonJavisteApp.component = component;
 
                 base.evaluate();
-
             }
         };
     }

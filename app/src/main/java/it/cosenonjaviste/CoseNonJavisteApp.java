@@ -19,7 +19,7 @@ import it.cosenonjaviste.model.Tweet;
 })
 public class CoseNonJavisteApp extends Application {
 
-    public static ApplicationComponent component;
+    private ApplicationComponent component;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -34,5 +34,9 @@ public class CoseNonJavisteApp extends Application {
 
     public static ApplicationComponent getComponent(Context context) {
         return ((CoseNonJavisteApp) context.getApplicationContext()).getComponent();
+    }
+
+    public void setComponent(ApplicationComponent component) {
+        this.component = component;
     }
 }

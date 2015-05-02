@@ -1,21 +1,24 @@
 package it.cosenonjaviste.androidtest;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.MainActivity;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.ActivityRule;
-import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
+import it.cosenonjaviste.androidtest.base.TestComponent;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 
@@ -43,9 +46,14 @@ public class MainActivityTest {
 
     @Inject TwitterService twitterService;
 
-    private final ActivityRule<MainActivity> fragmentRule = new ActivityRule<>(MainActivity.class);
+    @Rule public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class, false, false);
 
-    private final DaggerRule daggerRule = new DaggerRule(component -> {
+    @Before
+    public void setUp() throws Exception {
+        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+        TestComponent component = DaggerTestComponent.builder().build();
+        ((CoseNonJavisteApp) app).setComponent(component);
+
         component.inject(this);
 
         when(wordPressService.listPosts(eq(1)))
@@ -61,29 +69,32 @@ public class MainActivityTest {
                 .thenReturn(TestData.tweets());
 
         server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
-    });
-
-    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
+    }
 
     @Test public void showMainActivity() {
+        activityRule.launchActivity(null);
     }
 
     @Test public void showCategories() {
+        activityRule.launchActivity(null);
         clickOnDrawer(1);
         onView(withText("cat 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showAuthors() {
+        activityRule.launchActivity(null);
         clickOnDrawer(2);
         onView(withText("name 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showTweets() {
+        activityRule.launchActivity(null);
         clickOnDrawer(3);
         onView(withText("tweet text 1")).check(matches(isDisplayed()));
     }
 
     @Test public void showContactForm() {
+        activityRule.launchActivity(null);
         clickOnDrawer(4);
     }
 
