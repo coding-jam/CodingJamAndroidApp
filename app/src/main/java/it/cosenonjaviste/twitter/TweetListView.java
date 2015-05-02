@@ -6,4 +6,6 @@ public interface TweetListView {
     void startLoading(boolean showMainLoading);
 
     void startMoreItemsLoading();
+
+    void showError();
 }

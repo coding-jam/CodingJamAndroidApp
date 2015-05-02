@@ -28,8 +28,8 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
                     getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
                     getView().update(getModel());
                 }, throwable -> {
-                    getModel().error(throwable);
-                    getView().update(getModel());
+                    getModel().error();
+                    getView().showError();
                 });
     }
 
@@ -37,6 +37,8 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
         super.resume();
         if (getModel().isEmpty() && !isTaskRunning()) {
             reloadData();
+        } else if (getModel().isError()) {
+            getView().showError();
         } else {
             getView().update(getModel());
         }
@@ -54,8 +56,8 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
                     getView().update(getModel());
                 },
                 throwable -> {
-                    getModel().error(throwable);
-                    getView().update(getModel());
+                    getModel().error();
+                    getView().showError();
                 });
 
     }

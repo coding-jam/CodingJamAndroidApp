@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.quentindommerc.superlistview.SuperListview;
 
+import org.parceler.ParcelClass;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -17,8 +19,8 @@ import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
-import rx.functions.Actions;
 
+@ParcelClass(TweetListModel.class)
 public class TweetListFragment extends RxMvpFragment implements TweetListView {
 
     @InjectView(R.id.list) SuperListview list;
@@ -49,17 +51,13 @@ public class TweetListFragment extends RxMvpFragment implements TweetListView {
     }
 
     @Override public void update(TweetListModel model) {
-        model.call(
-                items -> {
-                    list.showList();
-                    list.hideMoreProgress(model.isMoreDataAvailable());
-                    adapter.reloadData(items);
-                }
-        ).whenError(
-                t -> list.showError()
-        ).whenEmpty(
-                Actions.empty()
-        );
+        list.showList();
+        list.hideMoreProgress(model.isMoreDataAvailable());
+        adapter.reloadData(model.getItems());
+    }
+
+    public void showError() {
+        list.showError();
     }
 
     @Override public void startLoading(boolean showMainLoading) {

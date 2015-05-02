@@ -1,17 +1,13 @@
 package it.cosenonjaviste.twitter;
 
-import org.parceler.Parcel;
-
 import java.util.List;
 
-import it.cosenonjaviste.lib.mvp.utils.OptionalItem;
-import it.cosenonjaviste.lib.mvp.utils.OptionalList;
 import it.cosenonjaviste.model.Tweet;
-import rx.functions.Action1;
 
-@Parcel
 public class TweetListModel {
-    OptionalList<Tweet> list = new OptionalList<>();
+    List<Tweet> list;
+
+    boolean errorLoading;
 
     boolean moreDataAvailable;
 
@@ -23,20 +19,18 @@ public class TweetListModel {
         return moreDataAvailable;
     }
 
-    public OptionalItem<List<Tweet>> call(Action1<List<Tweet>> action) {
-        return list.call(action);
-    }
-
     public boolean isEmpty() {
-        return list.isEmpty();
+        return list == null || list.isEmpty();
     }
 
-    public void done(List<Tweet> object) {
-        list.done(object);
+    public void done(List<Tweet> list) {
+        this.list = list;
+        errorLoading = false;
     }
 
-    public void error(Throwable throwable) {
-        list.error(throwable);
+    public void error() {
+        list = null;
+        errorLoading = true;
     }
 
     public int size() {
@@ -44,10 +38,14 @@ public class TweetListModel {
     }
 
     public boolean isError() {
-        return list.isError();
+        return errorLoading;
     }
 
     public void append(List<Tweet> object) {
-        list.append(object);
+        list.addAll(object);
+    }
+
+    public List<Tweet> getItems() {
+        return list;
     }
 }
