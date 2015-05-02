@@ -1,41 +1,46 @@
 package it.cosenonjaviste.androidtest;
 
-import android.support.test.runner.AndroidJUnit4;
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
-import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
+import it.cosenonjaviste.androidtest.base.TestComponent;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.model.WordPressService;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(AndroidJUnit4.class)
 public class AuthorListTest {
 
     @Inject WordPressService wordPressService;
 
-    private final FragmentRule fragmentRule = FragmentRule.create(AuthorListFragment.class, new AuthorListModel());
+    @Rule public FragmentRule fragmentRule = new FragmentRule(AuthorListFragment.class);
 
-    private final DaggerRule daggerRule = new DaggerRule(component -> {
+    @Before
+    public void setUp() {
+        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+        TestComponent component = DaggerTestComponent.builder().build();
+        ((CoseNonJavisteApp) app).setComponent(component);
+
         component.inject(this);
+
         when(wordPressService.listAuthors())
                 .thenReturn(TestData.authorResponse(2));
-    });
-
-    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
+    }
 
     @Test
     public void testAuthorList() {
-//        showUi();
+
+        fragmentRule.launchFragment(new AuthorListModel());
     }
 }

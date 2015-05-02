@@ -91,8 +91,8 @@ dependencies {
     apt 'org.parceler:parceler:0.2.14'
 
     androidTestApt 'com.google.dagger:dagger-compiler:2.0'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
-    androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.2') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
     androidTestCompile 'com.squareup.spoon:spoon-client:1.0.5'
@@ -104,10 +104,6 @@ dependencies {
     }
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.1'
     androidTestCompile 'com.squareup.okhttp:mockwebserver:2.0.0'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.9.5'
-    testCompile 'org.assertj:assertj-core:1.7.0'
 }
 
 // Define coverage source.

@@ -1,15 +1,19 @@
 package it.cosenonjaviste.androidtest;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.androidtest.base.DaggerRule;
+import it.cosenonjaviste.androidtest.base.DaggerTestComponent;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
+import it.cosenonjaviste.androidtest.base.TestComponent;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
@@ -31,28 +35,38 @@ public class PostListTest {
 
     @Inject WordPressService wordPressService;
 
-    private final FragmentRule fragmentRule = FragmentRule.create(PostListFragment.class, new PostListModel());
+    @Rule public FragmentRule fragmentRule = new FragmentRule(PostListFragment.class);
 
-    private final DaggerRule daggerRule = new DaggerRule(component -> {
+    @Before
+    public void setUp() {
+        Context app = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+        TestComponent component = DaggerTestComponent.builder().build();
+        ((CoseNonJavisteApp) app).setComponent(component);
+
         component.inject(this);
+
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(TestData.postResponse(0, 10));
         when(wordPressService.listPosts(eq(2)))
                 .thenReturn(TestData.postResponse(10, 10));
-    });
-
-    @Rule public TestRule chain = RuleChain.outerRule(daggerRule).around(fragmentRule);
+    }
 
     @Test public void testPostList() throws InterruptedException {
+        fragmentRule.launchFragment(new PostListModel());
+
         onView(withText("post title 1")).check(matches(isDisplayed()));
     }
 
     @Test public void testGoToPostDetail() {
+        fragmentRule.launchFragment(new PostListModel());
+
         onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
                 .atPosition(3).perform(click());
     }
 
     @Test public void testLoadMore() {
+        fragmentRule.launchFragment(new PostListModel());
+
         onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
                 .atPosition(9).check(matches(isDisplayed()));
         onView(withText("post title 10")).check(matches(isDisplayed()));

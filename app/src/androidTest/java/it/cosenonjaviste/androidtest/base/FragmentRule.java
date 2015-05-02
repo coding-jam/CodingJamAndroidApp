@@ -1,31 +1,44 @@
 package it.cosenonjaviste.androidtest.base;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
-public class FragmentRule extends ActivityRule<SingleFragmentActivity> {
+public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
+    private Class<? extends Fragment> fragmentClass;
 
-    private final Class<?> viewClass;
-
-    private Object model;
-
-    public static <M> FragmentRule create(Class<?> viewClass, M model) {
-        return new FragmentRule(viewClass, model);
+    public FragmentRule(Class<? extends Fragment> fragmentClass) {
+        super(SingleFragmentActivity.class, false, false);
+        this.fragmentClass = fragmentClass;
     }
 
-    private FragmentRule(Class<?> viewClass, Object model) {
-        super(SingleFragmentActivity.class);
-        this.viewClass = viewClass;
-        this.model = model;
+    public SingleFragmentActivity launchFragment() {
+        return launchFragment(null);
     }
 
-    @Override protected Intent getLaunchIntent(String targetPackage, Class<SingleFragmentActivity> activityClass) {
-        Intent intent = SingleFragmentActivity.populateIntent(super.getLaunchIntent(targetPackage, activityClass), viewClass);
-        intent.putExtra(RxMvpPresenter.MODEL, Parcels.wrap(model));
-        return intent;
+    public void launchFragment(Object model) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
+        launchFragment(bundle);
+    }
+
+    public SingleFragmentActivity launchFragment(Bundle b) {
+        Intent intent = SingleFragmentActivity.populateIntent(new Intent(), fragmentClass);
+        if (b != null) {
+            intent.putExtras(b);
+        }
+        return launchActivity(intent);
+    }
+
+    public <T extends Context> T getApplication() {
+        return (T) InstrumentationRegistry.getTargetContext().getApplicationContext();
     }
 }
