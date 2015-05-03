@@ -152,7 +152,7 @@ task mergeTestCodeCoverageResults(type: JacocoMerge) {
     description = 'Merge test code coverage results from junit and instrumentation test'
     destinationFile = file("build/outputs/code-coverage/merged-coverage.exec")
     doFirst {delete destinationFile}
-    executionData = files('build/outputs/code-coverage/connected/coverage.ec', '../core/build/jacoco/testDebug.exec')
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec', '../core/build/jacoco/test.exec')
 }
 
 task jacocoTestReport(type: JacocoReport) {
