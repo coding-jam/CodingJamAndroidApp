@@ -9,8 +9,8 @@ jacoco {
 }
 
 retrolambda {
-    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
-//    oldJdk '/usr/lib/jvm/jdk1.7.0'
+//    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
+    oldJdk '/usr/lib/jvm/jdk1.7.0'
 }
 
 dependencies {
