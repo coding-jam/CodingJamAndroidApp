@@ -10,7 +10,7 @@ jacoco {
 
 retrolambda {
 //    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home'
-    oldJdk '/usr/lib/jvm/jdk1.7.0'
+    oldJdk '/usr/lib/jvm/java-7-oracle'
 }
 
 dependencies {
