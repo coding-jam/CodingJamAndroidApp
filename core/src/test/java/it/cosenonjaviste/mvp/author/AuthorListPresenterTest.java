@@ -12,19 +12,16 @@ import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.author.AuthorListPresenter;
 import it.cosenonjaviste.author.AuthorListView;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.TestLifeCycle;
+import it.cosenonjaviste.mvp.ViewMock;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorListPresenterTest {
-
-    @Mock AuthorListView view;
 
     @InjectMocks AuthorListPresenter presenter;
 
@@ -32,7 +29,7 @@ public class AuthorListPresenterTest {
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
-    private TestLifeCycle testLifeCycle = new TestLifeCycle();
+    private ViewMock<AuthorListView> view = new ViewMock<>(AuthorListView.class);
 
     @Test
     public void testLoad() {
@@ -40,7 +37,7 @@ public class AuthorListPresenterTest {
                 .thenReturn(authorResponse(2));
 
         AuthorListModel model = new AuthorListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        view.initAndResume(model, presenter);
 
         assertThat(model.size()).isEqualTo(2);
     }
@@ -53,7 +50,7 @@ public class AuthorListPresenterTest {
                 .thenReturn(authorResponse(2));
 
         AuthorListModel model = new AuthorListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        view.initAndResume(model, presenter);
 
         presenter.loadAuthors();
 
@@ -66,11 +63,11 @@ public class AuthorListPresenterTest {
                 .thenReturn(authorResponse(2));
 
         AuthorListModel authorListModel = new AuthorListModel();
-        testLifeCycle.initAndResume(authorListModel, presenter, view);
+        view.initAndResume(authorListModel, presenter);
 
         presenter.goToAuthorDetail(1);
 
-        verify(view).openPostList(modelCaptor.capture());
+        view.verify().openPostList(modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));
