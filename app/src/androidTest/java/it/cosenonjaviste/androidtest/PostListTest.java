@@ -1,5 +1,7 @@
 package it.cosenonjaviste.androidtest;
 
+import android.support.test.espresso.contrib.RecyclerViewActions;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,20 +11,16 @@ import javax.inject.Inject;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -50,15 +48,19 @@ public class PostListTest {
     @Test public void testGoToPostDetail() {
         fragmentRule.launchFragment(new PostListModel());
 
-        onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
-                .atPosition(3).perform(click());
+        onView(withId(android.R.id.list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
     }
 
     @Test public void testLoadMore() {
         fragmentRule.launchFragment(new PostListModel());
 
-        onData(is(instanceOf(Post.class))).inAdapterView(withId(android.R.id.list))
-                .atPosition(9).check(matches(isDisplayed()));
+        onView(withId(android.R.id.list))
+                .perform(RecyclerViewActions.scrollToPosition(9));
+
+        onView(withId(android.R.id.list))
+                .perform(RecyclerViewActions.scrollToPosition(10));
+
         onView(withText("post title 10")).check(matches(isDisplayed()));
     }
 }

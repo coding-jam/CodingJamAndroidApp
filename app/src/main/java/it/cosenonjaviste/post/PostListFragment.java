@@ -1,36 +1,33 @@
 package it.cosenonjaviste.post;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.quentindommerc.superlistview.SuperListview;
 
 import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.utils.BindableViewHolder;
+import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 @ParcelClass(PostListModel.class)
-public class PostListFragment extends RxMvpFragment implements PostListView {
-
-    @InjectView(R.id.list) SuperListview list;
+public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements PostListView {
 
     @Inject PostListPresenter presenter;
-
-    private PostAdapter adapter;
 
     @Override public void init(Bundle state) {
         createComponent(
@@ -38,42 +35,23 @@ public class PostListFragment extends RxMvpFragment implements PostListView {
         ).inject(this);
     }
 
-    @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.super_list, container, false);
-        ButterKnife.inject(this, view);
-        adapter = new PostAdapter(getActivity());
-        list.setAdapter(adapter);
-        list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setRefreshListener(presenter::reloadData);
-        list.setOnItemClickListener((parent, v, position, id) -> presenter.goToDetail(adapter.getItem(position)));
-        list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
+    @NonNull @Override protected RecyclerView.LayoutManager createGridLayoutManager() {
+        return new LinearLayoutManager(getActivity());
+    }
+
+    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        superRecycler.setRefreshListener(presenter::reloadData);
+        superRecycler.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
         return view;
+    }
+
+    @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
+        return new PostViewHolder(inflater.inflate(R.layout.post_row, v, false), transformation, presenter);
     }
 
     @OnClick(R.id.error_retry) void retry() {
         presenter.reloadData();
-    }
-
-    @Override public void update(PostListModel model) {
-        list.showList();
-        list.hideMoreProgress(model.isMoreDataAvailable());
-        adapter.reloadData(model.getItems());
-    }
-
-    @Override public void showError() {
-        list.showError();
-    }
-
-    @Override public void startLoading(boolean showMainLoading) {
-        if (showMainLoading) {
-            list.showProgress();
-        } else {
-            list.setRefreshing(true);
-        }
-    }
-
-    @Override public void startMoreItemsLoading() {
-        list.showMoreProgress();
     }
 
     @Override public void openDetail(PageModel model) {

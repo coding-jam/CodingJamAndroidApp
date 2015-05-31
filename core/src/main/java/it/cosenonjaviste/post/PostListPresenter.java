@@ -30,7 +30,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
         } else if (getModel().isError()) {
             getView().showError();
         } else {
-            getView().update(getModel());
+            getView().update(getModel().getItems());
         }
     }
 
@@ -42,7 +42,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
                 posts -> {
                     getModel().done(new ArrayList<>(posts));
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    getView().update(getModel());
+                    getView().update(getModel().getItems());
                 }, throwable -> {
                     getModel().error();
                     getView().showError();
@@ -60,7 +60,7 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
         subscribe(observable, () -> getView().startMoreItemsLoading(), posts -> {
             getModel().append(posts);
             getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-            getView().update(getModel());
+            getView().update(getModel().getItems());
         }, throwable -> {
             getModel().error();
             getView().showError();

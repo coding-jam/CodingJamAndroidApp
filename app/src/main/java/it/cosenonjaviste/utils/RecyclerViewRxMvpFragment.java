@@ -22,7 +22,7 @@ import it.cosenonjaviste.lib.mvp.RxMvpListView;
 public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment implements RxMvpListView<T> {
     protected BindableAdapter<T> adapter;
 
-    @InjectView(R.id.recycler) SuperRecyclerView superRecycler;
+    @InjectView(R.id.recycler) protected SuperRecyclerView superRecycler;
 
     @InjectView(R.id.error_root) View errorLayout;
 
@@ -33,11 +33,24 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
     }
 
     public void startLoading() {
-        superRecycler.showProgress();
+        startLoading(true);
+    }
+
+    @Override public void startLoading(boolean showMainLoading) {
         errorLayout.setVisibility(View.GONE);
+        if (showMainLoading) {
+            superRecycler.showProgress();
+        } else {
+            superRecycler.getSwipeToRefresh().setRefreshing(true);
+        }
+    }
+
+    @Override public void startMoreItemsLoading() {
+        superRecycler.showMoreProgress();
     }
 
     public void update(List<T> items) {
+        superRecycler.hideMoreProgress();
         superRecycler.showRecycler();
         adapter.reloadData(items);
     }
@@ -50,6 +63,9 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
         adapter = new BindableAdapter<>(v -> createViewHolder(inflater, transformation, v));
         superRecycler.setAdapter(adapter);
         superRecycler.setLayoutManager(createGridLayoutManager());
+
+        superRecycler.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+
         return view;
     }
 

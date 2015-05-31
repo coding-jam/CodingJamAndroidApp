@@ -1,34 +1,27 @@
 package it.cosenonjaviste.category;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
-import com.quentindommerc.superlistview.SuperGridview;
 
 import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
+import it.cosenonjaviste.utils.BindableViewHolder;
+import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 @ParcelClass(CategoryListModel.class)
-public class CategoryListFragment extends RxMvpFragment implements CategoryListView {
-
-    @InjectView(R.id.grid) SuperGridview grid;
-
-    private CategoryAdapter adapter;
+public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> implements CategoryListView {
 
     @Inject CategoryListPresenter presenter;
 
@@ -38,33 +31,12 @@ public class CategoryListFragment extends RxMvpFragment implements CategoryListV
         ).inject(this);
     }
 
-    @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.super_grid, container, false);
-        ButterKnife.inject(this, view);
-        adapter = new CategoryAdapter(getActivity());
-        grid.setAdapter(adapter);
-        grid.getList().setNumColumns(2);
-        grid.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        grid.setOnItemClickListener((parent, v, position, id) -> presenter.goToPosts(position));
-        return view;
+    @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
+        return new CategoryViewHolder(inflater.inflate(R.layout.category_row, v, false), presenter);
     }
 
     @OnClick(R.id.error_retry) void retry() {
         presenter.loadData();
-    }
-
-
-    @Override public void update(CategoryListModel model) {
-        grid.showList();
-        adapter.reloadData(model.getItems());
-    }
-
-    @Override public void showError() {
-        grid.showError();
-    }
-
-    @Override public void startLoading() {
-        grid.showProgress();
     }
 
     @Override public void openPostList(PostListModel model) {

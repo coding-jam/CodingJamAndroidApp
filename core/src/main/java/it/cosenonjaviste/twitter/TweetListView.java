@@ -1,11 +1,7 @@
 package it.cosenonjaviste.twitter;
 
-public interface TweetListView {
-    void update(TweetListModel model);
+import it.cosenonjaviste.lib.mvp.RxMvpListView;
+import it.cosenonjaviste.model.Tweet;
 
-    void startLoading(boolean showMainLoading);
-
-    void startMoreItemsLoading();
-
-    void showError();
+public interface TweetListView extends RxMvpListView<Tweet> {
 }

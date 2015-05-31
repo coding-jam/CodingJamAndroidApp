@@ -1,1 +1,1 @@
-include ':androidMvp', ':SuperListviewLibrary', ':app', ':core', ':coremvp'
+include ':androidMvp', ':app', ':core', ':coremvp'

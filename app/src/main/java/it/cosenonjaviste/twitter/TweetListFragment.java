@@ -1,31 +1,28 @@
 package it.cosenonjaviste.twitter;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.quentindommerc.superlistview.SuperListview;
 
 import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.model.Tweet;
+import it.cosenonjaviste.utils.BindableViewHolder;
+import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 
 @ParcelClass(TweetListModel.class)
-public class TweetListFragment extends RxMvpFragment implements TweetListView {
-
-    @InjectView(R.id.list) SuperListview list;
-
-    private TweetAdapter adapter;
+public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implements TweetListView {
 
     @Inject TweetListPresenter presenter;
 
@@ -35,40 +32,22 @@ public class TweetListFragment extends RxMvpFragment implements TweetListView {
         ).inject(this);
     }
 
-    @SuppressLint("ResourceAsColor") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.super_list, container, false);
-        ButterKnife.inject(this, view);
-        adapter = new TweetAdapter(getActivity());
-        list.setAdapter(adapter);
-        list.setRefreshingColor(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        list.setRefreshListener(presenter::reloadData);
-        list.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
+    @NonNull @Override protected RecyclerView.LayoutManager createGridLayoutManager() {
+        return new LinearLayoutManager(getActivity());
+    }
+
+    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        superRecycler.setRefreshListener(presenter::reloadData);
+        superRecycler.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
         return view;
+    }
+
+    @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
+        return new TweetViewHolder(inflater.inflate(R.layout.tweet_row, v, false), transformation);
     }
 
     @OnClick(R.id.error_retry) void retry() {
         presenter.reloadData();
-    }
-
-    @Override public void update(TweetListModel model) {
-        list.showList();
-        list.hideMoreProgress(model.isMoreDataAvailable());
-        adapter.reloadData(model.getItems());
-    }
-
-    public void showError() {
-        list.showError();
-    }
-
-    @Override public void startLoading(boolean showMainLoading) {
-        if (showMainLoading) {
-            list.showProgress();
-        } else {
-            list.setRefreshing(true);
-        }
-    }
-
-    @Override public void startMoreItemsLoading() {
-        list.showMoreProgress();
     }
 }

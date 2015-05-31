@@ -1,15 +1,9 @@
 package it.cosenonjaviste.post;
 
+import it.cosenonjaviste.lib.mvp.RxMvpListView;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageModel;
 
-public interface PostListView {
-    void update(PostListModel model);
-
-    void showError();
-
-    void startLoading(boolean showMainLoading);
-
-    void startMoreItemsLoading();
-
+public interface PostListView extends RxMvpListView<Post> {
     void openDetail(PageModel model);
 }
