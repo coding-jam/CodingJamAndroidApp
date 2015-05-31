@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/author_cell"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="16dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/author_image"
@@ -19,36 +22,36 @@
 
         <TextView
             android:id="@+id/first_name"
-            tools:text="Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:text="Name"/>
 
         <TextView
             android:id="@+id/last_name"
-            tools:text="Last name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:text="Last name"/>
 
         <TextView
             android:id="@+id/title"
-            android:visibility="gone"
-            tools:text="Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingBottom="3dip"
             android:paddingLeft="6dip"
             android:paddingRight="6dip"
             android:paddingTop="3dip"
-            android:paddingBottom="3dip"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:text="Title"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
