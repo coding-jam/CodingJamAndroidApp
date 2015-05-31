@@ -31,7 +31,7 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
                 () -> getView().startLoading(),
                 posts -> {
                     getModel().done(posts);
-                    getView().update(getModel());
+                    getView().update(getModel().getItems());
                 }, throwable -> {
                     getModel().error();
                     getView().showError();
@@ -45,7 +45,7 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
         } else if (getModel().isError()) {
             getView().showError();
         } else {
-            getView().update(getModel());
+            getView().update(getModel().getItems());
         }
     }
 
