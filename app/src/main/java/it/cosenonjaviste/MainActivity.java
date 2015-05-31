@@ -1,18 +1,20 @@
 package it.cosenonjaviste;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify.IconValue;
 
 import org.parceler.Parcels;
 
@@ -31,10 +33,8 @@ import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 
 public class MainActivity extends AppCompatActivity {
-    @InjectView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @InjectView(R.id.left_drawer_menu) View mDrawerMenu;
-    @InjectView(R.id.left_drawer) ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
+    @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @InjectView(R.id.left_drawer_menu) NavigationView drawerMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,55 +46,67 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
-        String[] menuItems = getResources().getStringArray(R.array.menu_items);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
 
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, menuItems));
-        mDrawerList.setOnItemClickListener((parent, view, position, id) -> selectItem(position));
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawerMenu.setNavigationItemSelectedListener(menuItem -> {
+            selectItem(menuItem.getItemId());
+            menuItem.setChecked(true);
+            return true;
+        });
+        Menu drawerMenu = this.drawerMenu.getMenu();
+        drawerMenu.findItem(R.id.drawer_post).setIcon(new IconDrawable(this, IconValue.fa_home).actionBarSize());
+        drawerMenu.findItem(R.id.drawer_authors).setIcon(new IconDrawable(this, IconValue.fa_user).actionBarSize());
+        drawerMenu.findItem(R.id.drawer_categories).setIcon(new IconDrawable(this, IconValue.fa_tags).actionBarSize());
+        drawerMenu.findItem(R.id.drawer_twitter).setIcon(new IconDrawable(this, IconValue.fa_twitter).actionBarSize());
+        drawerMenu.findItem(R.id.drawer_contacts).setIcon(new IconDrawable(this, IconValue.fa_envelope).actionBarSize());
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(R.id.drawer_post);
+            drawerMenu.findItem(R.id.drawer_post).setChecked(true);
         }
     }
 
-    private void selectItem(int position) {
-        String tag = "fragment_" + position;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void selectItem(int menuItemId) {
+        String tag = "fragment_" + menuItemId;
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         if (fragment == null) {
-            fragment = createFragment(position);
+            fragment = createFragment(menuItemId);
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
 
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerMenu);
+        drawerLayout.closeDrawer(drawerMenu);
     }
 
-    private Fragment createFragment(int position) {
-        //TODO activity title
-        switch (position) {
-            case 1:
+    private Fragment createFragment(int menuItemId) {
+        switch (menuItemId) {
+            case R.id.drawer_categories:
                 return createView(this, CategoryListFragment.class, new CategoryListModel());
-            case 2:
+            case R.id.drawer_authors:
                 return createView(this, AuthorListFragment.class, new AuthorListModel());
-            case 3:
+            case R.id.drawer_twitter:
                 return createView(this, TweetListFragment.class, new TweetListModel());
-            case 4:
+            case R.id.drawer_contacts:
                 return createView(this, PageFragment.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
             default:
                 return createView(this, PostListFragment.class, new PostListModel());
@@ -107,17 +119,5 @@ public class MainActivity extends AppCompatActivity {
         bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
         fragment.setArguments(bundle);
         return (T) fragment;
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

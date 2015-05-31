@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_post"
+            android:title="@string/post"/>
+
+        <item
+            android:id="@+id/drawer_categories"
+            android:title="@string/categories"/>
+
+        <item
+            android:id="@+id/drawer_authors"
+            android:title="@string/authors"/>
+
+        <item
+            android:id="@+id/drawer_twitter"
+            android:title="@string/twitter"/>
+
+        <item
+            android:id="@+id/drawer_contacts"
+            android:title="@string/contacts"/>
+    </group>
+</menu>
