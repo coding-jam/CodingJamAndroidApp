@@ -8,7 +8,7 @@ public interface WordPressService {
 
     int POST_PAGE_SIZE = 10;
 
-    String POSTS_EXTRA = "&exclude=content,title_plain,tags,custom_fields&author_meta=email";
+    String POSTS_EXTRA = "&exclude=content,title_plain,tags,custom_fields,categories,comments&author_meta=email";
     String CATEGORY_POSTS_URL = "/?json=get_category_posts";
     String AUTHOR_POSTS_URL = "/?json=get_author_posts";
 
