@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import org.parceler.Parcels;
@@ -14,7 +13,7 @@ import org.parceler.Parcels;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
-public class SingleFragmentActivity extends ActionBarActivity {
+public class SingleFragmentActivity extends AppCompatActivity {
 
     private static final String VIEW_CLASS = "viewClass";
 
@@ -45,10 +44,6 @@ public class SingleFragmentActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.single_fragment);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             String viewClassName = getIntent().getStringExtra(VIEW_CLASS);
