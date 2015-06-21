@@ -16,7 +16,7 @@ public abstract class RxMvpFragment extends Fragment {
 
     @Override public final void onCreate(Bundle state) {
         super.onCreate(state);
-        init(state);
+        init();
         lifeCycle.loadState(key -> {
             Object restoredModel = null;
             if (state != null) {
@@ -29,7 +29,7 @@ public abstract class RxMvpFragment extends Fragment {
         });
     }
 
-    protected abstract void init(Bundle state);
+    protected abstract void init();
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

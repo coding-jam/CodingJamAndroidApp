@@ -11,6 +11,7 @@ import it.cosenonjaviste.androidtest.MainActivityTest;
 import it.cosenonjaviste.androidtest.PageTest;
 import it.cosenonjaviste.androidtest.PostListTest;
 import it.cosenonjaviste.androidtest.TweetListTest;
+import it.cosenonjaviste.contact.ContactFragmentTest;
 
 @Singleton
 @Component(modules = {MvpEspressoTestModule.class, BaseModule.class})
@@ -27,4 +28,6 @@ public interface TestComponent extends ApplicationComponent {
     void inject(PostListTest postListTest);
 
     void inject(TweetListTest tweetListTest);
+
+    void inject(ContactFragmentTest contactFragmentTest);
 }

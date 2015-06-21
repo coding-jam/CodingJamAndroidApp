@@ -43,6 +43,8 @@ public class PostListTest {
         fragmentRule.launchFragment(new PostListModel());
 
         onView(withText("post title 1")).check(matches(isDisplayed()));
+
+        Thread.sleep(100000);
     }
 
     @Test public void testGoToPostDetail() {

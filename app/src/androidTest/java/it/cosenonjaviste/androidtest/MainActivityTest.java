@@ -11,24 +11,19 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.MainActivity;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
@@ -95,7 +90,7 @@ public class MainActivityTest {
             Thread.sleep(500);
         } catch (InterruptedException ignored) {
         }
-        onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
-                .atPosition(position).perform(click());
+//        onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
+//                .atPosition(position).perform(click());
     }
 }

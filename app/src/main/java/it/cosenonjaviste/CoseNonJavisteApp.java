@@ -2,14 +2,17 @@ package it.cosenonjaviste;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
+import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.Tweet;
+import rx.functions.Func1;
 
 @ParcelClasses({
         @ParcelClass(Post.class),
@@ -38,5 +41,12 @@ public class CoseNonJavisteApp extends Application {
 
     public void setComponent(ApplicationComponent component) {
         this.component = component;
+    }
+
+    public static <C> C createComponent(Fragment fragment, Func1<ApplicationComponent, C> componentFactory) {
+        return ObjectsMapRetainedFragment.getOrCreate(
+                fragment.getChildFragmentManager(),
+                () -> componentFactory.call(getComponent(fragment.getActivity()))
+        );
     }
 }

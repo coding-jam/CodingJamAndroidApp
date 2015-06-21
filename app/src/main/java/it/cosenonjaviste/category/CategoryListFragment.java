@@ -1,6 +1,5 @@
 package it.cosenonjaviste.category;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> im
 
     @Inject CategoryListPresenter presenter;
 
-    @Override public void init(Bundle state) {
+    @Override public void init() {
         createComponent(
                 () -> DaggerCategoryListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
         ).inject(this);

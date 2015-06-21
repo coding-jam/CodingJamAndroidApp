@@ -63,7 +63,8 @@ public class ViewMock<V> {
         return Mockito.verify(get(), mode);
     }
 
-    public <M> void initAndResume(M model, RxMvpPresenter<M, V> presenter) {
+    public <M> M initAndResume(M model, RxMvpPresenter<M, V> presenter) {
         testLifeCycle.initAndResume(model, presenter, mock);
+        return model;
     }
 }

@@ -1,6 +1,5 @@
 package it.cosenonjaviste.author;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<Author> implem
 
     @Inject AuthorListPresenter presenter;
 
-    @Override public void init(Bundle state) {
+    @Override public void init() {
         createComponent(() -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build())
                 .inject(this);
     }
