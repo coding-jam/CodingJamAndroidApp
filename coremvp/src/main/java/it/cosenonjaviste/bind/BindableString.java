@@ -11,8 +11,14 @@ public class BindableString extends BaseObservable {
     }
 
     public void set(String value) {
-        this.mValue = value;
-        notifyChange();
+        if (!equals(mValue, value)) {
+            this.mValue = value;
+            notifyChange();
+        }
+    }
+
+    public static boolean equals(Object a, Object b) {
+        return (a == b) || (a != null && a.equals(b));
     }
 
     public void setFromView(String value) {
