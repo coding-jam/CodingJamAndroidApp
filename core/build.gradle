@@ -17,6 +17,7 @@ dependencies {
     compile project(':coremvp')
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
+    compile 'com.annimon:stream:1.0.1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'

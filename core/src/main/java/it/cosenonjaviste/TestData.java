@@ -1,6 +1,5 @@
 package it.cosenonjaviste;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +19,10 @@ public class TestData {
     }
 
     public static Observable<PostResponse> postResponse(int start, int size) {
-        List<Post> posts = new ArrayList<>();
-        for (int i = start; i < start + size; i++) {
-            posts.add(new Post(i, createAuthor(i), "post title " + i, new Date(), "url " + i, "excerpt " + i));
-        }
-        return Observable.just(new PostResponse(posts));
+        return Observable.range(start, size)
+                .map(i -> new Post(i, createAuthor(i), "post title " + i, new Date(), "url " + i, "excerpt " + i))
+                .toList()
+                .map(PostResponse::new);
     }
 
     public static Author createAuthor(int i) {
@@ -32,19 +30,17 @@ public class TestData {
     }
 
     public static Observable<AuthorResponse> authorResponse(int size) {
-        List<Author> authors = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            authors.add(createAuthor(i));
-        }
-        return Observable.just(new AuthorResponse(authors));
+        return Observable.range(0, size)
+                .map(TestData::createAuthor)
+                .toList()
+                .map(AuthorResponse::new);
     }
 
     public static Observable<CategoryResponse> categoryResponse(int size) {
-        List<Category> categories = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            categories.add(createCategory(i));
-        }
-        return Observable.just(new CategoryResponse(categories));
+        return Observable.range(0, size)
+                .map(TestData::createCategory)
+                .toList()
+                .map(CategoryResponse::new);
     }
 
     private static Category createCategory(int i) {
@@ -52,10 +48,8 @@ public class TestData {
     }
 
     public static Observable<List<Tweet>> tweets() {
-        List<Tweet> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new Tweet(123, "tweet text " + i, new Date(), "image", "author"));
-        }
-        return Observable.just(list);
+        return Observable.range(0, 10)
+                .map(i -> new Tweet(123, "tweet text " + i, new Date(), "image", "author"))
+                .toList();
     }
 }

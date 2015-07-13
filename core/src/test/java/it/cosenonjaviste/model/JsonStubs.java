@@ -1,5 +1,9 @@
 package it.cosenonjaviste.model;
 
+import com.annimon.stream.Stream;
+
+import static it.cosenonjaviste.utils.JoiningCollectors.joining;
+
 public class JsonStubs {
     private static final String SINGLE_POST = "{\n" +
             "id: 11213,\n" +
@@ -70,14 +74,10 @@ public class JsonStubs {
     }
 
     public static String getPostList(int firstPost, int numberOfPost) {
-        StringBuffer b = new StringBuffer();
-        for (int i = 0; i < numberOfPost; i++) {
-            if (i > 0) {
-                b.append(',');
-            }
-            b.append(SINGLE_POST.replace("%TITLE%", "post title " + (firstPost + i)));
-        }
-        return String.format(POSTS, b.toString());
+        String s = Stream.ofRange(0, numberOfPost)
+                .map(i -> SINGLE_POST.replace("%TITLE%", "post title " + (firstPost + i)))
+                .collect(joining(","));
+        return String.format(POSTS, s);
     }
 
     public static final String AUTHORS = "{\n" +
