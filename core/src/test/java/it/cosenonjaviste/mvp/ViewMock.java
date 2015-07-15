@@ -63,6 +63,15 @@ public class ViewMock<V> {
         return Mockito.verify(get(), mode);
     }
 
+    public <M> M initAndResume(RxMvpPresenter<M, V> presenter) {
+        M model = presenter.createDefaultModel();
+        if (model == null) {
+            throw new RuntimeException("createDefaultModel not implemented in " + presenter.getClass().getName());
+        }
+        testLifeCycle.initAndResume(model, presenter, mock);
+        return model;
+    }
+
     public <M> M initAndResume(M model, RxMvpPresenter<M, V> presenter) {
         testLifeCycle.initAndResume(model, presenter, mock);
         return model;

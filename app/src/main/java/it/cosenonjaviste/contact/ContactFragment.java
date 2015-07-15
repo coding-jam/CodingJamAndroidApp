@@ -1,18 +1,18 @@
 package it.cosenonjaviste.contact;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.ContactBinding;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import rx.Observable;
@@ -32,28 +32,44 @@ public class ContactFragment extends RxMvpFragment implements ContactView {
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.contact, container, false);
+        binding = ContactBinding.inflate(inflater, container, false);
         binding.setModel(presenter.getModel());
         return binding.getRoot();
     }
 
     @Override public Observable<Void> onSend() {
-        return ViewObservable.clicks(binding.sendButton).map(e -> null);
+        return observeClick(binding.sendButton);
     }
 
     @Override public Observable<String> name() {
-        return WidgetObservable.text(binding.name).map(e -> e.text().toString());
-    }
-
-    @Override public Observable<String> subject() {
-        return WidgetObservable.text(binding.subject).map(e -> e.text().toString());
+        return observeText(binding.name);
     }
 
     @Override public Observable<String> email() {
-        return WidgetObservable.text(binding.email).map(e -> e.text().toString());
+        return observeText(binding.email);
     }
 
     @Override public Observable<String> message() {
-        return WidgetObservable.text(binding.message).map(e -> e.text().toString());
+        return observeText(binding.message);
+    }
+
+    @NonNull private Observable<Void> observeClick(View view) {
+        return ViewObservable.clicks(view).map(e -> null);
+    }
+
+    @NonNull private Observable<String> observeText(EditText editText) {
+        return WidgetObservable.text(editText).map(e -> e.text().toString());
+    }
+
+    @Override public void startSending() {
+
+    }
+
+    @Override public void showSentMessage() {
+
+    }
+
+    @Override public void showSentError() {
+
     }
 }

@@ -7,9 +7,13 @@ public interface ContactView {
 
     Observable<String> name();
 
-    Observable<String> subject();
-
     Observable<String> email();
 
     Observable<String> message();
+
+    void startSending();
+
+    void showSentMessage();
+
+    void showSentError();
 }

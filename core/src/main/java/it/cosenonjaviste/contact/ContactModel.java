@@ -6,13 +6,11 @@ public class ContactModel {
 
     public boolean sendPressed;
 
-    public final BindableString name = new BindableString();
-    public final BindableString email = new BindableString();
-    public final BindableString subject = new BindableString();
-    public final BindableString message = new BindableString();
+    public BindableString name = new BindableString();
+    public BindableString email = new BindableString();
+    public BindableString message = new BindableString();
 
-    public final BindableString nameError = new BindableString();
-    public final BindableString emailError = new BindableString();
-    public final BindableString subjectError = new BindableString();
-    public final BindableString messageError = new BindableString();
+    public BindableValidationError nameError = new BindableValidationError();
+    public BindableValidationError emailError = new BindableValidationError();
+    public BindableValidationError messageError = new BindableValidationError();
 }

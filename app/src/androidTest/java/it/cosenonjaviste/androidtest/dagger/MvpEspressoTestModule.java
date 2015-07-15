@@ -9,6 +9,7 @@ import dagger.Provides;
 import it.cosenonjaviste.androidtest.base.EspressoSchedulerManager;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageUrlManager;
@@ -34,5 +35,9 @@ public class MvpEspressoTestModule {
 
     @Provides @Singleton TwitterService provideTwitterService() {
         return Mockito.mock(TwitterService.class);
+    }
+
+    @Provides @Singleton MailJetService provideMailJetService() {
+        return Mockito.mock(MailJetService.class);
     }
 }

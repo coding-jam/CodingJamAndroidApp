@@ -1,59 +1,81 @@
 package it.cosenonjaviste.contact;
 
+import com.annimon.stream.Stream;
+
 import javax.inject.Inject;
 
 import it.cosenonjaviste.bind.BindableString;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.utils.EmailVerifier;
+import retrofit.client.Response;
 import rx.Observable;
 import rx.functions.Action0;
 
 @PresenterScope
 public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> {
 
+    @Inject MailJetService mailJetService;
+
     @Inject public ContactPresenter() {
+    }
+
+    @Override public ContactModel createDefaultModel() {
+        return new ContactModel();
     }
 
     @Override public void resume() {
         super.resume();
 
         ContactView view = getView();
-        ContactModel model = getModel();
 
         bind(this::send, view.onSend());
-
-        bind(model.name, view.name());
-        bind(model.subject, view.subject());
-        bind(model.email, view.email());
-        bind(model.message, view.message());
-
-        bind(this::validate, view.name(), view.subject(), view.email(), view.message());
+        bind(this::validate, view.name(), view.email(), view.message());
     }
 
-    private void validate() {
+    private boolean validate() {
         ContactModel model = getModel();
+        boolean isValid = true;
         if (model.sendPressed) {
-            model.nameError.set(model.name.isEmpty() ? "Error" : null);
-            model.emailError.set(model.email.isEmpty() ? "Error" : null);
-            model.subjectError.set(model.subject.isEmpty() ? "Error" : null);
-            model.messageError.set(model.message.isEmpty() ? "Error" : null);
+            isValid = checkMandatory(model.name, model.nameError);
+            if (checkMandatory(model.email, model.emailError)) {
+                if (!EmailVerifier.checkEmail(model.email.get())) {
+                    model.emailError.set(ValidationError.INVALID_EMAIL);
+                    isValid = false;
+                }
+            }
+            isValid = checkMandatory(model.message, model.messageError) && isValid;
         }
+        return isValid;
     }
 
-    protected void bind(BindableString field, Observable<String> observable) {
-        observable.subscribe(field::setFromView);
+    private boolean checkMandatory(BindableString bindableString, BindableValidationError error) {
+        boolean empty = bindableString.isEmpty();
+        error.set(empty ? ValidationError.MANDATORY_FIELD : null);
+        return !empty;
     }
 
     protected void bind(Action0 method, Observable<?>... observables) {
-        for (int i = 0; i < observables.length; i++) {
-            observables[i].subscribe(v -> method.call());
-        }
+        Stream.of(observables).forEach(o -> o.subscribe(v -> method.call()));
     }
 
     private void send() {
         ContactModel model = getModel();
         model.sendPressed = true;
-        validate();
-        System.out.println(model.name.get() + " " + model.subject.get());
+        if (validate()) {
+            Observable<Response> observable = mailJetService.sendEmail(
+                    model.name + " <info@cosenonjaviste.it>",
+                    "info@cosenonjaviste.it",
+                    "Email from " + model.name,
+                    "Reply to: " + model.email + "\n" + model.message);
+
+            subscribe(
+                    observable,
+                    () -> getView().startSending(),
+                    r -> getView().showSentMessage(),
+                    t -> getView().showSentError()
+            );
+        }
     }
 }

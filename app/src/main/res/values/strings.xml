@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item name="binded" type="id" />
+
     <string name="app_name">CoseNonJaviste</string>
     <string name="loading_">Caricamento in corso…</string>
     <string name="download_error">Errore download</string>
@@ -23,5 +25,7 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="mandatory_field">Campo obbligatorio</string>
+    <string name="invalid_email">Email non valida</string>
 
 </resources>

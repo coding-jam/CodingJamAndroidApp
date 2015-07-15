@@ -1,31 +1,27 @@
 package it.cosenonjaviste.bind;
 
-public class BindableString extends BaseObservable {
-    private String mValue;
+import org.parceler.Parcel;
 
-    public BindableString() {
-    }
+@Parcel
+public class BindableString extends BaseObservable {
+    String value;
 
     public String get() {
-        return this.mValue;
+        return value != null ? value : "";
     }
 
     public void set(String value) {
-        if (!equals(mValue, value)) {
-            this.mValue = value;
+        if (!Objects.equals(this.value, value)) {
+            this.value = value;
             notifyChange();
         }
     }
 
-    public static boolean equals(Object a, Object b) {
-        return (a == b) || (a != null && a.equals(b));
-    }
-
-    public void setFromView(String value) {
-        this.mValue = value;
-    }
-
     public boolean isEmpty() {
-        return mValue == null || mValue.isEmpty();
+        return value == null || value.isEmpty();
+    }
+
+    @Override public String toString() {
+        return value;
     }
 }

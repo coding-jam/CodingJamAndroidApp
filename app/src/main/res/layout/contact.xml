@@ -18,21 +18,21 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:error="@{model.nameError}">
+            app:errorMessage="@{model.nameError}">
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
-                android:text="@{model.name}"/>
+                app:binding="@{model.name}"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:error="@{model.emailError}">
+            app:errorMessage="@{model.emailError}">
 
             <EditText
                 android:id="@+id/email"
@@ -40,27 +40,13 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:text="@{model.email}"/>
+                app:binding="@{model.email}"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:error="@{model.subjectError}">
-
-            <EditText
-                android:id="@+id/subject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Subject"
-                android:text="@{model.subject}"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:error="@{model.messageError}">
+            app:errorMessage="@{model.messageError}">
 
             <EditText
                 android:id="@+id/message"
@@ -68,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Message"
                 android:lines="4"
-                android:text="@{model.message}"/>
+                app:binding="@{model.message}"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
