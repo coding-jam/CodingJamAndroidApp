@@ -30,7 +30,7 @@ public class ContactPresenterTest {
         model.name.set("aaa");
         model.email.set("aaa");
         model.message.set("aaa");
-        view.click().onSend();
+        presenter.send();
 
         assertThat(model.nameError.get()).isNull();
         assertThat(model.messageError.get()).isNull();
@@ -47,7 +47,7 @@ public class ContactPresenterTest {
         model.name.set("aaa");
         model.email.set("aaa@aaa.it");
         model.message.set("aaa");
-        view.click().onSend();
+        presenter.send();
 
         assertThat(model.nameError.get()).isNull();
         assertThat(model.messageError.get()).isNull();

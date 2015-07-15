@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.widget.EditText;
 
 import org.parceler.ParcelClass;
@@ -27,9 +28,12 @@ public class DataBindingConverters {
     }
 
     @BindingAdapter({"app:errorMessage"})
-    public static String bindValidationError(TextInputLayout textInputLayout, BindableValidationError bindableValidationError) {
-        Resources res = textInputLayout.getResources();
-        ValidationError validationError = bindableValidationError.get();
+    public static void bindValidationError(TextInputLayout textInputLayout, BindableValidationError bindableValidationError) {
+        String errorMessage = getValidationErrorString(textInputLayout.getResources(), bindableValidationError.get());
+        textInputLayout.setError(errorMessage);
+    }
+
+    private static String getValidationErrorString(Resources res, ValidationError validationError) {
         if (validationError != null) {
             switch (validationError) {
                 case MANDATORY_FIELD:
@@ -55,5 +59,10 @@ public class DataBindingConverters {
         if (!view.getText().toString().equals(newValue)) {
             view.setText(newValue);
         }
+    }
+
+    @BindingAdapter({"app:visible"})
+    public static void bindVisible(View view, BindableBoolean bindableBoolean) {
+        view.setVisibility(bindableBoolean.get() ? View.VISIBLE : View.INVISIBLE);
     }
 }

@@ -27,5 +27,8 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="mandatory_field">Campo obbligatorio</string>
     <string name="invalid_email">Email non valida</string>
+    <string name="send">Send</string>
+    <string name="message_sent">Messaggio inviato, grazie per il tuo contributo!</string>
+    <string name="error_sending_message">Errore invio messaggio</string>
 
 </resources>

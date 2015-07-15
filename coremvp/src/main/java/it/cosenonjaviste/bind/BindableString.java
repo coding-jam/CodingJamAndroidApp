@@ -1,6 +1,10 @@
 package it.cosenonjaviste.bind;
 
+import android.databinding.Observable;
+
 import org.parceler.Parcel;
+
+import rx.functions.Action1;
 
 @Parcel
 public class BindableString extends BaseObservable {
@@ -23,5 +27,14 @@ public class BindableString extends BaseObservable {
 
     @Override public String toString() {
         return value;
+    }
+
+
+    public void addListener(Action1<String> listener) {
+        addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
+            @Override public void onPropertyChanged(Observable sender, int propertyId) {
+                listener.call(((BindableString) sender).get());
+            }
+        });
     }
 }

@@ -1,7 +1,5 @@
 package it.cosenonjaviste.contact;
 
-import com.annimon.stream.Stream;
-
 import javax.inject.Inject;
 
 import it.cosenonjaviste.bind.BindableString;
@@ -11,7 +9,6 @@ import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.utils.EmailVerifier;
 import retrofit.client.Response;
 import rx.Observable;
-import rx.functions.Action0;
 
 @PresenterScope
 public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> {
@@ -28,26 +25,31 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
     @Override public void resume() {
         super.resume();
 
-        ContactView view = getView();
-
-        bind(this::send, view.onSend());
-        bind(this::validate, view.name(), view.email(), view.message());
+        getModel().name.addListener(s -> validate());
+        getModel().message.addListener(s -> validate());
+        getModel().email.addListener(s -> validate());
     }
 
     private boolean validate() {
         ContactModel model = getModel();
-        boolean isValid = true;
         if (model.sendPressed) {
-            isValid = checkMandatory(model.name, model.nameError);
-            if (checkMandatory(model.email, model.emailError)) {
+            boolean isValid = checkMandatory(model.name, model.nameError);
+            if (!model.email.isEmpty()) {
                 if (!EmailVerifier.checkEmail(model.email.get())) {
                     model.emailError.set(ValidationError.INVALID_EMAIL);
                     isValid = false;
+                } else {
+                    model.emailError.set(null);
                 }
+            } else {
+                model.emailError.set(ValidationError.MANDATORY_FIELD);
+                isValid = false;
             }
             isValid = checkMandatory(model.message, model.messageError) && isValid;
+            return isValid;
+        } else {
+            return true;
         }
-        return isValid;
     }
 
     private boolean checkMandatory(BindableString bindableString, BindableValidationError error) {
@@ -56,11 +58,7 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
         return !empty;
     }
 
-    protected void bind(Action0 method, Observable<?>... observables) {
-        Stream.of(observables).forEach(o -> o.subscribe(v -> method.call()));
-    }
-
-    private void send() {
+    public void send() {
         ContactModel model = getModel();
         model.sendPressed = true;
         if (validate()) {
@@ -68,11 +66,12 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
                     model.name + " <info@cosenonjaviste.it>",
                     "info@cosenonjaviste.it",
                     "Email from " + model.name,
-                    "Reply to: " + model.email + "\n" + model.message);
+                    "Reply to: " + model.email + "\n" + model.message
+            ).finallyDo(() -> getModel().sending.set(false));
 
             subscribe(
                     observable,
-                    () -> getView().startSending(),
+                    () -> getModel().sending.set(true),
                     r -> getView().showSentMessage(),
                     t -> getView().showSentError()
             );

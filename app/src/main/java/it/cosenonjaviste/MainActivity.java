@@ -3,6 +3,7 @@ package it.cosenonjaviste;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -24,9 +25,8 @@ import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
 import it.cosenonjaviste.category.CategoryListModel;
+import it.cosenonjaviste.contact.ContactFragment;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.page.PageFragment;
-import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.twitter.TweetListFragment;
@@ -107,17 +107,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.drawer_twitter:
                 return createView(this, TweetListFragment.class, new TweetListModel());
             case R.id.drawer_contacts:
-                return createView(this, PageFragment.class, new PageModel("http://www.cosenonjaviste.it/contatti/"));
+                return createView(this, ContactFragment.class, null);
             default:
                 return createView(this, PostListFragment.class, new PostListModel());
         }
     }
 
-    public static <T, M> T createView(@NonNull Context context, @NonNull Class<?> viewClass, @NonNull M model) {
+    public static <T, M> T createView(@NonNull Context context, @NonNull Class<?> viewClass, @Nullable M model) {
         Fragment fragment = Fragment.instantiate(context, viewClass.getName());
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
-        fragment.setArguments(bundle);
+        if (model != null) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
+            fragment.setArguments(bundle);
+        }
         return (T) fragment;
     }
 }
