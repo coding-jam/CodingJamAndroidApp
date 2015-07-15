@@ -24,8 +24,9 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<Author> implem
     @Inject AuthorListPresenter presenter;
 
     @Override public void init() {
-        createComponent(() -> DaggerAuthorListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build())
-                .inject(this);
+        CoseNonJavisteApp.createComponent(this,
+                c -> DaggerAuthorListComponent.builder().applicationComponent(c).build()
+        ).inject(this);
     }
 
     @Override @NonNull protected AuthorViewHolder createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {

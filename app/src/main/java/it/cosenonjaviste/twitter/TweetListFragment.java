@@ -27,8 +27,8 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
     @Inject TweetListPresenter presenter;
 
     @Override public void init() {
-        createComponent(
-                () -> DaggerTweetListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
+        CoseNonJavisteApp.createComponent(this,
+                c -> DaggerTweetListComponent.builder().applicationComponent(c).build()
         ).inject(this);
     }
 

@@ -7,9 +7,6 @@ import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
-import rx.functions.Func0;
-
 public abstract class RxMvpFragment extends Fragment {
 
     @Inject LifeCycle lifeCycle;
@@ -44,12 +41,5 @@ public abstract class RxMvpFragment extends Fragment {
     @Override public void onPause() {
         super.onPause();
         lifeCycle.emit(this, LifeCycle.EventType.PAUSE);
-    }
-
-    protected <T> T createComponent(Func0<T> componentFactory) {
-        return ObjectsMapRetainedFragment.getOrCreate(
-                getChildFragmentManager(),
-                componentFactory
-        );
     }
 }

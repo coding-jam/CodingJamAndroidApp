@@ -34,8 +34,8 @@ public class PageFragment extends RxMvpFragment implements PageView {
     @Inject PagePresenter presenter;
 
     @Override public void init() {
-        createComponent(
-                () -> DaggerPageComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
+        CoseNonJavisteApp.createComponent(this,
+                c -> DaggerPageComponent.builder().applicationComponent(c).build()
         ).inject(this);
     }
 

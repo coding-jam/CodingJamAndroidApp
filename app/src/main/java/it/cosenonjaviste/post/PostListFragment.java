@@ -30,8 +30,8 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
     @Inject PostListPresenter presenter;
 
     @Override public void init() {
-        createComponent(
-                () -> DaggerPostListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
+        CoseNonJavisteApp.createComponent(this,
+                c -> DaggerPostListComponent.builder().applicationComponent(c).build()
         ).inject(this);
     }
 

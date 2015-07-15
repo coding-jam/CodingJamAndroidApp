@@ -25,8 +25,8 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> im
     @Inject CategoryListPresenter presenter;
 
     @Override public void init() {
-        createComponent(
-                () -> DaggerCategoryListComponent.builder().applicationComponent(CoseNonJavisteApp.getComponent(getActivity())).build()
+        CoseNonJavisteApp.createComponent(this,
+                c -> DaggerCategoryListComponent.builder().applicationComponent(c).build()
         ).inject(this);
     }
 
