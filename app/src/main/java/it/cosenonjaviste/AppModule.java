@@ -43,8 +43,8 @@ public class AppModule {
                 .setExecutors(Runnable::run, null)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(request -> {
-                    String userName = "d44e612d91a6914226cdee5118b0873d";
-                    String password = "896c727efc4ad822c00f23fa76db585f";
+                    String userName = BuildConfig.MAILJET_USERNAME;
+                    String password = BuildConfig.MAILJET_PASSWORD;
                     String string = "Basic " + Base64.encodeToString((userName + ":" + password).getBytes(), Base64.NO_WRAP);
                     request.addHeader("Authorization", string);
                 }).build();
