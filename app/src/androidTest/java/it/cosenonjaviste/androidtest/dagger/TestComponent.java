@@ -10,7 +10,7 @@ import it.cosenonjaviste.androidtest.CategoryListTest;
 import it.cosenonjaviste.androidtest.MainActivityTest;
 import it.cosenonjaviste.androidtest.PageTest;
 import it.cosenonjaviste.androidtest.PostListTest;
-import it.cosenonjaviste.androidtest.TweetListTest;
+import it.cosenonjaviste.androidtest.TweetListFragmentTest;
 import it.cosenonjaviste.contact.ContactFragmentTest;
 
 @Singleton
@@ -27,7 +27,7 @@ public interface TestComponent extends ApplicationComponent {
 
     void inject(PostListTest postListTest);
 
-    void inject(TweetListTest tweetListTest);
+    void inject(TweetListFragmentTest tweetListTest);
 
     void inject(ContactFragmentTest contactFragmentTest);
 }

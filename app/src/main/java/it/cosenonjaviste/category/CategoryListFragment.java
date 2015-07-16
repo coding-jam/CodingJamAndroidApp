@@ -11,11 +11,11 @@ import javax.inject.Inject;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.post.PostListFragment;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.utils.BindableViewHolder;
-import it.cosenonjaviste.utils.CircleTransform;
 import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
@@ -30,8 +30,8 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> im
         ).inject(this);
     }
 
-    @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
-        return new CategoryViewHolder(inflater.inflate(R.layout.category_row, v, false), presenter);
+    @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, ViewGroup v) {
+        return new CategoryViewHolder(CategoryRowBinding.inflate(inflater, v, false), presenter);
     }
 
     @OnClick(R.id.error_retry) void retry() {

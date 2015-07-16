@@ -1,6 +1,6 @@
 package it.cosenonjaviste.utils;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapShader;
@@ -16,18 +16,18 @@ public class CircleTransform implements Transformation {
     private int borderColor;
     private int imageSize;
 
-    public static CircleTransform createWithBorder(Context context, int dimensionResource, int colorRes, int borderSizeResource) {
-        return new CircleTransform(context, dimensionResource, true, colorRes, borderSizeResource);
+    public static CircleTransform createWithBorder(Resources resources, int dimensionResource, int colorRes, int borderSizeResource) {
+        return new CircleTransform(resources, dimensionResource, true, colorRes, borderSizeResource);
     }
 
-    private CircleTransform(Context context, int dimensionResource, boolean showBorder, int colorRes, int borderSizeResource) {
+    private CircleTransform(Resources resources, int dimensionResource, boolean showBorder, int colorRes, int borderSizeResource) {
         this.showBorder = showBorder;
         if (borderSizeResource != 0) {
-            borderSize = context.getResources().getDimensionPixelSize(borderSizeResource);
+            borderSize = resources.getDimensionPixelSize(borderSizeResource);
         }
-        imageSize = context.getResources().getDimensionPixelSize(dimensionResource);
+        imageSize = resources.getDimensionPixelSize(dimensionResource);
         if (colorRes != 0) {
-            borderColor = context.getResources().getColor(colorRes);
+            borderColor = resources.getColor(colorRes);
         }
     }
 

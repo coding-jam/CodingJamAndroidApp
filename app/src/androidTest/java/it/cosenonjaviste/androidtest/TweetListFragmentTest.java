@@ -24,7 +24,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class TweetListTest {
+public class TweetListFragmentTest {
 
     @Inject TwitterService twitterService;
 

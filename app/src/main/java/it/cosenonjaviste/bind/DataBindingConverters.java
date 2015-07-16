@@ -4,19 +4,32 @@ import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.design.widget.TextInputLayout;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
+import java.util.Date;
+
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.contact.BindableValidationError;
 import it.cosenonjaviste.contact.ValidationError;
+import it.cosenonjaviste.utils.CircleTransform;
+import it.cosenonjaviste.utils.DateFormatter;
 import it.cosenonjaviste.utils.TextWatcherAdapter;
 
 @ParcelClasses({@ParcelClass(BindableString.class)})
 public class DataBindingConverters {
+
+    private static CircleTransform circleTransformation;
+
     @BindingConversion
     public static String convertBindableToString(BindableString bindableString) {
         return bindableString.get();
@@ -25,6 +38,11 @@ public class DataBindingConverters {
     @BindingConversion
     public static boolean convertBindableToBoolean(BindableBoolean bindableBoolean) {
         return bindableBoolean.get();
+    }
+
+    @BindingConversion
+    public static CharSequence convertDateToCharSequence(Date date) {
+        return DateFormatter.formatDate(date);
     }
 
     @BindingAdapter({"app:errorMessage"})
@@ -64,5 +82,27 @@ public class DataBindingConverters {
     @BindingAdapter({"app:visible"})
     public static void bindVisible(View view, BindableBoolean bindableBoolean) {
         view.setVisibility(bindableBoolean.get() ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @BindingAdapter({"app:imageUrl"})
+    public static void loadImage(ImageView view, String url) {
+        if (!TextUtils.isEmpty(url)) {
+            if (circleTransformation == null) {
+                circleTransformation = CircleTransform.createWithBorder(view.getResources(), R.dimen.author_image_size_big, R.color.colorPrimary, R.dimen.author_image_border);
+            }
+            Picasso.with(view.getContext()).load(url).transform(circleTransformation).into(view);
+        } else {
+            view.setImageDrawable(null);
+        }
+    }
+
+    @BindingAdapter({"app:textHtml"})
+    public static void bindHtmlText(TextView view, String text) {
+        view.setText(Html.fromHtml(text));
+    }
+
+    @BindingAdapter({"bind:text1", "bind:textParam1"})
+    public static void bindHtmlText(TextView view, int textRes, Object param) {
+        view.setText(view.getResources().getString(textRes, param));
     }
 }

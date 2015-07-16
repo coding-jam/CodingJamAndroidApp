@@ -59,8 +59,7 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
         View view = inflater.inflate(R.layout.super_recycler, container, false);
         ButterKnife.inject(this, view);
 
-        CircleTransform transformation = CircleTransform.createWithBorder(getActivity(), R.dimen.author_image_size_big, R.color.colorPrimary, R.dimen.author_image_border);
-        adapter = new BindableAdapter<>(v -> createViewHolder(inflater, transformation, v));
+        adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));
         superRecycler.setAdapter(adapter);
         superRecycler.setLayoutManager(createGridLayoutManager());
 
@@ -73,5 +72,5 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
         return new GridLayoutManager(getActivity(), 2);
     }
 
-    @NonNull protected abstract BindableViewHolder<T> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v);
+    @NonNull protected abstract BindableViewHolder<T> createViewHolder(LayoutInflater inflater, ViewGroup v);
 }

@@ -16,9 +16,9 @@ import javax.inject.Inject;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.utils.BindableViewHolder;
-import it.cosenonjaviste.utils.CircleTransform;
 import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 
 @ParcelClass(TweetListModel.class)
@@ -43,8 +43,8 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
         return view;
     }
 
-    @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
-        return new TweetViewHolder(inflater.inflate(R.layout.tweet_row, v, false), transformation);
+    @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, ViewGroup v) {
+        return new TweetViewHolder(TweetRowBinding.inflate(inflater, v, false));
     }
 
     @OnClick(R.id.error_retry) void retry() {

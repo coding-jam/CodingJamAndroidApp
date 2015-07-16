@@ -46,4 +46,11 @@ public class Post {
     public String getExcerpt() {
         return excerpt;
     }
+
+    public String getExcerptHtml() {
+        if (excerpt == null) {
+            return "";
+        }
+        return excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "");
+    }
 }

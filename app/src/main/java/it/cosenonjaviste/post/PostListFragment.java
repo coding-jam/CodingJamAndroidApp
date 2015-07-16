@@ -16,11 +16,11 @@ import javax.inject.Inject;
 import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.utils.BindableViewHolder;
-import it.cosenonjaviste.utils.CircleTransform;
 import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
@@ -46,8 +46,8 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
         return view;
     }
 
-    @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, CircleTransform transformation, ViewGroup v) {
-        return new PostViewHolder(inflater.inflate(R.layout.post_row, v, false), transformation, presenter);
+    @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, ViewGroup v) {
+        return new PostViewHolder(PostRowBinding.inflate(inflater, v, false), presenter);
     }
 
     @OnClick(R.id.error_retry) void retry() {

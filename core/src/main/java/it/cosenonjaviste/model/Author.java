@@ -57,6 +57,10 @@ public class Author implements Comparable<Author> {
         return description;
     }
 
+    public String getHtmlDescription() {
+        return description.replaceAll("^<p>", "").replaceAll("$</p>", "");
+    }
+
     @Override public int compareTo(Author o) {
         return Long.compare(id, o.id);
     }
