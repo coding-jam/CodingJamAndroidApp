@@ -27,7 +27,7 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
     }
 
     @Override public int getItemCount() {
-        return authors.size();
+        return authors == null ? 0 : authors.size();
     }
 
     public void reloadData(List<T> posts) {

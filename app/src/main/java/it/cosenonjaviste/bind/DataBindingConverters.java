@@ -81,7 +81,17 @@ public class DataBindingConverters {
 
     @BindingAdapter({"app:visible"})
     public static void bindVisible(View view, BindableBoolean bindableBoolean) {
-        view.setVisibility(bindableBoolean.get() ? View.VISIBLE : View.INVISIBLE);
+        view.setVisibility(bindableBoolean != null && bindableBoolean.get() ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @BindingAdapter({"app:visibleOrGone"})
+    public static void bindVisibleOrGone(View view, BindableBoolean bindableBoolean) {
+        view.setVisibility(bindableBoolean != null && bindableBoolean.get() ? View.VISIBLE : View.GONE);
+    }
+
+    @BindingAdapter({"app:visible"})
+    public static void bindVisible(View view, boolean b) {
+        view.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
     }
 
     @BindingAdapter({"app:imageUrl"})

@@ -1,19 +1,50 @@
 package it.cosenonjaviste.bind;
 
+import android.databinding.Observable;
+
 import org.parceler.Parcel;
 
 @Parcel
 public class BindableBoolean extends BaseObservable {
-    boolean mValue;
+    boolean value;
+
+    public BindableBoolean() {
+    }
+
+    public BindableBoolean(boolean value) {
+        this.value = value;
+    }
 
     public boolean get() {
-        return mValue;
+        return value;
     }
 
     public void set(boolean value) {
-        if (mValue != value) {
-            this.mValue = value;
+        if (this.value != value) {
+            this.value = value;
             notifyChange();
         }
+    }
+
+    public BindableBoolean not() {
+        BindableBoolean not = new BindableBoolean(!value);
+        addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
+            @Override public void onPropertyChanged(Observable sender, int propertyId) {
+                not.set(!BindableBoolean.this.value);
+            }
+        });
+        return not;
+    }
+
+    public BindableBoolean and(BindableBoolean other) {
+        BindableBoolean ret = new BindableBoolean(value && other.value);
+        OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
+            @Override public void onPropertyChanged(Observable sender, int propertyId) {
+                ret.set(value && other.value);
+            }
+        };
+        addOnPropertyChangedCallback(listener);
+        other.addOnPropertyChangedCallback(listener);
+        return ret;
     }
 }

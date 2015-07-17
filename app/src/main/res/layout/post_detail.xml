@@ -10,7 +10,35 @@
         android:layout_height="match_parent"
         android:visibility="invisible"/>
 
-    <include
-        android:id="@+id/progress_detail"
-        layout="@layout/progress"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress_detail">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/progress_in"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:indeterminateDrawable="@drawable/progress_bar"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:textColor="#666"
+            android:layout_below="@+id/progress"/>
+    </RelativeLayout>
 </FrameLayout>

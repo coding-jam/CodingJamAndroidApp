@@ -22,9 +22,9 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
 
     @Override public void resume() {
         super.resume();
-        if (getModel().isEmpty() && !isTaskRunning()) {
+        if ((getModel().getItems() == null || getModel().getItems().isEmpty()) && !isTaskRunning()) {
             loadData();
-        } else if (getModel().isError()) {
+        } else if (getModel().isError().get()) {
             getView().showError();
         } else {
             getView().update(getModel().getItems());
@@ -34,10 +34,11 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
     public void loadData() {
         Observable<List<Category>> observable = wordPressService
                 .listCategories()
-                .map(CategoryResponse::getCategories);
+                .map(CategoryResponse::getCategories)
+                .finallyDo(() -> getModel().loading.set(false));
 
         subscribe(observable,
-                () -> getView().startLoading(),
+                () -> getModel().loading.set(true),
                 posts -> {
                     getModel().done(posts);
                     getView().update(getModel().getItems());
