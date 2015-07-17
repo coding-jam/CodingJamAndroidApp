@@ -14,9 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify.IconValue;
-
 import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
@@ -62,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
         Menu drawerMenu = this.drawerMenu.getMenu();
-        drawerMenu.findItem(R.id.drawer_post).setIcon(new IconDrawable(this, IconValue.fa_home).actionBarSize());
-        drawerMenu.findItem(R.id.drawer_authors).setIcon(new IconDrawable(this, IconValue.fa_user).actionBarSize());
-        drawerMenu.findItem(R.id.drawer_categories).setIcon(new IconDrawable(this, IconValue.fa_tags).actionBarSize());
-        drawerMenu.findItem(R.id.drawer_twitter).setIcon(new IconDrawable(this, IconValue.fa_twitter).actionBarSize());
-        drawerMenu.findItem(R.id.drawer_contacts).setIcon(new IconDrawable(this, IconValue.fa_envelope).actionBarSize());
 
         if (savedInstanceState == null) {
             selectItem(R.id.drawer_post);

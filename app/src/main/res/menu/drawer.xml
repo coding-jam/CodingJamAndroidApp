@@ -5,22 +5,27 @@
         android:checkableBehavior="single">
 
         <item
+            android:icon="@drawable/ic_home_black_24dp"
             android:id="@+id/drawer_post"
             android:title="@string/post"/>
 
         <item
+            android:icon="@drawable/ic_label_outline_black_24dp"
             android:id="@+id/drawer_categories"
             android:title="@string/categories"/>
 
         <item
+            android:icon="@drawable/ic_person_black_24dp"
             android:id="@+id/drawer_authors"
             android:title="@string/authors"/>
 
         <item
+            android:icon="@drawable/ic_public_black_24dp"
             android:id="@+id/drawer_twitter"
             android:title="@string/twitter"/>
 
         <item
+            android:icon="@drawable/ic_email_black_24dp"
             android:id="@+id/drawer_contacts"
             android:title="@string/contacts"/>
     </group>
