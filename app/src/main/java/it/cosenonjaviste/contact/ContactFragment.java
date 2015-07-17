@@ -39,6 +39,6 @@ public class ContactFragment extends RxMvpFragment implements ContactView {
     }
 
     @Override public void showSentError() {
-        Snackbar.make(getView(), getResources().getString(R.string.message_sent), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getView(), getResources().getString(R.string.error_sending_message), Snackbar.LENGTH_LONG).show();
     }
 }
