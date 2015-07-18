@@ -11,9 +11,7 @@ import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.post.PostListFragment;
@@ -40,11 +38,12 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> im
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         binding.setModel(presenter.getModel());
+        binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
         presenter.getModel().setListChangeListener(adapter::reloadData);
         return view;
     }
 
-    @OnClick(R.id.error_retry) void retry() {
+    @Override protected void retry() {
         presenter.loadData();
     }
 

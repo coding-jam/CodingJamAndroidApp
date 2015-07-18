@@ -13,9 +13,7 @@ import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.utils.BindableViewHolder;
@@ -47,7 +45,7 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
         return new TweetViewHolder(TweetRowBinding.inflate(inflater, v, false));
     }
 
-    @OnClick(R.id.error_retry) void retry() {
+    @Override protected void retry() {
         presenter.reloadData();
     }
 }

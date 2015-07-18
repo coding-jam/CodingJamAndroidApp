@@ -11,6 +11,7 @@ import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
+import rx.functions.Action1;
 
 @PresenterScope
 public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, CategoryListView> {
@@ -22,26 +23,30 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
 
     @Override public void resume() {
         super.resume();
-        if (getModel().getItems() == null &&!getModel().error.get() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !isTaskRunning()) {
             loadData();
         }
     }
 
+    public void loadDataPullToRefresh() {
+        loadData(b -> getModel().loadingPullToRefresh.set(b));
+    }
+
     public void loadData() {
+        loadData(b -> getModel().loading.set(b));
+    }
+
+    private void loadData(Action1<Boolean> loadingSetter) {
         Observable<List<Category>> observable = wordPressService
                 .listCategories()
                 .map(CategoryResponse::getCategories)
-                .finallyDo(() -> getModel().loading.set(false));
+                .finallyDo(() -> loadingSetter.call(false));
 
         subscribe(observable,
-                () -> getModel().loading.set(true),
-                posts -> {
-                    getModel().done(posts);
-                    getView().update(getModel().getItems());
-                }, throwable -> {
-                    getModel().error();
-                    getView().showError();
-                });
+                () -> loadingSetter.call(true),
+                posts -> getModel().done(posts),
+                throwable -> getModel().error()
+        );
     }
 
     public void goToPosts(int position) {

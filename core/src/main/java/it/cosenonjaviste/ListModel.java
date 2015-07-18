@@ -1,37 +1,17 @@
 package it.cosenonjaviste;
 
-import org.parceler.Transient;
-
 import it.cosenonjaviste.bind.BindableBoolean;
 
-public abstract class ListModel {
-    public BindableBoolean empty = new BindableBoolean(true);
+public interface ListModel {
+    BindableBoolean isLoadingMore();
 
-    public BindableBoolean error = new BindableBoolean();
+    BindableBoolean isLoading();
 
-    @Transient
-    public BindableBoolean loading = new BindableBoolean();
+    BindableBoolean isLoadingPullToRefresh();
 
-    @Transient
-    public BindableBoolean loadingMore = new BindableBoolean();
+    BindableBoolean isEmptyLayoutVisible();
 
-    public BindableBoolean isLoadingMore() {
-        return loadingMore;
-    }
+    BindableBoolean isListVisible();
 
-    public BindableBoolean isLoading() {
-        return loading;
-    }
-
-    public BindableBoolean isEmptyLayoutVisible() {
-        return empty.and(loading.not());
-    }
-
-    public BindableBoolean isListVisible() {
-        return empty.not().and(loading.not());
-    }
-
-    public BindableBoolean isError() {
-        return error;
-    }
+    BindableBoolean isError();
 }

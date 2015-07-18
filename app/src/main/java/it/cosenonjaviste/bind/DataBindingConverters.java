@@ -37,7 +37,7 @@ public class DataBindingConverters {
 
     @BindingConversion
     public static boolean convertBindableToBoolean(BindableBoolean bindableBoolean) {
-        return bindableBoolean.get();
+        return bindableBoolean != null && bindableBoolean.get();
     }
 
     @BindingConversion

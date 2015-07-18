@@ -56,11 +56,14 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
         adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));
         binding.list.setAdapter(adapter);
         binding.list.setLayoutManager(createGridLayoutManager());
+        binding.errorRetry.setOnClickListener(v -> retry());
 
         binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
 
         return binding.getRoot();
     }
+
+    protected abstract void retry();
 
     @NonNull protected RecyclerView.LayoutManager createGridLayoutManager() {
         return new GridLayoutManager(getActivity(), 2);

@@ -13,9 +13,7 @@ import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageFragment;
@@ -50,7 +48,7 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
         return new PostViewHolder(PostRowBinding.inflate(inflater, v, false), presenter);
     }
 
-    @OnClick(R.id.error_retry) void retry() {
+    @Override protected void retry() {
         presenter.reloadData();
     }
 

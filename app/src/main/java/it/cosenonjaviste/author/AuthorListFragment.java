@@ -8,9 +8,7 @@ import org.parceler.ParcelClass;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
 import it.cosenonjaviste.CoseNonJavisteApp;
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.post.PostListFragment;
@@ -33,7 +31,7 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<Author> implem
         return new AuthorViewHolder(AuthorCellBinding.inflate(inflater, v, false), presenter);
     }
 
-    @OnClick(R.id.error_retry) void retry() {
+    @Override protected void retry() {
         presenter.loadAuthors();
     }
 

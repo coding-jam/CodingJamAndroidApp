@@ -79,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
+                app:refreshing="@{model.loadingPullToRefresh}"
                 app:visibleOrGone="@{model.listVisible}">
 
                 <android.support.v7.widget.RecyclerView
