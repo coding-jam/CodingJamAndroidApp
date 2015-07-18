@@ -8,10 +8,6 @@ import it.cosenonjaviste.model.Category;
 public class CategoryListModel extends ListModelAdapter<Category> {
     List<Category> items;
 
-    public int size() {
-        return items.size();
-    }
-
     public Category get(int index) {
         return items.get(index);
     }

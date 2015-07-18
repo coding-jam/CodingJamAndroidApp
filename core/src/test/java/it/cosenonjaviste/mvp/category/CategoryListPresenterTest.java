@@ -43,7 +43,7 @@ public class CategoryListPresenterTest {
         CategoryListModel model = new CategoryListModel();
         testLifeCycle.initAndResume(model, presenter, view);
 
-        assertThat(model.size()).isEqualTo(3);
+        assertThat(model.getItems()).hasSize(3);
         Category category = model.get(2);
         assertThat(category.getId()).isEqualTo(2);
         assertThat(category.getTitle()).isEqualTo("cat 2");
@@ -63,7 +63,7 @@ public class CategoryListPresenterTest {
 
         presenter.loadData();
 
-        assertThat(model.size()).isEqualTo(3);
+        assertThat(model.getItems()).hasSize(3);
     }
 
     @Test
