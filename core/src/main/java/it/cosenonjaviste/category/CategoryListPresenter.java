@@ -22,12 +22,8 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
 
     @Override public void resume() {
         super.resume();
-        if ((getModel().getItems() == null || getModel().getItems().isEmpty()) && !isTaskRunning()) {
+        if (getModel().getItems() == null &&!getModel().error.get() && !isTaskRunning()) {
             loadData();
-        } else if (getModel().isError().get()) {
-            getView().showError();
-        } else {
-            getView().update(getModel().getItems());
         }
     }
 

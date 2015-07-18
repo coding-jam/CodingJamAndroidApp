@@ -5,21 +5,11 @@ import org.parceler.Transient;
 import java.util.List;
 
 import it.cosenonjaviste.ListModel;
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.model.Category;
+import rx.functions.Action1;
 
-public class CategoryListModel implements ListModel {
+public class CategoryListModel extends ListModel {
     List<Category> items;
-
-    BindableBoolean empty = new BindableBoolean(true);
-
-    BindableBoolean error = new BindableBoolean();
-
-    @Transient
-    BindableBoolean loading = new BindableBoolean();
-
-    @Transient
-    BindableBoolean loadingMore = new BindableBoolean();
 
     public int size() {
         return items.size();
@@ -29,39 +19,32 @@ public class CategoryListModel implements ListModel {
         return items.get(index);
     }
 
+    @Transient
+    Action1<List<Category>> listChangeListener;
+
     public void done(List<Category> items) {
         this.items = items;
         error.set(false);
         empty.set(items.isEmpty());
+        if (listChangeListener != null) {
+            listChangeListener.call(items);
+        }
     }
 
     public void error() {
-        items = null;
+        this.items = null;
         error.set(true);
         empty.set(false);
     }
 
+    public void setListChangeListener(Action1<List<Category>> listChangeListener) {
+        this.listChangeListener = listChangeListener;
+        if (listChangeListener != null && items != null) {
+            listChangeListener.call(items);
+        }
+    }
+
     public List<Category> getItems() {
         return items;
-    }
-
-    public BindableBoolean isEmptyLayoutVisible() {
-        return empty.and(loading.not());
-    }
-
-    public BindableBoolean isListVisible() {
-        return empty.not().and(loading.not());
-    }
-
-    public BindableBoolean isError() {
-        return error;
-    }
-
-    public BindableBoolean isLoading() {
-        return loading;
-    }
-
-    public BindableBoolean isLoadingMore() {
-        return loadingMore;
     }
 }

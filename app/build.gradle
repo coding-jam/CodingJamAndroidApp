@@ -94,6 +94,7 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile 'com.malinskiy:superrecyclerview:1.1.0'
     apt 'com.android.databinding:compiler:1.0-rc1'
+    androidTestApt 'com.android.databinding:compiler:1.0-rc1'
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     apt 'org.parceler:parceler:1.0.1'
 

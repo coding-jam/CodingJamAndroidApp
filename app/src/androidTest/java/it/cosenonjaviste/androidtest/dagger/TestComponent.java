@@ -6,7 +6,7 @@ import dagger.Component;
 import it.cosenonjaviste.ApplicationComponent;
 import it.cosenonjaviste.BaseModule;
 import it.cosenonjaviste.androidtest.AuthorListTest;
-import it.cosenonjaviste.androidtest.CategoryListTest;
+import it.cosenonjaviste.androidtest.CategoryListFragmentTest;
 import it.cosenonjaviste.androidtest.MainActivityTest;
 import it.cosenonjaviste.androidtest.PageTest;
 import it.cosenonjaviste.androidtest.PostListTest;
@@ -23,7 +23,7 @@ public interface TestComponent extends ApplicationComponent {
 
     void inject(PageTest pageTest);
 
-    void inject(CategoryListTest categoryListTest);
+    void inject(CategoryListFragmentTest categoryListFragmentTest);
 
     void inject(PostListTest postListTest);
 

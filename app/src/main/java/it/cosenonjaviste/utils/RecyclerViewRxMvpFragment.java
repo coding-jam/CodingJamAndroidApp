@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 import it.cosenonjaviste.lib.mvp.RxMvpListView;
@@ -45,11 +46,12 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
     public void update(List<T> items) {
 //        superRecycler.hideMoreProgress();
 //        superRecycler.showRecycler();
-        adapter.reloadData(items);
+//        adapter.reloadData(items);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = RecyclerBinding.inflate(inflater, container, false);
+//        binding = DataBindingUtil.inflate(inflater, R.layout.recycler, null, false);
+        binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, null, false));
 
         adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));
         binding.list.setAdapter(adapter);
