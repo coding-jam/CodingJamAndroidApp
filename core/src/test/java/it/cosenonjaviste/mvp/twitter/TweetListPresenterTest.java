@@ -34,7 +34,7 @@ public class TweetListPresenterTest {
 
         TweetListModel model = new TweetListModel();
         testLifeCycle.initAndResume(model, presenter, view);
-        Assertions.assertThat(model.size()).isEqualTo(10);
+        Assertions.assertThat(model.getItems()).hasSize(10);
     }
 
     @Test public void testRetryAfterError() {
@@ -44,15 +44,15 @@ public class TweetListPresenterTest {
         TweetListModel model = new TweetListModel();
         testLifeCycle.initAndResume(model, presenter, view);
 
-        Assertions.assertThat(model.isError()).isTrue();
+        Assertions.assertThat(model.isError().get()).isTrue();
 
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(TestData.tweets());
 
         presenter.reloadData();
 
-        Assertions.assertThat(model.isError()).isFalse();
-        Assertions.assertThat(model.size()).isEqualTo(10);
+        Assertions.assertThat(model.isError().get()).isFalse();
+        Assertions.assertThat(model.getItems()).hasSize(10);
     }
 
     @Test public void testLoadMoreTweets() {
@@ -64,6 +64,6 @@ public class TweetListPresenterTest {
 
         presenter.loadNextPage();
 
-        Assertions.assertThat(tweetListModel.size()).isEqualTo(20);
+        Assertions.assertThat(tweetListModel.getItems()).hasSize(20);
     }
 }

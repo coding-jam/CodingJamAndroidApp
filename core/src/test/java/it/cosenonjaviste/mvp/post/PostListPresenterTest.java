@@ -71,14 +71,14 @@ public class PostListPresenterTest {
 
         PostListModel model = new PostListModel();
         testLifeCycle.initAndResume(model, presenter, view);
-        assertThat(model.isError()).isTrue();
+        assertThat(model.isError().get()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(6));
 
         presenter.reloadData();
 
-        assertThat(model.isError()).isFalse();
+        assertThat(model.isError().get()).isFalse();
         assertThat(model.getItems().size()).isEqualTo(6);
     }
 

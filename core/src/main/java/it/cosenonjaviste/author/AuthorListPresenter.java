@@ -12,6 +12,7 @@ import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
+import rx.functions.Action1;
 
 @PresenterScope
 public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorListView> {
@@ -21,31 +22,32 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
     @Inject public AuthorListPresenter() {
     }
 
-    public void loadAuthors() {
+
+    public void loadDataPullToRefresh() {
+        reloadData(b -> getModel().loadingPullToRefresh.set(b));
+    }
+
+    public void reloadData() {
+        reloadData(b -> getModel().loading.set(b));
+    }
+
+    private void reloadData(Action1<Boolean> loadingAction) {
         Observable<List<Author>> observable = wordPressService
                 .listAuthors()
                 .map(AuthorResponse::getAuthors)
-                .doOnNext(Collections::sort);
+                .doOnNext(Collections::sort)
+                .finallyDo(() -> loadingAction.call(false));
 
         subscribe(observable,
-                () -> getView().startLoading(),
-                posts -> {
-                    getModel().done(posts);
-                    getView().update(getModel().getItems());
-                }, throwable -> {
-                    getModel().error();
-                    getView().showError();
-                });
+                () -> loadingAction.call(true),
+                posts -> getModel().done(posts),
+                throwable -> getModel().error());
     }
 
     @Override public void resume() {
         super.resume();
-        if (getModel().isEmpty() && !isTaskRunning()) {
-            loadAuthors();
-        } else if (getModel().isError()) {
-            getView().showError();
-        } else {
-            getView().update(getModel().getItems());
+        if (!getModel().isLoaded() && !isTaskRunning()) {
+            reloadData();
         }
     }
 

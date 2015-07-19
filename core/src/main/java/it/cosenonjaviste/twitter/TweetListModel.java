@@ -2,12 +2,11 @@ package it.cosenonjaviste.twitter;
 
 import java.util.List;
 
+import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Tweet;
 
-public class TweetListModel {
-    List<Tweet> list;
-
-    boolean errorLoading;
+public class TweetListModel extends ListModelAdapter<Tweet> {
+    List<Tweet> items;
 
     boolean moreDataAvailable;
 
@@ -19,33 +18,15 @@ public class TweetListModel {
         return moreDataAvailable;
     }
 
-    public boolean isEmpty() {
-        return list == null || list.isEmpty();
-    }
-
-    public void done(List<Tweet> list) {
-        this.list = list;
-        errorLoading = false;
-    }
-
-    public void error() {
-        list = null;
-        errorLoading = true;
-    }
-
-    public int size() {
-        return list.size();
-    }
-
-    public boolean isError() {
-        return errorLoading;
-    }
-
     public void append(List<Tweet> object) {
-        list.addAll(object);
+        items.addAll(object);
     }
 
     public List<Tweet> getItems() {
-        return list;
+        return items;
+    }
+
+    @Override protected void setItems(List<Tweet> items) {
+        this.items = items;
     }
 }

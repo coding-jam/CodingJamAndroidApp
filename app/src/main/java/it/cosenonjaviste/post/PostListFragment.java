@@ -39,7 +39,10 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-//        superRecycler.setRefreshListener(presenter::reloadData);
+        binding.setModel(presenter.getModel());
+        binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
+        presenter.getModel().setListChangeListener(adapter::reloadData);
+
 //        superRecycler.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
         return view;
     }

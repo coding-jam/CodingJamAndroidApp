@@ -2,7 +2,7 @@ package it.cosenonjaviste.category;
 
 import java.util.List;
 
-import it.cosenonjaviste.ListModelAdapter;
+import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Category;
 
 public class CategoryListModel extends ListModelAdapter<Category> {

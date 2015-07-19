@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
@@ -20,37 +18,7 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
     protected BindableAdapter<T> adapter;
     protected RecyclerBinding binding;
 
-    public void showError() {
-//        binding.errorRoot.setVisibility(View.VISIBLE);
-//        superRecycler.hideRecycler();
-//        superRecycler.hideProgress();
-    }
-
-    public void startLoading() {
-        startLoading(true);
-    }
-
-    @Override public void startLoading(boolean showMainLoading) {
-//        binding.errorRoot.setVisibility(View.GONE);
-//        if (showMainLoading) {
-//            superRecycler.showProgress();
-//        } else {
-//            superRecycler.getSwipeToRefresh().setRefreshing(true);
-//        }
-    }
-
-    @Override public void startMoreItemsLoading() {
-//        superRecycler.showMoreProgress();
-    }
-
-    public void update(List<T> items) {
-//        superRecycler.hideMoreProgress();
-//        superRecycler.showRecycler();
-//        adapter.reloadData(items);
-    }
-
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        binding = DataBindingUtil.inflate(inflater, R.layout.recycler, null, false);
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, null, false));
 
         adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));

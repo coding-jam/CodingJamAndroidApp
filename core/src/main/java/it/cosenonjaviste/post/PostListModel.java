@@ -2,19 +2,18 @@ package it.cosenonjaviste.post;
 
 import java.util.List;
 
+import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 
-public class PostListModel {
+public class PostListModel extends ListModelAdapter<Post> {
 
     List<Post> items;
 
     Category category;
 
     boolean moreDataAvailable;
-
-    boolean errorLoading;
 
     Author author;
 
@@ -49,18 +48,8 @@ public class PostListModel {
         return items;
     }
 
-    public void done(List<Post> items) {
+    @Override public void setItems(List<Post> items) {
         this.items = items;
-        errorLoading = false;
-    }
-
-    public void error() {
-        items = null;
-        errorLoading = true;
-    }
-
-    public boolean isError() {
-        return errorLoading;
     }
 
     public void append(List<Post> object) {

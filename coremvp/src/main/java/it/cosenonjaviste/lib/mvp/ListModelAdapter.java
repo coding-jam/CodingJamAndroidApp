@@ -1,4 +1,4 @@
-package it.cosenonjaviste;
+package it.cosenonjaviste.lib.mvp;
 
 import org.parceler.Transient;
 
@@ -7,13 +7,16 @@ import java.util.List;
 import it.cosenonjaviste.bind.BindableBoolean;
 import rx.functions.Action1;
 
-public abstract class ListModelAdapter<T> implements ListModel {
+public abstract class ListModelAdapter<T> implements it.cosenonjaviste.lib.mvp.ListModel {
     public BindableBoolean empty = new BindableBoolean(true);
 
     public BindableBoolean error = new BindableBoolean();
 
     @Transient
     public BindableBoolean loading = new BindableBoolean();
+
+    @Transient
+    public BindableBoolean loadingNextPage = new BindableBoolean();
 
     @Transient
     public BindableBoolean loadingPullToRefresh = new BindableBoolean();
@@ -34,6 +37,10 @@ public abstract class ListModelAdapter<T> implements ListModel {
 
     @Override public BindableBoolean isLoadingPullToRefresh() {
         return loadingPullToRefresh;
+    }
+
+    @Override public BindableBoolean isLoadingNextPage() {
+        return loadingNextPage;
     }
 
     @Override public BindableBoolean isEmptyLayoutVisible() {

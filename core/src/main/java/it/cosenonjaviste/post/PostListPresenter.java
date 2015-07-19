@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.PresenterScope;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpListPresenter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
@@ -14,9 +14,10 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
+import rx.functions.Action1;
 
 @PresenterScope
-public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListView> {
+public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -25,28 +26,28 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
 
     @Override public void resume() {
         super.resume();
-        if (getModel().isEmpty() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !isTaskRunning()) {
             reloadData();
-        } else if (getModel().isError()) {
-            getView().showError();
-        } else {
-            getView().update(getModel().getItems());
         }
     }
 
+    public void loadDataPullToRefresh() {
+        reloadData(b -> getModel().loadingPullToRefresh.set(b));
+    }
+
     public void reloadData() {
-        Observable<List<Post>> observable = getObservable(1);
+        reloadData(b -> getModel().loading.set(b));
+    }
+
+    public void reloadData(Action1<Boolean> loadingAction) {
+        Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.call(false));
 
         subscribe(observable,
-                () -> getView().startLoading(getModel().isEmpty()),
+                () -> loadingAction.call(true),
                 posts -> {
                     getModel().done(new ArrayList<>(posts));
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    getView().update(getModel().getItems());
-                }, throwable -> {
-                    getModel().error();
-                    getView().showError();
-                });
+                }, throwable -> getModel().error());
     }
 
     public void goToDetail(Post item) {
@@ -55,16 +56,15 @@ public class PostListPresenter extends RxMvpPresenter<PostListModel, PostListVie
 
     public void loadNextPage() {
         int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
-        Observable<List<Post>> observable = getObservable(page);
+        Observable<List<Post>> observable = getObservable(page).finallyDo(() -> getModel().loadingNextPage.set(false));
 
-        subscribe(observable, () -> getView().startMoreItemsLoading(), posts -> {
-            getModel().append(posts);
-            getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-            getView().update(getModel().getItems());
-        }, throwable -> {
-            getModel().error();
-            getView().showError();
-        });
+        subscribe(observable,
+                () -> getModel().loadingNextPage.set(true),
+                posts -> {
+                    getModel().append(posts);
+                    getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+                },
+                throwable -> getModel().error());
     }
 
     private Observable<List<Post>> getObservable(int page) {
