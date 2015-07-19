@@ -21,6 +21,10 @@ public class CategoryListPresenter extends RxMvpPresenter<CategoryListModel, Cat
     @Inject public CategoryListPresenter() {
     }
 
+    @Override public CategoryListModel createDefaultModel() {
+        return new CategoryListModel();
+    }
+
     @Override public void resume() {
         super.resume();
         if (!getModel().isLoaded() && !isTaskRunning()) {

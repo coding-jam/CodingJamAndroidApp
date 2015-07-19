@@ -19,6 +19,9 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
     @Inject public TweetListPresenter() {
     }
 
+    @Override public TweetListModel createDefaultModel() {
+        return new TweetListModel();
+    }
 
     public void loadDataPullToRefresh() {
         reloadData(b -> getModel().loadingPullToRefresh.set(b));

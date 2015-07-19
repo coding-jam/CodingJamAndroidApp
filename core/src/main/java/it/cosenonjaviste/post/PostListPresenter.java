@@ -24,6 +24,10 @@ public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostLis
     @Inject public PostListPresenter() {
     }
 
+    @Override public PostListModel createDefaultModel() {
+        return new PostListModel();
+    }
+
     @Override public void resume() {
         super.resume();
         if (!getModel().isLoaded() && !isTaskRunning()) {

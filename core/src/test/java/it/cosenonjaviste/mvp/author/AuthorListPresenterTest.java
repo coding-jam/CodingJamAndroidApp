@@ -36,8 +36,7 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel model = new AuthorListModel();
-        view.initAndResume(model, presenter);
+        AuthorListModel model = view.initAndResume(presenter);
 
         assertThat(model.size()).isEqualTo(2);
     }
@@ -49,10 +48,9 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel model = new AuthorListModel();
-        view.initAndResume(model, presenter);
+        AuthorListModel model = view.initAndResume(presenter);
 
-        presenter.loadAuthors();
+        presenter.reloadData();
 
         assertThat(model.size()).isEqualTo(2);
     }
@@ -62,8 +60,7 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel authorListModel = new AuthorListModel();
-        view.initAndResume(authorListModel, presenter);
+        AuthorListModel authorListModel = view.initAndResume(presenter);
 
         presenter.goToAuthorDetail(1);
 

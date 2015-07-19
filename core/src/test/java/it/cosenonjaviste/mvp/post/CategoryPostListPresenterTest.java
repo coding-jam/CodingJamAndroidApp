@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.TestLifeCycle;
+import it.cosenonjaviste.mvp.ViewMock;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
 import it.cosenonjaviste.post.PostListView;
@@ -21,9 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryPostListPresenterTest {
 
-    @Mock PostListView view;
-
-    private TestLifeCycle testLifeCycle = new TestLifeCycle();
+    private ViewMock<PostListView> view = new ViewMock<>(PostListView.class);
 
     @Mock WordPressService wordPressService;
 
@@ -33,8 +31,9 @@ public class CategoryPostListPresenterTest {
     public void testLoad() throws InterruptedException {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
                 .thenReturn(TestData.postResponse(1));
-        PostListModel model = new PostListModel(new Category(1, "cat", 10));
-        testLifeCycle.initAndResume(model, presenter, view);
+
+        PostListModel model = view.initAndResume(new PostListModel(new Category(1, "cat", 10)), presenter);
+
         assertThat(model.getItems().size()).isEqualTo(1);
     }
 
@@ -45,9 +44,9 @@ public class CategoryPostListPresenterTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(2)))
                 .thenReturn(TestData.postResponse(5));
 
-        PostListModel model = new PostListModel(new Category(1, "cat", 10));
-        testLifeCycle.initAndResume(model, presenter, view);
+        PostListModel model = view.initAndResume(new PostListModel(new Category(1, "cat", 10)), presenter);
         presenter.loadNextPage();
+
         assertThat(model.getItems().size()).isEqualTo(15);
     }
 }

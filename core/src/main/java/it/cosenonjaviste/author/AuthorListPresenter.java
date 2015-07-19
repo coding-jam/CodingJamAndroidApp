@@ -22,6 +22,9 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
     @Inject public AuthorListPresenter() {
     }
 
+    @Override public AuthorListModel createDefaultModel() {
+        return new AuthorListModel();
+    }
 
     public void loadDataPullToRefresh() {
         reloadData(b -> getModel().loadingPullToRefresh.set(b));

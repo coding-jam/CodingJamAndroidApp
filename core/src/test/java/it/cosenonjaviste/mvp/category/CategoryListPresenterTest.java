@@ -13,13 +13,12 @@ import it.cosenonjaviste.category.CategoryListPresenter;
 import it.cosenonjaviste.category.CategoryListView;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.TestLifeCycle;
+import it.cosenonjaviste.mvp.ViewMock;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,11 +26,9 @@ public class CategoryListPresenterTest {
 
     @Mock WordPressService wordPressService;
 
-    private TestLifeCycle testLifeCycle = new TestLifeCycle();
-
     @InjectMocks CategoryListPresenter presenter;
 
-    @Mock CategoryListView view;
+    private ViewMock<CategoryListView> view = new ViewMock<>(CategoryListView.class);
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
@@ -40,8 +37,7 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel model = new CategoryListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        CategoryListModel model = view.initAndResume(presenter);
 
         assertThat(model.getItems()).hasSize(3);
         Category category = model.get(2);
@@ -55,8 +51,7 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        CategoryListModel model = new CategoryListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        CategoryListModel model = view.initAndResume(presenter);
 
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
@@ -71,12 +66,11 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel categoryListModel = new CategoryListModel();
-        testLifeCycle.initAndResume(categoryListModel, presenter, view);
+        CategoryListModel categoryListModel = view.initAndResume(presenter);
 
         presenter.goToPosts(1);
 
-        verify(view).openPostList(modelCaptor.capture());
+        view.verify().openPostList(modelCaptor.capture());
 
         assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }

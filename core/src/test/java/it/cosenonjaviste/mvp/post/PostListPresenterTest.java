@@ -12,7 +12,7 @@ import java.util.List;
 
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mvp.TestLifeCycle;
+import it.cosenonjaviste.mvp.ViewMock;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.post.PostListPresenter;
@@ -22,15 +22,12 @@ import rx.Observable;
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest {
 
-    @Mock PostListView view;
-
-    private TestLifeCycle testLifeCycle = new TestLifeCycle();
+    private ViewMock<PostListView> view = new ViewMock<>(PostListView.class);
 
     @Mock WordPressService wordPressService;
 
@@ -43,8 +40,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = new PostListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        PostListModel model = view.initAndResume(presenter);
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -56,8 +52,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(2)))
                 .thenReturn(postResponse(6));
 
-        PostListModel model = new PostListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        PostListModel model = view.initAndResume(presenter);
         presenter.loadNextPage();
 
         List<Post> items = model.getItems();
@@ -69,8 +64,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        PostListModel model = new PostListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        PostListModel model = view.initAndResume(presenter);
         assertThat(model.isError().get()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
@@ -87,13 +81,12 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = new PostListModel();
-        testLifeCycle.initAndResume(model, presenter, view);
+        PostListModel model = view.initAndResume(presenter);
         Post firstPost = model.getItems().get(0);
 
         presenter.goToDetail(firstPost);
 
-        verify(view).openDetail(modelCaptor.capture());
+        view.verify().openDetail(modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getUrl();

@@ -1,9 +1,6 @@
 package it.cosenonjaviste;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -13,18 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import org.parceler.Parcels;
-
 import it.cosenonjaviste.author.AuthorListFragment;
-import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
-import it.cosenonjaviste.category.CategoryListModel;
 import it.cosenonjaviste.contact.ContactFragment;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.post.PostListFragment;
-import it.cosenonjaviste.post.PostListModel;
 import it.cosenonjaviste.twitter.TweetListFragment;
-import it.cosenonjaviste.twitter.TweetListModel;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -90,25 +80,15 @@ public class MainActivity extends AppCompatActivity {
     private Fragment createFragment(int menuItemId) {
         switch (menuItemId) {
             case R.id.drawer_categories:
-                return createView(this, CategoryListFragment.class, new CategoryListModel());
+                return Fragment.instantiate(this, CategoryListFragment.class.getName());
             case R.id.drawer_authors:
-                return createView(this, AuthorListFragment.class, new AuthorListModel());
+                return Fragment.instantiate(this, AuthorListFragment.class.getName());
             case R.id.drawer_twitter:
-                return createView(this, TweetListFragment.class, new TweetListModel());
+                return Fragment.instantiate(this, TweetListFragment.class.getName());
             case R.id.drawer_contacts:
-                return createView(this, ContactFragment.class, null);
+                return Fragment.instantiate(this, ContactFragment.class.getName());
             default:
-                return createView(this, PostListFragment.class, new PostListModel());
+                return Fragment.instantiate(this, PostListFragment.class.getName());
         }
-    }
-
-    public static <T, M> T createView(@NonNull Context context, @NonNull Class<?> viewClass, @Nullable M model) {
-        Fragment fragment = Fragment.instantiate(context, viewClass.getName());
-        if (model != null) {
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
-            fragment.setArguments(bundle);
-        }
-        return (T) fragment;
     }
 }
