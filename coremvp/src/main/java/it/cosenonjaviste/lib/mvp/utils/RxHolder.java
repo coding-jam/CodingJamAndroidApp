@@ -3,10 +3,7 @@ package it.cosenonjaviste.lib.mvp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.lib.mvp.ObservableWithFactory;
-import it.cosenonjaviste.lib.mvp.PresenterScope;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action0;
@@ -16,7 +13,6 @@ import rx.functions.Func0;
 import rx.observables.ConnectableObservable;
 import rx.subscriptions.CompositeSubscription;
 
-@PresenterScope
 public class RxHolder {
     private SchedulerManager schedulerManager;
 
@@ -26,7 +22,7 @@ public class RxHolder {
 
     protected final List<ObservableWithFactory> observables = new ArrayList<>();
 
-    @Inject public RxHolder(SchedulerManager schedulerManager) {
+    public RxHolder(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
     }
 
