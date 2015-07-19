@@ -31,7 +31,7 @@ public class ContactFragment extends LifeCycleFragment implements ContactView {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ContactBinding binding = ContactBinding.inflate(inflater, container, false);
-        binding.setModel(presenter.getModel());
+        binding.setPresenter(presenter);
         binding.sendButton.setOnClickListener(v -> presenter.send());
         return binding.getRoot();
     }

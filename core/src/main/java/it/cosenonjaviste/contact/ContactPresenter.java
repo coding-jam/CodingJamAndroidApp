@@ -2,6 +2,7 @@ package it.cosenonjaviste.contact;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.bind.BindableString;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
@@ -14,6 +15,8 @@ import rx.Observable;
 public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> {
 
     @Inject MailJetService mailJetService;
+
+    public BindableBoolean sending = new BindableBoolean();
 
     @Inject public ContactPresenter() {
     }
@@ -62,19 +65,44 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
         ContactModel model = getModel();
         model.sendPressed = true;
         if (validate()) {
+            sending.set(true);
+
             Observable<Response> observable = mailJetService.sendEmail(
                     model.name + " <info@cosenonjaviste.it>",
                     "info@cosenonjaviste.it",
                     "Email from " + model.name,
                     "Reply to: " + model.email + "\n" + model.message
-            ).finallyDo(() -> getModel().sending.set(false));
+            ).finallyDo(() -> sending.set(false));
 
             subscribe(
                     observable,
-                    () -> getModel().sending.set(true),
                     r -> getView().showSentMessage(),
                     t -> getView().showSentError()
             );
         }
+    }
+
+    public BindableString getName() {
+        return getModel().name;
+    }
+
+    public BindableString getEmail() {
+        return getModel().email;
+    }
+
+    public BindableString getMessage() {
+        return getModel().message;
+    }
+
+    public BindableValidationError getNameError() {
+        return getModel().nameError;
+    }
+
+    public BindableValidationError getEmailError() {
+        return getModel().emailError;
+    }
+
+    public BindableValidationError getMessageError() {
+        return getModel().messageError;
     }
 }
