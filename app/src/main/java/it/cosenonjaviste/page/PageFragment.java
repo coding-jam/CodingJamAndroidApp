@@ -18,8 +18,6 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpFragment;
@@ -27,9 +25,9 @@ import it.cosenonjaviste.lib.mvp.RxMvpFragment;
 @ParcelClass(PageModel.class)
 public class PageFragment extends RxMvpFragment implements PageView {
 
-    @InjectView(R.id.web_view) WebView webView;
+    private WebView webView;
 
-    @InjectView(R.id.progress_detail) View progressBar;
+    private View progressBar;
 
     @Inject PagePresenter presenter;
 
@@ -41,7 +39,9 @@ public class PageFragment extends RxMvpFragment implements PageView {
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.post_detail, container, false);
-        ButterKnife.inject(this, view);
+
+        webView = (WebView) view.findViewById(R.id.web_view);
+        progressBar = view.findViewById(R.id.progress_detail);
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

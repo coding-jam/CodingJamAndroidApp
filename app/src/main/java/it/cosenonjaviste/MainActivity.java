@@ -11,13 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import org.parceler.Parcels;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import it.cosenonjaviste.author.AuthorListFragment;
 import it.cosenonjaviste.author.AuthorListModel;
 import it.cosenonjaviste.category.CategoryListFragment;
@@ -30,8 +27,8 @@ import it.cosenonjaviste.twitter.TweetListFragment;
 import it.cosenonjaviste.twitter.TweetListModel;
 
 public class MainActivity extends AppCompatActivity {
-    @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @InjectView(R.id.left_drawer_menu) NavigationView drawerMenu;
+    private DrawerLayout drawerLayout;
+    private NavigationView drawerMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        ButterKnife.inject(this);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerMenu = (NavigationView) findViewById(R.id.left_drawer_menu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
@@ -58,11 +56,10 @@ public class MainActivity extends AppCompatActivity {
             menuItem.setChecked(true);
             return true;
         });
-        Menu drawerMenu = this.drawerMenu.getMenu();
 
         if (savedInstanceState == null) {
             selectItem(R.id.drawer_post);
-            drawerMenu.findItem(R.id.drawer_post).setChecked(true);
+            drawerMenu.getMenu().findItem(R.id.drawer_post).setChecked(true);
         }
     }
 
