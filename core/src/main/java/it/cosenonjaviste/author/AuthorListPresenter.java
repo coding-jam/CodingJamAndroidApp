@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.PresenterScope;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
@@ -15,7 +15,7 @@ import rx.Observable;
 import rx.functions.Action1;
 
 @PresenterScope
-public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorListView> {
+public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, AuthorListModel, AuthorListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -27,11 +27,11 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(b -> getModel().loadingPullToRefresh.set(b));
+        reloadData(b -> loadingPullToRefresh.set(b));
     }
 
     public void reloadData() {
-        reloadData(b -> getModel().loading.set(b));
+        reloadData(b -> loading.set(b));
     }
 
     private void reloadData(Action1<Boolean> loadingAction) {
@@ -43,8 +43,8 @@ public class AuthorListPresenter extends RxMvpPresenter<AuthorListModel, AuthorL
 
         subscribe(observable,
                 () -> loadingAction.call(true),
-                posts -> getModel().done(posts),
-                throwable -> getModel().error());
+                posts -> done(posts),
+                throwable -> error());
     }
 
     @Override public void resume() {

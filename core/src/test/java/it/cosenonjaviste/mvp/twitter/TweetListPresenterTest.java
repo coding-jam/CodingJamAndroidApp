@@ -41,14 +41,14 @@ public class TweetListPresenterTest {
 
         TweetListModel model = view.initAndResume(presenter);
 
-        Assertions.assertThat(model.isError().get()).isTrue();
+        Assertions.assertThat(presenter.isError().get()).isTrue();
 
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(TestData.tweets());
 
         presenter.reloadData();
 
-        Assertions.assertThat(model.isError().get()).isFalse();
+        Assertions.assertThat(presenter.isError().get()).isFalse();
         Assertions.assertThat(model.getItems()).hasSize(10);
     }
 

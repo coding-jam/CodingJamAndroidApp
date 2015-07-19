@@ -1,4 +1,17 @@
 package it.cosenonjaviste.lib.mvp;
 
-public class RxMvpListPresenter<M extends ListModelAdapter<?>, V> extends RxMvpPresenter<M, V> {
+import it.cosenonjaviste.bind.BindableBoolean;
+
+public interface RxMvpListPresenter {
+    BindableBoolean isLoading();
+
+    BindableBoolean isLoadingPullToRefresh();
+
+    BindableBoolean isLoadingNextPage();
+
+    BindableBoolean isEmptyLayoutVisible();
+
+    BindableBoolean isListVisible();
+
+    BindableBoolean isError();
 }

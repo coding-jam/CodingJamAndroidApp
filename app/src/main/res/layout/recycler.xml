@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="model"
-            type="it.cosenonjaviste.lib.mvp.ListModel"/>
+            name="presenter"
+            type="it.cosenonjaviste.lib.mvp.RxMvpListPresenter"/>
     </data>
 
     <FrameLayout
@@ -25,13 +25,13 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:indeterminate="false"
-                app:visibleOrGone="@{model.loadingNextPage}"/>
+                app:visibleOrGone="@{presenter.loadingNextPage}"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:visibleOrGone="@{model.emptyLayoutVisible}">
+                app:visibleOrGone="@{presenter.emptyLayoutVisible}">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                app:visibleOrGone="@{model.loading}">
+                app:visibleOrGone="@{presenter.loading}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -79,8 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
-                app:refreshing="@{model.loadingPullToRefresh}"
-                app:visibleOrGone="@{model.listVisible}">
+                app:refreshing="@{presenter.loadingPullToRefresh}"
+                app:visibleOrGone="@{presenter.listVisible}">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"
@@ -99,7 +99,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
-            app:visibleOrGone="@{model.error}">
+            app:visibleOrGone="@{presenter.error}">
 
             <TextView
                 android:id="@+id/error_message"

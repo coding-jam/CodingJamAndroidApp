@@ -38,9 +38,9 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        binding.setModel(presenter.getModel());
+        binding.setPresenter(presenter);
         binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
-        presenter.getModel().setListChangeListener(adapter::reloadData);
+        presenter.setListChangeListener(adapter::reloadData);
         return view;
     }
 

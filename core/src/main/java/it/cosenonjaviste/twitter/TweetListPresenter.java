@@ -5,14 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.PresenterScope;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 import rx.functions.Action1;
 
 @PresenterScope
-public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetListView> {
+public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetListModel, TweetListView> {
 
     @Inject TwitterService twitterService;
 
@@ -24,11 +24,11 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(b -> getModel().loadingPullToRefresh.set(b));
+        reloadData(b -> loadingPullToRefresh.set(b));
     }
 
     public void reloadData() {
-        reloadData(b -> getModel().loading.set(b));
+        reloadData(b -> loading.set(b));
     }
 
     public void reloadData(Action1<Boolean> loadingAction) {
@@ -37,9 +37,9 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
         subscribe(observable,
                 () -> loadingAction.call(true),
                 posts -> {
-                    getModel().done(posts);
+                    done(posts);
                     getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                }, throwable -> getModel().error());
+                }, throwable -> error());
     }
 
     @Override public void resume() {
@@ -50,17 +50,17 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
     }
 
     public void loadNextPage() {
-        if (!getModel().isLoadingNextPage().get()) {
+        if (!isLoadingNextPage().get()) {
             int page = calcNextPage(getModel().getItems().size(), TwitterService.PAGE_SIZE);
-            Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> getModel().loadingNextPage.set(false));
+            Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> loadingNextPage.set(false));
 
             subscribe(observable,
-                    () -> getModel().loadingNextPage.set(true),
+                    () -> loadingNextPage.set(true),
                     posts -> {
                         getModel().append(posts);
                         getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
                     },
-                    throwable -> getModel().error());
+                    throwable -> error());
         }
     }
 

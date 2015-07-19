@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.PresenterScope;
-import it.cosenonjaviste.lib.mvp.RxMvpListPresenter;
+import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
@@ -17,7 +17,7 @@ import rx.Observable;
 import rx.functions.Action1;
 
 @PresenterScope
-public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostListView> {
+public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
@@ -36,11 +36,11 @@ public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostLis
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(b -> getModel().loadingPullToRefresh.set(b));
+        reloadData(b -> loadingPullToRefresh.set(b));
     }
 
     public void reloadData() {
-        reloadData(b -> getModel().loading.set(b));
+        reloadData(b -> loading.set(b));
     }
 
     public void reloadData(Action1<Boolean> loadingAction) {
@@ -49,9 +49,9 @@ public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostLis
         subscribe(observable,
                 () -> loadingAction.call(true),
                 posts -> {
-                    getModel().done(new ArrayList<>(posts));
+                    done(new ArrayList<>(posts));
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                }, throwable -> getModel().error());
+                }, throwable -> error());
     }
 
     public void goToDetail(Post item) {
@@ -60,15 +60,15 @@ public class PostListPresenter extends RxMvpListPresenter<PostListModel, PostLis
 
     public void loadNextPage() {
         int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
-        Observable<List<Post>> observable = getObservable(page).finallyDo(() -> getModel().loadingNextPage.set(false));
+        Observable<List<Post>> observable = getObservable(page).finallyDo(() -> loadingNextPage.set(false));
 
         subscribe(observable,
-                () -> getModel().loadingNextPage.set(true),
+                () -> loadingNextPage.set(true),
                 posts -> {
                     getModel().append(posts);
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                 },
-                throwable -> getModel().error());
+                throwable -> error());
     }
 
     private Observable<List<Post>> getObservable(int page) {
