@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Category;
@@ -11,7 +12,6 @@ import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
-import rx.functions.Action1;
 
 @PresenterScope
 public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, CategoryListModel, CategoryListView> {
@@ -33,22 +33,23 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, C
     }
 
     public void loadDataPullToRefresh() {
-        loadData(b -> loadingPullToRefresh.set(b));
+        loadData(loadingPullToRefresh);
     }
 
     public void loadData() {
-        loadData(b -> loading.set(b));
+        loadData(loading);
     }
 
-    private void loadData(Action1<Boolean> loadingSetter) {
+    private void loadData(BindableBoolean loadingSetter) {
+        loadingSetter.set(true);
+
         Observable<List<Category>> observable = wordPressService
                 .listCategories()
                 .map(CategoryResponse::getCategories)
-                .finallyDo(() -> loadingSetter.call(false));
+                .finallyDo(() -> loadingSetter.set(false));
 
         subscribe(observable,
-                () -> loadingSetter.call(true),
-                posts -> done(posts),
+                this::done,
                 throwable -> error()
         );
     }

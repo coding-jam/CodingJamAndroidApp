@@ -30,24 +30,24 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
 
     @Override public void resume() {
         super.resume();
-        if (!getModel().isLoaded() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !loading.get()) {
             reloadData();
         }
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(b -> loadingPullToRefresh.set(b));
+        reloadData(loadingPullToRefresh::set);
     }
 
     public void reloadData() {
-        reloadData(b -> loading.set(b));
+        reloadData(loading::set);
     }
 
     public void reloadData(Action1<Boolean> loadingAction) {
+        loadingAction.call(true);
         Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.call(false));
 
         subscribe(observable,
-                () -> loadingAction.call(true),
                 posts -> {
                     done(new ArrayList<>(posts));
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
@@ -59,11 +59,11 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
     }
 
     public void loadNextPage() {
+        loadingNextPage.set(true);
         int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
         Observable<List<Post>> observable = getObservable(page).finallyDo(() -> loadingNextPage.set(false));
 
         subscribe(observable,
-                () -> loadingNextPage.set(true),
                 posts -> {
                     getModel().append(posts);
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);

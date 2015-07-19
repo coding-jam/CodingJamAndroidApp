@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Author;
@@ -12,7 +13,6 @@ import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.post.PostListModel;
 import rx.Observable;
-import rx.functions.Action1;
 
 @PresenterScope
 public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, AuthorListModel, AuthorListView> {
@@ -27,23 +27,24 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(b -> loadingPullToRefresh.set(b));
+        reloadData(loadingPullToRefresh);
     }
 
     public void reloadData() {
-        reloadData(b -> loading.set(b));
+        reloadData(loading);
     }
 
-    private void reloadData(Action1<Boolean> loadingAction) {
+    private void reloadData(BindableBoolean loadingAction) {
+        loadingAction.set(true);
+
         Observable<List<Author>> observable = wordPressService
                 .listAuthors()
                 .map(AuthorResponse::getAuthors)
                 .doOnNext(Collections::sort)
-                .finallyDo(() -> loadingAction.call(false));
+                .finallyDo(() -> loadingAction.set(false));
 
         subscribe(observable,
-                () -> loadingAction.call(true),
-                posts -> done(posts),
+                this::done,
                 throwable -> error());
     }
 
