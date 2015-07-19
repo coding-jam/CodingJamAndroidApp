@@ -47,17 +47,18 @@ public class TweetListPresenter extends RxMvpPresenter<TweetListModel, TweetList
     }
 
     public void loadNextPage() {
-        int page = calcNextPage(getModel().getItems().size(), TwitterService.PAGE_SIZE);
-        Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> getModel().loadingNextPage.set(false));
+        if (!getModel().isLoadingNextPage().get()) {
+            int page = calcNextPage(getModel().getItems().size(), TwitterService.PAGE_SIZE);
+            Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> getModel().loadingNextPage.set(false));
 
-        subscribe(observable,
-                () -> getModel().loadingNextPage.set(true),
-                posts -> {
-                    getModel().append(posts);
-                    getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                },
-                throwable -> getModel().error());
-
+            subscribe(observable,
+                    () -> getModel().loadingNextPage.set(true),
+                    posts -> {
+                        getModel().append(posts);
+                        getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
+                    },
+                    throwable -> getModel().error());
+        }
     }
 
     private static int calcNextPage(int size, int pageSize) {

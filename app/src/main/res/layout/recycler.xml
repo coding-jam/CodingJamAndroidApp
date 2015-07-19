@@ -25,7 +25,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:indeterminate="false"
-                app:visibleOrGone="@{model.loadingMore}"/>
+                app:visibleOrGone="@{model.loadingNextPage}"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

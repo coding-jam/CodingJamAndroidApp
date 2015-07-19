@@ -30,7 +30,7 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
         ).inject(this);
     }
 
-    @NonNull @Override protected RecyclerView.LayoutManager createGridLayoutManager() {
+    @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {
         return new LinearLayoutManager(getActivity());
     }
 
@@ -39,8 +39,11 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
         binding.setModel(presenter.getModel());
         binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
         presenter.getModel().setListChangeListener(adapter::reloadData);
-//        superRecycler.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
         return view;
+    }
+
+    @Override protected void loadMoreItems() {
+        presenter.loadNextPage();
     }
 
     @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, ViewGroup v) {

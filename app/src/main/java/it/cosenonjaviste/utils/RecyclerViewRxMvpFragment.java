@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,17 +24,31 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
 
         adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));
         binding.list.setAdapter(adapter);
-        binding.list.setLayoutManager(createGridLayoutManager());
+        RecyclerView.LayoutManager layoutManager = createLayoutManager();
+        binding.list.setLayoutManager(layoutManager);
         binding.errorRetry.setOnClickListener(v -> retry());
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) layoutManager) {
+                @Override
+                public void onLoadMore(int current_page) {
+                    loadMoreItems();
+                }
+            });
+        }
 
         binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
 
         return binding.getRoot();
     }
 
+    protected void loadMoreItems() {
+
+    }
+
     protected abstract void retry();
 
-    @NonNull protected RecyclerView.LayoutManager createGridLayoutManager() {
+    @NonNull protected RecyclerView.LayoutManager createLayoutManager() {
         return new GridLayoutManager(getActivity(), 2);
     }
 

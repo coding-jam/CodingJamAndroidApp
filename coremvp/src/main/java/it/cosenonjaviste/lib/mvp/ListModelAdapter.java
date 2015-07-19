@@ -7,7 +7,7 @@ import java.util.List;
 import it.cosenonjaviste.bind.BindableBoolean;
 import rx.functions.Action1;
 
-public abstract class ListModelAdapter<T> implements it.cosenonjaviste.lib.mvp.ListModel {
+public abstract class ListModelAdapter<T> implements ListModel {
     public BindableBoolean empty = new BindableBoolean(true);
 
     public BindableBoolean error = new BindableBoolean();
@@ -22,14 +22,7 @@ public abstract class ListModelAdapter<T> implements it.cosenonjaviste.lib.mvp.L
     public BindableBoolean loadingPullToRefresh = new BindableBoolean();
 
     @Transient
-    public BindableBoolean loadingMore = new BindableBoolean();
-
-    @Transient
     Action1<List<T>> listChangeListener;
-
-    @Override public BindableBoolean isLoadingMore() {
-        return loadingMore;
-    }
 
     @Override public BindableBoolean isLoading() {
         return loading;

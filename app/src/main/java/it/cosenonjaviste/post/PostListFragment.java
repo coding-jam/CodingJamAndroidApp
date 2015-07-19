@@ -33,7 +33,7 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
         ).inject(this);
     }
 
-    @NonNull @Override protected RecyclerView.LayoutManager createGridLayoutManager() {
+    @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {
         return new LinearLayoutManager(getActivity());
     }
 
@@ -42,9 +42,11 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
         binding.setModel(presenter.getModel());
         binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
         presenter.getModel().setListChangeListener(adapter::reloadData);
-
-//        superRecycler.setupMoreListener((numberOfItems, numberBeforeMore, currentItemPos) -> presenter.loadNextPage(), 1);
         return view;
+    }
+
+    @Override protected void loadMoreItems() {
+        presenter.loadNextPage();
     }
 
     @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, ViewGroup v) {
