@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.cosenonjaviste.lib.mvp.InstanceStateListener;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -20,7 +21,7 @@ public class ViewMock<V> {
 
     private Class<V> viewClass;
 
-    private TestLifeCycle testLifeCycle = new TestLifeCycle();
+    private TestSchedulerManager schedulerManager = new TestSchedulerManager();
 
     public ViewMock(Class<V> viewClass) {
         this.viewClass = viewClass;
@@ -68,12 +69,18 @@ public class ViewMock<V> {
         if (model == null) {
             throw new RuntimeException("createDefaultModel not implemented in " + presenter.getClass().getName());
         }
-        testLifeCycle.initAndResume(model, presenter, mock);
+        initAndResume(model, presenter);
         return model;
     }
 
     public <M> M initAndResume(M model, RxMvpPresenter<M, V> presenter) {
-        testLifeCycle.initAndResume(model, presenter, mock);
+        presenter.initLifeCycle(schedulerManager);
+        presenter.loadState(new InstanceStateListener.ObjectLoader() {
+            @Override public <T> T load(String key) {
+                return (T) model;
+            }
+        });
+        presenter.resume(mock);
         return model;
     }
 }

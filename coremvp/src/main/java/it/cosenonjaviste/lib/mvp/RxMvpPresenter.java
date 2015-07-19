@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-public abstract class RxMvpPresenter<M, V> {
+public abstract class RxMvpPresenter<M, V> implements LifeCycleListener<V>, InstanceStateListener {
 
     public static final String MODEL = "model";
 
@@ -27,22 +27,36 @@ public abstract class RxMvpPresenter<M, V> {
         return null;
     }
 
-    @Inject public final void initLifeCycle(LifeCycle lifeCycle, SchedulerManager schedulerManager) {
-        lifeCycle.asObservable()
-                .filter(e -> e.getType() == LifeCycle.EventType.RESUME)
-                .subscribe(e -> {
-                    view = (V) e.getSource();
-                    resume();
-                });
-        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_VIEW, () -> this.view = null);
-        lifeCycle.subscribeState(saver -> saver.call(MODEL, getModel()), loader -> {
-            model = (M) loader.call(MODEL);
-            if (model == null) {
-                model = createDefaultModel();
-            }
-        });
+    @Inject public final void initLifeCycle(SchedulerManager schedulerManager) {
+        rxHolder = new RxHolder(schedulerManager);
+    }
 
-        rxHolder = new RxHolder(schedulerManager, lifeCycle);
+    @Override public void saveState(ObjectSaver saver) {
+        saver.save(MODEL, getModel());
+    }
+
+    @Override public void loadState(ObjectLoader loader) {
+        model = loader.load(MODEL);
+        if (model == null) {
+            model = createDefaultModel();
+        }
+    }
+
+    @Override public void resume(V view) {
+        this.view = view;
+        resume();
+    }
+
+    @Override public void pause() {
+        rxHolder.pause();
+    }
+
+    @Override public void detachView() {
+        this.view = null;
+    }
+
+    @Override public void destroy() {
+        rxHolder.destroy();
     }
 
     public final V getView() {

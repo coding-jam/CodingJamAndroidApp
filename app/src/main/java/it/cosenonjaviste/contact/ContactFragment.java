@@ -14,10 +14,10 @@ import javax.inject.Inject;
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.ContactBinding;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.LifeCycleFragment;
 
 @ParcelClass(ContactModel.class)
-public class ContactFragment extends RxMvpFragment implements ContactView {
+public class ContactFragment extends LifeCycleFragment implements ContactView {
 
     @Inject ContactPresenter presenter;
 
@@ -25,6 +25,8 @@ public class ContactFragment extends RxMvpFragment implements ContactView {
         CoseNonJavisteApp.createComponent(this,
                 c -> DaggerContactComponent.builder().applicationComponent(c).build()
         ).inject(this);
+        addListener(presenter);
+        addInstanceStateListener(presenter);
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.LifeCycle;
 import it.cosenonjaviste.lib.mvp.ObservableWithFactory;
 import it.cosenonjaviste.lib.mvp.PresenterScope;
 import rx.Observable;
@@ -27,10 +26,8 @@ public class RxHolder {
 
     protected final List<ObservableWithFactory> observables = new ArrayList<>();
 
-    @Inject public RxHolder(SchedulerManager schedulerManager, LifeCycle lifeCycle) {
+    @Inject public RxHolder(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
-        lifeCycle.subscribe(LifeCycle.EventType.PAUSE, this::pause);
-        lifeCycle.subscribe(LifeCycle.EventType.DESTROY_ALL, this::destroy);
     }
 
     public <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {

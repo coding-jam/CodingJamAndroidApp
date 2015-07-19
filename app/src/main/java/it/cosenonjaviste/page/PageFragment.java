@@ -20,10 +20,10 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.LifeCycleFragment;
 
 @ParcelClass(PageModel.class)
-public class PageFragment extends RxMvpFragment implements PageView {
+public class PageFragment extends LifeCycleFragment implements PageView {
 
     private WebView webView;
 
@@ -35,6 +35,8 @@ public class PageFragment extends RxMvpFragment implements PageView {
         CoseNonJavisteApp.createComponent(this,
                 c -> DaggerPageComponent.builder().applicationComponent(c).build()
         ).inject(this);
+        addListener(presenter);
+        addInstanceStateListener(presenter);
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

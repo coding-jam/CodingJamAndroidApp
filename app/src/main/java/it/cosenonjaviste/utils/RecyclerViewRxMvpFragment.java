@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
-import it.cosenonjaviste.lib.mvp.RxMvpFragment;
+import it.cosenonjaviste.lib.mvp.LifeCycleFragment;
 import it.cosenonjaviste.lib.mvp.RxMvpListView;
 
-public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment implements RxMvpListView<T> {
+public abstract class RecyclerViewRxMvpFragment<T> extends LifeCycleFragment implements RxMvpListView<T> {
     protected BindableAdapter<T> adapter;
     protected RecyclerBinding binding;
 

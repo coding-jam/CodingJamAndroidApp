@@ -29,6 +29,8 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> im
         CoseNonJavisteApp.createComponent(this,
                 c -> DaggerCategoryListComponent.builder().applicationComponent(c).build()
         ).inject(this);
+        addListener(presenter);
+        addInstanceStateListener(presenter);
     }
 
     @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, ViewGroup v) {

@@ -28,6 +28,8 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implemen
         CoseNonJavisteApp.createComponent(this,
                 c -> DaggerTweetListComponent.builder().applicationComponent(c).build()
         ).inject(this);
+        addListener(presenter);
+        addInstanceStateListener(presenter);
     }
 
     @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {
