@@ -31,7 +31,7 @@ public abstract class RecyclerViewRxMvpFragment<T> extends RxMvpFragment impleme
         if (layoutManager instanceof LinearLayoutManager) {
             binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) layoutManager) {
                 @Override
-                public void onLoadMore(int current_page) {
+                public void onLoadMore() {
                     loadMoreItems();
                 }
             });
