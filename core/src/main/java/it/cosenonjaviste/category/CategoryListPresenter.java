@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.bind.BindableBoolean;
-import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;

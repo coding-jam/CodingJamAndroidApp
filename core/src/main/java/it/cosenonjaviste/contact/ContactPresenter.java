@@ -2,9 +2,9 @@ package it.cosenonjaviste.contact;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.bind.BindableString;
-import it.cosenonjaviste.lib.mvp.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.utils.EmailVerifier;

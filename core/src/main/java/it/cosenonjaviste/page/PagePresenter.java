@@ -2,7 +2,7 @@ package it.cosenonjaviste.page;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.mvp.PresenterScope;
+import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 @PresenterScope
