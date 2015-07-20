@@ -50,7 +50,7 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
 
     @Override public void resume() {
         super.resume();
-        if (!getModel().isLoaded() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !loading.get()) {
             reloadData();
         }
     }

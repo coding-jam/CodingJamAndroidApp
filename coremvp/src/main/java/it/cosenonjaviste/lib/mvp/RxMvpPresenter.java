@@ -69,8 +69,4 @@ public abstract class RxMvpPresenter<M, V> implements LifeCycleListener<V>, Inst
     public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
         rxHolder.subscribe(observable, onNext, onError);
     }
-
-    public boolean isTaskRunning() {
-        return rxHolder.isTaskRunning();
-    }
 }

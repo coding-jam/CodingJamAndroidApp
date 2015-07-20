@@ -45,7 +45,7 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
 
     @Override public void resume() {
         super.resume();
-        if (!getModel().isLoaded() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !loading.get()) {
             reloadData();
         }
     }

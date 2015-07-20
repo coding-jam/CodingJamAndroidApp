@@ -27,7 +27,7 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, C
 
     @Override public void resume() {
         super.resume();
-        if (!getModel().isLoaded() && !isTaskRunning()) {
+        if (!getModel().isLoaded() && !loading.get()) {
             loadData();
         }
     }

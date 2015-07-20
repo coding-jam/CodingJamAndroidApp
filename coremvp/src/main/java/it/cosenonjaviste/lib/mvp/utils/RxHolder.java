@@ -92,8 +92,4 @@ public class RxHolder {
     public CompositeSubscription getSubscriptions() {
         return subscriptions;
     }
-
-    public boolean isTaskRunning() {
-        return !observables.isEmpty();
-    }
 }
