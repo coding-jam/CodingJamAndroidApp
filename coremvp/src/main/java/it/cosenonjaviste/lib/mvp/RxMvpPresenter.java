@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import it.cosenonjaviste.lib.mvp.utils.RxHolder;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
-import rx.functions.Action0;
 import rx.functions.Action1;
 
 public abstract class RxMvpPresenter<M, V> implements LifeCycleListener<V>, InstanceStateListener {
@@ -67,12 +66,8 @@ public abstract class RxMvpPresenter<M, V> implements LifeCycleListener<V>, Inst
         return model;
     }
 
-    public <T> void subscribe(Observable<T> observable, Action0 onAttach, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribe(observable, onAttach, onNext, onError);
-    }
-
     public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribe(observable, null, onNext, onError);
+        rxHolder.subscribe(observable, onNext, onError);
     }
 
     public boolean isTaskRunning() {
