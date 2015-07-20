@@ -27,7 +27,7 @@ public class BindableBoolean extends BaseObservable {
     }
 
     public BindableBoolean not() {
-        BindableBoolean not = new BindableBoolean(!value);
+        final BindableBoolean not = new BindableBoolean(!value);
         addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
             @Override public void onPropertyChanged(Observable sender, int propertyId) {
                 not.set(!BindableBoolean.this.value);
@@ -36,8 +36,8 @@ public class BindableBoolean extends BaseObservable {
         return not;
     }
 
-    public BindableBoolean and(BindableBoolean other) {
-        BindableBoolean ret = new BindableBoolean(value && other.value);
+    public BindableBoolean and(final BindableBoolean other) {
+        final BindableBoolean ret = new BindableBoolean(value && other.value);
         OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
             @Override public void onPropertyChanged(Observable sender, int propertyId) {
                 ret.set(value && other.value);

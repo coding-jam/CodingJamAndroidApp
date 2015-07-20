@@ -27,7 +27,7 @@ public class BindableString extends BaseObservable {
         return value;
     }
 
-    public void addListener(Listener listener) {
+    public void addListener(final Listener listener) {
         addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
             @Override public void onPropertyChanged(Observable sender, int propertyId) {
                 listener.call(((BindableString) sender).get());

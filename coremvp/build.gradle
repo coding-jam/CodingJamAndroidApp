@@ -1,6 +1,9 @@
 apply plugin: 'java'
 
-apply plugin: 'me.tatarka.retrolambda'
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
 
 dependencies {
     compile 'com.google.dagger:dagger:2.0.1'
