@@ -10,6 +10,7 @@ import java.util.Map;
 
 import it.cosenonjaviste.lib.mvp.InstanceStateListener;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.utils.TestSchedulerManager;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 

@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+apply plugin: 'me.tatarka.retrolambda'
+
+dependencies {
+    compile project(':coremvp')
+    compile 'io.reactivex:rxandroid-framework:0.25.0'
+}

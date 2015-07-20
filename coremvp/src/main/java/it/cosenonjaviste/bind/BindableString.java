@@ -4,8 +4,6 @@ import android.databinding.Observable;
 
 import org.parceler.Parcel;
 
-import rx.functions.Action1;
-
 @Parcel
 public class BindableString extends BaseObservable {
     String value;
@@ -29,12 +27,15 @@ public class BindableString extends BaseObservable {
         return value;
     }
 
-
-    public void addListener(Action1<String> listener) {
+    public void addListener(Listener listener) {
         addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
             @Override public void onPropertyChanged(Observable sender, int propertyId) {
                 listener.call(((BindableString) sender).get());
             }
         });
+    }
+
+    public interface Listener {
+        void call(String s);
     }
 }

@@ -14,7 +14,7 @@ retrolambda {
 }
 
 dependencies {
-    compile project(':coremvp')
+    compile project(':corerx')
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'com.annimon:stream:1.0.1'

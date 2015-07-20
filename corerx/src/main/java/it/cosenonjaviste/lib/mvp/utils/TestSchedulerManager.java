@@ -1,9 +1,8 @@
-package it.cosenonjaviste.mvp;
+package it.cosenonjaviste.lib.mvp.utils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 
 @Singleton
