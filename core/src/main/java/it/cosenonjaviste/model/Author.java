@@ -62,6 +62,14 @@ public class Author implements Comparable<Author> {
     }
 
     @Override public int compareTo(Author o) {
-        return Long.compare(id, o.id);
+        return Long.compare(getSortId(), o.getSortId());
+    }
+
+    private long getSortId() {
+        if (id < 5 || id == 8 || id == 32) {
+            return id;
+        } else {
+            return id + 100;
+        }
     }
 }
