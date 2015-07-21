@@ -29,7 +29,6 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<Author> implem
                 c -> DaggerAuthorListComponent.builder().applicationComponent(c).build()
         ).inject(this);
         addListener(presenter);
-        addInstanceStateListener(presenter);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

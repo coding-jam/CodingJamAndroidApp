@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.cosenonjaviste.lib.mvp.InstanceStateListener;
+import it.cosenonjaviste.lib.mvp.LifeCycleListener;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import it.cosenonjaviste.lib.mvp.utils.TestSchedulerManager;
 import rx.Observable;
@@ -76,7 +76,7 @@ public class ViewMock<V> {
 
     public <M> M initAndResume(M model, RxMvpPresenter<M, V> presenter) {
         presenter.initLifeCycle(schedulerManager);
-        presenter.loadState(new InstanceStateListener.ObjectLoader() {
+        presenter.loadState(new LifeCycleListener.ObjectLoader() {
             @Override public <T> T load(String key) {
                 return (T) model;
             }

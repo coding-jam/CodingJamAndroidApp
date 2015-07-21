@@ -36,7 +36,6 @@ public class PageFragment extends LifeCycleFragment implements PageView {
                 c -> DaggerPageComponent.builder().applicationComponent(c).build()
         ).inject(this);
         addListener(presenter);
-        addInstanceStateListener(presenter);
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

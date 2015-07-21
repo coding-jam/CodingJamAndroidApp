@@ -1,6 +1,6 @@
 package it.cosenonjaviste.lib.mvp;
 
-public class MvpPresenter<M, V> implements LifeCycleListener<V>, InstanceStateListener {
+public class MvpPresenter<M, V> implements LifeCycleListener<V> {
     public static final String MODEL = "model";
 
     private V view;

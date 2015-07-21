@@ -26,7 +26,6 @@ public class ContactFragment extends LifeCycleFragment implements ContactView {
                 c -> DaggerContactComponent.builder().applicationComponent(c).build()
         ).inject(this);
         addListener(presenter);
-        addInstanceStateListener(presenter);
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

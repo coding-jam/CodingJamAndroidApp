@@ -5,27 +5,20 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class LifeCycleFragment extends Fragment {
     private ListenersRetainedFragment retainedFragment;
 
-    private List<InstanceStateListener> instanceStateListeners = new ArrayList<>();
-
     public void addListener(LifeCycleListener<?> listener) {
         retainedFragment.addListener((LifeCycleListener<Object>) listener);
-    }
-
-    public void addInstanceStateListener(InstanceStateListener listener) {
-        instanceStateListeners.add(listener);
     }
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         retainedFragment = ListenersRetainedFragment.getOrCreateFragment(getChildFragmentManager());
         init();
-        InstanceStateListener.ObjectLoader loader = new InstanceStateListener.ObjectLoader() {
+        LifeCycleListener.ObjectLoader loader = new LifeCycleListener.ObjectLoader() {
             @Override public Object load(String key) {
                 Object value = null;
                 if (state != null) {
@@ -37,7 +30,8 @@ public abstract class LifeCycleFragment extends Fragment {
                 return value;
             }
         };
-        for (InstanceStateListener listener : instanceStateListeners) {
+        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        for (LifeCycleListener listener : listeners) {
             listener.loadState(loader);
         }
     }
@@ -70,12 +64,13 @@ public abstract class LifeCycleFragment extends Fragment {
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        InstanceStateListener.ObjectSaver saver = new InstanceStateListener.ObjectSaver() {
+        LifeCycleListener.ObjectSaver saver = new LifeCycleListener.ObjectSaver() {
             @Override public void save(String key, Object value) {
                 outState.putParcelable(key, Parcels.wrap(value));
             }
         };
-        for (InstanceStateListener listener : instanceStateListeners) {
+        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        for (LifeCycleListener listener : listeners) {
             listener.saveState(saver);
         }
     }

@@ -32,7 +32,6 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements
                 c -> DaggerPostListComponent.builder().applicationComponent(c).build()
         ).inject(this);
         addListener(presenter);
-        addInstanceStateListener(presenter);
     }
 
     @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {
