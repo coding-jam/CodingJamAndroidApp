@@ -16,26 +16,19 @@ import org.parceler.ParcelClass;
 import java.io.File;
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.LifeCycleFragment;
+import it.cosenonjaviste.lib.mvp.MvpFragment;
 
 @ParcelClass(PageModel.class)
-public class PageFragment extends LifeCycleFragment implements PageView {
+public class PageFragment extends MvpFragment<PagePresenter> implements PageView {
 
     private WebView webView;
 
     private View progressBar;
 
-    @Inject PagePresenter presenter;
-
-    @Override public void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerPageComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected PagePresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getPagePresenter();
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

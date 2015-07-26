@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 import org.parceler.ParcelClass;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.model.Tweet;
@@ -20,15 +18,10 @@ import it.cosenonjaviste.utils.BindableViewHolder;
 import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 
 @ParcelClass(TweetListModel.class)
-public class TweetListFragment extends RecyclerViewRxMvpFragment<Tweet> implements TweetListView {
+public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresenter, Tweet> implements TweetListView {
 
-    @Inject TweetListPresenter presenter;
-
-    @Override public void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerTweetListComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected TweetListPresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getTweetListPresenter();
     }
 
     @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {

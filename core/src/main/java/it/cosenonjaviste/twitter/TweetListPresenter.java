@@ -4,14 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 
-@PresenterScope
 public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetListModel, TweetListView> {
 
     @Inject TwitterService twitterService;

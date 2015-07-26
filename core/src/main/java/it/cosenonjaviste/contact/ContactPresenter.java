@@ -2,7 +2,6 @@ package it.cosenonjaviste.contact;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.bind.BindableString;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
@@ -11,7 +10,6 @@ import it.cosenonjaviste.utils.EmailVerifier;
 import retrofit.client.Response;
 import rx.Observable;
 
-@PresenterScope
 public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> {
 
     @Inject MailJetService mailJetService;

@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 import org.parceler.ParcelClass;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.model.Post;
@@ -23,15 +21,10 @@ import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 @ParcelClass(PostListModel.class)
-public class PostListFragment extends RecyclerViewRxMvpFragment<Post> implements PostListView {
+public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresenter, Post> implements PostListView {
 
-    @Inject PostListPresenter presenter;
-
-    @Override public void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerPostListComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected PostListPresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getPostListPresenter();
     }
 
     @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {

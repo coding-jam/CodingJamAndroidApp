@@ -3,14 +3,14 @@ package it.cosenonjaviste.lib.mvp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 public class ListenersRetainedFragment extends Fragment {
 
     private static final String TAG = ListenersRetainedFragment.class.getName();
 
-    private List<LifeCycleListener<Object>> listeners = new ArrayList<>();
+    private LinkedHashMap<String, LifeCycleListener<Object>> listeners = new LinkedHashMap<>();
 
     public ListenersRetainedFragment() {
         setRetainInstance(true);
@@ -27,16 +27,20 @@ public class ListenersRetainedFragment extends Fragment {
 
     @Override public void onDestroy() {
         super.onDestroy();
-        for (LifeCycleListener<Object> listener : listeners) {
+        for (LifeCycleListener<Object> listener : listeners.values()) {
             listener.destroy();
         }
     }
 
-    public void addListener(LifeCycleListener<Object> listener) {
-        listeners.add(listener);
+    public void addListener(String key, LifeCycleListener<Object> listener) {
+        listeners.put(key, listener);
     }
 
-    public List<LifeCycleListener<Object>> getListeners() {
-        return listeners;
+    public LifeCycleListener<Object> getListener(String key) {
+        return listeners.get(key);
+    }
+
+    public Collection<LifeCycleListener<Object>> getListeners() {
+        return listeners.values();
     }
 }

@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import org.parceler.ParcelClass;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
@@ -21,15 +19,10 @@ import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 @ParcelClass(CategoryListModel.class)
-public class CategoryListFragment extends RecyclerViewRxMvpFragment<Category> implements CategoryListView {
+public class CategoryListFragment extends RecyclerViewRxMvpFragment<CategoryListPresenter, Category> implements CategoryListView {
 
-    @Inject CategoryListPresenter presenter;
-
-    @Override public void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerCategoryListComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected CategoryListPresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getCategoryListPresenter();
     }
 
     @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, ViewGroup v) {

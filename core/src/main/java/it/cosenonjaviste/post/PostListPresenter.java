@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.PresenterScope;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
@@ -16,7 +15,6 @@ import it.cosenonjaviste.page.PageModel;
 import rx.Observable;
 import rx.functions.Action1;
 
-@PresenterScope
 public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;

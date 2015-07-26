@@ -35,6 +35,10 @@ public class CoseNonJavisteApp extends Application {
         return component;
     }
 
+    public static ApplicationComponent getComponent(Fragment fragment) {
+        return getComponent(fragment.getActivity());
+    }
+
     public static ApplicationComponent getComponent(Context context) {
         return ((CoseNonJavisteApp) context.getApplicationContext()).getComponent();
     }

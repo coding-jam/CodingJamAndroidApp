@@ -9,23 +9,16 @@ import android.view.ViewGroup;
 
 import org.parceler.ParcelClass;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.ContactBinding;
-import it.cosenonjaviste.lib.mvp.LifeCycleFragment;
+import it.cosenonjaviste.lib.mvp.MvpFragment;
 
 @ParcelClass(ContactModel.class)
-public class ContactFragment extends LifeCycleFragment implements ContactView {
+public class ContactFragment extends MvpFragment<ContactPresenter> implements ContactView {
 
-    @Inject ContactPresenter presenter;
-
-    @Override protected void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerContactComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected ContactPresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getContactPresenter();
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

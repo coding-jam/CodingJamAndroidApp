@@ -5,13 +5,33 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import java.util.List;
+import java.util.Collection;
+
+import rx.functions.Func0;
 
 public abstract class LifeCycleFragment extends Fragment {
     private ListenersRetainedFragment retainedFragment;
 
     public void addListener(LifeCycleListener<?> listener) {
-        retainedFragment.addListener((LifeCycleListener<Object>) listener);
+        String key = listener.getClass().getName();
+        addListener(key, (LifeCycleListener<Object>) listener);
+    }
+
+    public void addListener(String key, LifeCycleListener<Object> listener) {
+        retainedFragment.addListener(key, listener);
+    }
+
+    public LifeCycleListener<Object> getListener(String key) {
+        return retainedFragment.getListener(key);
+    }
+
+    protected <P extends LifeCycleListener> P getOrCreate(Func0<P> factory) {
+        P presenter = (P) getListener("presenter");
+        if (presenter == null) {
+            presenter = factory.call();
+            addListener("presenter", presenter);
+        }
+        return presenter;
     }
 
     @Override public void onCreate(Bundle state) {
@@ -30,7 +50,7 @@ public abstract class LifeCycleFragment extends Fragment {
                 return value;
             }
         };
-        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
         for (LifeCycleListener listener : listeners) {
             listener.loadState(loader);
         }
@@ -40,7 +60,7 @@ public abstract class LifeCycleFragment extends Fragment {
 
     @Override public void onResume() {
         super.onResume();
-        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
         for (LifeCycleListener<Object> listener : listeners) {
             listener.resume(this);
         }
@@ -48,7 +68,7 @@ public abstract class LifeCycleFragment extends Fragment {
 
     @Override public void onPause() {
         super.onPause();
-        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
         for (LifeCycleListener<Object> listener : listeners) {
             listener.pause();
         }
@@ -56,7 +76,7 @@ public abstract class LifeCycleFragment extends Fragment {
 
     @Override public void onDestroy() {
         super.onDestroy();
-        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
         for (LifeCycleListener<Object> listener : listeners) {
             listener.detachView();
         }
@@ -69,7 +89,7 @@ public abstract class LifeCycleFragment extends Fragment {
                 outState.putParcelable(key, Parcels.wrap(value));
             }
         };
-        List<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
+        Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();
         for (LifeCycleListener listener : listeners) {
             listener.saveState(saver);
         }

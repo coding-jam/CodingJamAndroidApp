@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import org.parceler.ParcelClass;
 
-import javax.inject.Inject;
-
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.model.Author;
@@ -20,15 +18,10 @@ import it.cosenonjaviste.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.utils.SingleFragmentActivity;
 
 @ParcelClass(AuthorListModel.class)
-public class AuthorListFragment extends RecyclerViewRxMvpFragment<Author> implements AuthorListView {
+public class AuthorListFragment extends RecyclerViewRxMvpFragment<AuthorListPresenter, Author> implements AuthorListView {
 
-    @Inject AuthorListPresenter presenter;
-
-    @Override public void init() {
-        CoseNonJavisteApp.createComponent(this,
-                c -> DaggerAuthorListComponent.builder().applicationComponent(c).build()
-        ).inject(this);
-        addListener(presenter);
+    @Override protected AuthorListPresenter createPresenter() {
+        return CoseNonJavisteApp.getComponent(this).getAuthorListPresenter();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
