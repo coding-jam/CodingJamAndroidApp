@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
@@ -42,27 +43,13 @@ public class PostListTest {
     @Test public void testPostList() throws InterruptedException {
         fragmentRule.launchFragment(new PostListModel());
 
-//        onView(withText("post title 1")).check(matches(isDisplayed()));
-
-        Thread.sleep(100000);
+        onView(withText("post title 1")).check(matches(isDisplayed()));
     }
 
     @Test public void testGoToPostDetail() {
         fragmentRule.launchFragment(new PostListModel());
 
-        onView(withId(android.R.id.list))
+        onView(withId(R.id.list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
-    }
-
-    @Test public void testLoadMore() {
-        fragmentRule.launchFragment(new PostListModel());
-
-        onView(withId(android.R.id.list))
-                .perform(RecyclerViewActions.scrollToPosition(9));
-
-        onView(withId(android.R.id.list))
-                .perform(RecyclerViewActions.scrollToPosition(10));
-
-        onView(withText("post title 10")).check(matches(isDisplayed()));
     }
 }

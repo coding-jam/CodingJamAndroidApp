@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageFragment;
@@ -44,7 +45,7 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresente
     }
 
     @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, ViewGroup v) {
-        return new PostViewHolder(PostRowBinding.inflate(inflater, v, false), presenter);
+        return new PostViewHolder(PostRowBinding.bind(inflater.inflate(R.layout.post_row, v, false)), presenter);
     }
 
     @Override protected void retry() {

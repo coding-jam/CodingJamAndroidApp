@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.post.PostListFragment;
@@ -26,7 +27,7 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<CategoryList
     }
 
     @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, ViewGroup v) {
-        return new CategoryViewHolder(CategoryRowBinding.inflate(inflater, v, false), presenter);
+        return new CategoryViewHolder(CategoryRowBinding.bind(inflater.inflate(R.layout.category_row, v, false)), presenter);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

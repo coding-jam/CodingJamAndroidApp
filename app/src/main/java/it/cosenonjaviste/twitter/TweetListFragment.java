@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.utils.BindableViewHolder;
@@ -41,7 +42,7 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresen
     }
 
     @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, ViewGroup v) {
-        return new TweetViewHolder(TweetRowBinding.inflate(inflater, v, false));
+        return new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false)));
     }
 
     @Override protected void retry() {

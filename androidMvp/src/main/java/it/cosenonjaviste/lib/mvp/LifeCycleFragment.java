@@ -25,13 +25,13 @@ public abstract class LifeCycleFragment extends Fragment {
         return retainedFragment.getListener(key);
     }
 
-    protected <P extends LifeCycleListener> P getOrCreate(Func0<P> factory) {
-        P presenter = (P) getListener("presenter");
-        if (presenter == null) {
-            presenter = factory.call();
-            addListener("presenter", presenter);
+    protected <P extends LifeCycleListener> P getOrCreate(String key, Func0<P> factory) {
+        P listener = (P) getListener(key);
+        if (listener == null) {
+            listener = factory.call();
+            addListener(key, listener);
         }
-        return presenter;
+        return listener;
     }
 
     @Override public void onCreate(Bundle state) {

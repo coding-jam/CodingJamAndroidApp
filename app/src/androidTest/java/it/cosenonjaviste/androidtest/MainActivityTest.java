@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.MainActivity;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
@@ -63,34 +64,30 @@ public class MainActivityTest {
 
     @Test public void showCategories() {
         activityRule.launchActivity(null);
-        clickOnDrawer(1);
+        clickOnDrawer(R.string.categories);
         onView(withText("cat 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showAuthors() {
         activityRule.launchActivity(null);
-        clickOnDrawer(2);
+        clickOnDrawer(R.string.authors);
         onView(withText("name 0")).check(matches(isDisplayed()));
     }
 
     @Test public void showTweets() {
         activityRule.launchActivity(null);
-        clickOnDrawer(3);
+        clickOnDrawer(R.string.twitter);
         onView(withText("tweet text 1")).check(matches(isDisplayed()));
     }
 
     @Test public void showContactForm() {
         activityRule.launchActivity(null);
-        clickOnDrawer(4);
+        clickOnDrawer(R.string.contacts);
     }
 
-    private void clickOnDrawer(int position) {
+    private void clickOnDrawer(int text) {
         onView(withClassName(endsWith("ImageButton"))).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ignored) {
-        }
-//        onData(is(instanceOf(String.class))).inAdapterView(withId(R.id.left_drawer))
-//                .atPosition(position).perform(click());
+
+        onView(withText(text)).perform(click());
     }
 }

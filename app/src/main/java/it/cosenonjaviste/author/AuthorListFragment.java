@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.post.PostListFragment;
@@ -34,7 +35,7 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<AuthorListPres
 
 
     @Override @NonNull protected AuthorViewHolder createViewHolder(LayoutInflater inflater, ViewGroup v) {
-        return new AuthorViewHolder(AuthorCellBinding.inflate(inflater, v, false), presenter);
+        return new AuthorViewHolder(AuthorCellBinding.bind(inflater.inflate(R.layout.author_cell, v, false)), presenter);
     }
 
     @Override protected void retry() {

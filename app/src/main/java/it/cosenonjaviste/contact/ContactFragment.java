@@ -22,7 +22,7 @@ public class ContactFragment extends MvpFragment<ContactPresenter> implements Co
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ContactBinding binding = ContactBinding.inflate(inflater, container, false);
+        ContactBinding binding = ContactBinding.bind(inflater.inflate(R.layout.contact, container, false));
         binding.setPresenter(presenter);
         binding.sendButton.setOnClickListener(v -> presenter.send());
         return binding.getRoot();

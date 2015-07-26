@@ -5,8 +5,7 @@ public abstract class MvpFragment<P extends LifeCycleListener<?>> extends LifeCy
     protected P presenter;
 
     @Override protected void init() {
-        presenter = getOrCreate(this::createPresenter);
-        addListener(presenter);
+        presenter = getOrCreate("presenter", this::createPresenter);
     }
 
     protected abstract P createPresenter();
