@@ -15,15 +15,13 @@ env:
 android:
   components:
     - platform-tools
-    - build-tools-23.0.0-rc3
+    - build-tools-23.0.0 rc3
     - android-22
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-19
 
 before_script:
-    - ls -l /usr/lib/jvm/
-    - ls -l /usr/lib/jvm/java-7-oracle
     - export "JAVA7_HOME=/usr/lib/jvm/java-7-oracle"
     - export "JAVA8_HOME=/usr/lib/jvm/java-8-oracle"
     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
