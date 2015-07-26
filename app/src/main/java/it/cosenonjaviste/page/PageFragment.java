@@ -18,26 +18,23 @@ import java.io.IOException;
 
 import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 
 @ParcelClass(PageModel.class)
 public class PageFragment extends MvpFragment<PagePresenter> implements PageView {
 
-    private WebView webView;
-
-    private View progressBar;
+    private PostDetailBinding binding;
 
     @Override protected PagePresenter createPresenter() {
         return CoseNonJavisteApp.getComponent(this).getPagePresenter();
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.post_detail, container, false);
+        binding = PostDetailBinding.bind(inflater.inflate(R.layout.post_detail, container, false));
+        binding.setPresenter(presenter);
 
-        webView = (WebView) view.findViewById(R.id.web_view);
-        progressBar = view.findViewById(R.id.progress_detail);
-
-        WebSettings settings = webView.getSettings();
+        WebSettings settings = binding.webView.getSettings();
         settings.setJavaScriptEnabled(true);
         File externalFilesDir = getActivity().getExternalFilesDir(null);
         if (externalFilesDir != null) {
@@ -47,10 +44,10 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
             settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         }
 
-        webView.setWebViewClient(new WebViewClient() {
+        binding.webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view11, String url) {
-                view11.loadUrl(url);
+            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+                webView.loadUrl(url);
                 return true;
             }
 
@@ -81,16 +78,15 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
             }
 
             @Override
-            public void onPageFinished(WebView view11, String url) {
-                super.onPageFinished(view11, url);
-                webView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.INVISIBLE);
+            public void onPageFinished(WebView webView, String url) {
+                super.onPageFinished(webView, url);
+                presenter.loading.set(false);
             }
         });
-        return view;
+        return binding.getRoot();
     }
 
     @Override public void update(PageModel model) {
-        webView.loadUrl(presenter.getPostUrl());
+        binding.webView.loadUrl(presenter.getPostUrl());
     }
 }
