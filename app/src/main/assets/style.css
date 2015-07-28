@@ -2,6 +2,18 @@
     display: none;
 }
 
+div.breadcrumbs-wrap {
+    display: none;
+}
+
+div.page-heading {
+    display: none;
+}
+
+div.author-info-wrap {
+    display: none;
+}
+
 #header-section {
     display: none;
 }

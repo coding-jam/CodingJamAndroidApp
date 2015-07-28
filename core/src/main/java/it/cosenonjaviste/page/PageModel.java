@@ -1,17 +1,19 @@
 package it.cosenonjaviste.page;
 
+import it.cosenonjaviste.model.Post;
+
 public class PageModel {
 
-    String url;
+    Post post;
 
     PageModel() {
     }
 
-    public PageModel(String url) {
-        this.url = url;
+    public PageModel(Post post) {
+        this.post = post;
     }
 
-    public String getUrl() {
-        return url;
+    public Post getPost() {
+        return post;
     }
 }

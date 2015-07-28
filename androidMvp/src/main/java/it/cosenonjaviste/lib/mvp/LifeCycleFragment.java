@@ -36,7 +36,8 @@ public abstract class LifeCycleFragment extends Fragment {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        retainedFragment = ListenersRetainedFragment.getOrCreateFragment(getChildFragmentManager());
+        retainedFragment = ListenersRetainedFragment.getOrCreateFragment(getFragmentManager(),
+                ListenersRetainedFragment.TAG + getClass().getName());
         init();
         LifeCycleListener.ObjectLoader loader = new LifeCycleListener.ObjectLoader() {
             @Override public Object load(String key) {

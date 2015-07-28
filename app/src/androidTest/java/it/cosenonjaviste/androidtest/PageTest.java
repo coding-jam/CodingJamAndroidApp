@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.page.PageFragment;
 import it.cosenonjaviste.page.PageModel;
 
@@ -21,10 +22,10 @@ public class PageTest {
     @Before public void setUp() {
         DaggerUtils.createTestComponent().inject(this);
 
-        server.initDispatcher("<html><body>CoseNonJaviste</body></html>");
+        server.initDispatcher("<html><body>CoseNonJaviste<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A<br>A</body></html>");
     }
 
     @Test public void testDetailFragment() {
-        fragmentRule.launchFragment(new PageModel("url"));
+        fragmentRule.launchFragment(new PageModel(new Post("Sviluppare applicazioni con React e Flux", "url")));
     }
 }

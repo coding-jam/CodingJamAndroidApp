@@ -53,7 +53,7 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
     }
 
     public void goToDetail(Post item) {
-        getView().openDetail(new PageModel(item.getUrl()));
+        getView().openDetail(new PageModel(item));
     }
 
     public void loadNextPage() {

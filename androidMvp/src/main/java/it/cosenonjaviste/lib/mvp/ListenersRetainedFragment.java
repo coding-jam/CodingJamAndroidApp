@@ -1,5 +1,6 @@
 package it.cosenonjaviste.lib.mvp;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -8,19 +9,20 @@ import java.util.LinkedHashMap;
 
 public class ListenersRetainedFragment extends Fragment {
 
-    private static final String TAG = ListenersRetainedFragment.class.getName();
+    public static final String TAG = ListenersRetainedFragment.class.getName();
 
     private LinkedHashMap<String, LifeCycleListener<Object>> listeners = new LinkedHashMap<>();
 
-    public ListenersRetainedFragment() {
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
 
-    public static ListenersRetainedFragment getOrCreateFragment(FragmentManager fragmentManager) {
-        ListenersRetainedFragment fragment = (ListenersRetainedFragment) fragmentManager.findFragmentByTag(TAG);
+    public static ListenersRetainedFragment getOrCreateFragment(FragmentManager fragmentManager, String tag) {
+        ListenersRetainedFragment fragment = (ListenersRetainedFragment) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
             fragment = new ListenersRetainedFragment();
-            fragmentManager.beginTransaction().add(fragment, TAG).commit();
+            fragmentManager.beginTransaction().add(fragment, tag).commit();
         }
         return fragment;
     }

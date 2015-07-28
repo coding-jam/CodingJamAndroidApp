@@ -13,6 +13,11 @@ public class Post {
     public Post() {
     }
 
+    public Post(String title, String url) {
+        this.title = title;
+        this.url = url;
+    }
+
     public Post(long id, Author author, String title, Date date, String url, String excerpt) {
         this();
         this.id = id;

@@ -3,6 +3,8 @@ package it.cosenonjaviste.page;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import it.cosenonjaviste.CoseNonJavisteApp;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.utils.DateFormatter;
 
 @ParcelClass(PageModel.class)
 public class PageFragment extends MvpFragment<PagePresenter> implements PageView {
@@ -33,6 +37,10 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = PostDetailBinding.bind(inflater.inflate(R.layout.post_detail, container, false));
         binding.setPresenter(presenter);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(binding.toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         WebSettings settings = binding.webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -80,13 +88,17 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
             @Override
             public void onPageFinished(WebView webView, String url) {
                 super.onPageFinished(webView, url);
-                presenter.loading.set(false);
+                presenter.htmlLoaded();
             }
         });
         return binding.getRoot();
     }
 
     @Override public void update(PageModel model) {
+        Post post = model.getPost();
+        binding.toolbarText.setText(Html.fromHtml(post.getTitle()));
+        binding.subtitle.setText(post.getAuthor().getName() + ", " + DateFormatter.formatDate(post.getDate()));
+        binding.collapsingToolbar.setTitle("");
         binding.webView.loadUrl(presenter.getPostUrl());
     }
 }

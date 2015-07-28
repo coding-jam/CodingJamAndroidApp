@@ -89,7 +89,7 @@ public class PostListPresenterTest {
         view.verify().openDetail(modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
-        String url = detailModel.getUrl();
+        String url = detailModel.getPost().getUrl();
 
         assertThat(url).isNotNull();
         assertThat(url).isEqualTo(firstPost.getUrl());

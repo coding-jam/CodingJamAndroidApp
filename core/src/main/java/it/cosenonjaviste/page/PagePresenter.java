@@ -17,12 +17,16 @@ public class PagePresenter extends RxMvpPresenter<PageModel, PageView> {
     }
 
     public String getPostUrl() {
-        return pageUrlManager.getUrl(getModel().getUrl());
+        return pageUrlManager.getUrl(getModel().getPost().getUrl());
     }
 
     @Override public void resume() {
         super.resume();
         loading.set(true);
         getView().update(getModel());
+    }
+
+    public void htmlLoaded() {
+        loading.set(false);
     }
 }

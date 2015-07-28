@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mvp.ViewMock;
 import it.cosenonjaviste.page.PageModel;
 import it.cosenonjaviste.page.PagePresenter;
@@ -25,7 +26,7 @@ public class PagePresenterTest {
 
     @Test
     public void testLoad() {
-        view.initAndResume(new PageModel("url"), presenter);
+        view.initAndResume(new PageModel(new Post(1, null, "title", null, "url", null)), presenter);
 
         assertThat(presenter.getPostUrl()).isEqualTo("url");
     }
