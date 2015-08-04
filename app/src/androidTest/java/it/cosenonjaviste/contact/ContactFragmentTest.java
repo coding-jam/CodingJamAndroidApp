@@ -11,7 +11,9 @@ import javax.inject.Inject;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
+import it.cosenonjaviste.androidtest.utils.TestUtils;
 import it.cosenonjaviste.model.MailJetService;
+import retrofit.client.Response;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -30,7 +32,7 @@ public class ContactFragmentTest {
         DaggerUtils.createTestComponent().inject(this);
 
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.just(null));
+                .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleep()));
     }
 
     @Test public void testContactFragment() {

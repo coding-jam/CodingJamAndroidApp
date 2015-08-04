@@ -111,6 +111,11 @@ public class DataBindingConverters {
         view.setText(Html.fromHtml(text));
     }
 
+    @BindingAdapter({"app:onClick"})
+    public static void bindOnClick(View view, Runnable listener) {
+        view.setOnClickListener(v -> listener.run());
+    }
+
     @BindingAdapter({"bind:text1", "bind:textParam1"})
     public static void bindHtmlText(TextView view, int textRes, Object param) {
         view.setText(view.getResources().getString(textRes, param));
