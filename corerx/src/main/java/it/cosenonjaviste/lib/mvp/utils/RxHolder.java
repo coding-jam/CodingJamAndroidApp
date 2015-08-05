@@ -31,7 +31,7 @@ public class RxHolder {
     }
 
     public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
-        ConnectableObservable<T> replay = schedulerManager.bindObservable(observable).replay();
+        ConnectableObservable<T> replay = observable.compose(schedulerManager::bindObservable).replay();
         connectableSubscriptions.add(replay.connect());
         Func0<Subscriber<T>> factory = () -> new Subscriber<T>() {
             @Override public void onCompleted() {

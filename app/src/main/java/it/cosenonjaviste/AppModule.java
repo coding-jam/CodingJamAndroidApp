@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.lib.mvp.utils.AndroidSchedulerManager;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
@@ -59,6 +60,6 @@ public class AppModule {
     }
 
     @Provides @Singleton SchedulerManager provideSchedulerManager() {
-        return new SchedulerManager();
+        return new AndroidSchedulerManager();
     }
 }
