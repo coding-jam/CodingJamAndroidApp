@@ -12,20 +12,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import java.util.Date;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.bind.BindableBoolean;
-import it.cosenonjaviste.bind.BindableString;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.ui.utils.CircleTransform;
 import it.cosenonjaviste.ui.utils.DateFormatter;
 import it.cosenonjaviste.ui.utils.TextWatcherAdapter;
 
-@ParcelClasses({@ParcelClass(BindableString.class)})
 public class DataBindingConverters {
 
     private static CircleTransform circleTransformation;
