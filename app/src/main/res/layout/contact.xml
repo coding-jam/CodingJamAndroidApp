@@ -6,7 +6,7 @@
 
         <variable
             name="presenter"
-            type="it.cosenonjaviste.contact.ContactPresenter"/>
+            type="it.cosenonjaviste.core.contact.ContactPresenter"/>
     </data>
 
     <ScrollView

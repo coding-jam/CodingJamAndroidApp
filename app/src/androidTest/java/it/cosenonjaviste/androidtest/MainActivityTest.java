@@ -10,13 +10,13 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.MainActivity;
+import it.cosenonjaviste.ui.MainActivity;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.model.TwitterService;
-import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.core.model.TwitterService;
+import it.cosenonjaviste.core.model.WordPressService;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

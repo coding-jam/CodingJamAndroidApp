@@ -8,7 +8,7 @@
 
         <variable
             name="presenter"
-            type="it.cosenonjaviste.page.PagePresenter"/>
+            type="it.cosenonjaviste.core.page.PagePresenter"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout

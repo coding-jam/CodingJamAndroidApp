@@ -12,7 +12,8 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
-import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.core.model.MailJetService;
+import it.cosenonjaviste.ui.contact.ContactFragment;
 import retrofit.client.Response;
 import rx.Observable;
 
@@ -36,7 +37,7 @@ public class ContactFragmentTest {
     }
 
     @Test public void testContactFragment() {
-        fragmentRule.launchFragment(new ContactModel());
+        fragmentRule.launchFragment(new it.cosenonjaviste.core.contact.ContactModel());
 
         onView(withId(R.id.name)).perform(ViewActions.typeText("name"));
         onView(withId(R.id.email)).perform(ViewActions.typeText("email@email.it"));

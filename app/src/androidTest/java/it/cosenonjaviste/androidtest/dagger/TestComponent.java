@@ -3,8 +3,8 @@ package it.cosenonjaviste.androidtest.dagger;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.ApplicationComponent;
-import it.cosenonjaviste.BaseModule;
+import it.cosenonjaviste.ui.ApplicationComponent;
+import it.cosenonjaviste.ui.BaseModule;
 import it.cosenonjaviste.androidtest.AuthorListTest;
 import it.cosenonjaviste.androidtest.CategoryListFragmentTest;
 import it.cosenonjaviste.androidtest.MainActivityTest;

@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.page.PageFragment;
-import it.cosenonjaviste.page.PageModel;
+import it.cosenonjaviste.core.model.Post;
+import it.cosenonjaviste.ui.page.PageFragment;
+import it.cosenonjaviste.core.page.PageModel;
 
 public class PageTest {
 

@@ -6,7 +6,7 @@
 
         <variable
             name="author"
-            type="it.cosenonjaviste.model.Author"/>
+            type="it.cosenonjaviste.core.model.Author"/>
     </data>
 
     <android.support.v7.widget.CardView

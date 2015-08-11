@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.utils.SingleFragmentActivity;
+import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
     private Class<? extends Fragment> fragmentClass;

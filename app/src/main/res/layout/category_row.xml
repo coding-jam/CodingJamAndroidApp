@@ -6,7 +6,7 @@
 
         <variable
             name="category"
-            type="it.cosenonjaviste.model.Category"/>
+            type="it.cosenonjaviste.core.model.Category"/>
     </data>
 
     <android.support.v7.widget.CardView
