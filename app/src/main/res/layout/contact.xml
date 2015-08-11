@@ -22,7 +22,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorMessage="@{presenter.nameError}">
+                app:error="@{presenter.nameError}">
 
                 <EditText
                     android:id="@+id/name"
@@ -39,7 +39,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorMessage="@{presenter.emailError}">
+                app:error="@{presenter.emailError}">
 
                 <EditText
                     android:id="@+id/email"
@@ -53,7 +53,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorMessage="@{presenter.messageError}">
+                app:error="@{presenter.messageError}">
 
                 <EditText
                     android:id="@+id/message"

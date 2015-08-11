@@ -1,16 +1,18 @@
 package it.cosenonjaviste.core.contact;
 
-import it.cosenonjaviste.bind.BindableString;
+import android.databinding.ObservableInt;
+
+import it.cosenonjaviste.core.utils.ObservableString;
 
 public class ContactModel {
 
     public boolean sendPressed;
 
-    public BindableString name = new BindableString();
-    public BindableString email = new BindableString();
-    public BindableString message = new BindableString();
+    public ObservableString name = new ObservableString();
+    public ObservableString email = new ObservableString();
+    public ObservableString message = new ObservableString();
 
-    public BindableValidationError nameError = new BindableValidationError();
-    public BindableValidationError emailError = new BindableValidationError();
-    public BindableValidationError messageError = new BindableValidationError();
+    public ObservableInt nameError = new ObservableInt();
+    public ObservableInt emailError = new ObservableInt();
+    public ObservableInt messageError = new ObservableInt();
 }

@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.mvp.ViewMock;
 import rx.Observable;
@@ -32,9 +33,9 @@ public class ContactPresenterTest {
         model.message.set("aaa");
         presenter.send();
 
-        assertThat(model.nameError.get()).isNull();
-        assertThat(model.messageError.get()).isNull();
-        assertThat(model.emailError.get()).isEqualTo(ValidationError.INVALID_EMAIL);
+        assertThat(model.nameError.get()).isZero();
+        assertThat(model.messageError.get()).isZero();
+        assertThat(model.emailError.get()).isEqualTo(R.string.invalid_email);
     }
 
     @Test
@@ -49,9 +50,9 @@ public class ContactPresenterTest {
         model.message.set("aaa");
         presenter.send();
 
-        assertThat(model.nameError.get()).isNull();
-        assertThat(model.messageError.get()).isNull();
-        assertThat(model.emailError.get()).isNull();
+        assertThat(model.nameError.get()).isZero();
+        assertThat(model.messageError.get()).isZero();
+        assertThat(model.emailError.get()).isZero();
         view.verify().showSentMessage();
     }
 }

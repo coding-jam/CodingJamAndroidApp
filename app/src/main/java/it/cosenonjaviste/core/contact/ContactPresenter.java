@@ -1,11 +1,15 @@
 package it.cosenonjaviste.core.contact;
 
+import android.databinding.Observable.OnPropertyChangedCallback;
+import android.databinding.ObservableInt;
+
 import javax.inject.Inject;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.bind.BindableBoolean;
-import it.cosenonjaviste.bind.BindableString;
 import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.utils.EmailVerifier;
+import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 import retrofit.client.Response;
 import rx.Observable;
@@ -26,9 +30,14 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
     @Override public void resume() {
         super.resume();
 
-        getModel().name.addListener(s -> validate());
-        getModel().message.addListener(s -> validate());
-        getModel().email.addListener(s -> validate());
+        OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
+            @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
+                validate();
+            }
+        };
+        getModel().name.addOnPropertyChangedCallback(listener);
+        getModel().message.addOnPropertyChangedCallback(listener);
+        getModel().email.addOnPropertyChangedCallback(listener);
     }
 
     private boolean validate() {
@@ -37,13 +46,13 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
             boolean isValid = checkMandatory(model.name, model.nameError);
             if (!model.email.isEmpty()) {
                 if (!EmailVerifier.checkEmail(model.email.get())) {
-                    model.emailError.set(ValidationError.INVALID_EMAIL);
+                    model.emailError.set(R.string.invalid_email);
                     isValid = false;
                 } else {
-                    model.emailError.set(null);
+                    model.emailError.set(0);
                 }
             } else {
-                model.emailError.set(ValidationError.MANDATORY_FIELD);
+                model.emailError.set(R.string.mandatory_field);
                 isValid = false;
             }
             isValid = checkMandatory(model.message, model.messageError) && isValid;
@@ -53,9 +62,9 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
         }
     }
 
-    private boolean checkMandatory(BindableString bindableString, BindableValidationError error) {
+    private boolean checkMandatory(ObservableString bindableString, ObservableInt error) {
         boolean empty = bindableString.isEmpty();
-        error.set(empty ? ValidationError.MANDATORY_FIELD : null);
+        error.set(empty ? R.string.mandatory_field : 0);
         return !empty;
     }
 
@@ -80,27 +89,27 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
         }
     }
 
-    public BindableString getName() {
+    public ObservableString getName() {
         return getModel().name;
     }
 
-    public BindableString getEmail() {
+    public ObservableString getEmail() {
         return getModel().email;
     }
 
-    public BindableString getMessage() {
+    public ObservableString getMessage() {
         return getModel().message;
     }
 
-    public BindableValidationError getNameError() {
+    public ObservableInt getNameError() {
         return getModel().nameError;
     }
 
-    public BindableValidationError getEmailError() {
+    public ObservableInt getEmailError() {
         return getModel().emailError;
     }
 
-    public BindableValidationError getMessageError() {
+    public ObservableInt getMessageError() {
         return getModel().messageError;
     }
 }

@@ -1,6 +1,5 @@
 package it.cosenonjaviste.ui.bind;
 
-import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.design.widget.TextInputLayout;
@@ -21,8 +20,7 @@ import java.util.Date;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.bind.BindableString;
-import it.cosenonjaviste.core.contact.BindableValidationError;
-import it.cosenonjaviste.core.contact.ValidationError;
+import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.ui.utils.CircleTransform;
 import it.cosenonjaviste.ui.utils.DateFormatter;
 import it.cosenonjaviste.ui.utils.TextWatcherAdapter;
@@ -31,11 +29,6 @@ import it.cosenonjaviste.ui.utils.TextWatcherAdapter;
 public class DataBindingConverters {
 
     private static CircleTransform circleTransformation;
-
-    @BindingConversion
-    public static String convertBindableToString(BindableString bindableString) {
-        return bindableString.get();
-    }
 
     @BindingConversion
     public static boolean convertBindableToBoolean(BindableBoolean bindableBoolean) {
@@ -47,35 +40,26 @@ public class DataBindingConverters {
         return DateFormatter.formatDate(date);
     }
 
-    @BindingAdapter({"app:errorMessage"})
-    public static void bindValidationError(TextInputLayout textInputLayout, BindableValidationError bindableValidationError) {
-        String errorMessage = getValidationErrorString(textInputLayout.getResources(), bindableValidationError.get());
-        textInputLayout.setError(errorMessage);
-    }
-
-    private static String getValidationErrorString(Resources res, ValidationError validationError) {
-        if (validationError != null) {
-            switch (validationError) {
-                case MANDATORY_FIELD:
-                    return res.getString(R.string.mandatory_field);
-                case INVALID_EMAIL:
-                    return res.getString(R.string.invalid_email);
-            }
+    @BindingAdapter({"app:error"})
+    public static void bindValidationError(TextInputLayout textInputLayout, int errorRes) {
+        if (errorRes != 0) {
+            textInputLayout.setError(textInputLayout.getResources().getString(errorRes));
+        } else {
+            textInputLayout.setError(null);
         }
-        return null;
     }
 
     @BindingAdapter({"app:binding"})
-    public static void bindEditText(EditText view, final BindableString bindableString) {
+    public static void bindEditText(EditText view, final ObservableString observableString) {
         if (view.getTag(R.id.binded) == null) {
             view.setTag(R.id.binded, true);
             view.addTextChangedListener(new TextWatcherAdapter() {
                 @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    bindableString.set(s.toString());
+                    observableString.set(s.toString());
                 }
             });
         }
-        String newValue = bindableString.get();
+        String newValue = observableString.get();
         if (!view.getText().toString().equals(newValue)) {
             view.setText(newValue);
         }
