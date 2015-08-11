@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -21,13 +22,15 @@ public class WordPressServiceTest {
         List<Post> posts = postResponse.getPosts();
         assertEquals(1, posts.size());
         Post post = posts.get(0);
-        assertEquals(11213, post.getId());
+        assertEquals(12831, post.getId());
         assertNotNull(post.getDate());
         assertNotNull(post.getTitle());
         assertNotNull(post.getUrl());
         assertNotNull(post.getAuthor());
         assertNotNull(post.getAuthor().getImageUrl());
-        assertEquals(8, post.getAuthor().getId());
+        assertEquals(2, post.getAuthor().getId());
         assertNotNull(post.getAuthor().getName());
+        assertThat(post.getAttachments()).isNotEmpty();
+        assertThat(post.getAttachments()[0].getUrl()).isNotEmpty();
     }
 }

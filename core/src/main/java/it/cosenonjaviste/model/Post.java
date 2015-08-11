@@ -9,6 +9,7 @@ public class Post {
     Date date;
     String url;
     String excerpt;
+    Attachment[] attachments;
 
     public Post() {
     }
@@ -50,6 +51,10 @@ public class Post {
 
     public String getExcerpt() {
         return excerpt;
+    }
+
+    public Attachment[] getAttachments() {
+        return attachments;
     }
 
     public String getExcerptHtml() {
