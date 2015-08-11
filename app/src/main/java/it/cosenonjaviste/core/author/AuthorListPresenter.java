@@ -1,11 +1,12 @@
 package it.cosenonjaviste.core.author;
 
+import android.databinding.ObservableBoolean;
+
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.core.model.Author;
 import it.cosenonjaviste.core.model.AuthorResponse;
 import it.cosenonjaviste.core.model.WordPressService;
@@ -32,7 +33,7 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
         reloadData(loading);
     }
 
-    private void reloadData(BindableBoolean loadingAction) {
+    private void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 
         Observable<List<Author>> observable = wordPressService

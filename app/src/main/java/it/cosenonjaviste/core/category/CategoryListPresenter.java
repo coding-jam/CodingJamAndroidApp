@@ -1,10 +1,11 @@
 package it.cosenonjaviste.core.category;
 
+import android.databinding.ObservableBoolean;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.core.model.Category;
 import it.cosenonjaviste.core.model.CategoryResponse;
 import it.cosenonjaviste.core.model.WordPressService;
@@ -38,7 +39,7 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, i
         loadData(loading);
     }
 
-    private void loadData(BindableBoolean loadingSetter) {
+    private void loadData(ObservableBoolean loadingSetter) {
         loadingSetter.set(true);
 
         Observable<List<Category>> observable = wordPressService

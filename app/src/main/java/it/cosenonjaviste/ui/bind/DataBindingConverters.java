@@ -66,8 +66,8 @@ public class DataBindingConverters {
     }
 
     @BindingAdapter({"app:visibleOrGone"})
-    public static void bindVisibleOrGone(View view, BindableBoolean bindableBoolean) {
-        view.setVisibility(bindableBoolean != null && bindableBoolean.get() ? View.VISIBLE : View.GONE);
+    public static void bindVisibleOrGone(View view, boolean b) {
+        view.setVisibility(b ? View.VISIBLE : View.GONE);
     }
 
     @BindingAdapter({"app:visible"})

@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:visibleOrGone="@{presenter.emptyLayoutVisible}">
+                app:visibleOrGone="@{presenter.empty &amp;&amp; !presenter.loading}">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
                 app:refreshing="@{presenter.loadingPullToRefresh}"
-                app:visibleOrGone="@{presenter.listVisible}">
+                app:visibleOrGone="@{!presenter.empty &amp;&amp; !presenter.loading}">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"
@@ -99,7 +99,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
-            app:visibleOrGone="@{presenter.error}">
+            app:visibleOrGone="@{presenter.error &amp;&amp; !presenter.loading}">
 
             <TextView
                 android:id="@+id/error_message"

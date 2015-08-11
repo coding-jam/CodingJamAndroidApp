@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     app:onClick="@{presenter.send}"
-                    android:enabled="@{!presenter.sending.get()}"
+                    android:enabled="@{!presenter.sending}"
                     android:text="@string/send"/>
 
                 <ProgressBar

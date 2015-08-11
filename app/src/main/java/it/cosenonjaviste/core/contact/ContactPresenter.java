@@ -1,12 +1,12 @@
 package it.cosenonjaviste.core.contact;
 
 import android.databinding.Observable.OnPropertyChangedCallback;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
@@ -18,7 +18,7 @@ public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> 
 
     @Inject MailJetService mailJetService;
 
-    public BindableBoolean sending = new BindableBoolean();
+    public ObservableBoolean sending = new ObservableBoolean();
 
     @Inject public ContactPresenter() {
     }

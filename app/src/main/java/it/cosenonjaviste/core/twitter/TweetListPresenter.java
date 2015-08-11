@@ -1,10 +1,11 @@
 package it.cosenonjaviste.core.twitter;
 
+import android.databinding.ObservableBoolean;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.core.model.Tweet;
 import it.cosenonjaviste.core.model.TwitterService;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
@@ -29,7 +30,7 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
         reloadData(loading);
     }
 
-    public void reloadData(BindableBoolean loadingAction) {
+    public void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 
         Observable<List<Tweet>> observable = twitterService.loadTweets(1).finallyDo(() -> loadingAction.set(false));

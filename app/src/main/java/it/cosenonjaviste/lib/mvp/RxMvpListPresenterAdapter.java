@@ -1,41 +1,46 @@
 package it.cosenonjaviste.lib.mvp;
 
+import android.databinding.ObservableBoolean;
+
 import java.util.List;
 
-import it.cosenonjaviste.bind.BindableBoolean;
 import rx.functions.Action1;
 
 public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>, V> extends RxMvpPresenter<M, V> implements RxMvpListPresenter {
-    protected BindableBoolean loading = new BindableBoolean();
+    protected ObservableBoolean loading = new ObservableBoolean();
 
-    protected BindableBoolean loadingNextPage = new BindableBoolean();
+    protected ObservableBoolean loadingNextPage = new ObservableBoolean();
 
-    protected BindableBoolean loadingPullToRefresh = new BindableBoolean();
+    protected ObservableBoolean loadingPullToRefresh = new ObservableBoolean();
 
     protected Action1<List<T>> listChangeListener;
 
-    @Override public BindableBoolean isLoading() {
+    @Override public ObservableBoolean isLoading() {
         return loading;
     }
 
-    @Override public BindableBoolean isLoadingPullToRefresh() {
+    @Override public ObservableBoolean isLoadingPullToRefresh() {
         return loadingPullToRefresh;
     }
 
-    @Override public BindableBoolean isLoadingNextPage() {
+    @Override public ObservableBoolean isLoadingNextPage() {
         return loadingNextPage;
     }
 
-    @Override public BindableBoolean isEmptyLayoutVisible() {
-        return getModel().empty.and(loading.not());
-    }
+//    @Override public ObservableBoolean isEmptyLayoutVisible() {
+//        return getModel().empty.and(loading.not());
+//    }
+//
+//    @Override public ObservableBoolean isListVisible() {
+//        return getModel().empty.not().and(loading.not());
+//    }
 
-    @Override public BindableBoolean isListVisible() {
-        return getModel().empty.not().and(loading.not());
-    }
-
-    @Override public BindableBoolean isError() {
+    @Override public ObservableBoolean isError() {
         return getModel().error;
+    }
+
+    @Override public ObservableBoolean isEmpty() {
+        return getModel().empty;
     }
 
     public void done(List<T> items) {
