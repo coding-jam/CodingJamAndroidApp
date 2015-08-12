@@ -8,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorPostListPresenterTest {
 
-    private ViewMock<PostListView> view = new ViewMock<>(PostListView.class);
+    @Mock PostListView view;
 
     @Mock WordPressService wordPressService;
 
@@ -34,7 +33,7 @@ public class AuthorPostListPresenterTest {
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = view.initAndResume(new PostListModel(TestData.createAuthor(145)), presenter);
+        PostListModel model = presenter.initAndResume(new PostListModel(TestData.createAuthor(145)), view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

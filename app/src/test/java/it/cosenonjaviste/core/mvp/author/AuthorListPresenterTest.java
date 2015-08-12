@@ -12,12 +12,12 @@ import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.core.author.AuthorListPresenter;
 import it.cosenonjaviste.core.author.AuthorListView;
 import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.post.PostListModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.core.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,14 +29,14 @@ public class AuthorListPresenterTest {
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
-    private ViewMock<AuthorListView> view = new ViewMock<>(AuthorListView.class);
+    @Mock AuthorListView view;
 
     @Test
     public void testLoad() {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel model = view.initAndResume(presenter);
+        AuthorListModel model = presenter.initAndResume(view);
 
         assertThat(model.size()).isEqualTo(2);
     }
@@ -48,7 +48,7 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel model = view.initAndResume(presenter);
+        AuthorListModel model = presenter.initAndResume(view);
 
         presenter.reloadData();
 
@@ -60,11 +60,11 @@ public class AuthorListPresenterTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel authorListModel = view.initAndResume(presenter);
+        AuthorListModel authorListModel = presenter.initAndResume(view);
 
         presenter.goToAuthorDetail(1);
 
-        view.verify().openPostList(modelCaptor.capture());
+        verify(view).openPostList(modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));

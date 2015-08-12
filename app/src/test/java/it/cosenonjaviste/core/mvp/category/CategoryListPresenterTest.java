@@ -6,6 +6,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.category.CategoryListModel;
@@ -13,7 +14,6 @@ import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.model.Category;
 import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.post.PostListModel;
 import rx.Observable;
 
@@ -28,7 +28,7 @@ public class CategoryListPresenterTest {
 
     @InjectMocks CategoryListPresenter presenter;
 
-    private ViewMock<CategoryListView> view = new ViewMock<>(CategoryListView.class);
+    @Mock CategoryListView view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
@@ -37,7 +37,7 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel model = view.initAndResume(presenter);
+        CategoryListModel model = presenter.initAndResume(view);
 
         assertThat(model.getItems()).hasSize(3);
         Category category = model.get(2);
@@ -51,7 +51,7 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        CategoryListModel model = view.initAndResume(presenter);
+        CategoryListModel model = presenter.initAndResume(view);
 
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
@@ -66,11 +66,11 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel categoryListModel = view.initAndResume(presenter);
+        CategoryListModel categoryListModel = presenter.initAndResume(view);
 
         presenter.goToPosts(1);
 
-        view.verify().openPostList(modelCaptor.capture());
+        Mockito.verify(view).openPostList(modelCaptor.capture());
 
         assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }

@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.model.TwitterService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.twitter.TweetListModel;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
@@ -20,7 +19,7 @@ import rx.Observable;
 @RunWith(MockitoJUnitRunner.class)
 public class TweetListPresenterTest {
 
-    private ViewMock<TweetListView> view = new ViewMock<>(TweetListView.class);
+    @Mock TweetListView view;
 
     @Mock TwitterService twitterService;
 
@@ -30,7 +29,7 @@ public class TweetListPresenterTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(TestData.tweets());
 
-        TweetListModel model = view.initAndResume(presenter);
+        TweetListModel model = presenter.initAndResume(view);
 
         Assertions.assertThat(model.getItems()).hasSize(10);
     }
@@ -39,7 +38,7 @@ public class TweetListPresenterTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        TweetListModel model = view.initAndResume(presenter);
+        TweetListModel model = presenter.initAndResume(view);
 
         Assertions.assertThat(presenter.isError().get()).isTrue();
 
@@ -56,7 +55,7 @@ public class TweetListPresenterTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(TestData.tweets());
 
-        TweetListModel tweetListModel = view.initAndResume(presenter);
+        TweetListModel tweetListModel = presenter.initAndResume(view);
 
         presenter.loadNextPage();
 

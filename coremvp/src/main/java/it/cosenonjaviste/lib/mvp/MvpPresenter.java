@@ -37,7 +37,24 @@ public class MvpPresenter<M, V> implements LifeCycleListener<V> {
         model = loader.load(MODEL);
         if (model == null) {
             model = createDefaultModel();
+            if (model == null) {
+                throw new RuntimeException("createDefaultModel not implemented in " + getClass().getName());
+            }
         }
+    }
+
+    public M initAndResume(V view) {
+        return initAndResume(null, view);
+    }
+
+    public M initAndResume(final M newModel, V view) {
+        loadState(new LifeCycleListener.ObjectLoader() {
+            @Override public <T> T load(String key) {
+                return (T) newModel;
+            }
+        });
+        resume(view);
+        return getModel();
     }
 
     public final V getView() {

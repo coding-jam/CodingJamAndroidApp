@@ -6,13 +6,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
 import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PostListPresenterTest {
 
-    private ViewMock<PostListView> view = new ViewMock<>(PostListView.class);
+    @Mock PostListView view;
 
     @Mock WordPressService wordPressService;
 
@@ -40,7 +40,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = view.initAndResume(presenter);
+        PostListModel model = presenter.initAndResume(view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -52,7 +52,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(2)))
                 .thenReturn(postResponse(6));
 
-        PostListModel model = view.initAndResume(presenter);
+        PostListModel model = presenter.initAndResume(view);
         presenter.loadNextPage();
 
         List<Post> items = model.getItems();
@@ -64,7 +64,7 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        PostListModel model = view.initAndResume(presenter);
+        PostListModel model = presenter.initAndResume(view);
         assertThat(presenter.isError().get()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
@@ -81,12 +81,12 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = view.initAndResume(presenter);
+        PostListModel model = presenter.initAndResume(view);
         Post firstPost = model.getItems().get(0);
 
         presenter.goToDetail(firstPost);
 
-        view.verify().openDetail(modelCaptor.capture());
+        Mockito.verify(view).openDetail(modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getPost().getUrl();

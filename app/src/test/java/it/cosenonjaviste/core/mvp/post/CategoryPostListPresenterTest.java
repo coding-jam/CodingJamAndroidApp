@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.model.Category;
 import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.core.mvp.ViewMock;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryPostListPresenterTest {
 
-    private ViewMock<PostListView> view = new ViewMock<>(PostListView.class);
+    @Mock PostListView view;
 
     @Mock WordPressService wordPressService;
 
@@ -32,7 +31,7 @@ public class CategoryPostListPresenterTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = view.initAndResume(new PostListModel(new Category(1, "cat", 10)), presenter);
+        PostListModel model = presenter.initAndResume(new PostListModel(new Category(1, "cat", 10)), view);
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -44,7 +43,7 @@ public class CategoryPostListPresenterTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(2)))
                 .thenReturn(TestData.postResponse(5));
 
-        PostListModel model = view.initAndResume(new PostListModel(new Category(1, "cat", 10)), presenter);
+        PostListModel model = presenter.initAndResume(new PostListModel(new Category(1, "cat", 10)), view);
         presenter.loadNextPage();
 
         assertThat(model.getItems().size()).isEqualTo(15);

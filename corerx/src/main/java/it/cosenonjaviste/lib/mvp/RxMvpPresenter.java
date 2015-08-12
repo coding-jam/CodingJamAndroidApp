@@ -17,18 +17,27 @@ public abstract class RxMvpPresenter<M, V> extends MvpPresenter<M, V> {
     }
 
     @Override public void resume() {
-        rxHolder.resubscribePendingObservable();
+        if (rxHolder != null) {
+            rxHolder.resubscribePendingObservable();
+        }
     }
 
     @Override public void pause() {
-        rxHolder.pause();
+        if (rxHolder != null) {
+            rxHolder.pause();
+        }
     }
 
     @Override public void destroy() {
-        rxHolder.destroy();
+        if (rxHolder != null) {
+            rxHolder.destroy();
+        }
     }
 
     public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
+        if (rxHolder == null) {
+            rxHolder = new RxHolder(SchedulerManager.IDENTITY);
+        }
         rxHolder.subscribe(observable, onNext, onError);
     }
 }
