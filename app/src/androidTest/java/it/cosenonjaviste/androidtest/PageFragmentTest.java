@@ -10,10 +10,10 @@ import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.core.model.Post;
-import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.core.page.PageModel;
+import it.cosenonjaviste.ui.page.PageFragment;
 
-public class PageTest {
+public class PageFragmentTest {
 
     @Inject MockWebServerWrapper server;
 

@@ -3,15 +3,15 @@ package it.cosenonjaviste.androidtest.dagger;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.ui.ApplicationComponent;
-import it.cosenonjaviste.ui.BaseModule;
 import it.cosenonjaviste.androidtest.AuthorListTest;
 import it.cosenonjaviste.androidtest.CategoryListFragmentTest;
 import it.cosenonjaviste.androidtest.MainActivityTest;
-import it.cosenonjaviste.androidtest.PageTest;
+import it.cosenonjaviste.androidtest.PageFragmentTest;
 import it.cosenonjaviste.androidtest.PostListTest;
 import it.cosenonjaviste.androidtest.TweetListFragmentTest;
 import it.cosenonjaviste.contact.ContactFragmentTest;
+import it.cosenonjaviste.ui.ApplicationComponent;
+import it.cosenonjaviste.ui.BaseModule;
 
 @Singleton
 @Component(modules = {MvpEspressoTestModule.class, BaseModule.class})
@@ -21,7 +21,7 @@ public interface TestComponent extends ApplicationComponent {
 
     void inject(MainActivityTest mainActivityTest);
 
-    void inject(PageTest pageTest);
+    void inject(PageFragmentTest pageFragmentTest);
 
     void inject(CategoryListFragmentTest categoryListFragmentTest);
 
