@@ -27,14 +27,6 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
         return loadingNextPage;
     }
 
-//    @Override public ObservableBoolean isEmptyLayoutVisible() {
-//        return getModel().empty.and(loading.not());
-//    }
-//
-//    @Override public ObservableBoolean isListVisible() {
-//        return getModel().empty.not().and(loading.not());
-//    }
-
     @Override public ObservableBoolean isError() {
         return getModel().error;
     }
