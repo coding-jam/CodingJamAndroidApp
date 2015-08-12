@@ -7,8 +7,6 @@ import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
 
 public class PagePresenter extends RxMvpPresenter<PageModel, PageView> {
 
-    @Inject PageUrlManager pageUrlManager;
-
     public BindableBoolean loading = new BindableBoolean();
 
     public BindableBoolean webViewVisible = loading.not();
@@ -17,7 +15,7 @@ public class PagePresenter extends RxMvpPresenter<PageModel, PageView> {
     }
 
     public String getPostUrl() {
-        return pageUrlManager.getUrl(getModel().getPost().getUrl());
+        return getModel().getPost().getUrl();
     }
 
     @Override public void resume() {

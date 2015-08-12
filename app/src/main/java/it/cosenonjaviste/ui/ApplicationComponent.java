@@ -10,7 +10,6 @@ import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.model.TwitterService;
 import it.cosenonjaviste.core.model.WordPressService;
 import it.cosenonjaviste.core.page.PagePresenter;
-import it.cosenonjaviste.core.page.PageUrlManager;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
@@ -26,8 +25,6 @@ public interface ApplicationComponent {
     WordPressService providesWordPressService();
 
     MailJetService providesMailJetService();
-
-    PageUrlManager providesPageUrlManager();
 
     TwitterService providesTwitterService();
 
