@@ -33,7 +33,7 @@ public class ContactFragmentTest {
         DaggerUtils.createTestComponent().inject(this);
 
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleep()));
+                .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleepAction()));
     }
 
     @Test public void testContactFragment() {

@@ -8,11 +8,11 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.androidtest.base.EspressoSchedulerManager;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.model.TwitterService;
 import it.cosenonjaviste.core.model.WordPressService;
 import it.cosenonjaviste.core.page.PageUrlManager;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 
 @Module
 public class MvpEspressoTestModule {
@@ -28,7 +28,7 @@ public class MvpEspressoTestModule {
     @Provides @Singleton PageUrlManager providePostDetailUrlManager(MockWebServerWrapper server) {
         return new PageUrlManager() {
             @Override public String getUrl(String url) {
-                return server.getUrl(true) + url;
+                return url;
             }
         };
     }

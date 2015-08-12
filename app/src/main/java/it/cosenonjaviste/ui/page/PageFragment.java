@@ -102,6 +102,6 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
         binding.toolbarText.setText(Html.fromHtml(post.getTitle()));
         binding.subtitle.setText(post.getAuthor().getName() + ", " + DateFormatter.formatDate(post.getDate()));
         binding.collapsingToolbar.setTitle("");
-//        binding.webView.loadUrl(presenter.getPostUrl());
+        binding.webView.loadUrl(presenter.getPostUrl());
     }
 }

@@ -20,9 +20,17 @@ public class TestData {
 
     public static Observable<PostResponse> postResponse(int start, int size) {
         return Observable.range(start, size)
-                .map(i -> new Post(i, createAuthor(i), "post title " + i, new Date(), "url " + i, "excerpt " + i))
+                .map(TestData::createPost)
                 .toList()
                 .map(PostResponse::new);
+    }
+
+    public static Post createPost(int i) {
+        return createPost(i, "url " + i);
+    }
+
+    public static Post createPost(int i, String url) {
+        return new Post(i, createAuthor(i), "post title " + i, new Date(), url, "excerpt " + i);
     }
 
     public static Author createAuthor(int i) {

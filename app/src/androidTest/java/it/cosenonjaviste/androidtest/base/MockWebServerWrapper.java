@@ -28,7 +28,7 @@ public class MockWebServerWrapper {
         if (server == null) {
             server = new MockWebServer();
             try {
-                server.play();
+                server.start();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
