@@ -20,13 +20,13 @@ public class ContactPresenterTest {
 
     @Mock MailJetService mailJetService;
 
-    @InjectMocks it.cosenonjaviste.core.contact.ContactPresenter presenter;
+    @InjectMocks ContactPresenter presenter;
 
     @Mock ContactView view;
 
     @Test
     public void testEmailError() {
-        it.cosenonjaviste.core.contact.ContactModel model = presenter.initAndResume(view);
+        ContactModel model = presenter.initAndResume(view);
 
         model.name.set("aaa");
         model.email.set("aaa");
