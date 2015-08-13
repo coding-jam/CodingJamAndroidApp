@@ -1,27 +1,26 @@
 package it.cosenonjaviste.core.page;
 
+import android.databinding.ObservableBoolean;
+
 import javax.inject.Inject;
 
-import it.cosenonjaviste.bind.BindableBoolean;
+import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.lib.mvp.MvpPresenter;
 
 public class PagePresenter extends MvpPresenter<PageModel, PageView> {
 
-    public BindableBoolean loading = new BindableBoolean();
-
-    public BindableBoolean webViewVisible = loading.not();
+    public ObservableBoolean loading = new ObservableBoolean();
 
     @Inject public PagePresenter() {
     }
 
-    public String getPostUrl() {
-        return getModel().getPost().getUrl();
+    public Post getPost() {
+        return getModel().getPost();
     }
 
     @Override public void resume() {
         super.resume();
         loading.set(true);
-        getView().update(getModel());
     }
 
     public void htmlLoaded() {

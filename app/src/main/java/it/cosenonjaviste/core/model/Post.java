@@ -2,6 +2,8 @@ package it.cosenonjaviste.core.model;
 
 import java.util.Date;
 
+import it.cosenonjaviste.ui.utils.DateFormatter;
+
 public class Post {
     long id;
     Author author;
@@ -62,5 +64,17 @@ public class Post {
             return "";
         }
         return excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "");
+    }
+
+    public String getSubtitle() {
+        return author.getName() + ", " + DateFormatter.formatDate(date);
+    }
+
+    public String getImageUrl() {
+        if (attachments != null && attachments.length > 0) {
+            return attachments[0].getUrl();
+        } else {
+            return null;
+        }
     }
 }

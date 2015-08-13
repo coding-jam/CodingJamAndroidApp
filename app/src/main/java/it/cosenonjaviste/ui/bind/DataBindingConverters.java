@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,13 +76,22 @@ public class DataBindingConverters {
         view.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
     }
 
-    @BindingAdapter({"app:imageUrl"})
-    public static void loadImage(ImageView view, String url) {
+    @BindingAdapter({"app:userImageUrl"})
+    public static void loadUserImage(ImageView view, String url) {
         if (!TextUtils.isEmpty(url)) {
             if (circleTransformation == null) {
                 circleTransformation = CircleTransform.createWithBorder(view.getResources(), R.dimen.author_image_size_big, R.color.colorPrimary, R.dimen.author_image_border);
             }
             Picasso.with(view.getContext()).load(url).transform(circleTransformation).into(view);
+        } else {
+            view.setImageDrawable(null);
+        }
+    }
+
+    @BindingAdapter({"app:imageUrl"})
+    public static void loadImage(ImageView view, String url) {
+        if (!TextUtils.isEmpty(url)) {
+            Picasso.with(view.getContext()).load(url).into(view);
         } else {
             view.setImageDrawable(null);
         }
@@ -95,6 +105,11 @@ public class DataBindingConverters {
     @BindingAdapter({"app:onClick"})
     public static void bindOnClick(View view, Runnable listener) {
         view.setOnClickListener(v -> listener.run());
+    }
+
+    @BindingAdapter({"app:url"})
+    public static void bindOnClick(WebView view, String url) {
+        view.loadUrl(url);
     }
 
     @BindingAdapter({"bind:text1", "bind:textParam1"})

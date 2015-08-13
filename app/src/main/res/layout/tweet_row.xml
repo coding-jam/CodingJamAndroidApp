@@ -24,7 +24,7 @@
                 android:id="@+id/author_image"
                 android:layout_width="@dimen/author_image_size"
                 android:layout_height="@dimen/author_image_size"
-                app:imageUrl="@{tweet.userImage}"/>
+                app:userImageUrl="@{tweet.userImage}"/>
 
             <TextView
                 android:id="@+id/author"

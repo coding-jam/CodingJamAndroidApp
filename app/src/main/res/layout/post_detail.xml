@@ -33,12 +33,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
+                    app:imageUrl="@{presenter.post.imageUrl}"
                     android:src="@drawable/logocnj"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/detail_shadow" />
+                    android:background="@drawable/detail_shadow"/>
 
                 <TextView
                     android:id="@+id/subtitle"
@@ -46,9 +47,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_margin="20dp"
-                    tools:text="Author, date"
                     android:textSize="18sp"
-                    app:layout_scrollFlags="scroll"/>
+                    app:layout_scrollFlags="scroll"
+                    tools:text="@{presenter.post.subtitle}"/>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -61,8 +62,9 @@
                         android:id="@+id/toolbar_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="Sviluppare applicazioni con React e Flux"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        app:textHtml="@{presenter.post.title}"
+                        tools:text="Sviluppare applicazioni con React e Flux"/>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
@@ -77,7 +79,8 @@
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:visible="@{presenter.webViewVisible}"/>
+                app:url="@{presenter.post.url}"
+                app:visible="@{!presenter.loading}"/>
         </android.support.v4.widget.NestedScrollView>
 
         <RelativeLayout
@@ -117,8 +120,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:backgroundTint="@color/cnj_border"
             android:src="@drawable/ic_share_white_24dp"
+            app:backgroundTint="@color/cnj_border"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|right|end"/>
     </android.support.design.widget.CoordinatorLayout>
