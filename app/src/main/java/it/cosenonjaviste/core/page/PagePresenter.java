@@ -3,9 +3,9 @@ package it.cosenonjaviste.core.page;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.bind.BindableBoolean;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.MvpPresenter;
 
-public class PagePresenter extends RxMvpPresenter<PageModel, PageView> {
+public class PagePresenter extends MvpPresenter<PageModel, PageView> {
 
     public BindableBoolean loading = new BindableBoolean();
 
