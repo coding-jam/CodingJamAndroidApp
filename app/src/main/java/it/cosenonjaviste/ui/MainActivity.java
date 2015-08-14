@@ -1,16 +1,15 @@
 package it.cosenonjaviste.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.databinding.ActivityMainBinding;
 import it.cosenonjaviste.ui.author.AuthorListFragment;
 import it.cosenonjaviste.ui.category.CategoryListFragment;
 import it.cosenonjaviste.ui.contact.ContactFragment;
@@ -18,22 +17,17 @@ import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.twitter.TweetListFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private NavigationView drawerMenu;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((CoseNonJavisteApp) getApplication()).getComponent().inject(this);
 
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerMenu = (NavigationView) findViewById(R.id.left_drawer_menu);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        setSupportActionBar(toolbar);
+        binding.toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(binding.toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -41,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
-        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        drawerMenu.setNavigationItemSelectedListener(menuItem -> {
+        binding.drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        binding.leftDrawerMenu.setNavigationItemSelectedListener(menuItem -> {
             selectItem(menuItem.getItemId());
             menuItem.setChecked(true);
             return true;
@@ -50,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             selectItem(R.id.drawer_post);
-            drawerMenu.getMenu().findItem(R.id.drawer_post).setChecked(true);
+            binding.leftDrawerMenu.getMenu().findItem(R.id.drawer_post).setChecked(true);
         }
     }
 
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                binding.drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
@@ -75,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
 
-        drawerLayout.closeDrawer(drawerMenu);
+        binding.drawerLayout.closeDrawer(binding.leftDrawerMenu);
     }
 
     private Fragment createFragment(int menuItemId) {
