@@ -67,6 +67,10 @@ div.page-heading h1 {
     line-height: 32px;
 }
 
+div.tags-link-wrap {
+	display: none;
+}
+
 /* LICENSE & DETAILS
    ==================================================
 

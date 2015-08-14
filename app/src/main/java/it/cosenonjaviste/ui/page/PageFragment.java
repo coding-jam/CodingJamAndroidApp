@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import org.parceler.ParcelClass;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -70,9 +71,28 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
                         || url.startsWith("http://www.facebook.com/plugins/like_box.php")
                         || url.startsWith("https://fbcdn-profile-")
                         || url.contains("sharethis.com/")
+                        || url.contains("disquscdn.com/")
+                        || url.contains("sharethis-gtm-pixel")
+                        || url.contains("facebook.com/")
+                        || url.contains("fbcdn.net/")
+                        || url.contains("/contact-form-7/")
+                        || url.contains("/catablog/")
+                        || url.contains("/advanced-random-posts-widget/")
+                        || url.contains("/yet-another-related-posts-plugin/")
+                        || url.contains("/wp-social-seo-booster/")
+                        || url.contains("/extended-categories-widget/")
+                        || url.contains("google-analytics.com/")
+                        || url.contains("cf_action=sync_comments")
+                        || url.startsWith("http://www.cosenonjaviste.it/wp-includes/js/comment-reply.min.js")
+                        || url.startsWith("https://fbstatic-a.akamaihd.net")
+                        || url.startsWith("https://glitter.services.disqus.com")
+                        || url.startsWith("http://connect.facebook.net")
+                        || url.startsWith("http://disqus.com/")
+                        || url.startsWith("https://referrer.disqus.com")
+                        || url.startsWith("http://cosenonjaviste.disqus.com/")
                         || url.equals("http://www.cosenonjaviste.it/wp-content/uploads/2013/06/favicon.ico")
                         ) {
-                    return null;
+                    return new WebResourceResponse("", "", new ByteArrayInputStream(new byte[0]));
                 }
                 return super.shouldInterceptRequest(view11, url);
             }
