@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.core.author.AuthorListPresenter;
 import it.cosenonjaviste.core.author.AuthorListView;
-import it.cosenonjaviste.core.model.WordPressService;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
 import rx.Observable;
 

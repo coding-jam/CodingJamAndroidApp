@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import org.parceler.ParcelClass;
 import org.parceler.ParcelClasses;
 
-import it.cosenonjaviste.core.model.Attachment;
-import it.cosenonjaviste.core.model.Author;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.Post;
-import it.cosenonjaviste.core.model.Tweet;
 import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
+import it.cosenonjaviste.model.Attachment;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.Tweet;
 import rx.functions.Func1;
 
 @ParcelClasses({

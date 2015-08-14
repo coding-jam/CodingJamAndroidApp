@@ -1,8 +1,8 @@
 package it.cosenonjaviste.ui.post;
 
-import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.databinding.PostRowBinding;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
 public class PostViewHolder extends BindableViewHolder<Post> {

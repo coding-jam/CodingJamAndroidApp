@@ -12,8 +12,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.WordPressService;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
 import rx.Observable;
 

@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,10 +18,10 @@ public class WordPressServiceTest {
 
     @Test
     public void testLoadPosts() throws IOException {
-        it.cosenonjaviste.core.model.PostResponse postResponse = gson.fromJson(JsonStubs.getPostList(1), PostResponse.class);
-        List<it.cosenonjaviste.core.model.Post> posts = postResponse.getPosts();
+        it.cosenonjaviste.model.PostResponse postResponse = gson.fromJson(JsonStubs.getPostList(1), PostResponse.class);
+        List<it.cosenonjaviste.model.Post> posts = postResponse.getPosts();
         assertEquals(1, posts.size());
-        it.cosenonjaviste.core.model.Post post = posts.get(0);
+        it.cosenonjaviste.model.Post post = posts.get(0);
         assertEquals(12831, post.getId());
         assertNotNull(post.getDate());
         assertNotNull(post.getTitle());

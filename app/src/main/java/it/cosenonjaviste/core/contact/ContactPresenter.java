@@ -7,10 +7,10 @@ import android.databinding.ObservableInt;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.model.MailJetService;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.model.MailJetService;
 import retrofit.client.Response;
 import rx.Observable;
 

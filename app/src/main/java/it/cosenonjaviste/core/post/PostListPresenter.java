@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.model.Author;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.Post;
-import it.cosenonjaviste.core.model.PostResponse;
-import it.cosenonjaviste.core.model.WordPressService;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.PostResponse;
+import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 import rx.functions.Action1;
 

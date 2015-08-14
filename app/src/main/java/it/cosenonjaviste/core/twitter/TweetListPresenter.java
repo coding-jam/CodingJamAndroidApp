@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.model.Tweet;
-import it.cosenonjaviste.core.model.TwitterService;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.model.Tweet;
+import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 
 public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetListModel, TweetListView> {

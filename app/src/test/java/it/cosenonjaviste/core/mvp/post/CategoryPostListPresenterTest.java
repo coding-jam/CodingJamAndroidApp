@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.TestData;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.WordPressService;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;

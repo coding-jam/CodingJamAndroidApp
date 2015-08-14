@@ -2,10 +2,10 @@ package it.cosenonjaviste.core.post;
 
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Author;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.Post;
 
 public class PostListModel extends ListModelAdapter<Post> {
 

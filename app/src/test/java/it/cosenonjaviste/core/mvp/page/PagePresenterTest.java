@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.core.model.Post;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.page.PagePresenter;
 import it.cosenonjaviste.core.page.PageView;

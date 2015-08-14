@@ -3,13 +3,13 @@ package it.cosenonjaviste.core;
 import java.util.Date;
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Author;
-import it.cosenonjaviste.core.model.AuthorResponse;
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.CategoryResponse;
-import it.cosenonjaviste.core.model.Post;
-import it.cosenonjaviste.core.model.PostResponse;
-import it.cosenonjaviste.core.model.Tweet;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.AuthorResponse;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.CategoryResponse;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.PostResponse;
+import it.cosenonjaviste.model.Tweet;
 import rx.Observable;
 
 public class TestData {

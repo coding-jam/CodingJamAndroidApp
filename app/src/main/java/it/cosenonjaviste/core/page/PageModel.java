@@ -1,6 +1,6 @@
 package it.cosenonjaviste.core.page;
 
-import it.cosenonjaviste.core.model.Post;
+import it.cosenonjaviste.model.Post;
 
 public class PageModel {
 

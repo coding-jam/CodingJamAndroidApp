@@ -12,7 +12,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
-import it.cosenonjaviste.core.model.MailJetService;
+import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.ui.contact.ContactFragment;
 import retrofit.client.Response;
 import rx.Observable;

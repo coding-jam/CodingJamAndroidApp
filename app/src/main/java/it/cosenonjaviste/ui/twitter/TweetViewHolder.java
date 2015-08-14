@@ -1,7 +1,7 @@
 package it.cosenonjaviste.ui.twitter;
 
-import it.cosenonjaviste.core.model.Tweet;
 import it.cosenonjaviste.databinding.TweetRowBinding;
+import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
 public class TweetViewHolder extends BindableViewHolder<Tweet> {

@@ -2,8 +2,8 @@ package it.cosenonjaviste.ui.category;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.category.CategoryListPresenter;
-import it.cosenonjaviste.core.model.Category;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
+import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
 public class CategoryViewHolder extends BindableViewHolder<Category> {

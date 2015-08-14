@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Post;
-import it.cosenonjaviste.core.model.WordPressService;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;

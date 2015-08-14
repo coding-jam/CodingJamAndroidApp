@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.model;
 
 public class Attachment {
     String url;

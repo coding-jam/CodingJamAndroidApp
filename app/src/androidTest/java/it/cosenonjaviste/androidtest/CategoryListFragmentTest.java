@@ -8,12 +8,12 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.ui.category.CategoryListFragment;
+import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.category.CategoryListModel;
-import it.cosenonjaviste.core.model.WordPressService;
+import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.category.CategoryListFragment;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;

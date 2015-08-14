@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.model.MailJetService;
+import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;

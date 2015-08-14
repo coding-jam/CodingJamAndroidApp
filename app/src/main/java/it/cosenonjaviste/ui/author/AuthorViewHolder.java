@@ -1,8 +1,8 @@
 package it.cosenonjaviste.ui.author;
 
 import it.cosenonjaviste.core.author.AuthorListPresenter;
-import it.cosenonjaviste.core.model.Author;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
+import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
 public class AuthorViewHolder extends BindableViewHolder<Author> {

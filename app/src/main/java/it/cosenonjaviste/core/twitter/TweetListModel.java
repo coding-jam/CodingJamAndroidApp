@@ -2,8 +2,8 @@ package it.cosenonjaviste.core.twitter;
 
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Tweet;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.model.Tweet;
 
 public class TweetListModel extends ListModelAdapter<Tweet> {
     List<Tweet> items;

@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.databinding.PostRowBinding;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;

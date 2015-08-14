@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import org.parceler.ParcelClass;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.model.Tweet;
 import it.cosenonjaviste.core.twitter.TweetListModel;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
 import it.cosenonjaviste.databinding.TweetRowBinding;
+import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;

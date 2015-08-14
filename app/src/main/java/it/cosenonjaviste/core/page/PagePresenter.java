@@ -4,8 +4,8 @@ import android.databinding.ObservableBoolean;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.model.Post;
 import it.cosenonjaviste.lib.mvp.MvpPresenter;
+import it.cosenonjaviste.model.Post;
 
 public class PagePresenter extends MvpPresenter<PageModel, PageView> {
 

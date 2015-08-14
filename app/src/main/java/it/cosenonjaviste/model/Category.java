@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.model;
 
 import com.google.gson.annotations.SerializedName;
 

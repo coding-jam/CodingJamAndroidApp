@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.model;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -18,7 +18,7 @@ public interface WordPressService {
 
     @GET(AUTHOR_POSTS_URL + "&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Observable<PostResponse> listAuthorPosts(@Query("id") long authorId, @Query("page") int page);
 
-    @GET("/?json=get_author_index&author_meta=email") Observable<it.cosenonjaviste.core.model.AuthorResponse> listAuthors();
+    @GET("/?json=get_author_index&author_meta=email") Observable<it.cosenonjaviste.model.AuthorResponse> listAuthors();
 
     @GET("/?json=get_category_index") Observable<CategoryResponse> listCategories();
 }

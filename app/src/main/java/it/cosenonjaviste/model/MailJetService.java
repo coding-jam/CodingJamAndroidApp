@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.model;
 
 import retrofit.client.Response;
 import retrofit.http.Field;

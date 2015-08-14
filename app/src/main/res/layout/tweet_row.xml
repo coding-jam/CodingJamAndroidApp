@@ -6,7 +6,7 @@
 
         <variable
             name="tweet"
-            type="it.cosenonjaviste.core.model.Tweet"/>
+            type="it.cosenonjaviste.model.Tweet"/>
     </data>
 
     <android.support.v7.widget.CardView

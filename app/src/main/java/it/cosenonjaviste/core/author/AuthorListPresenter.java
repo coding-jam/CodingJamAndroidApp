@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.model.Author;
-import it.cosenonjaviste.core.model.AuthorResponse;
-import it.cosenonjaviste.core.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.AuthorResponse;
+import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
 public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, AuthorListModel, AuthorListView> {

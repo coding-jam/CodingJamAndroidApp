@@ -2,8 +2,8 @@ package it.cosenonjaviste.core.author;
 
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Author;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.model.Author;
 
 public class AuthorListModel extends ListModelAdapter<Author> {
     List<Author> items;

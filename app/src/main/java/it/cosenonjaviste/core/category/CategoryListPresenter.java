@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.model.Category;
-import it.cosenonjaviste.core.model.CategoryResponse;
-import it.cosenonjaviste.core.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.CategoryResponse;
+import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
 public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, it.cosenonjaviste.core.category.CategoryListModel, CategoryListView> {

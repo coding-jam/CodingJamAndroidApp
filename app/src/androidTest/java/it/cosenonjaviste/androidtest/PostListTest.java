@@ -9,12 +9,12 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.core.model.WordPressService;
-import it.cosenonjaviste.ui.post.PostListFragment;
+import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.post.PostListFragment;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

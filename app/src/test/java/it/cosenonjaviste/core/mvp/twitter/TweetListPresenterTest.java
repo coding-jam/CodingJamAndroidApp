@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.TestData;
-import it.cosenonjaviste.core.model.TwitterService;
+import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.core.twitter.TweetListModel;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;

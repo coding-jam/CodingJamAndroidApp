@@ -2,8 +2,8 @@ package it.cosenonjaviste.core.category;
 
 import java.util.List;
 
-import it.cosenonjaviste.core.model.Category;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.model.Category;
 
 public class CategoryListModel extends ListModelAdapter<Category> {
     List<Category> items;
