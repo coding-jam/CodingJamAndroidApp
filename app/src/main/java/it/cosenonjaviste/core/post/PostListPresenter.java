@@ -15,15 +15,15 @@ import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 import rx.functions.Action1;
 
-public class PostListPresenter extends RxMvpListPresenterAdapter<Post, it.cosenonjaviste.core.post.PostListModel, PostListView> {
+public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
     @Inject public PostListPresenter() {
     }
 
-    @Override public it.cosenonjaviste.core.post.PostListModel createDefaultModel() {
-        return new it.cosenonjaviste.core.post.PostListModel();
+    @Override public PostListModel createDefaultModel() {
+        return new PostListModel();
     }
 
     @Override public void resume() {

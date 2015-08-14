@@ -6,10 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.page.PagePresenter;
 import it.cosenonjaviste.core.page.PageView;
+import it.cosenonjaviste.model.Post;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +24,6 @@ public class PagePresenterTest {
     public void testLoad() {
         presenter.initAndResume(new PageModel(new Post(1, null, "title", null, "url", null)), view);
 
-        assertThat(presenter.getPostUrl()).isEqualTo("url");
+        assertThat(presenter.getPost().getUrl()).isEqualTo("url");
     }
 }
