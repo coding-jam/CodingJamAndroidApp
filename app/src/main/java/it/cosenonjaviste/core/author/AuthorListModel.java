@@ -1,21 +1,15 @@
 package it.cosenonjaviste.core.author;
 
-import android.databinding.ObservableArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hannesdorfmann.parcelableplease.annotation.Bagger;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Author;
 
 @ParcelablePlease
 public class AuthorListModel extends ListModelAdapter<Author> implements Parcelable {
-
-    @Bagger(ObservableArrayListBagger.class)
-    ObservableArrayList<Author> items = new ObservableArrayList<>();
 
     public int size() {
         return items.size();
@@ -23,10 +17,6 @@ public class AuthorListModel extends ListModelAdapter<Author> implements Parcela
 
     public Author get(int index) {
         return items.get(index);
-    }
-
-    public ObservableArrayList<Author> getItems() {
-        return items;
     }
 
     @Override public int describeContents() {

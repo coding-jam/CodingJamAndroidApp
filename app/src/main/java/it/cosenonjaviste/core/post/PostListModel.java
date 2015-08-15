@@ -1,13 +1,10 @@
 package it.cosenonjaviste.core.post;
 
-import android.databinding.ObservableArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hannesdorfmann.parcelableplease.annotation.Bagger;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
@@ -15,9 +12,6 @@ import it.cosenonjaviste.model.Post;
 
 @ParcelablePlease
 public class PostListModel extends ListModelAdapter<Post> implements Parcelable {
-
-    @Bagger(ObservableArrayListBagger.class)
-    ObservableArrayList<Post> items = new ObservableArrayList<>();
 
     Category category;
 
@@ -50,10 +44,6 @@ public class PostListModel extends ListModelAdapter<Post> implements Parcelable 
 
     public Author getAuthor() {
         return author;
-    }
-
-    @Override public ObservableArrayList<Post> getItems() {
-        return items;
     }
 
     public int size() {

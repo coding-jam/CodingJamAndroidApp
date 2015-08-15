@@ -1,20 +1,15 @@
 package it.cosenonjaviste.core.twitter;
 
-import android.databinding.ObservableArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hannesdorfmann.parcelableplease.annotation.Bagger;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Tweet;
 
 @ParcelablePlease
 public class TweetListModel extends ListModelAdapter<Tweet> implements Parcelable {
-    @Bagger(ObservableArrayListBagger.class)
-    ObservableArrayList<Tweet> items = new ObservableArrayList<>();
 
     boolean moreDataAvailable;
 
@@ -25,11 +20,6 @@ public class TweetListModel extends ListModelAdapter<Tweet> implements Parcelabl
     public boolean isMoreDataAvailable() {
         return moreDataAvailable;
     }
-
-    public ObservableArrayList<Tweet> getItems() {
-        return items;
-    }
-
 
     @Override public int describeContents() {
         return 0;
