@@ -4,16 +4,26 @@ import android.databinding.ObservableBoolean;
 
 import java.util.List;
 
+import it.cosenonjaviste.core.utils.ObservableParcelerArrayList;
+
 public abstract class ListModelAdapter<T> {
-    public ObservableBoolean empty = new ObservableBoolean(true);
 
     public ObservableBoolean error = new ObservableBoolean();
 
-    protected abstract List<T> getItems();
+    public boolean loaded;
 
-    protected abstract void setItems(List<T> items);
+    public abstract ObservableParcelerArrayList<T> getItems();
+
+    public void append(List<T> object) {
+        loaded = true;
+        getItems().addAll(object);
+    }
 
     public boolean isLoaded() {
-        return getItems() != null || error.get();
+        return loaded || error.get();
+    }
+
+    public void clear() {
+        getItems().clear();
     }
 }

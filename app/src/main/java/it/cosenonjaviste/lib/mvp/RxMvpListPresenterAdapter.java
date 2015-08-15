@@ -31,23 +31,17 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
         return getModel().error;
     }
 
-    @Override public ObservableBoolean isEmpty() {
-        return getModel().empty;
-    }
-
     public void done(List<T> items) {
-        getModel().setItems(items);
+        getModel().append(items);
         getModel().error.set(false);
-        getModel().empty.set(items.isEmpty());
         if (listChangeListener != null) {
             listChangeListener.call(items);
         }
     }
 
     public void error() {
-        getModel().setItems(null);
+        getModel().clear();
         getModel().error.set(true);
-        getModel().empty.set(false);
     }
 
     public void setListChangeListener(Action1<List<T>> listChangeListener) {

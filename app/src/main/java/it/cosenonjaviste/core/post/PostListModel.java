@@ -2,6 +2,7 @@ package it.cosenonjaviste.core.post;
 
 import java.util.List;
 
+import it.cosenonjaviste.core.utils.ObservableParcelerArrayList;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
@@ -9,7 +10,7 @@ import it.cosenonjaviste.model.Post;
 
 public class PostListModel extends ListModelAdapter<Post> {
 
-    List<Post> items;
+    ObservableParcelerArrayList<Post> items = new ObservableParcelerArrayList<>();
 
     Category category;
 
@@ -44,12 +45,8 @@ public class PostListModel extends ListModelAdapter<Post> {
         return author;
     }
 
-    public List<Post> getItems() {
+    @Override public ObservableParcelerArrayList<Post> getItems() {
         return items;
-    }
-
-    @Override public void setItems(List<Post> items) {
-        this.items = items;
     }
 
     public void append(List<Post> object) {

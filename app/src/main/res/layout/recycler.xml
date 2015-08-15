@@ -28,20 +28,6 @@
                 app:visibleOrGone="@{presenter.loadingNextPage}"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:visibleOrGone="@{presenter.empty &amp;&amp; !presenter.loading}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="Nothing here."
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/progress_root"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
                 app:refreshing="@{presenter.loadingPullToRefresh}"
-                app:visibleOrGone="@{!presenter.empty &amp;&amp; !presenter.loading}">
+                app:visibleOrGone="@{!presenter.error &amp;&amp; !presenter.loading}">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"
