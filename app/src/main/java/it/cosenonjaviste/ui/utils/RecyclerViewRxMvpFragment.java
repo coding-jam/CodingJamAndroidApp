@@ -14,9 +14,8 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.lib.mvp.LifeCycleListener;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
-import it.cosenonjaviste.lib.mvp.RxMvpListView;
 
-public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, T> extends MvpFragment<P> implements RxMvpListView<T> {
+public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, T> extends MvpFragment<P> {
     protected BindableAdapter<T> adapter;
     protected RecyclerBinding binding;
 
