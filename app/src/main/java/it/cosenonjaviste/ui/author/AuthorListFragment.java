@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.parceler.ParcelClass;
-
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.core.author.AuthorListPresenter;
 import it.cosenonjaviste.core.author.AuthorListView;
 import it.cosenonjaviste.core.post.PostListModel;
@@ -21,7 +18,6 @@ import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-@ParcelClass(AuthorListModel.class)
 public class AuthorListFragment extends RecyclerViewRxMvpFragment<AuthorListPresenter, Author> implements AuthorListView {
 
     @Override protected AuthorListPresenter createPresenter() {

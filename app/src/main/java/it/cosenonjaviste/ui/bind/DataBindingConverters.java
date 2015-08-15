@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.bind.BindableBoolean;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.ui.utils.CircleTransform;
 import it.cosenonjaviste.ui.utils.DateFormatter;
@@ -25,11 +24,6 @@ import it.cosenonjaviste.ui.utils.TextWatcherAdapter;
 public class DataBindingConverters {
 
     private static CircleTransform circleTransformation;
-
-    @BindingConversion
-    public static boolean convertBindableToBoolean(BindableBoolean bindableBoolean) {
-        return bindableBoolean != null && bindableBoolean.get();
-    }
 
     @BindingConversion
     public static CharSequence convertDateToCharSequence(Date date) {
@@ -59,11 +53,6 @@ public class DataBindingConverters {
         if (!view.getText().toString().equals(newValue)) {
             view.setText(newValue);
         }
-    }
-
-    @BindingAdapter({"app:visible"})
-    public static void bindVisible(View view, BindableBoolean bindableBoolean) {
-        view.setVisibility(bindableBoolean != null && bindableBoolean.get() ? View.VISIBLE : View.INVISIBLE);
     }
 
     @BindingAdapter({"app:visibleOrGone"})

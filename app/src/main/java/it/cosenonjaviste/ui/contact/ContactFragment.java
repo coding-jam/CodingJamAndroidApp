@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.parceler.ParcelClass;
-
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.contact.ContactModel;
 import it.cosenonjaviste.core.contact.ContactPresenter;
 import it.cosenonjaviste.core.contact.ContactView;
 import it.cosenonjaviste.databinding.ContactBinding;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-@ParcelClass(ContactModel.class)
 public class ContactFragment extends MvpFragment<ContactPresenter> implements ContactView {
 
     @Override protected ContactPresenter createPresenter() {

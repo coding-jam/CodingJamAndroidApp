@@ -1,9 +1,8 @@
 package it.cosenonjaviste.lib.mvp;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-
-import org.parceler.Parcels;
 
 import java.util.Collection;
 
@@ -43,10 +42,10 @@ public abstract class LifeCycleFragment extends Fragment {
             @Override public Object load(String key) {
                 Object value = null;
                 if (state != null) {
-                    value = Parcels.unwrap(state.getParcelable(key));
+                    value = state.getParcelable(key);
                 }
                 if (value == null && getArguments() != null) {
-                    value = Parcels.unwrap(getArguments().getParcelable(key));
+                    value = getArguments().getParcelable(key);
                 }
                 return value;
             }
@@ -87,7 +86,7 @@ public abstract class LifeCycleFragment extends Fragment {
         super.onSaveInstanceState(outState);
         LifeCycleListener.ObjectSaver saver = new LifeCycleListener.ObjectSaver() {
             @Override public void save(String key, Object value) {
-                outState.putParcelable(key, Parcels.wrap(value));
+                outState.putParcelable(key, (Parcelable) value);
             }
         };
         Collection<LifeCycleListener<Object>> listeners = retainedFragment.getListeners();

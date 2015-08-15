@@ -9,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.parceler.ParcelClass;
-
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.twitter.TweetListModel;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
 import it.cosenonjaviste.databinding.TweetRowBinding;
@@ -21,7 +18,6 @@ import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
 
-@ParcelClass(TweetListModel.class)
 public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresenter, Tweet> implements TweetListView {
 
     @Override protected TweetListPresenter createPresenter() {

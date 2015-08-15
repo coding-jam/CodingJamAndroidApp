@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.parceler.ParcelClass;
-
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.post.PostListModel;
@@ -22,7 +19,6 @@ import it.cosenonjaviste.ui.utils.BindableViewHolder;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-@ParcelClass(CategoryListModel.class)
 public class CategoryListFragment extends RecyclerViewRxMvpFragment<CategoryListPresenter, Category> implements CategoryListView {
 
     @Override protected CategoryListPresenter createPresenter() {

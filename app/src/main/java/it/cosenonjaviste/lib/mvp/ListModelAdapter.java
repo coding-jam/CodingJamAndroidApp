@@ -1,10 +1,9 @@
 package it.cosenonjaviste.lib.mvp;
 
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 
 import java.util.List;
-
-import it.cosenonjaviste.core.utils.ObservableParcelerArrayList;
 
 public abstract class ListModelAdapter<T> {
 
@@ -12,7 +11,7 @@ public abstract class ListModelAdapter<T> {
 
     public boolean loaded;
 
-    public abstract ObservableParcelerArrayList<T> getItems();
+    public abstract ObservableArrayList<T> getItems();
 
     public void append(List<T> object) {
         loaded = true;

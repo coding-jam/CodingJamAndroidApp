@@ -4,9 +4,9 @@ import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
+import com.annimon.stream.Objects;
 
-import it.cosenonjaviste.bind.Objects;
+import java.io.Serializable;
 
 public class ObservableString extends BaseObservable implements Parcelable, Serializable {
     static final long serialVersionUID = 1L;

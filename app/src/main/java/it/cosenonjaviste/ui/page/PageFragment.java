@@ -12,21 +12,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import org.parceler.ParcelClass;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.page.PagePresenter;
 import it.cosenonjaviste.core.page.PageView;
 import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-@ParcelClass(PageModel.class)
 public class PageFragment extends MvpFragment<PagePresenter> implements PageView {
 
     @Override protected PagePresenter createPresenter() {

@@ -6,6 +6,4 @@ compileJava {
 }
 
 dependencies {
-    compile 'com.android.databinding:baseLibrary:1.0-rc1'
-    compile 'org.parceler:parceler-api:1.0.1'
 }

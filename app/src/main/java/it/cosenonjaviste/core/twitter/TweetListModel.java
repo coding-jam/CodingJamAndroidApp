@@ -1,11 +1,20 @@
 package it.cosenonjaviste.core.twitter;
 
-import it.cosenonjaviste.core.utils.ObservableParcelerArrayList;
+import android.databinding.ObservableArrayList;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.hannesdorfmann.parcelableplease.annotation.Bagger;
+import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
+
+import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Tweet;
 
-public class TweetListModel extends ListModelAdapter<Tweet> {
-    ObservableParcelerArrayList<Tweet> items = new ObservableParcelerArrayList<>();
+@ParcelablePlease
+public class TweetListModel extends ListModelAdapter<Tweet> implements Parcelable {
+    @Bagger(ObservableArrayListBagger.class)
+    ObservableArrayList<Tweet> items = new ObservableArrayList<>();
 
     boolean moreDataAvailable;
 
@@ -17,7 +26,28 @@ public class TweetListModel extends ListModelAdapter<Tweet> {
         return moreDataAvailable;
     }
 
-    public ObservableParcelerArrayList<Tweet> getItems() {
+    public ObservableArrayList<Tweet> getItems() {
         return items;
     }
+
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        TweetListModelParcelablePlease.writeToParcel(this, dest, flags);
+    }
+
+    public static final Creator<TweetListModel> CREATOR = new Creator<TweetListModel>() {
+        public TweetListModel createFromParcel(Parcel source) {
+            TweetListModel target = new TweetListModel();
+            TweetListModelParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        public TweetListModel[] newArray(int size) {
+            return new TweetListModel[size];
+        }
+    };
 }

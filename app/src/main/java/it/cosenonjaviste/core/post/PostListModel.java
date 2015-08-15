@@ -1,16 +1,23 @@
 package it.cosenonjaviste.core.post;
 
-import java.util.List;
+import android.databinding.ObservableArrayList;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import it.cosenonjaviste.core.utils.ObservableParcelerArrayList;
+import com.hannesdorfmann.parcelableplease.annotation.Bagger;
+import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
+
+import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 
-public class PostListModel extends ListModelAdapter<Post> {
+@ParcelablePlease
+public class PostListModel extends ListModelAdapter<Post> implements Parcelable {
 
-    ObservableParcelerArrayList<Post> items = new ObservableParcelerArrayList<>();
+    @Bagger(ObservableArrayListBagger.class)
+    ObservableArrayList<Post> items = new ObservableArrayList<>();
 
     Category category;
 
@@ -45,19 +52,31 @@ public class PostListModel extends ListModelAdapter<Post> {
         return author;
     }
 
-    @Override public ObservableParcelerArrayList<Post> getItems() {
+    @Override public ObservableArrayList<Post> getItems() {
         return items;
-    }
-
-    public void append(List<Post> object) {
-        items.addAll(object);
     }
 
     public int size() {
         return items.size();
     }
 
-    public boolean isEmpty() {
-        return items == null || items.isEmpty();
+    @Override public int describeContents() {
+        return 0;
     }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        PostListModelParcelablePlease.writeToParcel(this, dest, flags);
+    }
+
+    public static final Creator<PostListModel> CREATOR = new Creator<PostListModel>() {
+        public PostListModel createFromParcel(Parcel source) {
+            PostListModel target = new PostListModel();
+            PostListModelParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        public PostListModel[] newArray(int size) {
+            return new PostListModel[size];
+        }
+    };
 }

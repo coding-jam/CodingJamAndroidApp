@@ -1,10 +1,15 @@
 package it.cosenonjaviste.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 import it.cosenonjaviste.core.utils.Md5Utils;
 
-public class Author implements Comparable<Author> {
+@ParcelablePlease
+public class Author implements Comparable<Author>, Parcelable {
     long id;
 
     @SerializedName("first_name")
@@ -72,4 +77,24 @@ public class Author implements Comparable<Author> {
             return id + 100;
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        AuthorParcelablePlease.writeToParcel(this, dest, flags);
+    }
+
+    public static final Creator<Author> CREATOR = new Creator<Author>() {
+        public Author createFromParcel(Parcel source) {
+            Author target = new Author();
+            AuthorParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        public Author[] newArray(int size) {
+            return new Author[size];
+        }
+    };
 }

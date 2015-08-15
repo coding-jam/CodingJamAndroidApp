@@ -1,8 +1,14 @@
 package it.cosenonjaviste.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
+
 import java.util.Date;
 
-public class Tweet {
+@ParcelablePlease
+public class Tweet implements Parcelable {
     long id;
     String text;
     Date createdAt;
@@ -40,4 +46,24 @@ public class Tweet {
     public String getAuthor() {
         return author;
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        TweetParcelablePlease.writeToParcel(this, dest, flags);
+    }
+
+    public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {
+        public Tweet createFromParcel(Parcel source) {
+            Tweet target = new Tweet();
+            TweetParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        public Tweet[] newArray(int size) {
+            return new Tweet[size];
+        }
+    };
 }

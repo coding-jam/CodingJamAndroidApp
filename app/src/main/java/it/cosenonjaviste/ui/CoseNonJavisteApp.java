@@ -4,24 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-import org.parceler.ParcelClass;
-import org.parceler.ParcelClasses;
-
 import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
-import it.cosenonjaviste.model.Attachment;
-import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.model.Tweet;
 import rx.functions.Func1;
 
-@ParcelClasses({
-        @ParcelClass(Attachment.class),
-        @ParcelClass(Post.class),
-        @ParcelClass(Category.class),
-        @ParcelClass(Tweet.class),
-        @ParcelClass(Author.class)
-})
 public class CoseNonJavisteApp extends Application {
 
     private ApplicationComponent component;

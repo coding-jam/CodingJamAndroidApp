@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.parceler.ParcelClass;
-
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageModel;
-import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.databinding.PostRowBinding;
@@ -24,7 +21,6 @@ import it.cosenonjaviste.ui.utils.BindableViewHolder;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-@ParcelClass(PostListModel.class)
 public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresenter, Post> implements PostListView {
 
     @Override protected PostListPresenter createPresenter() {

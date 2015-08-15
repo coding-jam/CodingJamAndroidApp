@@ -3,12 +3,11 @@ package it.cosenonjaviste.ui.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-
-import org.parceler.Parcels;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
@@ -34,9 +33,9 @@ public class SingleFragmentActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static <MM> void open(FragmentActivity activity, Class<?> viewClass, MM model) {
+    public static <MM extends Parcelable> void open(FragmentActivity activity, Class<?> viewClass, MM model) {
         Intent intent = createIntent(activity, viewClass);
-        intent.putExtra(RxMvpPresenter.MODEL, Parcels.wrap(model));
+        intent.putExtra(RxMvpPresenter.MODEL, model);
         activity.startActivity(intent);
     }
 
