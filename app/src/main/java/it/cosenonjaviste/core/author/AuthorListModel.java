@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.lib.mvp.ListModel;
 import it.cosenonjaviste.model.Author;
 
 @ParcelablePlease
-public class AuthorListModel extends ListModelAdapter<Author> implements Parcelable {
+public class AuthorListModel extends ListModel<Author> implements Parcelable {
 
     public int size() {
         return items.size();

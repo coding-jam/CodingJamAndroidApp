@@ -9,7 +9,7 @@ import java.util.List;
 
 import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 
-public abstract class ListModelAdapter<T> {
+public abstract class ListModel<T> {
 
     public ObservableBoolean error = new ObservableBoolean();
 

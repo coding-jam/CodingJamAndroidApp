@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.lib.mvp.ListModelAdapter;
+import it.cosenonjaviste.lib.mvp.ListModel;
 import it.cosenonjaviste.model.Tweet;
 
 @ParcelablePlease
-public class TweetListModel extends ListModelAdapter<Tweet> implements Parcelable {
+public class TweetListModel extends ListModel<Tweet> implements Parcelable {
 
     boolean moreDataAvailable;
 

@@ -2,7 +2,7 @@ package it.cosenonjaviste.lib.mvp;
 
 import android.databinding.ObservableBoolean;
 
-public abstract class RxMvpListPresenterAdapter<M extends ListModelAdapter<?>, V> extends RxMvpPresenter<M, V> implements RxMvpListPresenter {
+public abstract class RxMvpListPresenterAdapter<M extends ListModel<?>, V> extends RxMvpPresenter<M, V> implements RxMvpListPresenter {
     protected ObservableBoolean loading = new ObservableBoolean();
 
     protected ObservableBoolean loadingNextPage = new ObservableBoolean();
