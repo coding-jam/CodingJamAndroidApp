@@ -1,8 +1,6 @@
 package it.cosenonjaviste.lib.mvp;
 
 
-import it.cosenonjaviste.lib.mvp.utils.RxHolder;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import rx.Observable;
 import rx.functions.Action1;
 

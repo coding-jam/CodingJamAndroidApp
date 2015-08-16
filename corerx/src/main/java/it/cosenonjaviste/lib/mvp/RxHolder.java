@@ -1,15 +1,12 @@
-package it.cosenonjaviste.lib.mvp.utils;
+package it.cosenonjaviste.lib.mvp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cosenonjaviste.lib.mvp.ObservableWithFactory;
 import rx.Observable;
-import rx.Subscriber;
+import rx.Observer;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.functions.Actions;
-import rx.functions.Func0;
 import rx.observables.ConnectableObservable;
 import rx.subscriptions.CompositeSubscription;
 
@@ -20,7 +17,7 @@ public class RxHolder {
 
     private CompositeSubscription subscriptions = new CompositeSubscription();
 
-    protected final List<ObservableWithFactory> observables = new ArrayList<>();
+    protected final List<ObservableWithObserver> observables = new ArrayList<>();
 
     public RxHolder(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
@@ -33,7 +30,7 @@ public class RxHolder {
     public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
         ConnectableObservable<T> replay = observable.compose(schedulerManager::bindObservable).replay();
         connectableSubscriptions.add(replay.connect());
-        Func0<Subscriber<T>> factory = () -> new Subscriber<T>() {
+        ObservableWithObserver<T> observableWithObserver = new ObservableWithObserver<>(replay, new Observer<T>() {
             @Override public void onCompleted() {
                 if (onCompleted != null) {
                     onCompleted.call();
@@ -51,32 +48,24 @@ public class RxHolder {
                     onNext.call(t);
                 }
             }
-        };
-        ObservableWithFactory<T> observableWithFactory = new ObservableWithFactory<>(replay, factory);
-        observables.add(observableWithFactory);
-        subscribe(observableWithFactory);
+        });
+        observables.add(observableWithObserver);
+        subscribe(observableWithObserver);
     }
 
 
-    private <T> void subscribe(ObservableWithFactory<T> observableWithFactory) {
-        Observable<T> observable = observableWithFactory.observable;
-        Subscriber<T> subscriber = observableWithFactory.subscriberFactory.call();
-        subscriptions.add(observable.subscribe(
-                Actions.empty(),
-                t -> removeObservableFactory(observableWithFactory),
-                () -> removeObservableFactory(observableWithFactory)));
-        subscriptions.add(observable.subscribe(subscriber));
-    }
-
-
-    private <T> boolean removeObservableFactory(ObservableWithFactory<T> observableWithFactory) {
-        return observables.remove(observableWithFactory);
+    private <T> void subscribe(ObservableWithObserver<T> observableWithObserver) {
+        subscriptions.add(
+                observableWithObserver.observable
+                        .finallyDo(() -> observables.remove(observableWithObserver))
+                        .subscribe(observableWithObserver.observer)
+        );
     }
 
     public void resubscribePendingObservable() {
-        ArrayList<ObservableWithFactory> observableCopy = new ArrayList<>(observables);
-        for (ObservableWithFactory<?> observableWithFactory : observableCopy) {
-            subscribe(observableWithFactory);
+        ArrayList<ObservableWithObserver> observableCopy = new ArrayList<>(observables);
+        for (ObservableWithObserver<?> observableWithObserver : observableCopy) {
+            subscribe(observableWithObserver);
         }
     }
 

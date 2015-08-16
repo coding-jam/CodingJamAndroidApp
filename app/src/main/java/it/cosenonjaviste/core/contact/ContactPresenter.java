@@ -10,7 +10,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
 import retrofit.client.Response;
 import rx.Observable;

@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.androidtest.base.EspressoSchedulerManager;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;

@@ -8,13 +8,14 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
+import rx.functions.Action1;
 
 public class PostListPresenter extends RxMvpListPresenterAdapter<PostListModel, PostListView> {
 
@@ -31,7 +32,15 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<PostListModel, 
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
-        Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.set(false));
+        Observable<List<Post>> observable = getObservable(1).doOnNext(new Action1<List<Post>>() {
+            @Override public void call(List<Post> posts) {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).finallyDo(() -> loadingAction.set(false));
 
         subscribe(observable,
                 posts -> {

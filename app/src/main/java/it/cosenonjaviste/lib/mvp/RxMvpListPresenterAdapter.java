@@ -2,8 +2,6 @@ package it.cosenonjaviste.lib.mvp;
 
 import android.databinding.ObservableBoolean;
 
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
-
 public abstract class RxMvpListPresenterAdapter<M extends ListModel<?>, V> extends RxMvpPresenter<M, V> implements RxMvpListPresenter {
     protected ObservableBoolean loading = new ObservableBoolean();
 

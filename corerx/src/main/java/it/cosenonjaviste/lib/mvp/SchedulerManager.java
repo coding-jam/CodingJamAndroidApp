@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp.utils;
+package it.cosenonjaviste.lib.mvp;
 
 import rx.Observable;
 

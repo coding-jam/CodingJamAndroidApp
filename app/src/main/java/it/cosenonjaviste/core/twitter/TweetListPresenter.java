@@ -7,7 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
-import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
+import it.cosenonjaviste.lib.mvp.SchedulerManager;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
