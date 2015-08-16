@@ -13,7 +13,7 @@ import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
-public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, CategoryListModel, CategoryListView> {
+public class CategoryListPresenter extends RxMvpListPresenterAdapter<CategoryListModel, CategoryListView> {
 
     @Inject WordPressService wordPressService;
 

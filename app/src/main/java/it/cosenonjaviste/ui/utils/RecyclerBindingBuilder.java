@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
+import it.cosenonjaviste.lib.mvp.ListModelAdapter;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import rx.functions.Func1;
 
 public class RecyclerBindingBuilder<T> {
 
-    private final RxMvpListPresenterAdapter<T, ?, ?> presenter;
+    private final RxMvpListPresenterAdapter<? extends ListModelAdapter<T>, ?> presenter;
 
     private RecyclerBinding binding;
 
-    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxMvpListPresenterAdapter<T, ?, ?> presenter) {
+    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxMvpListPresenterAdapter<? extends ListModelAdapter<T>, ?> presenter) {
         this.presenter = presenter;
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);

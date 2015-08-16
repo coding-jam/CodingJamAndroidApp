@@ -11,7 +11,7 @@ import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 
-public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetListModel, TweetListView> {
+public class TweetListPresenter extends RxMvpListPresenterAdapter<TweetListModel, TweetListView> {
 
     @Inject TwitterService twitterService;
 

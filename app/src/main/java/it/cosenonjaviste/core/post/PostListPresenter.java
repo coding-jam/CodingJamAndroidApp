@@ -15,7 +15,7 @@ import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
-public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListModel, PostListView> {
+public class PostListPresenter extends RxMvpListPresenterAdapter<PostListModel, PostListView> {
 
     @Inject WordPressService wordPressService;
 
