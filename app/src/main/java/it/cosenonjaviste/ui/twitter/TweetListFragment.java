@@ -1,38 +1,30 @@
 package it.cosenonjaviste.ui.twitter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
-import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.databinding.TweetRowBinding;
-import it.cosenonjaviste.model.Tweet;
+import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.utils.BindableViewHolder;
-import it.cosenonjaviste.ui.utils.EndlessRecyclerOnScrollListener;
-import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
+import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
-public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresenter, Tweet> implements TweetListView {
+public class TweetListFragment extends MvpFragment<TweetListPresenter> implements TweetListView {
 
     @Override protected TweetListPresenter createPresenter() {
         return CoseNonJavisteApp.getComponent(this).getTweetListPresenter();
     }
 
-    @NonNull @Override protected RecyclerView.LayoutManager createLayoutManager() {
-        return new LinearLayoutManager(getActivity());
-    }
-
-    @Override protected void initBinding(RecyclerBinding binding) {
-        super.initBinding(binding);
-        binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener(presenter::loadNextPage));
-    }
-
-    @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, ViewGroup v) {
-        return new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false)));
+    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return new RecyclerBindingBuilder<>(inflater, container, presenter)
+                .linearLayoutManager()
+                .viewHolderFactory(v -> new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false))))
+                .loadMoreListener(presenter::loadNextPage)
+                .getRoot();
     }
 }
