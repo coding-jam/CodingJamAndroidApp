@@ -1,6 +1,7 @@
 package it.cosenonjaviste.lib.mvp;
 
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableList;
 
 import java.util.List;
 
@@ -12,8 +13,6 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
     protected ObservableBoolean loadingNextPage = new ObservableBoolean();
 
     protected ObservableBoolean loadingPullToRefresh = new ObservableBoolean();
-
-    protected Action1<List<T>> listChangeListener;
 
     @Override public ObservableBoolean isLoading() {
         return loading;
@@ -34,9 +33,6 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
     public void done(List<T> items) {
         getModel().append(items);
         getModel().error.set(false);
-        if (listChangeListener != null) {
-            listChangeListener.call(items);
-        }
     }
 
     public void error() {
@@ -45,7 +41,27 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
     }
 
     public void setListChangeListener(Action1<List<T>> listChangeListener) {
-        this.listChangeListener = listChangeListener;
+        getModel().getItems().addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<T>>() {
+            @Override public void onChanged(ObservableList<T> sender) {
+                listChangeListener.call(sender);
+            }
+
+            @Override public void onItemRangeChanged(ObservableList<T> sender, int positionStart, int itemCount) {
+                listChangeListener.call(sender);
+            }
+
+            @Override public void onItemRangeInserted(ObservableList<T> sender, int positionStart, int itemCount) {
+                listChangeListener.call(sender);
+            }
+
+            @Override public void onItemRangeMoved(ObservableList<T> sender, int fromPosition, int toPosition, int itemCount) {
+                listChangeListener.call(sender);
+            }
+
+            @Override public void onItemRangeRemoved(ObservableList<T> sender, int positionStart, int itemCount) {
+                listChangeListener.call(sender);
+            }
+        });
         if (listChangeListener != null && getModel().getItems() != null) {
             listChangeListener.call(getModel().getItems());
         }

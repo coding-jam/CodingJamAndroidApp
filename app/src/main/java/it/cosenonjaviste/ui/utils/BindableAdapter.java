@@ -10,7 +10,7 @@ import rx.functions.Func1;
 
 public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<T>> {
 
-    private List<T> authors = new ArrayList<>();
+    private List<T> items = new ArrayList<>();
 
     private Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory;
 
@@ -22,16 +22,16 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
         return viewHolderFactory.call(viewGroup);
     }
 
-    @Override public void onBindViewHolder(BindableViewHolder<T> authorViewHolder, int i) {
-        authorViewHolder.bind(authors.get(i), i);
+    @Override public void onBindViewHolder(BindableViewHolder<T> viewHolder, int i) {
+        viewHolder.bind(items.get(i), i);
     }
 
     @Override public int getItemCount() {
-        return authors == null ? 0 : authors.size();
+        return items == null ? 0 : items.size();
     }
 
-    public void reloadData(List<T> posts) {
-        this.authors = posts;
+    public void reloadData(List<T> items) {
+        this.items = items;
         notifyDataSetChanged();
     }
 }

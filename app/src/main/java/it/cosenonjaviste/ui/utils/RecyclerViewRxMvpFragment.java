@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.databinding.RecyclerBinding;
-import it.cosenonjaviste.lib.mvp.LifeCycleListener;
 import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 
-public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, T> extends MvpFragment<P> {
+public abstract class RecyclerViewRxMvpFragment<P extends RxMvpListPresenterAdapter<T, ?, ?>, T> extends MvpFragment<P> {
     protected BindableAdapter<T> adapter;
     protected RecyclerBinding binding;
 
@@ -27,22 +27,21 @@ public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, 
         RecyclerView.LayoutManager layoutManager = createLayoutManager();
         binding.list.setLayoutManager(layoutManager);
 
-        if (layoutManager instanceof LinearLayoutManager) {
-            binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) layoutManager) {
-                @Override
-                public void onLoadMore() {
-                    loadMoreItems();
-                }
-            });
-        }
-
         binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+
+        binding.setPresenter(presenter);
+        presenter.setListChangeListener(adapter::reloadData);
 
         return binding.getRoot();
     }
 
-    protected void loadMoreItems() {
-
+    protected void initLoadMore(Runnable listener) {
+        binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) binding.list.getLayoutManager()) {
+            @Override
+            public void onLoadMore() {
+                listener.run();
+            }
+        });
     }
 
     @NonNull protected RecyclerView.LayoutManager createLayoutManager() {

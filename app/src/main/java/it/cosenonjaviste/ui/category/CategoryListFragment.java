@@ -1,10 +1,7 @@
 package it.cosenonjaviste.ui.category;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
@@ -27,13 +24,6 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<CategoryList
 
     @NonNull @Override protected BindableViewHolder<Category> createViewHolder(LayoutInflater inflater, ViewGroup v) {
         return new CategoryViewHolder(CategoryRowBinding.bind(inflater.inflate(R.layout.category_row, v, false)), presenter);
-    }
-
-    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        binding.setPresenter(presenter);
-        presenter.setListChangeListener(adapter::reloadData);
-        return view;
     }
 
     @Override public void openPostList(PostListModel model) {

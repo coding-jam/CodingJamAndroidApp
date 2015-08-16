@@ -30,17 +30,11 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresen
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        binding.setPresenter(presenter);
-        presenter.setListChangeListener(adapter::reloadData);
+        initLoadMore(presenter::loadNextPage);
         return view;
-    }
-
-    @Override protected void loadMoreItems() {
-        presenter.loadNextPage();
     }
 
     @NonNull @Override protected BindableViewHolder<Tweet> createViewHolder(LayoutInflater inflater, ViewGroup v) {
         return new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false)));
     }
-
 }
