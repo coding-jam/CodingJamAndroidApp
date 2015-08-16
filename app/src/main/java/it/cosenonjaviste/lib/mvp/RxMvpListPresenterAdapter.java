@@ -30,6 +30,13 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
         return getModel().error;
     }
 
+    @Override public void resume() {
+        super.resume();
+        if (!getModel().isLoaded() && !loading.get()) {
+            reloadData();
+        }
+    }
+
     public void done(List<T> items) {
         getModel().append(items);
         getModel().error.set(false);

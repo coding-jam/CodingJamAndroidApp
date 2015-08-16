@@ -24,13 +24,6 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, C
         return new CategoryListModel();
     }
 
-    @Override public void resume() {
-        super.resume();
-        if (!getModel().isLoaded() && !loading.get()) {
-            reloadData();
-        }
-    }
-
     @Override protected void reloadData(ObservableBoolean loadingSetter) {
         loadingSetter.set(true);
 

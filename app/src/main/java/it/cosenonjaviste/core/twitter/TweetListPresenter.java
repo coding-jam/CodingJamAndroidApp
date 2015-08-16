@@ -34,13 +34,6 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
                 }, throwable -> error());
     }
 
-    @Override public void resume() {
-        super.resume();
-        if (!getModel().isLoaded() && !loading.get()) {
-            reloadData();
-        }
-    }
-
     public void loadNextPage() {
         if (!isLoadingNextPage().get()) {
             loadingNextPage.set(true);

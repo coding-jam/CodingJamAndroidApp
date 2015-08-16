@@ -27,13 +27,6 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
         return new PostListModel();
     }
 
-    @Override public void resume() {
-        super.resume();
-        if (!getModel().isLoaded() && !loading.get()) {
-            reloadData();
-        }
-    }
-
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
         Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.set(false));

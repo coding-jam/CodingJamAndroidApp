@@ -39,13 +39,6 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
                 throwable -> error());
     }
 
-    @Override public void resume() {
-        super.resume();
-        if (!getModel().isLoaded() && !loading.get()) {
-            reloadData();
-        }
-    }
-
     public void goToAuthorDetail(int position) {
         Author author = getModel().get(position);
         getView().openPostList(new PostListModel(author));
