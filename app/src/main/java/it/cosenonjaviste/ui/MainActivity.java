@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((CoseNonJavisteApp) getApplication()).getComponent().inject(this);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
