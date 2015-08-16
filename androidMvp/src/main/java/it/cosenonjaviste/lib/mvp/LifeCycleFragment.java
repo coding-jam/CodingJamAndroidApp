@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.Collection;
 
-import rx.functions.Func0;
+import it.cosenonjaviste.lib.mvp.utils.ComponentFactory;
 
 public abstract class LifeCycleFragment extends Fragment {
     private ListenersRetainedFragment retainedFragment;
@@ -24,7 +24,7 @@ public abstract class LifeCycleFragment extends Fragment {
         return retainedFragment.getListener(key);
     }
 
-    protected <P extends LifeCycleListener> P getOrCreate(String key, Func0<P> factory) {
+    protected <P extends LifeCycleListener> P getOrCreate(String key, ComponentFactory<P> factory) {
         P listener = (P) getListener(key);
         if (listener == null) {
             listener = factory.call();

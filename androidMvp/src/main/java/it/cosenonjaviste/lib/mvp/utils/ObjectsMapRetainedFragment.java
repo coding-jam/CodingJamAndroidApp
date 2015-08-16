@@ -3,8 +3,6 @@ package it.cosenonjaviste.lib.mvp.utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import rx.functions.Func0;
-
 public class ObjectsMapRetainedFragment extends Fragment {
 
     private static final String TAG = ObjectsMapRetainedFragment.class.getName();
@@ -34,7 +32,7 @@ public class ObjectsMapRetainedFragment extends Fragment {
         return (P) fragment.object;
     }
 
-    public static <C> C getOrCreate(FragmentManager fragmentManager, Func0<C> componentFactory) {
+    public static <C> C getOrCreate(FragmentManager fragmentManager, ComponentFactory<C> componentFactory) {
         C component = load(fragmentManager);
         if (component == null) {
             component = componentFactory.call();
@@ -45,8 +43,10 @@ public class ObjectsMapRetainedFragment extends Fragment {
 
     @Override public void onDestroy() {
         super.onDestroy();
+        //TODO
 //        for (MvpPresenter<?> presenter : object.values()) {
 //            presenter.destroy();
 //        }
     }
+
 }

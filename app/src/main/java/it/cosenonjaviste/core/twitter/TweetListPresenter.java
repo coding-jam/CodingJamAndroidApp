@@ -7,15 +7,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 
 public class TweetListPresenter extends RxMvpListPresenterAdapter<TweetListModel, TweetListView> {
 
-    @Inject TwitterService twitterService;
+    private TwitterService twitterService;
 
-    @Inject public TweetListPresenter() {
+    @Inject public TweetListPresenter(SchedulerManager schedulerManager, TwitterService twitterService) {
+        super(schedulerManager);
+        this.twitterService = twitterService;
     }
 
     @Override public TweetListModel createDefaultModel() {

@@ -10,17 +10,20 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
 import retrofit.client.Response;
 import rx.Observable;
 
 public class ContactPresenter extends RxMvpPresenter<ContactModel, ContactView> {
 
-    @Inject MailJetService mailJetService;
+    private MailJetService mailJetService;
 
     public ObservableBoolean sending = new ObservableBoolean();
 
-    @Inject public ContactPresenter() {
+    @Inject public ContactPresenter(SchedulerManager schedulerManager, MailJetService mailJetService) {
+        super(schedulerManager);
+        this.mailJetService = mailJetService;
     }
 
     @Override public ContactModel createDefaultModel() {

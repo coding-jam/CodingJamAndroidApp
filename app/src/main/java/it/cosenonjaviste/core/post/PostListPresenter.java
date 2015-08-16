@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
+import it.cosenonjaviste.lib.mvp.utils.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
@@ -17,9 +18,11 @@ import rx.Observable;
 
 public class PostListPresenter extends RxMvpListPresenterAdapter<PostListModel, PostListView> {
 
-    @Inject WordPressService wordPressService;
+    private WordPressService wordPressService;
 
-    @Inject public PostListPresenter() {
+    @Inject public PostListPresenter(SchedulerManager schedulerManager, WordPressService wordPressService) {
+        super(schedulerManager);
+        this.wordPressService = wordPressService;
     }
 
     @Override public PostListModel createDefaultModel() {
