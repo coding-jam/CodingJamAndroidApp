@@ -27,8 +27,12 @@ public class RxHolder {
         subscribe(observable, onNext, onError, null);
     }
 
-    public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
-        ConnectableObservable<T> replay = observable.compose(schedulerManager::bindObservable).replay();
+    public <T> void subscribe(Observable<T> observable, final Action1<? super T> onNext, final Action1<Throwable> onError, final Action0 onCompleted) {
+        ConnectableObservable<T> replay = observable.compose(new Observable.Transformer<T, T>() {
+            @Override public Observable<T> call(Observable<T> observable1) {
+                return schedulerManager.bindObservable(observable1);
+            }
+        }).replay();
         connectableSubscriptions.add(replay.connect());
         ObservableWithObserver<T> observableWithObserver = new ObservableWithObserver<>(replay, new Observer<T>() {
             @Override public void onCompleted() {
@@ -54,10 +58,14 @@ public class RxHolder {
     }
 
 
-    private <T> void subscribe(ObservableWithObserver<T> observableWithObserver) {
+    private <T> void subscribe(final ObservableWithObserver<T> observableWithObserver) {
         subscriptions.add(
                 observableWithObserver.observable
-                        .finallyDo(() -> observables.remove(observableWithObserver))
+                        .finallyDo(new Action0() {
+                            @Override public void call() {
+                                observables.remove(observableWithObserver);
+                            }
+                        })
                         .subscribe(observableWithObserver.observer)
         );
     }
