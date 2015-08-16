@@ -22,10 +22,6 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
         return new TweetListModel();
     }
 
-    public void loadDataPullToRefresh() {
-        reloadData(loadingPullToRefresh);
-    }
-
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 

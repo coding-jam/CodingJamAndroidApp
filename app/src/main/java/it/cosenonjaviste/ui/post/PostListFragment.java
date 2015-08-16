@@ -34,7 +34,6 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresente
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         binding.setPresenter(presenter);
-        binding.swipeRefresh.setOnRefreshListener(presenter::loadDataPullToRefresh);
         presenter.setListChangeListener(adapter::reloadData);
         return view;
     }

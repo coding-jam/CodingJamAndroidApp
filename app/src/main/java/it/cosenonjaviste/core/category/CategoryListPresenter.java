@@ -13,15 +13,15 @@ import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
-public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, it.cosenonjaviste.core.category.CategoryListModel, CategoryListView> {
+public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, CategoryListModel, CategoryListView> {
 
     @Inject WordPressService wordPressService;
 
     @Inject public CategoryListPresenter() {
     }
 
-    @Override public it.cosenonjaviste.core.category.CategoryListModel createDefaultModel() {
-        return new it.cosenonjaviste.core.category.CategoryListModel();
+    @Override public CategoryListModel createDefaultModel() {
+        return new CategoryListModel();
     }
 
     @Override public void resume() {
@@ -29,10 +29,6 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, i
         if (!getModel().isLoaded() && !loading.get()) {
             reloadData();
         }
-    }
-
-    public void loadDataPullToRefresh() {
-        reloadData(loadingPullToRefresh);
     }
 
     @Override protected void reloadData(ObservableBoolean loadingSetter) {

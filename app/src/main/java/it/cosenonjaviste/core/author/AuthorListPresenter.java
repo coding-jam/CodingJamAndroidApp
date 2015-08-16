@@ -25,10 +25,6 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
         return new AuthorListModel();
     }
 
-    public void loadDataPullToRefresh() {
-        reloadData(loadingPullToRefresh);
-    }
-
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 

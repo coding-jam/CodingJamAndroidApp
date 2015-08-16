@@ -55,5 +55,9 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
         reloadData(loading);
     }
 
+    public final void loadDataPullToRefresh() {
+        reloadData(loadingPullToRefresh);
+    }
+
     protected abstract void reloadData(ObservableBoolean loadingAction);
 }

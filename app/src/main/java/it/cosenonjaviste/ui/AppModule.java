@@ -56,7 +56,7 @@ public class AppModule {
         return restAdapter.create(MailJetService.class);
     }
 
-    @Provides TwitterService provideTwitterService() {
+    @Provides @Singleton TwitterService provideTwitterService() {
         return new TwitterService(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET, BuildConfig.ACCESS_TOKEN, BuildConfig.ACCESS_TOKEN_SECRET);
     }
 

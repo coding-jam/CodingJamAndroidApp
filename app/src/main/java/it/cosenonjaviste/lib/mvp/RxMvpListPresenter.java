@@ -12,4 +12,6 @@ public interface RxMvpListPresenter {
     ObservableBoolean isError();
 
     void reloadData();
+
+    void loadDataPullToRefresh();
 }

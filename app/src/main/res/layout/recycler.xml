@@ -65,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
+                android:onRefreshListener="@{presenter.loadDataPullToRefresh}"
                 app:refreshing="@{presenter.loadingPullToRefresh}"
                 app:visibleOrGone="@{!presenter.error &amp;&amp; !presenter.loading}">
 
