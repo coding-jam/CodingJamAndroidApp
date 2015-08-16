@@ -18,6 +18,7 @@ import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
+import it.cosenonjaviste.ui.utils.EndlessRecyclerOnScrollListener;
 import it.cosenonjaviste.ui.utils.RecyclerViewRxMvpFragment;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
@@ -33,7 +34,7 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresente
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        initLoadMore(presenter::loadNextPage);
+        binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener(presenter::loadNextPage));
         return view;
     }
 
