@@ -1,12 +1,9 @@
 package it.cosenonjaviste.ui.post;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
@@ -14,6 +11,7 @@ import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListPresenter;
 import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.databinding.PostRowBinding;
+import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.page.PageFragment;
@@ -32,10 +30,9 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresente
         return new LinearLayoutManager(getActivity());
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+    @Override protected void initBinding(RecyclerBinding binding) {
+        super.initBinding(binding);
         binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener(presenter::loadNextPage));
-        return view;
     }
 
     @NonNull @Override protected BindableViewHolder<Post> createViewHolder(LayoutInflater inflater, ViewGroup v) {

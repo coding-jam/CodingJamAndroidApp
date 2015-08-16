@@ -15,21 +15,24 @@ import it.cosenonjaviste.lib.mvp.MvpFragment;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 
 public abstract class RecyclerViewRxMvpFragment<P extends RxMvpListPresenterAdapter<T, ?, ?>, T> extends MvpFragment<P> {
-    protected RecyclerBinding binding;
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, null, false));
+        RecyclerBinding binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, null, false));
 
-        BindableAdapter<T> adapter = new BindableAdapter<>(presenter.getModel().getItems(), v -> createViewHolder(inflater, v));
-        binding.list.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = createLayoutManager();
-        binding.list.setLayoutManager(layoutManager);
+        binding.list.setAdapter(new BindableAdapter<>(presenter.getModel().getItems(), v -> createViewHolder(inflater, v)));
+        binding.list.setLayoutManager(createLayoutManager());
 
-        binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
 
         binding.setPresenter(presenter);
 
+        initBinding(binding);
+
         return binding.getRoot();
+    }
+
+    protected void initBinding(RecyclerBinding binding) {
+
     }
 
     @NonNull protected RecyclerView.LayoutManager createLayoutManager() {
