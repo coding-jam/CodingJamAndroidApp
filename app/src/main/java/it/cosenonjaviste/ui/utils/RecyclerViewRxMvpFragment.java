@@ -20,7 +20,7 @@ public abstract class RecyclerViewRxMvpFragment<P extends RxMvpListPresenterAdap
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, null, false));
 
-        BindableAdapter<T> adapter = new BindableAdapter<>(v -> createViewHolder(inflater, v));
+        BindableAdapter<T> adapter = new BindableAdapter<>(presenter.getModel().getItems(), v -> createViewHolder(inflater, v));
         binding.list.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = createLayoutManager();
         binding.list.setLayoutManager(layoutManager);
@@ -28,7 +28,6 @@ public abstract class RecyclerViewRxMvpFragment<P extends RxMvpListPresenterAdap
         binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
 
         binding.setPresenter(presenter);
-        presenter.setListChangeListener(adapter::reloadData);
 
         return binding.getRoot();
     }

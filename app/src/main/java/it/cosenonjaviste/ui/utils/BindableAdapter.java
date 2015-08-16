@@ -1,21 +1,42 @@
 package it.cosenonjaviste.ui.utils;
 
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import rx.functions.Func1;
 
 public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<T>> {
 
-    private List<T> items = new ArrayList<>();
+    private ObservableArrayList<T> items;
 
     private Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory;
 
-    public BindableAdapter(Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
+    public BindableAdapter(ObservableArrayList<T> items, Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
         this.viewHolderFactory = viewHolderFactory;
+        this.items = items;
+        items.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<T>>() {
+            @Override public void onChanged(ObservableList<T> sender) {
+                notifyDataSetChanged();
+            }
+
+            @Override public void onItemRangeChanged(ObservableList<T> sender, int positionStart, int itemCount) {
+                notifyItemRangeChanged(positionStart, itemCount);
+            }
+
+            @Override public void onItemRangeInserted(ObservableList<T> sender, int positionStart, int itemCount) {
+                notifyItemRangeInserted(positionStart, itemCount);
+            }
+
+            @Override public void onItemRangeMoved(ObservableList<T> sender, int fromPosition, int toPosition, int itemCount) {
+                notifyDataSetChanged();
+            }
+
+            @Override public void onItemRangeRemoved(ObservableList<T> sender, int positionStart, int itemCount) {
+                notifyItemRangeRemoved(positionStart, itemCount);
+            }
+        });
     }
 
     @Override public BindableViewHolder<T> onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -27,11 +48,6 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
     }
 
     @Override public int getItemCount() {
-        return items == null ? 0 : items.size();
-    }
-
-    public void reloadData(List<T> items) {
-        this.items = items;
-        notifyDataSetChanged();
+        return items.size();
     }
 }
