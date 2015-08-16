@@ -16,7 +16,7 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
     public BindableAdapter(ObservableArrayList<T> items, Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
         this.viewHolderFactory = viewHolderFactory;
         this.items = items;
-        items.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<T>>() {
+        items.addOnListChangedCallback(new WeakOnListChangedCallback<>(new ObservableList.OnListChangedCallback<ObservableList<T>>() {
             @Override public void onChanged(ObservableList<T> sender) {
                 notifyDataSetChanged();
             }
@@ -36,7 +36,7 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
             @Override public void onItemRangeRemoved(ObservableList<T> sender, int positionStart, int itemCount) {
                 notifyItemRangeRemoved(positionStart, itemCount);
             }
-        });
+        }));
     }
 
     @Override public BindableViewHolder<T> onCreateViewHolder(ViewGroup viewGroup, int i) {

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
 import rx.functions.Func1;
 
@@ -13,6 +15,7 @@ public class CoseNonJavisteApp extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         component = DaggerApplicationComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
