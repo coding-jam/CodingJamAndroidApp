@@ -2,7 +2,6 @@ package it.cosenonjaviste.core.post;
 
 import android.databinding.ObservableBoolean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,9 +32,9 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
 
         subscribe(observable,
                 posts -> {
-                    done(new ArrayList<>(posts));
+                    getModel().done(posts);
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                }, throwable -> error());
+                }, throwable -> getModel().error());
     }
 
     public void goToDetail(Post item) {
@@ -49,10 +48,10 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
 
         subscribe(observable,
                 posts -> {
-                    getModel().append(posts);
+                    getModel().done(posts);
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                 },
-                throwable -> error());
+                throwable -> getModel().error());
     }
 
     private Observable<List<Post>> getObservable(int page) {

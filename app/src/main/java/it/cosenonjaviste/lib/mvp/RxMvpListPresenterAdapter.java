@@ -2,8 +2,6 @@ package it.cosenonjaviste.lib.mvp;
 
 import android.databinding.ObservableBoolean;
 
-import java.util.List;
-
 public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>, V> extends RxMvpPresenter<M, V> implements RxMvpListPresenter {
     protected ObservableBoolean loading = new ObservableBoolean();
 
@@ -32,16 +30,6 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
         if (!getModel().isLoaded() && !loading.get()) {
             reloadData();
         }
-    }
-
-    public void done(List<T> items) {
-        getModel().append(items);
-        getModel().error.set(false);
-    }
-
-    public void error() {
-        getModel().clear();
-        getModel().error.set(true);
     }
 
     public void reloadData() {

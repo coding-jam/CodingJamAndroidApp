@@ -29,9 +29,9 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
 
         subscribe(observable,
                 posts -> {
-                    done(posts);
+                    getModel().done(posts);
                     getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                }, throwable -> error());
+                }, throwable -> getModel().error());
     }
 
     public void loadNextPage() {
@@ -42,10 +42,10 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
 
             subscribe(observable,
                     posts -> {
-                        getModel().append(posts);
+                        getModel().done(posts);
                         getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
                     },
-                    throwable -> error());
+                    throwable -> getModel().error());
         }
     }
 

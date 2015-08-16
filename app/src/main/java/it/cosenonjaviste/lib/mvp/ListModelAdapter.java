@@ -22,16 +22,22 @@ public abstract class ListModelAdapter<T> {
         return items;
     }
 
-    public void append(List<T> object) {
-        loaded = true;
-        getItems().addAll(object);
-    }
-
     public boolean isLoaded() {
         return loaded || error.get();
     }
 
     public void clear() {
         getItems().clear();
+    }
+
+    public void done(List<T> items) {
+        loaded = true;
+        getItems().addAll(items);
+        error.set(false);
+    }
+
+    public void error() {
+        clear();
+        error.set(true);
     }
 }

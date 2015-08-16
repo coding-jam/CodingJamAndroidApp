@@ -33,8 +33,8 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, C
                 .finallyDo(() -> loadingSetter.set(false));
 
         subscribe(observable,
-                this::done,
-                throwable -> error()
+                l -> getModel().done(l),
+                throwable -> getModel().error()
         );
     }
 

@@ -35,8 +35,8 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
                 .finallyDo(() -> loadingAction.set(false));
 
         subscribe(observable,
-                this::done,
-                throwable -> error());
+                l -> getModel().done(l),
+                throwable -> getModel().error());
     }
 
     public void goToAuthorDetail(int position) {
