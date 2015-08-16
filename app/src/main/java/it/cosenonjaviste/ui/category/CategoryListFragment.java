@@ -37,10 +37,6 @@ public class CategoryListFragment extends RecyclerViewRxMvpFragment<CategoryList
         return view;
     }
 
-    @Override protected void retry() {
-        presenter.loadData();
-    }
-
     @Override public void openPostList(PostListModel model) {
         SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }

@@ -1,5 +1,7 @@
 package it.cosenonjaviste.core.post;
 
+import android.databinding.ObservableBoolean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,6 @@ import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
-import rx.functions.Action1;
 
 public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListModel, PostListView> {
 
@@ -34,16 +35,12 @@ public class PostListPresenter extends RxMvpListPresenterAdapter<Post, PostListM
     }
 
     public void loadDataPullToRefresh() {
-        reloadData(loadingPullToRefresh::set);
+        reloadData(loadingPullToRefresh);
     }
 
-    public void reloadData() {
-        reloadData(loading::set);
-    }
-
-    public void reloadData(Action1<Boolean> loadingAction) {
-        loadingAction.call(true);
-        Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.call(false));
+    @Override protected void reloadData(ObservableBoolean loadingAction) {
+        loadingAction.set(true);
+        Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.set(false));
 
         subscribe(observable,
                 posts -> {

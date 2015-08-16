@@ -50,4 +50,10 @@ public abstract class RxMvpListPresenterAdapter<T, M extends ListModelAdapter<T>
             listChangeListener.call(getModel().getItems());
         }
     }
+
+    public void reloadData() {
+        reloadData(loading);
+    }
+
+    protected abstract void reloadData(ObservableBoolean loadingAction);
 }

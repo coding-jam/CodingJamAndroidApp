@@ -37,10 +37,6 @@ public class AuthorListFragment extends RecyclerViewRxMvpFragment<AuthorListPres
         return new AuthorViewHolder(AuthorCellBinding.bind(inflater.inflate(R.layout.author_cell, v, false)), presenter);
     }
 
-    @Override protected void retry() {
-        presenter.reloadData();
-    }
-
     @Override public void openPostList(PostListModel model) {
         SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }

@@ -10,4 +10,6 @@ public interface RxMvpListPresenter {
     ObservableBoolean isLoadingNextPage();
 
     ObservableBoolean isError();
+
+    void reloadData();
 }

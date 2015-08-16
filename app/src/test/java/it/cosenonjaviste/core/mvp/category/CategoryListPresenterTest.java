@@ -12,9 +12,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
+import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.core.post.PostListModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.core.TestData.categoryResponse;
@@ -56,7 +56,7 @@ public class CategoryListPresenterTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        presenter.loadData();
+        presenter.reloadData();
 
         assertThat(model.getItems()).hasSize(3);
     }

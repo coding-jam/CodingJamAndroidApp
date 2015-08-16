@@ -27,19 +27,15 @@ public class CategoryListPresenter extends RxMvpListPresenterAdapter<Category, i
     @Override public void resume() {
         super.resume();
         if (!getModel().isLoaded() && !loading.get()) {
-            loadData();
+            reloadData();
         }
     }
 
     public void loadDataPullToRefresh() {
-        loadData(loadingPullToRefresh);
+        reloadData(loadingPullToRefresh);
     }
 
-    public void loadData() {
-        loadData(loading);
-    }
-
-    private void loadData(ObservableBoolean loadingSetter) {
+    @Override protected void reloadData(ObservableBoolean loadingSetter) {
         loadingSetter.set(true);
 
         Observable<List<Category>> observable = wordPressService

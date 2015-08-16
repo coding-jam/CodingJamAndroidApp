@@ -44,7 +44,4 @@ public class TweetListFragment extends RecyclerViewRxMvpFragment<TweetListPresen
         return new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false)));
     }
 
-    @Override protected void retry() {
-        presenter.reloadData();
-    }
 }

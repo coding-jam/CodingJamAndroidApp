@@ -29,11 +29,7 @@ public class AuthorListPresenter extends RxMvpListPresenterAdapter<Author, Autho
         reloadData(loadingPullToRefresh);
     }
 
-    public void reloadData() {
-        reloadData(loading);
-    }
-
-    private void reloadData(ObservableBoolean loadingAction) {
+    @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 
         Observable<List<Author>> observable = wordPressService

@@ -47,10 +47,6 @@ public class PostListFragment extends RecyclerViewRxMvpFragment<PostListPresente
         return new PostViewHolder(PostRowBinding.bind(inflater.inflate(R.layout.post_row, v, false)), presenter);
     }
 
-    @Override protected void retry() {
-        presenter.reloadData();
-    }
-
     @Override public void openDetail(PageModel model) {
         SingleFragmentActivity.open(getActivity(), PageFragment.class, model);
     }

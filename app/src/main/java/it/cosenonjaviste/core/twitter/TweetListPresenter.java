@@ -26,11 +26,7 @@ public class TweetListPresenter extends RxMvpListPresenterAdapter<Tweet, TweetLi
         reloadData(loadingPullToRefresh);
     }
 
-    public void reloadData() {
-        reloadData(loading);
-    }
-
-    public void reloadData(ObservableBoolean loadingAction) {
+    @Override protected void reloadData(ObservableBoolean loadingAction) {
         loadingAction.set(true);
 
         Observable<List<Tweet>> observable = twitterService.loadTweets(1).finallyDo(() -> loadingAction.set(false));

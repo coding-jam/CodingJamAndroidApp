@@ -26,7 +26,6 @@ public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, 
         binding.list.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = createLayoutManager();
         binding.list.setLayoutManager(layoutManager);
-        binding.errorRetry.setOnClickListener(v -> retry());
 
         if (layoutManager instanceof LinearLayoutManager) {
             binding.list.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) layoutManager) {
@@ -45,8 +44,6 @@ public abstract class RecyclerViewRxMvpFragment<P extends LifeCycleListener<?>, 
     protected void loadMoreItems() {
 
     }
-
-    protected abstract void retry();
 
     @NonNull protected RecyclerView.LayoutManager createLayoutManager() {
         return new GridLayoutManager(getActivity(), 2);
