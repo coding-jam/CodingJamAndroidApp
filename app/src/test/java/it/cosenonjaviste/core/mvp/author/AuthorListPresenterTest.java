@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.core.author.AuthorListPresenter;
 import it.cosenonjaviste.core.author.AuthorListView;
-import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
 import static it.cosenonjaviste.core.TestData.authorResponse;
@@ -44,11 +44,14 @@ public class AuthorListPresenterTest {
     @Test
     public void testRetryAfterError() {
         when(wordPressService.listAuthors())
-                .thenReturn(Observable.error(new RuntimeException()));
-        when(wordPressService.listAuthors())
-                .thenReturn(authorResponse(2));
+                .thenReturn(
+                        Observable.error(new RuntimeException()),
+                        authorResponse(2)
+                );
 
         AuthorListModel model = presenter.initAndResume(view);
+
+        assertThat(model.size()).isEqualTo(0);
 
         presenter.reloadData();
 
