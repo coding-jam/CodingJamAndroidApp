@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.lib.mvp.ViewModelManager;
+import it.cosenonjaviste.lib.ViewModelManager;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {

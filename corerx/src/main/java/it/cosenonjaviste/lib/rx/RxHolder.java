@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.lib.rx;
 
 import java.util.ArrayList;
 import java.util.List;

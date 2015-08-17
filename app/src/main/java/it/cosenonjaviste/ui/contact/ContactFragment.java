@@ -11,7 +11,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.contact.ContactPresenter;
 import it.cosenonjaviste.core.contact.ContactView;
 import it.cosenonjaviste.databinding.ContactBinding;
-import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.lib.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
 public class ContactFragment extends MvpFragment<ContactPresenter> implements ContactView {

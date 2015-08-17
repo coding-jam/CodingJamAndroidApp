@@ -11,7 +11,7 @@ import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
-import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.lib.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;

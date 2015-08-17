@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
-import it.cosenonjaviste.lib.mvp.SchedulerManager;
+import it.cosenonjaviste.lib.rx.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;

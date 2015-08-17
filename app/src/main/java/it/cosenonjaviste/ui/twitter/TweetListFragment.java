@@ -10,7 +10,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
 import it.cosenonjaviste.databinding.TweetRowBinding;
-import it.cosenonjaviste.lib.mvp.MvpFragment;
+import it.cosenonjaviste.lib.MvpFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 

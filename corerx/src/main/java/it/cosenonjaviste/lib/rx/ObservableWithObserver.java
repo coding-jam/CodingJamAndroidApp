@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.lib.rx;
 
 import rx.Observer;
 import rx.observables.ConnectableObservable;

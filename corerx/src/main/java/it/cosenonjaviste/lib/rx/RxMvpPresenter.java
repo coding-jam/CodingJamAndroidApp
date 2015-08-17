@@ -1,8 +1,9 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.lib.rx;
 
 
 import android.os.Parcelable;
 
+import it.cosenonjaviste.lib.MvpPresenter;
 import rx.Observable;
 import rx.functions.Action1;
 

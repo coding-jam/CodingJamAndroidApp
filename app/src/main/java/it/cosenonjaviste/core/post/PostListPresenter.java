@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
-import it.cosenonjaviste.lib.mvp.SchedulerManager;
+import it.cosenonjaviste.lib.rx.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;

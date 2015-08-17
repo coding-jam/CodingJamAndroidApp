@@ -1,4 +1,4 @@
-package it.cosenonjaviste.lib.mvp;
+package it.cosenonjaviste.lib;
 
 import android.os.Bundle;
 import android.os.Parcelable;
