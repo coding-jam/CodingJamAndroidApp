@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.lib.mvp.ListModel;
+import it.cosenonjaviste.core.list.ListModel;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;

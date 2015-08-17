@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="it.cosenonjaviste.core.page.PagePresenter"/>
+            name="viewModel"
+            type="it.cosenonjaviste.core.page.PageViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{presenter.post.imageUrl}"
+                    app:imageUrl="@{viewModel.post.imageUrl}"
                     android:src="@drawable/logocnj"/>
 
                 <View
@@ -49,7 +49,7 @@
                     android:layout_margin="20dp"
                     android:textSize="18sp"
                     app:layout_scrollFlags="scroll"
-                    tools:text="@{presenter.post.subtitle}"/>
+                    tools:text="@{viewModel.post.subtitle}"/>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -63,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        app:textHtml="@{presenter.post.title}"
+                        app:textHtml="@{viewModel.post.title}"
                         tools:text="Sviluppare applicazioni con React e Flux"/>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -79,8 +79,8 @@
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:url="@{presenter.post.url}"
-                app:visible="@{!presenter.loading}"/>
+                app:url="@{viewModel.post.url}"
+                app:visible="@{!viewModel.loading}"/>
         </android.support.v4.widget.NestedScrollView>
 
         <RelativeLayout
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:visible="@{presenter.loading}">
+            app:visible="@{viewModel.loading}">
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="it.cosenonjaviste.core.contact.ContactPresenter"/>
+            name="viewModel"
+            type="it.cosenonjaviste.core.contact.ContactViewModel"/>
     </data>
 
     <ScrollView
@@ -22,14 +22,14 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{presenter.nameError}">
+                app:error="@{viewModel.nameError}">
 
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
-                    app:binding="@{presenter.name}">
+                    app:binding="@{viewModel.name}">
 
                     <requestFocus/>
                 </EditText>
@@ -39,7 +39,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{presenter.emailError}">
+                app:error="@{viewModel.emailError}">
 
                 <EditText
                     android:id="@+id/email"
@@ -47,13 +47,13 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    app:binding="@{presenter.email}"/>
+                    app:binding="@{viewModel.email}"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{presenter.messageError}">
+                app:error="@{viewModel.messageError}">
 
                 <EditText
                     android:id="@+id/message"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Message"
                     android:lines="4"
-                    app:binding="@{presenter.message}"/>
+                    app:binding="@{viewModel.message}"/>
             </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
@@ -74,8 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    app:onClick="@{presenter.send}"
-                    android:enabled="@{!presenter.sending}"
+                    app:onClick="@{viewModel.send}"
+                    android:enabled="@{!viewModel.sending}"
                     android:text="@string/send"/>
 
                 <ProgressBar
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/send_button"
                     android:indeterminate="true"
-                    app:visible="@{presenter.sending}"/>
+                    app:visible="@{viewModel.sending}"/>
 
             </RelativeLayout>
         </LinearLayout>

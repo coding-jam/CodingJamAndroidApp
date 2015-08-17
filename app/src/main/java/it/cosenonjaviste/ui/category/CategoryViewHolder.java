@@ -1,7 +1,7 @@
 package it.cosenonjaviste.ui.category;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.category.CategoryListPresenter;
+import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
@@ -12,10 +12,10 @@ public class CategoryViewHolder extends BindableViewHolder<Category> {
 
     private int position;
 
-    public CategoryViewHolder(CategoryRowBinding binding, CategoryListPresenter presenter) {
+    public CategoryViewHolder(CategoryRowBinding binding, CategoryListViewModel viewModel) {
         super(binding.getRoot());
         this.binding = binding;
-        binding.getRoot().setOnClickListener(v -> presenter.goToPosts(position));
+        binding.getRoot().setOnClickListener(v -> viewModel.goToPosts(position));
     }
 
     @Override public void bind(Category category, int position) {

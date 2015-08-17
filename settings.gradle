@@ -1,1 +1,1 @@
-include ':androidMvp', ':app', ':corerx'
+include ':app', ':ViewModelLib', ':ViewModelRxLib'

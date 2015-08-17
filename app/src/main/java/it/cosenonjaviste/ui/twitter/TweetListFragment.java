@@ -7,24 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.twitter.TweetListPresenter;
 import it.cosenonjaviste.core.twitter.TweetListView;
+import it.cosenonjaviste.core.twitter.TweetListViewModel;
 import it.cosenonjaviste.databinding.TweetRowBinding;
-import it.cosenonjaviste.lib.MvpFragment;
+import it.cosenonjaviste.lib.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
-public class TweetListFragment extends MvpFragment<TweetListPresenter> implements TweetListView {
+public class TweetListFragment extends ViewModelFragment<TweetListViewModel> implements TweetListView {
 
-    @Override protected TweetListPresenter createPresenter() {
-        return CoseNonJavisteApp.getComponent(this).getTweetListPresenter();
+    @Override protected TweetListViewModel createViewModel() {
+        return CoseNonJavisteApp.getComponent(this).getTweetListViewModel();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new RecyclerBindingBuilder<>(inflater, container, presenter)
+        return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .linearLayoutManager()
                 .viewHolderFactory(v -> new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false))))
-                .loadMoreListener(presenter::loadNextPage)
+                .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
     }
 }

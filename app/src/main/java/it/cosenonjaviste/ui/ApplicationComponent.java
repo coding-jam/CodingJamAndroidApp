@@ -3,26 +3,26 @@ package it.cosenonjaviste.ui;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.core.author.AuthorListPresenter;
-import it.cosenonjaviste.core.category.CategoryListPresenter;
-import it.cosenonjaviste.core.contact.ContactPresenter;
-import it.cosenonjaviste.core.page.PagePresenter;
-import it.cosenonjaviste.core.post.PostListPresenter;
-import it.cosenonjaviste.core.twitter.TweetListPresenter;
+import it.cosenonjaviste.core.author.AuthorListViewModel;
+import it.cosenonjaviste.core.category.CategoryListViewModel;
+import it.cosenonjaviste.core.contact.ContactViewModel;
+import it.cosenonjaviste.core.page.PageViewModel;
+import it.cosenonjaviste.core.post.PostListViewModel;
+import it.cosenonjaviste.core.twitter.TweetListViewModel;
 
 @Singleton
 @Component(modules = {AppModule.class})
 public interface ApplicationComponent {
 
-    AuthorListPresenter getAuthorListPresenter();
+    AuthorListViewModel getAuthorListViewModel();
 
-    ContactPresenter getContactPresenter();
+    ContactViewModel getContactViewModel();
 
-    CategoryListPresenter getCategoryListPresenter();
+    CategoryListViewModel getCategoryListViewModel();
 
-    PostListPresenter getPostListPresenter();
+    PostListViewModel getPostListViewModel();
 
-    TweetListPresenter getTweetListPresenter();
+    TweetListViewModel getTweetListViewModel();
 
-    PagePresenter getPagePresenter();
+    PageViewModel getPageViewModel();
 }

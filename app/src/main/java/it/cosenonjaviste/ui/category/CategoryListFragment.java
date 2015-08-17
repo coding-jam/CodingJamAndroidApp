@@ -7,26 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.category.CategoryListPresenter;
 import it.cosenonjaviste.core.category.CategoryListView;
+import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
-import it.cosenonjaviste.lib.MvpFragment;
+import it.cosenonjaviste.lib.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-public class CategoryListFragment extends MvpFragment<CategoryListPresenter> implements CategoryListView {
+public class CategoryListFragment extends ViewModelFragment<CategoryListViewModel> implements CategoryListView {
 
-    @Override protected CategoryListPresenter createPresenter() {
-        return CoseNonJavisteApp.getComponent(this).getCategoryListPresenter();
+    @Override protected CategoryListViewModel createViewModel() {
+        return CoseNonJavisteApp.getComponent(this).getCategoryListViewModel();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new RecyclerBindingBuilder<>(inflater, container, presenter)
+        return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolderFactory(v -> new CategoryViewHolder(CategoryRowBinding.bind(inflater.inflate(R.layout.category_row, v, false)), presenter))
+                .viewHolderFactory(v -> new CategoryViewHolder(CategoryRowBinding.bind(inflater.inflate(R.layout.category_row, v, false)), viewModel))
                 .getRoot();
     }
 

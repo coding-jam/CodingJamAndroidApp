@@ -14,7 +14,7 @@ import it.cosenonjaviste.ui.ApplicationComponent;
 import it.cosenonjaviste.ui.BaseModule;
 
 @Singleton
-@Component(modules = {MvpEspressoTestModule.class, BaseModule.class})
+@Component(modules = {EspressoTestModule.class, BaseModule.class})
 public interface TestComponent extends ApplicationComponent {
 
     void inject(AuthorListTest authorListTest);

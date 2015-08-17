@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="it.cosenonjaviste.lib.mvp.RxMvpListPresenter"/>
+            name="viewModel"
+            type="it.cosenonjaviste.core.list.GenericRxListViewModel"/>
     </data>
 
     <FrameLayout
@@ -25,14 +25,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:indeterminate="false"
-                app:visibleOrGone="@{presenter.loadingNextPage}"/>
+                app:visibleOrGone="@{viewModel.loadingNextPage}"/>
 
             <RelativeLayout
                 android:id="@+id/progress_root"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                app:visibleOrGone="@{presenter.loading}">
+                app:visibleOrGone="@{viewModel.loading}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/more_progress"
-                android:onRefreshListener="@{presenter.loadDataPullToRefresh}"
-                app:refreshing="@{presenter.loadingPullToRefresh}"
-                app:visibleOrGone="@{!presenter.error &amp;&amp; !presenter.loading}">
+                android:onRefreshListener="@{viewModel.loadDataPullToRefresh}"
+                app:refreshing="@{viewModel.loadingPullToRefresh}"
+                app:visibleOrGone="@{!viewModel.error &amp;&amp; !viewModel.loading}">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list"
@@ -86,7 +86,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
-            app:visibleOrGone="@{presenter.error &amp;&amp; !presenter.loading}">
+            app:visibleOrGone="@{viewModel.error &amp;&amp; !viewModel.loading}">
 
             <TextView
                 android:id="@+id/error_message"
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                app:onClick="@{presenter.reloadData}"
+                app:onClick="@{viewModel.reloadData}"
                 android:text="@string/retry"/>
         </LinearLayout>
     </FrameLayout>

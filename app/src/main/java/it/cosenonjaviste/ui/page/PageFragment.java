@@ -17,21 +17,21 @@ import java.io.File;
 import java.io.IOException;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.page.PagePresenter;
 import it.cosenonjaviste.core.page.PageView;
+import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
-import it.cosenonjaviste.lib.MvpFragment;
+import it.cosenonjaviste.lib.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-public class PageFragment extends MvpFragment<PagePresenter> implements PageView {
+public class PageFragment extends ViewModelFragment<PageViewModel> implements PageView {
 
-    @Override protected PagePresenter createPresenter() {
-        return CoseNonJavisteApp.getComponent(this).getPagePresenter();
+    @Override protected PageViewModel createViewModel() {
+        return CoseNonJavisteApp.getComponent(this).getPageViewModel();
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         PostDetailBinding binding = PostDetailBinding.bind(inflater.inflate(R.layout.post_detail, container, false));
-        binding.setPresenter(presenter);
+        binding.setViewModel(viewModel);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(binding.toolbar);
@@ -104,7 +104,7 @@ public class PageFragment extends MvpFragment<PagePresenter> implements PageView
             @Override
             public void onPageFinished(WebView webView, String url) {
                 super.onPageFinished(webView, url);
-                presenter.htmlLoaded();
+                viewModel.htmlLoaded();
             }
         });
         return binding.getRoot();

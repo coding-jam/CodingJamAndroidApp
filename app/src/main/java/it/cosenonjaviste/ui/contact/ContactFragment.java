@@ -8,21 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.contact.ContactPresenter;
 import it.cosenonjaviste.core.contact.ContactView;
+import it.cosenonjaviste.core.contact.ContactViewModel;
 import it.cosenonjaviste.databinding.ContactBinding;
-import it.cosenonjaviste.lib.MvpFragment;
+import it.cosenonjaviste.lib.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-public class ContactFragment extends MvpFragment<ContactPresenter> implements ContactView {
+public class ContactFragment extends ViewModelFragment<ContactViewModel> implements ContactView {
 
-    @Override protected ContactPresenter createPresenter() {
-        return CoseNonJavisteApp.getComponent(this).getContactPresenter();
+    @Override protected ContactViewModel createViewModel() {
+        return CoseNonJavisteApp.getComponent(this).getContactViewModel();
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ContactBinding binding = ContactBinding.bind(inflater.inflate(R.layout.contact, container, false));
-        binding.setPresenter(presenter);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
     }
 

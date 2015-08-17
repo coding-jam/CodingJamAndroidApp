@@ -8,22 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.list.ListModel;
+import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.databinding.RecyclerBinding;
-import it.cosenonjaviste.lib.mvp.ListModel;
-import it.cosenonjaviste.lib.mvp.RxMvpListPresenterAdapter;
 import rx.functions.Func1;
 
 public class RecyclerBindingBuilder<T> {
 
-    private final RxMvpListPresenterAdapter<? extends ListModel<T>, ?> presenter;
+    private final RxListViewModel<? extends ListModel<T>, ?> viewModel;
 
     private RecyclerBinding binding;
 
-    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxMvpListPresenterAdapter<? extends ListModel<T>, ?> presenter) {
-        this.presenter = presenter;
+    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<? extends ListModel<T>, ?> viewModel) {
+        this.viewModel = viewModel;
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
-        binding.setPresenter(presenter);
+        binding.setViewModel(viewModel);
     }
 
     public RecyclerBinding getBinding() {
@@ -53,7 +53,7 @@ public class RecyclerBindingBuilder<T> {
     }
 
     public RecyclerBindingBuilder<T> viewHolderFactory(Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
-        binding.list.setAdapter(new BindableAdapter<>(presenter.getModel().getItems(), viewHolderFactory));
+        binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), viewHolderFactory));
         return this;
     }
 }

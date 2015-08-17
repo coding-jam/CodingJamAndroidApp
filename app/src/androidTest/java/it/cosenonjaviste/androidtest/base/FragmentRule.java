@@ -3,11 +3,10 @@ package it.cosenonjaviste.androidtest.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
-
-import org.parceler.Parcels;
 
 import it.cosenonjaviste.lib.ViewModelManager;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
@@ -24,9 +23,9 @@ public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
         return launchFragment(null);
     }
 
-    public void launchFragment(Object model) {
+    public void launchFragment(Parcelable model) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ViewModelManager.MODEL, Parcels.wrap(model));
+        bundle.putParcelable(ViewModelManager.MODEL, model);
         launchFragment(bundle);
     }
 
