@@ -89,4 +89,15 @@ public class RxHolder {
     public CompositeSubscription getSubscriptions() {
         return subscriptions;
     }
+
+    private static class ObservableWithObserver<T> {
+        public final ConnectableObservable<T> observable;
+
+        public final Observer<T> observer;
+
+        public ObservableWithObserver(ConnectableObservable<T> observable, Observer<T> observer) {
+            this.observable = observable;
+            this.observer = observer;
+        }
+    }
 }
