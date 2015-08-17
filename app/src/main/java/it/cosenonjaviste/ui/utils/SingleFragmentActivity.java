@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.ViewModelManager;
 
 public class SingleFragmentActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
 
     public static <MM extends Parcelable> void open(FragmentActivity activity, Class<?> viewClass, MM model) {
         Intent intent = createIntent(activity, viewClass);
-        intent.putExtra(RxMvpPresenter.MODEL, model);
+        intent.putExtra(ViewModelManager.MODEL, model);
         activity.startActivity(intent);
     }
 

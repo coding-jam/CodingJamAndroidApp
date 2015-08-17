@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import it.cosenonjaviste.lib.mvp.RxMvpPresenter;
+import it.cosenonjaviste.lib.mvp.ViewModelManager;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
@@ -26,7 +26,7 @@ public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
 
     public void launchFragment(Object model) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(RxMvpPresenter.MODEL, Parcels.wrap(model));
+        bundle.putParcelable(ViewModelManager.MODEL, Parcels.wrap(model));
         launchFragment(bundle);
     }
 

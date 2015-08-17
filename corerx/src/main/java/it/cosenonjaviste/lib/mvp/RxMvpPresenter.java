@@ -1,10 +1,12 @@
 package it.cosenonjaviste.lib.mvp;
 
 
+import android.os.Parcelable;
+
 import rx.Observable;
 import rx.functions.Action1;
 
-public abstract class RxMvpPresenter<M, V> extends MvpPresenter<M, V> {
+public abstract class RxMvpPresenter<M extends Parcelable, V> extends MvpPresenter<M, V> {
 
     private RxHolder rxHolder;
 

@@ -2,6 +2,7 @@ package it.cosenonjaviste.lib.mvp;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.os.Parcelable;
 
 import com.hannesdorfmann.parcelableplease.annotation.Bagger;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 import it.cosenonjaviste.core.utils.ObservableArrayListBagger;
 
-public abstract class ListModel<T> {
+public abstract class ListModel<T> implements Parcelable {
 
     public ObservableBoolean error = new ObservableBoolean();
 

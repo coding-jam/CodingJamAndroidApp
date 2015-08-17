@@ -1,7 +1,8 @@
 package it.cosenonjaviste.lib.mvp;
 
-public class MvpPresenter<M, V> {
-    public static final String MODEL = "model";
+import android.os.Parcelable;
+
+public class MvpPresenter<M extends Parcelable, V> {
 
     private V view;
 
@@ -29,15 +30,11 @@ public class MvpPresenter<M, V> {
         return null;
     }
 
-    public void saveState(ObjectSaver saver) {
-        saver.save(MODEL, getModel());
-    }
-
-    public void loadState(ObjectLoader loader) {
-        model = loader.load(MODEL);
-        if (model == null) {
-            model = createDefaultModel();
-            if (model == null) {
+    public void initModel(M model) {
+        this.model = model;
+        if (this.model == null) {
+            this.model = createDefaultModel();
+            if (this.model == null) {
                 throw new RuntimeException("createDefaultModel not implemented in " + getClass().getName());
             }
         }
@@ -48,11 +45,7 @@ public class MvpPresenter<M, V> {
     }
 
     public M initAndResume(final M newModel, V view) {
-        loadState(new ObjectLoader() {
-            @Override public <T> T load(String key) {
-                return (T) newModel;
-            }
-        });
+        initModel(newModel);
         resume(view);
         return getModel();
     }

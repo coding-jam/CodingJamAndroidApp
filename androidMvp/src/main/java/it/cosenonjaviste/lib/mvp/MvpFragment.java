@@ -7,33 +7,34 @@ public abstract class MvpFragment<P extends MvpPresenter<?, ?>> extends Fragment
 
     protected P presenter;
 
-    private ListenersRetainedFragment retainedFragment;
-
     protected abstract P createPresenter();
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        retainedFragment = ListenersRetainedFragment.getOrCreate(getActivity(), state, getArguments(), getClass().getName(), this::createPresenter);
-        presenter = (P) retainedFragment.getListener();
+        presenter = ListenersRetainedFragment.getOrCreate(this, state, getFragmentTag(), this::createPresenter);
+    }
+
+    protected String getFragmentTag() {
+        return getClass().getName();
     }
 
     @Override public void onResume() {
         super.onResume();
-        retainedFragment.resume(this);
+        ViewModelManager.resume(this, presenter);
     }
 
     @Override public void onPause() {
         super.onPause();
-        retainedFragment.pause();
+        ViewModelManager.pause(presenter);
     }
 
     @Override public void onDestroy() {
         super.onDestroy();
-        retainedFragment.destroy();
+        ViewModelManager.destroy(presenter);
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        retainedFragment.saveState(outState);
+        ViewModelManager.saveState(outState, presenter);
     }
 }
