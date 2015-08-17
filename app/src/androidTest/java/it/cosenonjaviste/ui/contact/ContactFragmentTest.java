@@ -1,4 +1,4 @@
-package it.cosenonjaviste.contact;
+package it.cosenonjaviste.ui.contact;
 
 import android.support.test.espresso.action.ViewActions;
 
@@ -13,7 +13,6 @@ import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
 import it.cosenonjaviste.model.MailJetService;
-import it.cosenonjaviste.ui.contact.ContactFragment;
 import retrofit.client.Response;
 import rx.Observable;
 

@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest;
+package it.cosenonjaviste.ui.category;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,7 +13,6 @@ import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.ui.category.CategoryListFragment;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;

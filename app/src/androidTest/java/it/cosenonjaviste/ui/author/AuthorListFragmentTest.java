@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest;
+package it.cosenonjaviste.ui.author;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,7 +11,6 @@ import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.ui.author.AuthorListFragment;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -19,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Mockito.when;
 
-public class AuthorListTest {
+public class AuthorListFragmentTest {
 
     @Inject WordPressService wordPressService;
 

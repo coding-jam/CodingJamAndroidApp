@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest;
+package it.cosenonjaviste.ui.page;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,7 +12,6 @@ import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.page.PageModel;
-import it.cosenonjaviste.ui.page.PageFragment;
 
 public class PageFragmentTest {
 

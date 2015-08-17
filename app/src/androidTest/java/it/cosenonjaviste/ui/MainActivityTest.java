@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest;
+package it.cosenonjaviste.ui;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -16,7 +16,6 @@ import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.ui.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

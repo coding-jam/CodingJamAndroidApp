@@ -1,4 +1,4 @@
-package it.cosenonjaviste.androidtest;
+package it.cosenonjaviste.ui.twitter;
 
 import android.support.test.runner.AndroidJUnit4;
 
@@ -14,7 +14,6 @@ import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.twitter.TweetListModel;
 import it.cosenonjaviste.model.TwitterService;
-import it.cosenonjaviste.ui.twitter.TweetListFragment;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;

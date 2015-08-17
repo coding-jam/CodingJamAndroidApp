@@ -3,21 +3,21 @@ package it.cosenonjaviste.androidtest.dagger;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.androidtest.AuthorListTest;
-import it.cosenonjaviste.androidtest.CategoryListFragmentTest;
-import it.cosenonjaviste.androidtest.MainActivityTest;
-import it.cosenonjaviste.androidtest.PageFragmentTest;
-import it.cosenonjaviste.androidtest.PostListTest;
-import it.cosenonjaviste.androidtest.TweetListFragmentTest;
-import it.cosenonjaviste.contact.ContactFragmentTest;
 import it.cosenonjaviste.ui.ApplicationComponent;
 import it.cosenonjaviste.ui.BaseModule;
+import it.cosenonjaviste.ui.MainActivityTest;
+import it.cosenonjaviste.ui.author.AuthorListFragmentTest;
+import it.cosenonjaviste.ui.category.CategoryListFragmentTest;
+import it.cosenonjaviste.ui.contact.ContactFragmentTest;
+import it.cosenonjaviste.ui.page.PageFragmentTest;
+import it.cosenonjaviste.ui.post.PostListFragmentTest;
+import it.cosenonjaviste.ui.twitter.TweetListFragmentTest;
 
 @Singleton
 @Component(modules = {EspressoTestModule.class, BaseModule.class})
 public interface TestComponent extends ApplicationComponent {
 
-    void inject(AuthorListTest authorListTest);
+    void inject(AuthorListFragmentTest authorListFragmentTest);
 
     void inject(MainActivityTest mainActivityTest);
 
@@ -25,7 +25,7 @@ public interface TestComponent extends ApplicationComponent {
 
     void inject(CategoryListFragmentTest categoryListFragmentTest);
 
-    void inject(PostListTest postListTest);
+    void inject(PostListFragmentTest postListFragmentTest);
 
     void inject(TweetListFragmentTest tweetListTest);
 
