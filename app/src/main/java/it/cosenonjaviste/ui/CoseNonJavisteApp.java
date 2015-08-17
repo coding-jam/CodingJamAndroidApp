@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import it.cosenonjaviste.lib.mvp.utils.ObjectsMapRetainedFragment;
-import rx.functions.Func1;
-
 public class CoseNonJavisteApp extends Application {
 
     private ApplicationComponent component;
@@ -35,12 +32,5 @@ public class CoseNonJavisteApp extends Application {
 
     public void setComponent(ApplicationComponent component) {
         this.component = component;
-    }
-
-    public static <C> C createComponent(Fragment fragment, Func1<ApplicationComponent, C> componentFactory) {
-        return ObjectsMapRetainedFragment.getOrCreate(
-                fragment.getChildFragmentManager(),
-                () -> componentFactory.call(getComponent(fragment.getActivity()))
-        );
     }
 }

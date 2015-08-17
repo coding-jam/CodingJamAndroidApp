@@ -1,1 +1,1 @@
-include ':androidMvp', ':app', ':coremvp', ':corerx'
+include ':androidMvp', ':app', ':corerx'

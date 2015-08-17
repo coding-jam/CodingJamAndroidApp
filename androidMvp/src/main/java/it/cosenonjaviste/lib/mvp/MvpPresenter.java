@@ -1,27 +1,27 @@
 package it.cosenonjaviste.lib.mvp;
 
-public class MvpPresenter<M, V> implements LifeCycleListener<V> {
+public class MvpPresenter<M, V> {
     public static final String MODEL = "model";
 
     private V view;
 
     private M model;
 
-    @Override public void resume(V view) {
+    public void resume(V view) {
         this.view = view;
         resume();
     }
 
-    @Override public void pause() {
+    public void pause() {
     }
 
     public void resume() {
     }
 
-    @Override public void destroy() {
+    public void destroy() {
     }
 
-    @Override public void detachView() {
+    public void detachView() {
         this.view = null;
     }
 
@@ -29,11 +29,11 @@ public class MvpPresenter<M, V> implements LifeCycleListener<V> {
         return null;
     }
 
-    @Override public void saveState(ObjectSaver saver) {
+    public void saveState(ObjectSaver saver) {
         saver.save(MODEL, getModel());
     }
 
-    @Override public void loadState(ObjectLoader loader) {
+    public void loadState(ObjectLoader loader) {
         model = loader.load(MODEL);
         if (model == null) {
             model = createDefaultModel();
@@ -48,7 +48,7 @@ public class MvpPresenter<M, V> implements LifeCycleListener<V> {
     }
 
     public M initAndResume(final M newModel, V view) {
-        loadState(new LifeCycleListener.ObjectLoader() {
+        loadState(new ObjectLoader() {
             @Override public <T> T load(String key) {
                 return (T) newModel;
             }

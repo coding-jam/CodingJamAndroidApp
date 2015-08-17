@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-
 public class ListenersRetainedFragment extends Fragment {
 
     public static final String TAG = ListenersRetainedFragment.class.getName();
 
-    private LinkedHashMap<String, LifeCycleListener<Object>> listeners = new LinkedHashMap<>();
+    private MvpPresenter<?, ?> listener;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,20 +26,16 @@ public class ListenersRetainedFragment extends Fragment {
 
     @Override public void onDestroy() {
         super.onDestroy();
-        for (LifeCycleListener<Object> listener : listeners.values()) {
+        if (listener != null) {
             listener.destroy();
         }
     }
 
-    public void addListener(String key, LifeCycleListener<Object> listener) {
-        listeners.put(key, listener);
+    public MvpPresenter<?, ?> getListener() {
+        return listener;
     }
 
-    public LifeCycleListener<Object> getListener(String key) {
-        return listeners.get(key);
-    }
-
-    public Collection<LifeCycleListener<Object>> getListeners() {
-        return listeners.values();
+    public void setListener(MvpPresenter<?, ?> listener) {
+        this.listener = listener;
     }
 }
