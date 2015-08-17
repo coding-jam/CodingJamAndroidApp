@@ -41,17 +41,6 @@ public class CategoryListFragmentTest {
         onView(withText("cat 1")).check(matches(isDisplayed()));
     }
 
-    @Test public void testCategoryEmptyList() {
-        when(wordPressService.listCategories())
-                .thenReturn(TestData.categoryResponse(0));
-
-        fragmentRule.launchFragment(new CategoryListModel());
-
-        verify(wordPressService).listCategories();
-
-        onView(withText("Nothing here.")).check(matches(isDisplayed()));
-    }
-
     @Test public void testCategoryError() {
         when(wordPressService.listCategories())
                 .thenReturn(Observable.error(new IOException("bla bla bla")));
