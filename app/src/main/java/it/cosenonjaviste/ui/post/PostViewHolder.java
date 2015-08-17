@@ -14,7 +14,7 @@ public class PostViewHolder extends BindableViewHolder<Post> {
     public PostViewHolder(PostRowBinding binding, PostListPresenter presenter) {
         super(binding.getRoot());
         this.binding = binding;
-        binding.postCell.setOnClickListener(v -> presenter.goToDetail(post));
+        binding.getRoot().setOnClickListener(v -> presenter.goToDetail(post));
     }
 
     @Override public void bind(Post post, int position) {

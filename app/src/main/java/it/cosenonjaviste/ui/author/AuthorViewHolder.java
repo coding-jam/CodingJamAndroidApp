@@ -14,7 +14,7 @@ public class AuthorViewHolder extends BindableViewHolder<Author> {
     public AuthorViewHolder(AuthorCellBinding binding, AuthorListPresenter presenter) {
         super(binding.getRoot());
         this.binding = binding;
-        binding.authorCell.setOnClickListener(v -> presenter.goToAuthorDetail(position));
+        binding.getRoot().setOnClickListener(v -> presenter.goToAuthorDetail(position));
     }
 
     @Override public void bind(Author author, int position) {

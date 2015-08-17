@@ -15,7 +15,7 @@ public class CategoryViewHolder extends BindableViewHolder<Category> {
     public CategoryViewHolder(CategoryRowBinding binding, CategoryListPresenter presenter) {
         super(binding.getRoot());
         this.binding = binding;
-        binding.categoryCell.setOnClickListener(v -> presenter.goToPosts(position));
+        binding.getRoot().setOnClickListener(v -> presenter.goToPosts(position));
     }
 
     @Override public void bind(Category category, int position) {
