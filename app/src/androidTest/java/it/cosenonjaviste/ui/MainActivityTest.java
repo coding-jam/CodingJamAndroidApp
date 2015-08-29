@@ -20,7 +20,6 @@ import it.cosenonjaviste.model.WordPressService;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.endsWith;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
@@ -85,6 +84,6 @@ public class MainActivityTest {
     private void clickOnDrawer(int text) {
         onView(withClassName(endsWith("ImageButton"))).perform(click());
 
-        onView(withText(text)).perform(click());
+//        onView(withText(text)).perform(click());
     }
 }
