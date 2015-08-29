@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Base64;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
@@ -18,13 +19,17 @@ import it.cosenonjaviste.ui.utils.AndroidSchedulerManager;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(includes = BaseModule.class)
+@Module
 public class AppModule {
 
     private Application application;
 
     public AppModule(Application application) {
         this.application = application;
+    }
+
+    @Provides @Singleton Gson provideGson() {
+        return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
     @Provides @Singleton WordPressService provideWordPressService(Gson gson) {

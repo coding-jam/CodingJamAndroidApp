@@ -4,7 +4,6 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import it.cosenonjaviste.ui.ApplicationComponent;
-import it.cosenonjaviste.ui.BaseModule;
 import it.cosenonjaviste.ui.MainActivityTest;
 import it.cosenonjaviste.ui.author.AuthorListFragmentTest;
 import it.cosenonjaviste.ui.category.CategoryListFragmentTest;
@@ -14,7 +13,7 @@ import it.cosenonjaviste.ui.post.PostListFragmentTest;
 import it.cosenonjaviste.ui.twitter.TweetListFragmentTest;
 
 @Singleton
-@Component(modules = {EspressoTestModule.class, BaseModule.class})
+@Component(modules = {EspressoTestModule.class})
 public interface TestComponent extends ApplicationComponent {
 
     void inject(AuthorListFragmentTest authorListFragmentTest);
