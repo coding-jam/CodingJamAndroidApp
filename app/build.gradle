@@ -30,7 +30,7 @@ retrolambda {
 }
 
 jacoco {
-    toolVersion = "0.7.2.201409121644"
+    toolVersion = "0.7.5.201505241946"
 
 }
 
@@ -43,7 +43,7 @@ android {
     }
 
     jacoco {
-        version = '0.7.2.201409121644'
+        version = '0.7.5.201505241946'
     }
 
     compileSdkVersion 22
@@ -61,7 +61,7 @@ android {
         buildConfigField "String", "ACCESS_TOKEN_SECRET", project.oauth_accessTokenSecret
         buildConfigField "String", "MAILJET_USERNAME", project.mailjet_userName
         buildConfigField "String", "MAILJET_PASSWORD", project.mailJetPassword
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "it.cosenonjaviste.androidtest.utils.AndroidJacocoTestRunner"
     }
     buildTypes {
         debug {
@@ -144,13 +144,13 @@ task jacocoUnitTestReport(type: JacocoReport) {
         xml.enabled = true // coveralls plugin depends on xml format report
         html.enabled = true
     }
-    // class R is used, but usage will not be covered, so ignore this class from report
-    // This differs per plugin version (0.10 -> 0.11)
-    // have very different fileTrees.
-    // I have added rules to Ignore Dagger/Butterknife
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
             excludes: ['it/cosenonjaviste/R*.class',
+                       'it/cosenonjaviste/BR*.class',
+                       'it/cosenonjaviste/BuildConfig*.class',
+                       'it/cosenonjaviste/lib/R*.class',
+                       'it/cosenonjaviste/lib/rx/R*.class',
                        'it/cosenonjaviste/databinding/**/*.class',
                        'com/android/**/*.class',
                        'android/**/*.class',
@@ -170,51 +170,47 @@ task jacocoUnitTestReport(type: JacocoReport) {
             }
         }
     }
-//    afterEvaluate {
-//        // just clean up coveralls dashboard, following reports are not of interest
-//        testDebug.reports.junitXml.enabled = false
-//    }
 }
-//
-//task mergeTestCodeCoverageResults(type: JacocoMerge) {
-//    description = 'Merge test code coverage results from junit and instrumentation test'
-//    destinationFile = file("build/outputs/code-coverage/merged-coverage.exec")
-//    doFirst {delete destinationFile}
-//    executionData = files('build/outputs/code-coverage/connected/coverage.ec', '../core/build/jacoco/test.exec')
-//}
-//
-//task jacocoTestReport(type: JacocoReport) {
-//    group = "Reporting"
-//    description = "Generates Jacoco coverage reports"
-//    reports {
-//        xml.enabled = true
-//        html.enabled = true
-//    }
-//    classDirectories = fileTree(
-//            dir: 'build/intermediates/classes',
-//            excludes: ['**/R.class',
-//                       '**/R$*.class',
-//                       '**/BuildConfig.*',
-//                       '**/Manifest*.*',
-//                       '**/*$InjectAdapter.class',
-//                       '**/*$ModuleAdapter.class',
-//                       '**/*$ViewInjector*.class',
-//                       '**/*$Provide*.class',
-//                       '**/*Parceler$*.class',
-//                       '**/*$Parcelable*.class',
-//                       '**/androidtest/**/*.class'
-//            ]
-//    )
-//    sourceDirectories = files(coverageSourceDirs)
-//    additionalSourceDirs = files(coverageSourceDirs)
-//    executionData = files('build/outputs/code-coverage/merged-coverage.exec')
-//    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
-//    // We iterate through the compiled .class tree and rename $$ to $.
-//    doFirst {
-//        new File('app/build/intermediates/classes/').eachFileRecurse { file ->
-//            if (file.name.contains('$$')) {
-//                file.renameTo(file.path.replace('$$', '$'))
-//            }
-//        }
-//    }
-//}
+
+task mergeTestCodeCoverageResults(type: JacocoMerge) {
+    description = 'Merge test code coverage results from junit and instrumentation test'
+    destinationFile = file("build/outputs/code-coverage/merged-coverage.exec")
+    doFirst {delete destinationFile}
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec', 'build/jacoco/testDebugUnitTest.exec')
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generates Jacoco coverage reports"
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BR.class',
+                       '**/BuildConfig.class',
+                       'it/cosenonjaviste/databinding/*.class',
+                       'it/cosenonjaviste/databinding/**/*.class',
+                       'com/android/**/*.class',
+                       'android/**/*.class',
+                       '**/*_MembersInjector.class',
+                       '**/*_Factory.class',
+                       '**/*_Provide*.class',
+                       '**/*ParcelablePlease.class'
+            ])
+    sourceDirectories = files(coverageSourceDirs)
+    additionalSourceDirs = files(coverageSourceDirs)
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec')
+    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
+    // We iterate through the compiled .class tree and rename $$ to $.
+    doFirst {
+        new File('app/build/intermediates/classes/').eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+}
