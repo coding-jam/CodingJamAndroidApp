@@ -36,7 +36,7 @@ public class ContactFragmentTest {
     }
 
     @Test public void testContactFragment() {
-        fragmentRule.launchFragment(new it.cosenonjaviste.core.contact.ContactModel());
+        fragmentRule.launchFragment();
 
         onView(withId(R.id.name)).perform(ViewActions.typeText("name"));
         onView(withId(R.id.email)).perform(ViewActions.typeText("email@email.it"));
