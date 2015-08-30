@@ -25,7 +25,6 @@ public class PostListFragment extends ViewModelFragment<PostListViewModel> imple
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .linearLayoutManager()
                 .viewHolderFactory(v -> new PostViewHolder(PostRowBinding.bind(inflater.inflate(R.layout.post_row, v, false)), viewModel))
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();

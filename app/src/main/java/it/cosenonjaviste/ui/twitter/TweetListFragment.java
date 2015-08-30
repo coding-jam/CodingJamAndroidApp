@@ -22,7 +22,6 @@ public class TweetListFragment extends ViewModelFragment<TweetListViewModel> imp
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .linearLayoutManager()
                 .viewHolderFactory(v -> new TweetViewHolder(TweetRowBinding.bind(inflater.inflate(R.layout.tweet_row, v, false))))
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
