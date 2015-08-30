@@ -67,7 +67,9 @@ public class Author implements Comparable<Author>, Parcelable {
     }
 
     @Override public int compareTo(Author o) {
-        return Long.compare(getSortId(), o.getSortId());
+        long lhs = getSortId();
+        long rhs = o.getSortId();
+        return lhs < rhs ? -1 : (lhs == rhs ? 0 : 1);
     }
 
     private long getSortId() {
