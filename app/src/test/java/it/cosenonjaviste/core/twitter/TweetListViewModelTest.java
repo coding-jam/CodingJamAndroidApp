@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+
+import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
@@ -21,6 +24,15 @@ public class TweetListViewModelTest {
     @Mock TwitterService twitterService;
 
     @InjectMocks TweetListViewModel viewModel;
+
+    @Test
+    public void testParcelable() {
+        TweetListModel model = new TweetListModel();
+        ParcelableTester.check(model, TweetListModel.CREATOR);
+
+        model.done(Arrays.asList(TestData.createTweet(1), TestData.createTweet(2)));
+        ParcelableTester.check(model, TweetListModel.CREATOR);
+    }
 
     @Test public void testLoadTweets() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))

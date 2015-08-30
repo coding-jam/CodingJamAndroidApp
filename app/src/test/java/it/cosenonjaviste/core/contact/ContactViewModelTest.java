@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
 
@@ -23,6 +24,12 @@ public class ContactViewModelTest {
     @InjectMocks ContactViewModel viewModel;
 
     @Mock ContactView view;
+
+    @Test
+    public void testParcelable() {
+        ContactModel model = new ContactModel();
+        ParcelableTester.check(model, ContactModel.CREATOR);
+    }
 
     @Test
     public void testEmailError() {

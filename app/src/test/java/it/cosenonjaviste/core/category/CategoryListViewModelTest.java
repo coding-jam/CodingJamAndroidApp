@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+
+import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
@@ -28,6 +31,15 @@ public class CategoryListViewModelTest {
     @Mock CategoryListView view;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
+
+    @Test
+    public void testParcelable() {
+        CategoryListModel model = new CategoryListModel();
+        ParcelableTester.check(model, CategoryListModel.CREATOR);
+
+        model.done(Arrays.asList(new Category(123, "abc", 3), new Category(123456, "abcdef", 6)));
+        ParcelableTester.check(model, CategoryListModel.CREATOR);
+    }
 
     @Test
     public void testLoad() {

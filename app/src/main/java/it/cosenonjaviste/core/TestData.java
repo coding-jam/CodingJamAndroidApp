@@ -57,7 +57,11 @@ public class TestData {
 
     public static Observable<List<Tweet>> tweets() {
         return Observable.range(0, 10)
-                .map(i -> new Tweet(123, "tweet text " + i, new Date(), "image", "author"))
+                .map(TestData::createTweet)
                 .toList();
+    }
+
+    public static Tweet createTweet(int i) {
+        return new Tweet(123, "tweet text " + i, new Date(), "image", "author");
     }
 }

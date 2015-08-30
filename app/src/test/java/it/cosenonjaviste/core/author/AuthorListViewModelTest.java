@@ -8,6 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+
+import it.cosenonjaviste.core.ParcelableTester;
+import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
@@ -27,6 +31,15 @@ public class AuthorListViewModelTest {
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
     @Mock AuthorListView view;
+
+    @Test
+    public void testParcelable() {
+        AuthorListModel model = new AuthorListModel();
+        ParcelableTester.check(model, AuthorListModel.CREATOR);
+
+        model.done(Arrays.asList(TestData.createAuthor(1), TestData.createAuthor(2)));
+        ParcelableTester.check(model, AuthorListModel.CREATOR);
+    }
 
     @Test
     public void testLoad() {

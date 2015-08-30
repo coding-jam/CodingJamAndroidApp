@@ -6,6 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+
+import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.WordPressService;
 
@@ -24,6 +27,15 @@ public class AuthorPostListViewModelTest {
     @Mock WordPressService wordPressService;
 
     @InjectMocks PostListViewModel viewModel;
+
+    @Test
+    public void testParcelable() {
+        PostListModel model = new PostListModel(TestData.createAuthor(145));
+        ParcelableTester.check(model, PostListModel.CREATOR);
+
+        model.done(Arrays.asList(TestData.createPost(1), TestData.createPost(2)));
+        ParcelableTester.check(model, PostListModel.CREATOR);
+    }
 
     @Test
     public void testLoad() throws InterruptedException {

@@ -146,18 +146,18 @@ task jacocoUnitTestReport(type: JacocoReport) {
     }
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
-            excludes: ['it/cosenonjaviste/R*.class',
-                       'it/cosenonjaviste/BR*.class',
-                       'it/cosenonjaviste/BuildConfig*.class',
-                       'it/cosenonjaviste/lib/R*.class',
-                       'it/cosenonjaviste/lib/rx/R*.class',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BR.class',
+                       '**/BuildConfig.class',
                        'it/cosenonjaviste/databinding/**/*.class',
                        'com/android/**/*.class',
                        'android/**/*.class',
-                       '**/*$InjectAdapter.class',
-                       '**/*$ModuleAdapter.class',
+                       '**/*_MembersInjector.class',
                        '**/*_Factory.class',
-                       '**/*ParcelablePlease.class'
+                       '**/*_Provide*.class',
+                       '**/*ParcelablePlease.class',
+                       'it/cosenonjaviste/ui/**/*.class',
             ])
     sourceDirectories = files(coverageSourceDirs)
     executionData = files('build/jacoco/testDebugUnitTest.exec')
@@ -192,7 +192,6 @@ task jacocoTestReport(type: JacocoReport) {
                        '**/R$*.class',
                        '**/BR.class',
                        '**/BuildConfig.class',
-                       'it/cosenonjaviste/databinding/*.class',
                        'it/cosenonjaviste/databinding/**/*.class',
                        'com/android/**/*.class',
                        'android/**/*.class',

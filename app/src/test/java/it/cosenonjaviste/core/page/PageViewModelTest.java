@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.model.Post;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +17,12 @@ public class PageViewModelTest {
     @Mock PageView view;
 
     @InjectMocks PageViewModel viewModel;
+
+    @Test
+    public void testParcelable() {
+        PageModel model = new PageModel(new Post(1, null, "title", null, "url", null));
+        ParcelableTester.check(model, PageModel.CREATOR);
+    }
 
     @Test
     public void testLoad() {
