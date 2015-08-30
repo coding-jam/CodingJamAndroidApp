@@ -31,7 +31,7 @@ public class AuthorListFragmentTest {
     @Test
     public void testAuthorList() {
         when(wordPressService.listAuthors())
-                .thenReturn(TestData.authorResponse(2));
+                .thenReturn(TestData.authorResponse(8));
 
         fragmentRule.launchFragment(new AuthorListModel());
 
