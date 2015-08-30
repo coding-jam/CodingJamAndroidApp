@@ -96,6 +96,8 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'com.hannesdorfmann.parcelableplease:annotation:1.0.1'
     apt 'com.hannesdorfmann.parcelableplease:processor:1.0.1'
+    apt 'com.android.databinding:library:1.0-rc1'
+    androidTestApt 'com.android.databinding:library:1.0-rc1'
 
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
