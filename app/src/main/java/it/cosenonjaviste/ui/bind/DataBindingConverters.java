@@ -100,9 +100,4 @@ public class DataBindingConverters {
     public static void bindOnClick(WebView view, String url) {
         view.loadUrl(url);
     }
-
-    @BindingAdapter({"bind:text1", "bind:textParam1"})
-    public static void bindHtmlText(TextView view, int textRes, Object param) {
-        view.setText(view.getResources().getString(textRes, param));
-    }
 }
