@@ -49,19 +49,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="3dip"
-                android:paddingLeft="6dip"
-                android:paddingRight="6dip"
-                android:paddingTop="3dip"
-                android:textSize="10sp"
-                android:visibility="gone"
-                app:textHtml="@{author.htmlDescription}"/>
-
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

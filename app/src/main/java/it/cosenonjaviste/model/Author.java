@@ -22,17 +22,14 @@ public class Author implements Comparable<Author>, Parcelable {
 
     String imageUrl;
 
-    String description;
-
     public Author() {
     }
 
-    public Author(long id, String firstName, String lastName, String description) {
+    public Author(long id, String firstName, String lastName) {
         this();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.description = description;
     }
 
     public long getId() {
@@ -56,14 +53,6 @@ public class Author implements Comparable<Author>, Parcelable {
             imageUrl = "http://www.gravatar.com/avatar/" + Md5Utils.md5Hex(email);
         }
         return imageUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getHtmlDescription() {
-        return description.replaceAll("^<p>", "").replaceAll("$</p>", "");
     }
 
     @Override public int compareTo(Author o) {

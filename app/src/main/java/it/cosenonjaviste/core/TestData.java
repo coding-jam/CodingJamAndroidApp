@@ -34,7 +34,7 @@ public class TestData {
     }
 
     public static Author createAuthor(int i) {
-        return new Author(i, "name " + i, "last name " + i, "desc " + i);
+        return new Author(i, "name " + i, "last name " + i);
     }
 
     public static Observable<AuthorResponse> authorResponse(int size) {
