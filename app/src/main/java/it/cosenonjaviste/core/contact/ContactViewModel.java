@@ -91,28 +91,4 @@ public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
             );
         }
     }
-
-    public ObservableString getName() {
-        return getModel().name;
-    }
-
-    public ObservableString getEmail() {
-        return getModel().email;
-    }
-
-    public ObservableString getMessage() {
-        return getModel().message;
-    }
-
-    public ObservableInt getNameError() {
-        return getModel().nameError;
-    }
-
-    public ObservableInt getEmailError() {
-        return getModel().emailError;
-    }
-
-    public ObservableInt getMessageError() {
-        return getModel().messageError;
-    }
 }

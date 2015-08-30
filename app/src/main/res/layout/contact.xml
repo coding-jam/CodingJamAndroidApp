@@ -22,14 +22,14 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{viewModel.nameError}">
+                app:error="@{viewModel.model.nameError}">
 
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
-                    app:binding="@{viewModel.name}">
+                    app:binding="@{viewModel.model.name}">
 
                     <requestFocus/>
                 </EditText>
@@ -39,7 +39,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{viewModel.emailError}">
+                app:error="@{viewModel.model.emailError}">
 
                 <EditText
                     android:id="@+id/email"
@@ -47,13 +47,13 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    app:binding="@{viewModel.email}"/>
+                    app:binding="@{viewModel.model.email}"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:error="@{viewModel.messageError}">
+                app:error="@{viewModel.model.messageError}">
 
                 <EditText
                     android:id="@+id/message"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Message"
                     android:lines="4"
-                    app:binding="@{viewModel.message}"/>
+                    app:binding="@{viewModel.model.message}"/>
             </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
