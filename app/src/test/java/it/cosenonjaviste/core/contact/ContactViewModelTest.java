@@ -35,14 +35,20 @@ public class ContactViewModelTest {
     public void testEmailError() {
         ContactModel model = viewModel.initAndResume(view);
 
-        model.name.set("aaa");
-        model.email.set("aaa");
-        model.message.set("aaa");
+        compileForm(model, "aaa", "aaa", "aaa");
         viewModel.send();
 
-        assertThat(model.nameError.get()).isZero();
-        assertThat(model.messageError.get()).isZero();
-        assertThat(model.emailError.get()).isEqualTo(R.string.invalid_email);
+        checkErrors(model, 0, R.string.invalid_email, 0);
+    }
+
+    @Test
+    public void testMandatoryFields() {
+        ContactModel model = viewModel.initAndResume(view);
+
+        compileForm(model, "", null, "");
+        viewModel.send();
+
+        checkErrors(model, R.string.mandatory_field, R.string.mandatory_field, R.string.mandatory_field);
     }
 
     @Test
@@ -52,14 +58,37 @@ public class ContactViewModelTest {
 
         ContactModel model = viewModel.initAndResume(view);
 
-        model.name.set("aaa");
-        model.email.set("aaa@aaa.it");
-        model.message.set("aaa");
+        compileForm(model, "aaa", "aaa@aaa.it", "aaabbb");
         viewModel.send();
 
-        assertThat(model.nameError.get()).isZero();
-        assertThat(model.messageError.get()).isZero();
-        assertThat(model.emailError.get()).isZero();
+        checkErrors(model, 0, 0, 0);
         Mockito.verify(view).showSentMessage();
+    }
+
+    @Test
+    public void testSendError() {
+        when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
+                .thenReturn(Observable.error(new Exception("aaa")));
+
+        ContactModel model = viewModel.initAndResume(view);
+
+        compileForm(model, "aaa", "aaa@aaa.it", "aaabbb");
+        viewModel.send();
+
+        checkErrors(model, 0, 0, 0);
+        Mockito.verify(view).showSentError();
+    }
+
+    private void compileForm(ContactModel model, String name, String email, String message) {
+        model.name.set(name);
+        model.email.set(email);
+        model.message.set(message);
+    }
+
+
+    private void checkErrors(ContactModel model, int name, int email, int message) {
+        assertThat(model.nameError.get()).isEqualTo(name);
+        assertThat(model.emailError.get()).isEqualTo(email);
+        assertThat(model.messageError.get()).isEqualTo(message);
     }
 }

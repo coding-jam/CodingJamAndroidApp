@@ -9,6 +9,13 @@ import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 public class Attachment implements Parcelable {
     String url;
 
+    public Attachment() {
+    }
+
+    public Attachment(String url) {
+        this.url = url;
+    }
+
     public String getUrl() {
         return url;
     }

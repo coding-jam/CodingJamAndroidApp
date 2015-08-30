@@ -1,4 +1,4 @@
-package it.cosenonjaviste.model;
+package it.cosenonjaviste.core.model;
 
 import com.annimon.stream.Stream;
 
@@ -23,7 +23,6 @@ public class JsonStubs {
             "                \"last_name\": \"Collini\",\n" +
             "                \"nickname\": \"fabio.collini\",\n" +
             "                \"url\": \"http:\\/\\/www.cosenonjaviste.it\\/?team=fabio-collini\",\n" +
-            "                \"description\": \"Sono un <strong>Software Architect<\\/strong> che si occupa di progettazione e sviluppo di applicazioni web enterprise su piattaforma J2EE.\\r\\n\\r\\nPresso <a href=\\\"http:\\/\\/www.omniagroup.it\\\">OmniaGroup<\\/a> ricopro il ruolo di <strong>Tech Leader<\\/strong> nell'ambito di progetti di rich internet application che utilizzano <strong>JSF<\\/strong> (RichFaces), <strong>JPA<\\/strong>(EclipseLink o Hibernate) ed <strong>EJB3<\\/strong>\\/<strong>Spring<\\/strong> su application server <strong>IBM Websphere 7.0<\\/strong> e <strong>JBoss 7<\\/strong>.\\r\\n\\r\\nDa agosto 2009 sono un <strong>freelance android developer<\\/strong>, ho rilasciato due applicazioni nell'Android Market: <a href=\\\"http:\\/\\/sites.google.com\\/site\\/appsorganizer\\/\\\">Apps Organizer<\\/a> e <a href=\\\"http:\\/\\/www.folderorganizer.net\\/\\\">Folder Organizer<\\/a>.\\r\\n\\r\\n\\r\\n\\r\\n<a href=\\\"https:\\/\\/twitter.com\\/fabioCollini\\\">Follow me on Twitter<\\/a>  -  <a href=\\\"http:\\/\\/www.linkedin.com\\/in\\/fabiocollini\\\">LinkedIn profile<\\/a> - <a href=\\\"https:\\/\\/plus.google.com\\/102082700410245289967\\/posts?rel=author\\\">Google+<\\/a>\",\n" +
             "                \"email\": \"fabio.collini@gmail.com\"\n" +
             "            },\n" +
             "            \"attachments\": [\n" +

@@ -27,14 +27,14 @@ public class Post implements Parcelable {
         this.url = url;
     }
 
-    public Post(long id, Author author, String title, Date date, String url, String excerpt) {
-        this();
+    public Post(long id, Author author, String title, Date date, String url, String excerpt, Attachment... attachments) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.date = date;
         this.url = url;
         this.excerpt = excerpt;
+        this.attachments = attachments;
     }
 
     public long getId() {
@@ -55,10 +55,6 @@ public class Post implements Parcelable {
 
     public String getUrl() {
         return url;
-    }
-
-    public String getExcerpt() {
-        return excerpt;
     }
 
     public Attachment[] getAttachments() {

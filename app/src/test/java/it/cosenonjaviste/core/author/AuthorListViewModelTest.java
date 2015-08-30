@@ -44,11 +44,11 @@ public class AuthorListViewModelTest {
     @Test
     public void testLoad() {
         when(wordPressService.listAuthors())
-                .thenReturn(authorResponse(2));
+                .thenReturn(authorResponse(10));
 
         AuthorListModel model = viewModel.initAndResume(view);
 
-        assertThat(model.size()).isEqualTo(2);
+        assertThat(model.size()).isEqualTo(10);
     }
 
     @Test

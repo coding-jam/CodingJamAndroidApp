@@ -8,9 +8,12 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,9 +38,10 @@ public class ParcelableTester {
         String s1 = gson.toJson(parcelable);
         String s2 = gson.toJson(loadedData);
 
-        assertThat(s1).isEqualTo(s2);
+        assertThat(s2).isEqualTo(s1);
 
         assertThat(parcelable.describeContents()).isEqualTo(0);
+        assertThat(creator.newArray(2)).hasSize(2);
     }
 
     @NonNull public static Parcel createParcel() {
@@ -65,26 +69,25 @@ public class ParcelableTester {
 
         doAnswer(invocation -> {
             List<Parcelable> list = (List<Parcelable>) invocation.getArguments()[0];
-            if (list == null) {
-                parcelData.add(-1);
-            } else {
-                parcelData.add(list.size());
-                for (Parcelable item : list) {
-                    writeParcelable(parcelData, item, (Parcel) invocation.getMock());
-                }
-            }
+            writeList(parcelData, invocation, list);
             return null;
         }).when(parcel).writeList(any());
         doAnswer(invocation -> {
-            int size = (int) parcelData.removeFirst();
-            if (size > 0) {
-                List<Parcelable> list = (List<Parcelable>) invocation.getArguments()[0];
-                for (int i = 0; i < size; i++) {
-                    list.add(readParcelable(parcelData, (Parcel) invocation.getMock()));
-                }
-            }
+            List<Parcelable> list = (List<Parcelable>) invocation.getArguments()[0];
+            readList(parcelData, invocation, list);
             return null;
         }).when(parcel).readList(any(), any());
+
+        doAnswer(invocation -> {
+            Parcelable[] parcelables = (Parcelable[]) invocation.getArguments()[0];
+            writeList(parcelData, invocation, parcelables == null ? null : Arrays.asList(parcelables));
+            return null;
+        }).when(parcel).writeParcelableArray(any(), anyInt());
+        doAnswer(invocation -> {
+            List<Parcelable> list = new ArrayList<>();
+            readList(parcelData, invocation, list);
+            return list.toArray(new Parcelable[list.size()]);
+        }).when(parcel).readParcelableArray(any());
 
         doAnswer(invocation -> {
             Parcelable parcelable = (Parcelable) invocation.getArguments()[0];
@@ -96,12 +99,34 @@ public class ParcelableTester {
         return parcel;
     }
 
+    private static void readList(LinkedList<Object> parcelData, InvocationOnMock invocation, List<Parcelable> list) {
+        int size = (int) parcelData.removeFirst();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                list.add(readParcelable(parcelData, (Parcel) invocation.getMock()));
+            }
+        }
+    }
+
+    private static void writeList(LinkedList<Object> parcelData, InvocationOnMock invocation, List<Parcelable> list) {
+        if (list == null) {
+            parcelData.add(-1);
+        } else {
+            parcelData.add(list.size());
+            for (Parcelable item : list) {
+                writeParcelable(parcelData, item, (Parcel) invocation.getMock());
+            }
+        }
+    }
+
     private static Parcelable readParcelable(LinkedList<Object> parcelData, Parcel parcel1) {
         Class<? extends Parcelable> parcelableClass = (Class<? extends Parcelable>) parcelData.removeFirst();
         if (parcelableClass == null) {
             return null;
         } else {
-            return readParcelableCreator(parcelableClass).createFromParcel(parcel1);
+            Parcelable.Creator<Parcelable> parcelableCreator = readParcelableCreator(parcelableClass);
+            parcelableCreator.newArray(2);
+            return parcelableCreator.createFromParcel(parcel1);
         }
     }
 
