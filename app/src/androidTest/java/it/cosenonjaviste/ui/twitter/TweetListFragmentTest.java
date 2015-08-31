@@ -33,7 +33,7 @@ public class TweetListFragmentTest {
         DaggerUtils.createTestComponent().inject(this);
     }
 
-    @Test public void testPostList() {
+    @Test public void testTweetList() {
         when(twitterService.loadTweets(eq(1)))
                 .thenReturn(TestData.tweets());
 
