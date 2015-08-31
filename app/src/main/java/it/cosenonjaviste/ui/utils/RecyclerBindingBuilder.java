@@ -21,7 +21,7 @@ public class RecyclerBindingBuilder<T> {
 
     public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<? extends ListModel<T>, ?> viewModel) {
         this.viewModel = viewModel;
-        binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));
+        binding = RecyclerBinding.inflate(inflater, container, false);
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
         binding.setViewModel(viewModel);
     }

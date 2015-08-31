@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.core.post.PostListViewModel;
@@ -25,7 +24,7 @@ public class PostListFragment extends ViewModelFragment<PostListViewModel> imple
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .viewHolderFactory(v -> new PostViewHolder(PostRowBinding.bind(inflater.inflate(R.layout.post_row, v, false)), viewModel))
+                .viewHolderFactory(v -> new PostViewHolder(PostRowBinding.inflate(inflater, v, false), viewModel))
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
     }

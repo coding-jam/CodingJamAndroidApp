@@ -21,7 +21,7 @@ public class ContactFragment extends ViewModelFragment<ContactViewModel> impleme
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ContactBinding binding = ContactBinding.bind(inflater.inflate(R.layout.contact, container, false));
+        ContactBinding binding = ContactBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }
