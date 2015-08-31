@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import rx.functions.Func1;
 
-public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<T>> {
+public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<?, T>> {
 
     private ObservableArrayList<T> items;
 
-    private Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory;
+    private Func1<ViewGroup, BindableViewHolder<?, T>> viewHolderFactory;
 
-    public BindableAdapter(ObservableArrayList<T> items, Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
+    public BindableAdapter(ObservableArrayList<T> items, Func1<ViewGroup, BindableViewHolder<?, T>> viewHolderFactory) {
         this.viewHolderFactory = viewHolderFactory;
         this.items = items;
         items.addOnListChangedCallback(new WeakOnListChangedCallback<>(new ObservableList.OnListChangedCallback<ObservableList<T>>() {
@@ -39,11 +39,11 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
         }));
     }
 
-    @Override public BindableViewHolder<T> onCreateViewHolder(ViewGroup viewGroup, int i) {
+    @Override public BindableViewHolder<?, T> onCreateViewHolder(ViewGroup viewGroup, int i) {
         return viewHolderFactory.call(viewGroup);
     }
 
-    @Override public void onBindViewHolder(BindableViewHolder<T> viewHolder, int i) {
+    @Override public void onBindViewHolder(BindableViewHolder<?, T> viewHolder, int i) {
         viewHolder.bind(items.get(i), i);
     }
 

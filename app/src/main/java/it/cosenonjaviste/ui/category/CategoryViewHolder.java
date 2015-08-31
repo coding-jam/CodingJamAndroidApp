@@ -5,15 +5,12 @@ import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
-public class CategoryViewHolder extends BindableViewHolder<Category> {
-
-    private CategoryRowBinding binding;
+public class CategoryViewHolder extends BindableViewHolder<CategoryRowBinding, Category> {
 
     private int position;
 
     public CategoryViewHolder(CategoryRowBinding binding, CategoryListViewModel viewModel) {
-        super(binding.getRoot());
-        this.binding = binding;
+        super(binding);
         binding.getRoot().setOnClickListener(v -> viewModel.goToPosts(position));
     }
 

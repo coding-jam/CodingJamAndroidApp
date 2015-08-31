@@ -5,15 +5,12 @@ import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.ui.utils.BindableViewHolder;
 
-public class AuthorViewHolder extends BindableViewHolder<Author> {
-
-    private final AuthorCellBinding binding;
+public class AuthorViewHolder extends BindableViewHolder<AuthorCellBinding, Author> {
 
     private int position;
 
     public AuthorViewHolder(AuthorCellBinding binding, AuthorListViewModel viewModel) {
-        super(binding.getRoot());
-        this.binding = binding;
+        super(binding);
         binding.getRoot().setOnClickListener(v -> viewModel.goToAuthorDetail(position));
     }
 

@@ -52,7 +52,7 @@ public class RecyclerBindingBuilder<T> {
         return this;
     }
 
-    public RecyclerBindingBuilder<T> viewHolderFactory(Func1<ViewGroup, BindableViewHolder<T>> viewHolderFactory) {
+    public RecyclerBindingBuilder<T> viewHolderFactory(Func1<ViewGroup, BindableViewHolder<?, T>> viewHolderFactory) {
         binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), viewHolderFactory));
         return this;
     }
