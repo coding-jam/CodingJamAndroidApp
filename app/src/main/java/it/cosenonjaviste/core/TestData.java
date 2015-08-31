@@ -55,8 +55,8 @@ public class TestData {
         return new Category(i, "cat " + i, 10 + i);
     }
 
-    public static Observable<List<Tweet>> tweets() {
-        return Observable.range(0, 10)
+    public static Observable<List<Tweet>> tweets(int count) {
+        return Observable.range(0, count)
                 .map(TestData::createTweet)
                 .toList();
     }

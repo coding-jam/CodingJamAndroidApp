@@ -35,7 +35,7 @@ public class TweetListFragmentTest {
 
     @Test public void testTweetList() {
         when(twitterService.loadTweets(eq(1)))
-                .thenReturn(TestData.tweets());
+                .thenReturn(TestData.tweets(10));
 
         fragmentRule.launchFragment(new TweetListModel());
 

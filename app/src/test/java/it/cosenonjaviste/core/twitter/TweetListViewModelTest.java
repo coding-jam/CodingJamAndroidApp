@@ -1,6 +1,5 @@
 package it.cosenonjaviste.core.twitter;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +14,8 @@ import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TweetListViewModelTest {
@@ -36,11 +37,11 @@ public class TweetListViewModelTest {
 
     @Test public void testLoadTweets() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets());
+                .thenReturn(TestData.tweets(10));
 
         TweetListModel model = viewModel.initAndResume(view);
 
-        Assertions.assertThat(model.getItems()).hasSize(10);
+        assertThat(model.getItems()).hasSize(10);
     }
 
     @Test public void testRetryAfterError() {
@@ -49,25 +50,29 @@ public class TweetListViewModelTest {
 
         TweetListModel model = viewModel.initAndResume(view);
 
-        Assertions.assertThat(viewModel.isError().get()).isTrue();
+        assertThat(viewModel.isError().get()).isTrue();
 
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets());
+                .thenReturn(TestData.tweets(10));
 
         viewModel.reloadData();
 
-        Assertions.assertThat(viewModel.isError().get()).isFalse();
-        Assertions.assertThat(model.getItems()).hasSize(10);
+        assertThat(viewModel.isError().get()).isFalse();
+        assertThat(model.getItems()).hasSize(10);
     }
 
     @Test public void testLoadMoreTweets() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets());
+                .thenReturn(TestData.tweets(20));
+        Mockito.when(twitterService.loadTweets(Matchers.eq(2)))
+                .thenReturn(TestData.tweets(8));
 
         TweetListModel tweetListModel = viewModel.initAndResume(view);
 
+        assertThat(tweetListModel.getItems()).hasSize(20);
+
         viewModel.loadNextPage();
 
-        Assertions.assertThat(tweetListModel.getItems()).hasSize(20);
+        assertThat(tweetListModel.getItems()).hasSize(28);
     }
 }
