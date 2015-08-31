@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.R;
+import it.cosenonjaviste.BR;
 import it.cosenonjaviste.core.author.AuthorListView;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
@@ -26,7 +26,9 @@ public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> i
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolderFactory(v -> new AuthorViewHolder(AuthorCellBinding.bind(inflater.inflate(R.layout.author_cell, v, false)), viewModel))
+                .viewHolderFactory(AuthorCellBinding::inflate, BR.author,
+                        vh -> vh.itemView.setOnClickListener(v -> viewModel.goToAuthorDetail(vh.getAdapterPosition()))
+                )
                 .getRoot();
     }
 

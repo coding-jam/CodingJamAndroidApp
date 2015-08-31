@@ -1,5 +1,6 @@
 package it.cosenonjaviste.ui.utils;
 
+import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,15 +12,20 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.list.ListModel;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.databinding.RecyclerBinding;
+import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func3;
 
 public class RecyclerBindingBuilder<T> {
+
+    private final LayoutInflater inflater;
 
     private final RxListViewModel<? extends ListModel<T>, ?> viewModel;
 
     private RecyclerBinding binding;
 
     public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<? extends ListModel<T>, ?> viewModel) {
+        this.inflater = inflater;
         this.viewModel = viewModel;
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
@@ -55,5 +61,22 @@ public class RecyclerBindingBuilder<T> {
     public RecyclerBindingBuilder<T> viewHolderFactory(Func1<ViewGroup, BindableViewHolder<?, T>> viewHolderFactory) {
         binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), viewHolderFactory));
         return this;
+    }
+
+    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderFactory(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, int variableId, Action1<BindableViewHolder<B, T>> customizer) {
+        Func1<ViewGroup, BindableViewHolder<?, T>> factory = v -> {
+            B binding = inflateFunction.call(inflater, v, false);
+            BindableViewHolder<B, T> viewHolder = new BindableViewHolder<>(binding, variableId);
+            if (customizer != null) {
+                customizer.call(viewHolder);
+            }
+            return viewHolder;
+        };
+        binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), factory));
+        return this;
+    }
+
+    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderFactory(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, int variableId) {
+        return viewHolderFactory(inflateFunction, variableId, null);
     }
 }
