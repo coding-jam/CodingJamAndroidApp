@@ -13,6 +13,7 @@ import it.cosenonjaviste.core.list.ListModel;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.databinding.RecyclerBinding;
 import rx.functions.Action1;
+import rx.functions.Action2;
 import rx.functions.Func1;
 import rx.functions.Func3;
 
@@ -58,15 +59,13 @@ public class RecyclerBindingBuilder<T> {
         return this;
     }
 
-    public RecyclerBindingBuilder<T> viewHolderFactory(Func1<ViewGroup, BindableViewHolder<?, T>> viewHolderFactory) {
-        binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), viewHolderFactory));
-        return this;
-    }
-
-    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderFactory(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, int variableId, Action1<BindableViewHolder<B, T>> customizer) {
+    private <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderWithCustomizer(
+            Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
+            Action2<B, T> binder,
+            Action1<BindableViewHolder<B, T>> customizer) {
         Func1<ViewGroup, BindableViewHolder<?, T>> factory = v -> {
             B binding = inflateFunction.call(inflater, v, false);
-            BindableViewHolder<B, T> viewHolder = new BindableViewHolder<>(binding, variableId);
+            BindableViewHolder<B, T> viewHolder = new BindableViewHolder<>(binding, binder);
             if (customizer != null) {
                 customizer.call(viewHolder);
             }
@@ -76,7 +75,14 @@ public class RecyclerBindingBuilder<T> {
         return this;
     }
 
-    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderFactory(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, int variableId) {
-        return viewHolderFactory(inflateFunction, variableId, null);
+    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolder(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, Action2<B, T> binder) {
+        return viewHolderWithCustomizer(inflateFunction, binder, null);
+    }
+
+    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolder(
+            Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
+            Action2<B, T> binder,
+            Action1<BindableViewHolder<B, T>> clickListener) {
+        return viewHolderWithCustomizer(inflateFunction, binder, vh -> vh.itemView.setOnClickListener(v -> clickListener.call(vh)));
     }
 }

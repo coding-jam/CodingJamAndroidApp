@@ -44,7 +44,7 @@ public class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<
     }
 
     @Override public void onBindViewHolder(BindableViewHolder<?, T> viewHolder, int i) {
-        viewHolder.bind(items.get(i), i);
+        viewHolder.bind(items.get(i));
     }
 
     @Override public int getItemCount() {

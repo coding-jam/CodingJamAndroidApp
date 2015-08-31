@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.BR;
 import it.cosenonjaviste.core.twitter.TweetListView;
 import it.cosenonjaviste.core.twitter.TweetListViewModel;
 import it.cosenonjaviste.databinding.TweetRowBinding;
@@ -22,7 +21,7 @@ public class TweetListFragment extends ViewModelFragment<TweetListViewModel> imp
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .viewHolderFactory(TweetRowBinding::inflate, BR.tweet)
+                .viewHolder(TweetRowBinding::inflate, TweetRowBinding::setTweet)
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
     }

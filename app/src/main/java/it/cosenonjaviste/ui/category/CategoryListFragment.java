@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.BR;
 import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
@@ -26,9 +25,7 @@ public class CategoryListFragment extends ViewModelFragment<CategoryListViewMode
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolderFactory(CategoryRowBinding::inflate, BR.category,
-                        vh -> vh.itemView.setOnClickListener(v -> viewModel.goToPosts(vh.getAdapterPosition()))
-                )
+                .viewHolder(CategoryRowBinding::inflate, CategoryRowBinding::setCategory, vh -> viewModel.goToPosts(vh.getAdapterPosition()))
                 .getRoot();
     }
 
