@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
+import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageView;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
@@ -29,7 +30,7 @@ public class PageFragment extends ViewModelFragment<PageViewModel> implements Pa
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        PostDetailBinding binding = PostDetailBinding.inflate(inflater, container, false);
+        PostDetailBinding binding = PostDetailBinding.bind(inflater.inflate(R.layout.post_detail, container, false));
         binding.setViewModel(viewModel);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
