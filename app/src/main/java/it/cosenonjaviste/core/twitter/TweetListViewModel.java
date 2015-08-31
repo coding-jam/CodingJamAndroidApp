@@ -38,7 +38,7 @@ public class TweetListViewModel extends RxListViewModel<TweetListModel, TweetLis
     }
 
     public void loadNextPage() {
-        if (!isLoadingNextPage().get()) {
+        if (!isLoadingNextPage().get() && getModel().isMoreDataAvailable()) {
             loadingNextPage.set(true);
             int page = calcNextPage(getModel().getItems().size(), TwitterService.PAGE_SIZE);
             Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> loadingNextPage.set(false));

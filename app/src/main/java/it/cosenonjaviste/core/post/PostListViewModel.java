@@ -45,16 +45,18 @@ public class PostListViewModel extends RxListViewModel<PostListModel, PostListVi
     }
 
     public void loadNextPage() {
-        loadingNextPage.set(true);
-        int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
-        Observable<List<Post>> observable = getObservable(page).finallyDo(() -> loadingNextPage.set(false));
+        if (!loadingNextPage.get() && getModel().isMoreDataAvailable()) {
+            loadingNextPage.set(true);
+            int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
+            Observable<List<Post>> observable = getObservable(page).finallyDo(() -> loadingNextPage.set(false));
 
-        subscribe(observable,
-                posts -> {
-                    getModel().append(posts);
-                    getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                },
-                throwable -> getModel().error());
+            subscribe(observable,
+                    posts -> {
+                        getModel().append(posts);
+                        getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+                    },
+                    throwable -> getModel().error());
+        }
     }
 
     private Observable<List<Post>> getObservable(int page) {
