@@ -33,6 +33,13 @@ public abstract class ListModel<T> implements Parcelable {
 
     public void done(List<T> items) {
         loaded = true;
+        getItems().clear();
+        getItems().addAll(items);
+        error.set(false);
+    }
+
+    public void append(List<T> items) {
+        loaded = true;
         getItems().addAll(items);
         error.set(false);
     }

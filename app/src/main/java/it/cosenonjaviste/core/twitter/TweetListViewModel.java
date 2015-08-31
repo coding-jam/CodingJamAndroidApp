@@ -45,7 +45,7 @@ public class TweetListViewModel extends RxListViewModel<TweetListModel, TweetLis
 
             subscribe(observable,
                     posts -> {
-                        getModel().done(posts);
+                        getModel().append(posts);
                         getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
                     },
                     throwable -> getModel().error());

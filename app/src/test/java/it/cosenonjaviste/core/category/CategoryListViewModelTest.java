@@ -56,6 +56,20 @@ public class CategoryListViewModelTest {
     }
 
     @Test
+    public void testLoadAndPullToRefresh() {
+        when(wordPressService.listCategories())
+                .thenReturn(categoryResponse(3), categoryResponse(2));
+
+        CategoryListModel model = viewModel.initAndResume(view);
+
+        assertThat(model.getItems()).hasSize(3);
+
+        viewModel.loadDataPullToRefresh();
+
+        assertThat(model.getItems()).hasSize(2);
+    }
+
+    @Test
     public void testRetryAfterError() {
         when(wordPressService.listCategories())
                 .thenReturn(Observable.error(new RuntimeException()));

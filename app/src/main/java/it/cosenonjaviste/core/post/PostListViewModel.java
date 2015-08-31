@@ -51,7 +51,7 @@ public class PostListViewModel extends RxListViewModel<PostListModel, PostListVi
 
         subscribe(observable,
                 posts -> {
-                    getModel().done(posts);
+                    getModel().append(posts);
                     getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                 },
                 throwable -> getModel().error());
