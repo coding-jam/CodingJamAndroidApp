@@ -2,6 +2,7 @@ package it.cosenonjaviste.ui.post;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class PostListFragment extends ViewModelFragment<PostListViewModel> imple
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .viewHolder(PostRowBinding::inflate, PostRowBinding::setPost, vh -> viewModel.goToDetail(vh.getItem()))
                 .loadMoreListener(viewModel::loadNextPage)
+                .showToolbar((AppCompatActivity) getActivity(), viewModel.isToolbarVisible(), viewModel.getToolbarTitle())
                 .getRoot();
     }
 

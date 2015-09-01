@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(binding.toolbar);
 
         ActionBar actionBar = getSupportActionBar();

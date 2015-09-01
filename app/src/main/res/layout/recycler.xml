@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,30 +10,41 @@
             type="it.cosenonjaviste.core.list.GenericRxListViewModel"/>
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
-            <ProgressBar
-                android:id="@+id/more_progress"
-                style="@android:style/Widget.ProgressBar.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="64dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:indeterminate="false"
-                app:visibleOrGone="@{viewModel.loadingNextPage}"/>
+        <ProgressBar
+            android:id="@+id/more_progress"
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"
+            app:visibleOrGone="@{viewModel.loadingNextPage}"/>
 
-            <RelativeLayout
-                android:id="@+id/progress_root"
+        <LinearLayout
+            android:id="@+id/progress_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:visibleOrGone="@{viewModel.loading}">
+
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                app:visibleOrGone="@{viewModel.loading}">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -48,41 +60,42 @@
                     android:layout_centerHorizontal="true"
                     android:indeterminate="false"
                     android:indeterminateDrawable="@drawable/progress_bar"/>
+            </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/progress"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/loading_"
-                    android:textColor="#666"
-                    android:textSize="18sp"/>
-            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progress"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/loading_"
+                android:textColor="#666"
+                android:textSize="18sp"/>
+        </LinearLayout>
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/more_progress"
+            android:layout_below="@+id/toolbar"
+            android:onRefreshListener="@{viewModel.loadDataPullToRefresh}"
+            app:refreshing="@{viewModel.loadingPullToRefresh}"
+            app:visibleOrGone="@{!viewModel.error &amp;&amp; !viewModel.loading}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/more_progress"
-                android:onRefreshListener="@{viewModel.loadDataPullToRefresh}"
-                app:refreshing="@{viewModel.loadingPullToRefresh}"
-                app:visibleOrGone="@{!viewModel.error &amp;&amp; !viewModel.loading}">
+                android:scrollbars="vertical"/>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"/>
-
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-        </RelativeLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@+id/error_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
@@ -102,8 +115,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                app:onClick="@{viewModel.reloadData}"
-                android:text="@string/retry"/>
+                android:text="@string/retry"
+                app:onClick="@{viewModel.reloadData}"/>
         </LinearLayout>
-    </FrameLayout>
+
+    </RelativeLayout>
 </layout>

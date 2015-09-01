@@ -78,4 +78,22 @@ public class PostListViewModel extends RxListViewModel<PostListModel, PostListVi
     private static int calcNextPage(int size, int pageSize) {
         return size / pageSize + 1;
     }
+
+    public boolean isToolbarVisible() {
+        return getModel().getAuthor() != null || getModel().getCategory() != null;
+    }
+
+    public String getToolbarTitle() {
+        Author author = getModel().getAuthor();
+        if (author != null) {
+            return author.getName();
+        } else {
+            Category category = getModel().getCategory();
+            if (category != null) {
+                return category.getTitle();
+            } else {
+                return null;
+            }
+        }
+    }
 }

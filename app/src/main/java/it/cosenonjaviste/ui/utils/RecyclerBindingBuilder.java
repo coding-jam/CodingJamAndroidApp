@@ -2,6 +2,7 @@ package it.cosenonjaviste.ui.utils;
 
 import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -84,5 +85,17 @@ public class RecyclerBindingBuilder<T> {
             Action2<B, T> binder,
             Action1<BindableViewHolder<B, T>> clickListener) {
         return viewHolderWithCustomizer(inflateFunction, binder, vh -> vh.itemView.setOnClickListener(v -> clickListener.call(vh)));
+    }
+
+    public RecyclerBindingBuilder<T> showToolbar(AppCompatActivity activity, boolean toolbarVisible, String toolbarTitle) {
+        if (toolbarVisible) {
+            binding.toolbar.setVisibility(View.VISIBLE);
+            activity.setSupportActionBar(binding.toolbar);
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setTitle(toolbarTitle);
+            }
+        }
+        return this;
     }
 }
