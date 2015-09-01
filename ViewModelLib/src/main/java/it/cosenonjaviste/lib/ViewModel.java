@@ -8,7 +8,7 @@ public class ViewModel<M extends Parcelable, V> {
 
     private M model;
 
-    public void resume(V view) {
+    public final void resume(V view) {
         this.view = view;
         resume();
     }
