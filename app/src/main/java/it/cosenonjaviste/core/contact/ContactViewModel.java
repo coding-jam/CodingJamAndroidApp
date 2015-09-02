@@ -21,6 +21,12 @@ public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
 
     public ObservableBoolean sending = new ObservableBoolean();
 
+    private OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
+        @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
+            validate();
+        }
+    };
+
     @Inject public ContactViewModel(SchedulerManager schedulerManager, MailJetService mailJetService) {
         super(schedulerManager);
         this.mailJetService = mailJetService;
@@ -33,14 +39,16 @@ public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
     @Override public void resume() {
         super.resume();
 
-        OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
-            @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
-                validate();
-            }
-        };
         getModel().name.addOnPropertyChangedCallback(listener);
         getModel().message.addOnPropertyChangedCallback(listener);
         getModel().email.addOnPropertyChangedCallback(listener);
+    }
+
+    @Override public void pause() {
+        super.pause();
+        getModel().name.removeOnPropertyChangedCallback(listener);
+        getModel().message.removeOnPropertyChangedCallback(listener);
+        getModel().email.removeOnPropertyChangedCallback(listener);
     }
 
     private boolean validate() {
