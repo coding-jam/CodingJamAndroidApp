@@ -11,9 +11,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import it.cosenonjaviste.core.TestData;
+import it.cosenonjaviste.core.page.PageModel;
+import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.core.page.PageModel;
 import rx.Observable;
 
 import static it.cosenonjaviste.core.TestData.postResponse;
@@ -90,5 +92,29 @@ public class PostListViewModelTest {
 
         assertThat(url).isNotNull();
         assertThat(url).isEqualTo(firstPost.getUrl());
+    }
+
+    @Test
+    public void testToolbalTitleNotVisible() {
+        viewModel.initModel(new PostListModel());
+
+        assertThat(viewModel.isToolbarVisible()).isFalse();
+        assertThat(viewModel.getToolbarTitle()).isNull();
+    }
+
+    @Test
+    public void testToolbalTitleAuthor() {
+        viewModel.initModel(new PostListModel(TestData.createAuthor(1)));
+
+        assertThat(viewModel.isToolbarVisible()).isTrue();
+        assertThat(viewModel.getToolbarTitle()).isEqualTo("name 1 last name 1");
+    }
+
+    @Test
+    public void testToolbalTitle() {
+        viewModel.initModel(new PostListModel(new Category(123, "aaa", 1)));
+
+        assertThat(viewModel.isToolbarVisible()).isTrue();
+        assertThat(viewModel.getToolbarTitle()).isEqualTo("aaa");
     }
 }
