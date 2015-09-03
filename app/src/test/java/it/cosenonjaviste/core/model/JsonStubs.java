@@ -2,7 +2,7 @@ package it.cosenonjaviste.core.model;
 
 import com.annimon.stream.Stream;
 
-import static it.cosenonjaviste.core.utils.JoiningCollectors.joining;
+import static com.annimon.stream.Collectors.joining;
 
 public class JsonStubs {
     private static final String SINGLE_POST = "{\n" +
