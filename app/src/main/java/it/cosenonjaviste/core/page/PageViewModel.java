@@ -4,8 +4,8 @@ import android.databinding.ObservableBoolean;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.lib.ViewModel;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.mv2m.ViewModel;
 
 public class PageViewModel extends ViewModel<PageModel, PageView> {
 

@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
-import it.cosenonjaviste.lib.rx.RxViewModel;
-import it.cosenonjaviste.lib.rx.SchedulerManager;
 import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.mv2m.rx.RxViewModel;
+import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import retrofit.client.Response;
 import rx.Observable;
 

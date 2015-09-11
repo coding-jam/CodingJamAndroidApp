@@ -1,6 +1,6 @@
 package it.cosenonjaviste.ui.utils;
 
-import it.cosenonjaviste.lib.rx.SchedulerManager;
+import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

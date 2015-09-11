@@ -9,10 +9,10 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
-import it.cosenonjaviste.lib.rx.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
 public class AuthorListViewModel extends RxListViewModel<AuthorListModel, AuthorListView> {

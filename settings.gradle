@@ -1,1 +1,1 @@
-include ':app', ':ViewModelLib', ':ViewModelRxLib'
+include ':app'

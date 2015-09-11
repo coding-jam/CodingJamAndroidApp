@@ -10,7 +10,7 @@ import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
-import it.cosenonjaviste.lib.ViewModelFragment;
+import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;

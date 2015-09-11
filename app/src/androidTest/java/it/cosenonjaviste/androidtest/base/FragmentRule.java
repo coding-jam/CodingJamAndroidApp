@@ -8,7 +8,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
 
-import it.cosenonjaviste.lib.ViewModelManager;
+import it.cosenonjaviste.mv2m.ViewModelManager;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {

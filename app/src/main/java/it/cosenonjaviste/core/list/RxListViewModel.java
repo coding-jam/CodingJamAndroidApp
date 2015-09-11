@@ -2,8 +2,8 @@ package it.cosenonjaviste.core.list;
 
 import android.databinding.ObservableBoolean;
 
-import it.cosenonjaviste.lib.rx.RxViewModel;
-import it.cosenonjaviste.lib.rx.SchedulerManager;
+import it.cosenonjaviste.mv2m.rx.RxViewModel;
+import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 
 public abstract class RxListViewModel<M extends ListModel<?>, V> extends RxViewModel<M, V> implements GenericRxListViewModel {
     protected ObservableBoolean loading = new ObservableBoolean();

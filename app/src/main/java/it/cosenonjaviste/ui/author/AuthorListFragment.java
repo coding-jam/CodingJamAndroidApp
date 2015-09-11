@@ -10,7 +10,7 @@ import it.cosenonjaviste.core.author.AuthorListView;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
-import it.cosenonjaviste.lib.ViewModelFragment;
+import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;

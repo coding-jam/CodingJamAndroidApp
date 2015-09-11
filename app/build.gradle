@@ -84,7 +84,7 @@ android {
 }
 
 dependencies {
-    compile project(':ViewModelRxLib')
+    compile 'com.github.fabioCollini.mv2m:mv2mrx:-SNAPSHOT'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:cardview-v7:22.2.1'
     compile 'com.squareup.picasso:picasso:2.5.0'

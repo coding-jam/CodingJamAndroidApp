@@ -8,12 +8,12 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.page.PageModel;
-import it.cosenonjaviste.lib.rx.SchedulerManager;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
 public class PostListViewModel extends RxListViewModel<PostListModel, PostListView> {

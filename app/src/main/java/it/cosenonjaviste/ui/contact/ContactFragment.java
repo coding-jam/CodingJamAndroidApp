@@ -11,7 +11,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.contact.ContactView;
 import it.cosenonjaviste.core.contact.ContactViewModel;
 import it.cosenonjaviste.databinding.ContactBinding;
-import it.cosenonjaviste.lib.ViewModelFragment;
+import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
 public class ContactFragment extends ViewModelFragment<ContactViewModel> implements ContactView {

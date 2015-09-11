@@ -11,7 +11,7 @@ import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.core.post.PostListViewModel;
 import it.cosenonjaviste.databinding.PostRowBinding;
-import it.cosenonjaviste.lib.ViewModelFragment;
+import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;

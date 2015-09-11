@@ -20,7 +20,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageView;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
-import it.cosenonjaviste.lib.ViewModelFragment;
+import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
 public class PageFragment extends ViewModelFragment<PageViewModel> implements PageView {
