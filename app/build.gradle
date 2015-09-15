@@ -61,7 +61,7 @@ android {
         buildConfigField "String", "ACCESS_TOKEN_SECRET", project.oauth_accessTokenSecret
         buildConfigField "String", "MAILJET_USERNAME", project.mailjet_userName
         buildConfigField "String", "MAILJET_PASSWORD", project.mailJetPassword
-        testInstrumentationRunner "it.cosenonjaviste.androidtest.utils.AndroidJacocoTestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
@@ -76,6 +76,7 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/rxjava.properties'
         exclude 'LICENSE.txt'
     }
     lintOptions {
@@ -115,18 +116,18 @@ dependencies {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
     androidTestCompile 'com.squareup.spoon:spoon-client:1.0.5'
-    androidTestCompile 'com.android.support.test:runner:0.3'
-    androidTestCompile 'com.android.support.test:rules:0.3'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
         exclude group: 'javax.inject', module: 'javax.inject'
         exclude group: 'com.squareup', module: 'javawriter'
     }
-    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support.test.espresso', module: 'espresso-core'
     }
-    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
     androidTestCompile 'com.squareup.okhttp:mockwebserver:2.4.0'
 }
 
