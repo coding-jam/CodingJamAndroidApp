@@ -6,17 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.core.author.AuthorListView;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
-import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
-import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> implements AuthorListView {
+public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> {
 
     @Override protected AuthorListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getAuthorListViewModel();
@@ -27,9 +23,5 @@ public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> i
                 .gridLayoutManager(2)
                 .viewHolder(AuthorCellBinding::inflate, AuthorCellBinding::setAuthor, vh -> viewModel.goToAuthorDetail(vh.getAdapterPosition()))
                 .getRoot();
-    }
-
-    @Override public void openPostList(PostListModel model) {
-        SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }
 }

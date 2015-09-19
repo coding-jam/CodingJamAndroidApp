@@ -6,17 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.core.category.CategoryListView;
 import it.cosenonjaviste.core.category.CategoryListViewModel;
-import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
-import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-public class CategoryListFragment extends ViewModelFragment<CategoryListViewModel> implements CategoryListView {
+public class CategoryListFragment extends ViewModelFragment<CategoryListViewModel> {
 
     @Override protected CategoryListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getCategoryListViewModel();
@@ -27,9 +23,5 @@ public class CategoryListFragment extends ViewModelFragment<CategoryListViewMode
                 .gridLayoutManager(2)
                 .viewHolder(CategoryRowBinding::inflate, CategoryRowBinding::setCategory, vh -> viewModel.goToPosts(vh.getAdapterPosition()))
                 .getRoot();
-    }
-
-    @Override public void openPostList(PostListModel model) {
-        SingleFragmentActivity.open(getActivity(), PostListFragment.class, model);
     }
 }

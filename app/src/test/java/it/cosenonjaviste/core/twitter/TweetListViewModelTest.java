@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class TweetListViewModelTest {
 
-    @Mock TweetListView view;
-
     @Mock TwitterService twitterService;
 
     @InjectMocks TweetListViewModel viewModel;
@@ -39,7 +37,7 @@ public class TweetListViewModelTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(TestData.tweets(10));
 
-        TweetListModel model = viewModel.initAndResume(view);
+        TweetListModel model = viewModel.initAndResume();
 
         assertThat(model.getItems()).hasSize(10);
     }
@@ -48,7 +46,7 @@ public class TweetListViewModelTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        TweetListModel model = viewModel.initAndResume(view);
+        TweetListModel model = viewModel.initAndResume();
 
         assertThat(viewModel.isError().get()).isTrue();
 
@@ -67,7 +65,7 @@ public class TweetListViewModelTest {
         Mockito.when(twitterService.loadTweets(Matchers.eq(2)))
                 .thenReturn(TestData.tweets(8));
 
-        TweetListModel tweetListModel = viewModel.initAndResume(view);
+        TweetListModel tweetListModel = viewModel.initAndResume();
 
         assertThat(tweetListModel.getItems()).hasSize(20);
 

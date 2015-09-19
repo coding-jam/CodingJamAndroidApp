@@ -6,11 +6,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.Category;
@@ -19,6 +19,7 @@ import rx.Observable;
 
 import static it.cosenonjaviste.core.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,7 +29,7 @@ public class CategoryListViewModelTest {
 
     @InjectMocks CategoryListViewModel viewModel;
 
-    @Mock CategoryListView view;
+    @Mock Navigator navigator;
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
@@ -46,7 +47,7 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel model = viewModel.initAndResume(view);
+        CategoryListModel model = viewModel.initAndResume();
 
         assertThat(model.getItems()).hasSize(3);
         Category category = model.get(2);
@@ -60,7 +61,7 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3), categoryResponse(2));
 
-        CategoryListModel model = viewModel.initAndResume(view);
+        CategoryListModel model = viewModel.initAndResume();
 
         assertThat(model.getItems()).hasSize(3);
 
@@ -74,7 +75,7 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        CategoryListModel model = viewModel.initAndResume(view);
+        CategoryListModel model = viewModel.initAndResume();
 
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
@@ -89,11 +90,11 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        CategoryListModel categoryListModel = viewModel.initAndResume(view);
+        CategoryListModel categoryListModel = viewModel.initAndResume();
 
         viewModel.goToPosts(1);
 
-        Mockito.verify(view).openPostList(modelCaptor.capture());
+        verify(navigator).openPostList(modelCaptor.capture());
 
         assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }

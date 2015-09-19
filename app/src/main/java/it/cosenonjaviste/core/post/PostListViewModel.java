@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.model.Author;
@@ -16,13 +17,17 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class PostListViewModel extends RxListViewModel<PostListModel, PostListView> {
+public class PostListViewModel extends RxListViewModel<PostListModel> {
 
     private WordPressService wordPressService;
 
-    @Inject public PostListViewModel(SchedulerManager schedulerManager, WordPressService wordPressService) {
+    private Navigator navigator;
+
+    @Inject public PostListViewModel(SchedulerManager schedulerManager, WordPressService wordPressService, Navigator navigator) {
         super(schedulerManager);
         this.wordPressService = wordPressService;
+        this.navigator = navigator;
+        registerActivityAware(navigator);
     }
 
     @Override public PostListModel createDefaultModel() {
@@ -41,7 +46,7 @@ public class PostListViewModel extends RxListViewModel<PostListModel, PostListVi
     }
 
     public void goToDetail(Post item) {
-        getView().openDetail(new PageModel(item));
+        navigator.openDetail(new PageModel(item));
     }
 
     public void loadNextPage() {

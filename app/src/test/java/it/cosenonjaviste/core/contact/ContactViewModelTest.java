@@ -4,16 +4,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +24,7 @@ public class ContactViewModelTest {
 
     @InjectMocks ContactViewModel viewModel;
 
-    @Mock ContactView view;
+    @Mock MessageManager messageManager;
 
     @Test
     public void testParcelable() {
@@ -33,7 +34,7 @@ public class ContactViewModelTest {
 
     @Test
     public void testEmailError() {
-        ContactModel model = viewModel.initAndResume(view);
+        ContactModel model = viewModel.initAndResume();
 
         compileForm(model, "aaa", "aaa", "aaa");
         viewModel.send();
@@ -43,7 +44,7 @@ public class ContactViewModelTest {
 
     @Test
     public void testMandatoryFields() {
-        ContactModel model = viewModel.initAndResume(view);
+        ContactModel model = viewModel.initAndResume();
 
         compileForm(model, "", null, "");
         viewModel.send();
@@ -56,13 +57,13 @@ public class ContactViewModelTest {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(Observable.just(null));
 
-        ContactModel model = viewModel.initAndResume(view);
+        ContactModel model = viewModel.initAndResume();
 
         compileForm(model, "aaa", "aaa@aaa.it", "aaabbb");
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        Mockito.verify(view).showSentMessage();
+        verify(messageManager).showMessage(R.string.message_sent);
     }
 
     @Test
@@ -70,13 +71,13 @@ public class ContactViewModelTest {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(Observable.error(new Exception("aaa")));
 
-        ContactModel model = viewModel.initAndResume(view);
+        ContactModel model = viewModel.initAndResume();
 
         compileForm(model, "aaa", "aaa@aaa.it", "aaabbb");
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        Mockito.verify(view).showSentError();
+        verify(messageManager).showMessage(R.string.error_sending_message);
     }
 
     private void compileForm(ContactModel model, String name, String email, String message) {

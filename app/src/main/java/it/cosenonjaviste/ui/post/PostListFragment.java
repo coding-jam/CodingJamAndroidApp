@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.core.page.PageModel;
-import it.cosenonjaviste.core.post.PostListView;
 import it.cosenonjaviste.core.post.PostListViewModel;
 import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
-import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-public class PostListFragment extends ViewModelFragment<PostListViewModel> implements PostListView {
+public class PostListFragment extends ViewModelFragment<PostListViewModel> {
 
     @Override protected PostListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getPostListViewModel();
@@ -29,9 +25,5 @@ public class PostListFragment extends ViewModelFragment<PostListViewModel> imple
                 .loadMoreListener(viewModel::loadNextPage)
                 .showToolbar((AppCompatActivity) getActivity(), viewModel.isToolbarVisible(), viewModel.getToolbarTitle())
                 .getRoot();
-    }
-
-    @Override public void openDetail(PageModel model) {
-        SingleFragmentActivity.open(getActivity(), PageFragment.class, model);
     }
 }

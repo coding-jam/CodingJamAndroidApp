@@ -3,7 +3,6 @@ package it.cosenonjaviste.core.page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.core.ParcelableTester;
@@ -15,8 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class PageViewModelTest {
 
-    @Mock PageView view;
-
     @InjectMocks PageViewModel viewModel;
 
     @Test
@@ -27,7 +24,7 @@ public class PageViewModelTest {
 
     @Test
     public void testLoad() {
-        viewModel.initAndResume(new PageModel(new Post(1, null, "title", null, "url", null)), view);
+        viewModel.initAndResume(new PageModel(new Post(1, null, "title", null, "url", null)));
 
         assertThat(viewModel.getPost().getUrl()).isEqualTo("url");
     }

@@ -6,11 +6,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.model.Category;
@@ -21,12 +21,13 @@ import rx.Observable;
 import static it.cosenonjaviste.core.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostListViewModelTest {
 
-    @Mock PostListView view;
+    @Mock Navigator navigator;
 
     @Mock WordPressService wordPressService;
 
@@ -39,7 +40,7 @@ public class PostListViewModelTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(view);
+        PostListModel model = viewModel.initAndResume();
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -51,7 +52,7 @@ public class PostListViewModelTest {
         when(wordPressService.listPosts(eq(2)))
                 .thenReturn(postResponse(6));
 
-        PostListModel model = viewModel.initAndResume(view);
+        PostListModel model = viewModel.initAndResume();
         viewModel.loadNextPage();
 
         List<Post> items = model.getItems();
@@ -63,7 +64,7 @@ public class PostListViewModelTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(Observable.error(new RuntimeException()));
 
-        PostListModel model = viewModel.initAndResume(view);
+        PostListModel model = viewModel.initAndResume();
         assertThat(viewModel.isError().get()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
@@ -80,12 +81,12 @@ public class PostListViewModelTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(view);
+        PostListModel model = viewModel.initAndResume();
         Post firstPost = model.getItems().get(0);
 
         viewModel.goToDetail(firstPost);
 
-        Mockito.verify(view).openDetail(modelCaptor.capture());
+        verify(navigator).openDetail(modelCaptor.capture());
 
         PageModel detailModel = modelCaptor.getValue();
         String url = detailModel.getPost().getUrl();

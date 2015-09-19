@@ -17,13 +17,12 @@ import java.io.File;
 import java.io.IOException;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.page.PageView;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-public class PageFragment extends ViewModelFragment<PageViewModel> implements PageView {
+public class PageFragment extends ViewModelFragment<PageViewModel> {
 
     @Override protected PageViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getPageViewModel();

@@ -12,7 +12,7 @@ import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class TweetListViewModel extends RxListViewModel<TweetListModel, TweetListView> {
+public class TweetListViewModel extends RxListViewModel<TweetListModel> {
 
     private TwitterService twitterService;
 

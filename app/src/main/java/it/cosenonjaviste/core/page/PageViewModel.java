@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mv2m.ViewModel;
 
-public class PageViewModel extends ViewModel<PageModel, PageView> {
+public class PageViewModel extends ViewModel<PageModel> {
 
     public ObservableBoolean loading = new ObservableBoolean();
 

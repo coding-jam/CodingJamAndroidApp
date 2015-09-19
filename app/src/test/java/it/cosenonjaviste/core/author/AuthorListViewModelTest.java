@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.post.PostListModel;
@@ -30,7 +31,7 @@ public class AuthorListViewModelTest {
 
     @Captor ArgumentCaptor<PostListModel> modelCaptor;
 
-    @Mock AuthorListView view;
+    @Mock Navigator navigator;
 
     @Test
     public void testParcelable() {
@@ -46,7 +47,7 @@ public class AuthorListViewModelTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(10));
 
-        AuthorListModel model = viewModel.initAndResume(view);
+        AuthorListModel model = viewModel.initAndResume();
 
         assertThat(model.size()).isEqualTo(10);
     }
@@ -59,7 +60,7 @@ public class AuthorListViewModelTest {
                         authorResponse(2)
                 );
 
-        AuthorListModel model = viewModel.initAndResume(view);
+        AuthorListModel model = viewModel.initAndResume();
 
         assertThat(model.size()).isEqualTo(0);
 
@@ -73,11 +74,11 @@ public class AuthorListViewModelTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AuthorListModel authorListModel = viewModel.initAndResume(view);
+        AuthorListModel authorListModel = viewModel.initAndResume();
 
         viewModel.goToAuthorDetail(1);
 
-        verify(view).openPostList(modelCaptor.capture());
+        verify(navigator).openPostList(modelCaptor.capture());
 
         PostListModel model = modelCaptor.getValue();
         assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));

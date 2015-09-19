@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.cosenonjaviste.core.twitter.TweetListView;
 import it.cosenonjaviste.core.twitter.TweetListViewModel;
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
-public class TweetListFragment extends ViewModelFragment<TweetListViewModel> implements TweetListView {
+public class TweetListFragment extends ViewModelFragment<TweetListViewModel> {
 
     @Override protected TweetListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getTweetListViewModel();

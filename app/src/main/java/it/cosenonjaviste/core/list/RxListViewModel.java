@@ -5,7 +5,7 @@ import android.databinding.ObservableBoolean;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 
-public abstract class RxListViewModel<M extends ListModel<?>, V> extends RxViewModel<M, V> implements GenericRxListViewModel {
+public abstract class RxListViewModel<M extends ListModel<?>> extends RxViewModel<M> implements GenericRxListViewModel {
     protected ObservableBoolean loading = new ObservableBoolean();
 
     protected ObservableBoolean loadingNextPage = new ObservableBoolean();

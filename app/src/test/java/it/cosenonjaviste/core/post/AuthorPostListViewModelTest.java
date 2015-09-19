@@ -22,8 +22,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorPostListViewModelTest {
 
-    @Mock PostListView view;
-
     @Mock WordPressService wordPressService;
 
     @InjectMocks PostListViewModel viewModel;
@@ -42,7 +40,7 @@ public class AuthorPostListViewModelTest {
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(new PostListModel(TestData.createAuthor(145)), view);
+        PostListModel model = viewModel.initAndResume(new PostListModel(TestData.createAuthor(145)));
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

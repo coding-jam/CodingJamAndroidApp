@@ -7,6 +7,7 @@ import android.databinding.ObservableInt;
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.model.MailJetService;
@@ -15,9 +16,11 @@ import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import retrofit.client.Response;
 import rx.Observable;
 
-public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
+public class ContactViewModel extends RxViewModel<ContactModel> {
 
     private MailJetService mailJetService;
+
+    private MessageManager messageManager;
 
     public ObservableBoolean sending = new ObservableBoolean();
 
@@ -27,9 +30,11 @@ public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
         }
     };
 
-    @Inject public ContactViewModel(SchedulerManager schedulerManager, MailJetService mailJetService) {
+    @Inject public ContactViewModel(SchedulerManager schedulerManager, MailJetService mailJetService, MessageManager messageManager) {
         super(schedulerManager);
         this.mailJetService = mailJetService;
+        this.messageManager = messageManager;
+        registerActivityAware(messageManager);
     }
 
     @Override public ContactModel createDefaultModel() {
@@ -94,8 +99,8 @@ public class ContactViewModel extends RxViewModel<ContactModel, ContactView> {
 
             subscribe(
                     observable,
-                    r -> getView().showSentMessage(),
-                    t -> getView().showSentError()
+                    r -> messageManager.showMessage(R.string.message_sent),
+                    t -> messageManager.showMessage(R.string.error_sending_message)
             );
         }
     }
