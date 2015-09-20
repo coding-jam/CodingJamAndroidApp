@@ -14,7 +14,7 @@ import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
 public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> {
 
-    @Override protected AuthorListViewModel createViewModel() {
+    @Override public AuthorListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getAuthorListViewModel();
     }
 

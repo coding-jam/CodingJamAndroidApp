@@ -14,7 +14,7 @@ import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
 public class TweetListFragment extends ViewModelFragment<TweetListViewModel> {
 
-    @Override protected TweetListViewModel createViewModel() {
+    @Override public TweetListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getTweetListViewModel();
     }
 

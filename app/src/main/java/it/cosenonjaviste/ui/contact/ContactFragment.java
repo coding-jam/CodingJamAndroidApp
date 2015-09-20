@@ -14,7 +14,7 @@ import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
 public class ContactFragment extends ViewModelFragment<ContactViewModel> {
 
-    @Override protected ContactViewModel createViewModel() {
+    @Override public ContactViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getContactViewModel();
     }
 

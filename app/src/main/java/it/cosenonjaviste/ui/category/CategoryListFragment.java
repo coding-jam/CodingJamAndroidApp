@@ -14,7 +14,7 @@ import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
 public class CategoryListFragment extends ViewModelFragment<CategoryListViewModel> {
 
-    @Override protected CategoryListViewModel createViewModel() {
+    @Override public CategoryListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getCategoryListViewModel();
     }
 

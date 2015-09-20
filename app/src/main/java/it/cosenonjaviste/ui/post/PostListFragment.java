@@ -15,7 +15,7 @@ import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
 public class PostListFragment extends ViewModelFragment<PostListViewModel> {
 
-    @Override protected PostListViewModel createViewModel() {
+    @Override public PostListViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getPostListViewModel();
     }
 

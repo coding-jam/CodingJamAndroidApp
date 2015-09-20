@@ -24,7 +24,7 @@ import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
 public class PageFragment extends ViewModelFragment<PageViewModel> {
 
-    @Override protected PageViewModel createViewModel() {
+    @Override public PageViewModel createViewModel() {
         return CoseNonJavisteApp.getComponent(this).getPageViewModel();
     }
 

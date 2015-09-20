@@ -8,7 +8,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
 
-import it.cosenonjaviste.mv2m.ViewModelManager;
+import it.cosenonjaviste.mv2m.ViewModel;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
 public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
@@ -25,7 +25,7 @@ public class FragmentRule extends ActivityTestRule<SingleFragmentActivity> {
 
     public void launchFragment(Parcelable model) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ViewModelManager.MODEL, model);
+        bundle.putParcelable(ViewModel.MODEL, model);
         launchFragment(bundle);
     }
 
