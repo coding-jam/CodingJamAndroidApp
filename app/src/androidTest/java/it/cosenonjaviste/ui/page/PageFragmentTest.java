@@ -10,7 +10,7 @@ import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
-import it.cosenonjaviste.core.TestData;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.page.PageModel;
 
 public class PageFragmentTest {

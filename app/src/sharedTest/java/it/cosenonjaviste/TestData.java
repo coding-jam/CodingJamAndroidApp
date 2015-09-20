@@ -1,4 +1,4 @@
-package it.cosenonjaviste.core;
+package it.cosenonjaviste;
 
 import java.util.Date;
 import java.util.List;

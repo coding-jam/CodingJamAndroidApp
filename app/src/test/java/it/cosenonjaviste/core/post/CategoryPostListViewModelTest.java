@@ -6,8 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.ParcelableTester;
-import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 

@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
-import it.cosenonjaviste.core.TestData;
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.WordPressService;
 

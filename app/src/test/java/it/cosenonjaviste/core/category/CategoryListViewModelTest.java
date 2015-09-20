@@ -17,7 +17,7 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
-import static it.cosenonjaviste.core.TestData.categoryResponse;
+import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

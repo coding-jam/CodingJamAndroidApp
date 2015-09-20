@@ -10,8 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.ParcelableTester;
-import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 

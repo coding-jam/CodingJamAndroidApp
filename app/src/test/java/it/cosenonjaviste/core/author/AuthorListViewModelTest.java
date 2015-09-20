@@ -10,14 +10,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
-import it.cosenonjaviste.core.TestData;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
-import static it.cosenonjaviste.core.TestData.authorResponse;
+import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
