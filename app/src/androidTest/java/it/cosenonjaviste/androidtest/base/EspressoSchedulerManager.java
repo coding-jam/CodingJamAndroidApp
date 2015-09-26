@@ -7,7 +7,7 @@ import rx.schedulers.Schedulers;
 
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
 
-public class EspressoSchedulerManager extends SchedulerManager {
+public class EspressoSchedulerManager implements SchedulerManager {
 
     private Scheduler scheduler = Schedulers.from(EspressoExecutor.newCachedThreadPool());
 

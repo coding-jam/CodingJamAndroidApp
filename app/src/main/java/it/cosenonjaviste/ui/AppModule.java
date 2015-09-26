@@ -16,8 +16,8 @@ import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.mv2m.rx.AndroidSchedulerManager;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
-import it.cosenonjaviste.ui.utils.AndroidSchedulerManager;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
