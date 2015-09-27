@@ -27,29 +27,27 @@ public class TweetListViewModel extends RxListViewModel<Void, TweetListModel> {
     }
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
-        loadingAction.set(true);
-
-        Observable<List<Tweet>> observable = twitterService.loadTweets(1).finallyDo(() -> loadingAction.set(false));
-
-        subscribe(observable,
+        subscribe(loadingAction::set,
+                twitterService.loadTweets(1),
                 posts -> {
-                    getModel().done(posts);
-                    getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
-                }, throwable -> getModel().error());
+                    model.done(posts);
+                    model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
+                }, throwable -> model.error());
     }
 
     public void loadNextPage() {
-        if (!isLoadingNextPage().get() && getModel().isMoreDataAvailable()) {
-            loadingNextPage.set(true);
-            int page = calcNextPage(getModel().getItems().size(), TwitterService.PAGE_SIZE);
-            Observable<List<Tweet>> observable = twitterService.loadTweets(page).finallyDo(() -> loadingNextPage.set(false));
+        if (!isLoadingNextPage().get() && model.isMoreDataAvailable()) {
+            int page = calcNextPage(model.getItems().size(), TwitterService.PAGE_SIZE);
+            Observable<List<Tweet>> observable = twitterService.loadTweets(page);
 
-            subscribe(observable,
+            subscribe(
+                    loadingNextPage::set,
+                    observable,
                     posts -> {
-                        getModel().append(posts);
-                        getModel().setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
+                        model.append(posts);
+                        model.setMoreDataAvailable(posts.size() == TwitterService.PAGE_SIZE);
                     },
-                    throwable -> getModel().error());
+                    throwable -> model.error());
         }
     }
 

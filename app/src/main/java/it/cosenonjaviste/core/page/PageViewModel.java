@@ -25,12 +25,12 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
     }
 
     public Post getPost() {
-        return getModel().getPost();
+        return model.getPost();
     }
 
     @Override public void resume() {
         super.resume();
-        getModel().setPost(getArgument());
+        model.setPost(getArgument());
         loading.set(true);
     }
 
@@ -39,7 +39,7 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
     }
 
     public void share() {
-        Post post = getModel().getPost();
+        Post post = model.getPost();
         navigator.share(post.getTitle(), post.getTitle() + " - " + post.getUrl());
     }
 }

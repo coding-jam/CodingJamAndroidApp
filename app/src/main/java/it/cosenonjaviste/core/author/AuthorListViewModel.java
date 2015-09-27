@@ -35,21 +35,19 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
     }
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
-        loadingAction.set(true);
-
         Observable<List<Author>> observable = wordPressService
                 .listAuthors()
                 .map(AuthorResponse::getAuthors)
-                .doOnNext(Collections::sort)
-                .finallyDo(() -> loadingAction.set(false));
+                .doOnNext(Collections::sort);
 
-        subscribe(observable,
-                l -> getModel().done(l),
-                throwable -> getModel().error());
+        subscribe(loadingAction::set,
+                observable,
+                model::done,
+                throwable -> model.error());
     }
 
     public void goToAuthorDetail(int position) {
-        Author author = getModel().get(position);
+        Author author = model.get(position);
         navigator.openPostList(new PostListArgument(author));
     }
 }

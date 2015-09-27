@@ -35,14 +35,12 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     }
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
-        loadingAction.set(true);
-        Observable<List<Post>> observable = getObservable(1).finallyDo(() -> loadingAction.set(false));
-
-        subscribe(observable,
+        subscribe(loadingAction::set,
+                getObservable(1),
                 posts -> {
-                    getModel().done(posts);
-                    getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                }, throwable -> getModel().error());
+                    model.done(posts);
+                    model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+                }, throwable -> model.error());
     }
 
     public void goToDetail(Post item) {
@@ -50,17 +48,17 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     }
 
     public void loadNextPage() {
-        if (!loadingNextPage.get() && getModel().isMoreDataAvailable()) {
-            loadingNextPage.set(true);
-            int page = calcNextPage(getModel().getItems().size(), WordPressService.POST_PAGE_SIZE);
-            Observable<List<Post>> observable = getObservable(page).finallyDo(() -> loadingNextPage.set(false));
+        if (!loadingNextPage.get() && model.isMoreDataAvailable()) {
+            int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
+            Observable<List<Post>> observable = getObservable(page);
 
-            subscribe(observable,
+            subscribe(loadingNextPage::set,
+                    observable,
                     posts -> {
-                        getModel().append(posts);
-                        getModel().setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
+                        model.append(posts);
+                        model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                     },
-                    throwable -> getModel().error());
+                    throwable -> model.error());
         }
     }
 

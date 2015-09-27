@@ -45,20 +45,19 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
     @Override public void resume() {
         super.resume();
 
-        getModel().name.addOnPropertyChangedCallback(listener);
-        getModel().message.addOnPropertyChangedCallback(listener);
-        getModel().email.addOnPropertyChangedCallback(listener);
+        model.name.addOnPropertyChangedCallback(listener);
+        model.message.addOnPropertyChangedCallback(listener);
+        model.email.addOnPropertyChangedCallback(listener);
     }
 
     @Override public void pause() {
         super.pause();
-        getModel().name.removeOnPropertyChangedCallback(listener);
-        getModel().message.removeOnPropertyChangedCallback(listener);
-        getModel().email.removeOnPropertyChangedCallback(listener);
+        model.name.removeOnPropertyChangedCallback(listener);
+        model.message.removeOnPropertyChangedCallback(listener);
+        model.email.removeOnPropertyChangedCallback(listener);
     }
 
     private boolean validate() {
-        ContactModel model = getModel();
         if (model.sendPressed) {
             boolean isValid = checkMandatory(model.name, model.nameError);
             if (!model.email.isEmpty()) {
@@ -86,19 +85,17 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
     }
 
     public void send() {
-        ContactModel model = getModel();
         model.sendPressed = true;
         if (validate()) {
-            sending.set(true);
-
             Observable<Response> observable = mailJetService.sendEmail(
                     model.name + " <info@cosenonjaviste.it>",
                     "info@cosenonjaviste.it",
                     "Email from " + model.name,
                     "Reply to: " + model.email + "\n" + model.message
-            ).finallyDo(() -> sending.set(false));
+            );
 
             subscribe(
+                    sending::set,
                     observable,
                     r -> messageManager.showMessage(R.string.message_sent),
                     t -> messageManager.showMessage(R.string.error_sending_message)

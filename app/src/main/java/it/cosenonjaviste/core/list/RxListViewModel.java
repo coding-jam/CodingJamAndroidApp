@@ -29,12 +29,12 @@ public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewM
     }
 
     @Override public ObservableBoolean isError() {
-        return getModel().error;
+        return model.error;
     }
 
     @Override public void resume() {
         super.resume();
-        if (!getModel().isLoaded() && !loading.get()) {
+        if (!model.isLoaded() && !loading.get()) {
             reloadData();
         }
     }

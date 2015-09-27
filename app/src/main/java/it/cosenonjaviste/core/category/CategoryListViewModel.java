@@ -34,21 +34,19 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
     }
 
     @Override protected void reloadData(ObservableBoolean loadingSetter) {
-        loadingSetter.set(true);
-
         Observable<List<Category>> observable = wordPressService
                 .listCategories()
-                .map(CategoryResponse::getCategories)
-                .finallyDo(() -> loadingSetter.set(false));
+                .map(CategoryResponse::getCategories);
 
-        subscribe(observable,
-                l -> getModel().done(l),
-                throwable -> getModel().error()
+        subscribe(loadingSetter::set,
+                observable,
+                model::done,
+                throwable -> model.error()
         );
     }
 
     public void goToPosts(int position) {
-        Category category = getModel().get(position);
+        Category category = model.get(position);
         navigator.openPostList(new PostListArgument(category));
     }
 }
