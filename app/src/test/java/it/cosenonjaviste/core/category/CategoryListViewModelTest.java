@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
-import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
@@ -31,7 +31,7 @@ public class CategoryListViewModelTest {
 
     @Mock Navigator navigator;
 
-    @Captor ArgumentCaptor<PostListModel> modelCaptor;
+    @Captor ArgumentCaptor<PostListArgument> argumentCaptor;
 
     @Test
     public void testParcelable() {
@@ -94,8 +94,8 @@ public class CategoryListViewModelTest {
 
         viewModel.goToPosts(1);
 
-        verify(navigator).openPostList(modelCaptor.capture());
+        verify(navigator).openPostList(argumentCaptor.capture());
 
-        assertThat(modelCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
+        assertThat(argumentCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }
 }

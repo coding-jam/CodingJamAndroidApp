@@ -1,6 +1,7 @@
 package it.cosenonjaviste.core.category;
 
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -8,14 +9,14 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
-import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class CategoryListViewModel extends RxListViewModel<CategoryListModel> {
+public class CategoryListViewModel extends RxListViewModel<Void, CategoryListModel> {
 
     private WordPressService wordPressService;
 
@@ -28,7 +29,7 @@ public class CategoryListViewModel extends RxListViewModel<CategoryListModel> {
         registerActivityAware(navigator);
     }
 
-    @Override public CategoryListModel createDefaultModel() {
+    @NonNull @Override protected CategoryListModel createModel() {
         return new CategoryListModel();
     }
 
@@ -48,6 +49,6 @@ public class CategoryListViewModel extends RxListViewModel<CategoryListModel> {
 
     public void goToPosts(int position) {
         Category category = getModel().get(position);
-        navigator.openPostList(new PostListModel(category));
+        navigator.openPostList(new PostListArgument(category));
     }
 }

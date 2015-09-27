@@ -6,12 +6,11 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.androidtest.base.MockWebServerWrapper;
 import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
-import it.cosenonjaviste.TestData;
-import it.cosenonjaviste.core.page.PageModel;
 
 public class PageFragmentTest {
 
@@ -26,7 +25,7 @@ public class PageFragmentTest {
     }
 
     @Test public void testDetailFragment() {
-        fragmentRule.launchFragment(new PageModel(TestData.createPost(1, server.getUrl(false) + "abc")));
+        fragmentRule.launchFragment(TestData.createPost(1, server.getUrl(false) + "abc"));
         TestUtils.sleep(100);
     }
 }

@@ -88,7 +88,11 @@ public class DataBindingConverters {
 
     @BindingAdapter({"app:textHtml"})
     public static void bindHtmlText(TextView view, String text) {
-        view.setText(Html.fromHtml(text));
+        if (text != null) {
+            view.setText(Html.fromHtml(text));
+        } else {
+            view.setText("");
+        }
     }
 
     @BindingAdapter({"app:onClick"})

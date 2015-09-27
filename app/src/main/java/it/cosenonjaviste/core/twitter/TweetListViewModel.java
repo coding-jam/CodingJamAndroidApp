@@ -1,6 +1,7 @@
 package it.cosenonjaviste.core.twitter;
 
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class TweetListViewModel extends RxListViewModel<TweetListModel> {
+public class TweetListViewModel extends RxListViewModel<Void, TweetListModel> {
 
     private TwitterService twitterService;
 
@@ -21,7 +22,7 @@ public class TweetListViewModel extends RxListViewModel<TweetListModel> {
         this.twitterService = twitterService;
     }
 
-    @Override public TweetListModel createDefaultModel() {
+    @NonNull @Override protected TweetListModel createModel() {
         return new TweetListModel();
     }
 

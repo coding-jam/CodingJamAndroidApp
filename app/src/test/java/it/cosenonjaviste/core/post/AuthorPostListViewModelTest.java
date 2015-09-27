@@ -28,7 +28,7 @@ public class AuthorPostListViewModelTest {
 
     @Test
     public void testParcelable() {
-        PostListModel model = new PostListModel(TestData.createAuthor(145));
+        PostListModel model = new PostListModel();
         ParcelableTester.check(model, PostListModel.CREATOR);
 
         model.done(Arrays.asList(TestData.createPost(1), TestData.createPost(2)));
@@ -40,7 +40,7 @@ public class AuthorPostListViewModelTest {
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(new PostListModel(TestData.createAuthor(145)));
+        PostListModel model = viewModel.initAndResume(new PostListArgument(TestData.createAuthor(145)));
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

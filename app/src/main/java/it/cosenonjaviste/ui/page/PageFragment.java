@@ -56,7 +56,7 @@ public class PageFragment extends ViewModelFragment<PageViewModel> {
             }
 
             @Override public WebResourceResponse shouldInterceptRequest(WebView view11, String url) {
-                if (url.equalsIgnoreCase("http://www.cosenonjaviste.it/wp-content/themes/flexform/style.css")) {
+                if (url.contains("cosenonjaviste.it/wp-content/themes/flexform/style.css")) {
                     return getCssWebResourceResponseFromAsset();
                 }
                 if (url.startsWith("https://pbs.twimg.com/")

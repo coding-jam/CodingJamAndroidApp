@@ -13,7 +13,7 @@ import java.util.Arrays;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
-import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
@@ -29,7 +29,7 @@ public class AuthorListViewModelTest {
 
     @Mock WordPressService wordPressService;
 
-    @Captor ArgumentCaptor<PostListModel> modelCaptor;
+    @Captor ArgumentCaptor<PostListArgument> argumentCaptor;
 
     @Mock Navigator navigator;
 
@@ -78,9 +78,9 @@ public class AuthorListViewModelTest {
 
         viewModel.goToAuthorDetail(1);
 
-        verify(navigator).openPostList(modelCaptor.capture());
+        verify(navigator).openPostList(argumentCaptor.capture());
 
-        PostListModel model = modelCaptor.getValue();
-        assertThat(model.getAuthor()).isEqualTo(authorListModel.get(1));
+        PostListArgument argument = argumentCaptor.getValue();
+        assertThat(argument.getAuthor()).isEqualTo(authorListModel.get(1));
     }
 }

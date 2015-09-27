@@ -18,13 +18,14 @@ public class PageViewModelTest {
 
     @Test
     public void testParcelable() {
-        PageModel model = new PageModel(new Post(1, null, "title", null, "url", null, new Attachment("http://aaaa.aa")));
+        PageModel model = new PageModel();
+        model.setPost(new Post(1, null, "title", null, "url", null, new Attachment("http://aaaa.aa")));
         ParcelableTester.check(model, PageModel.CREATOR);
     }
 
     @Test
     public void testLoad() {
-        viewModel.initAndResume(new PageModel(new Post(1, null, "title", null, "url", null)));
+        viewModel.initAndResume(new Post(1, null, "title", null, "url", null));
 
         assertThat(viewModel.getPost().getUrl()).isEqualTo("url");
     }

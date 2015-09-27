@@ -1,11 +1,11 @@
 package it.cosenonjaviste.core;
 
-import it.cosenonjaviste.core.page.PageModel;
-import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.core.post.PostListArgument;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mv2m.ActivityAware;
 
 public interface Navigator extends ActivityAware {
-    void openPostList(PostListModel postListModel);
+    void openPostList(PostListArgument postListArgument);
 
-    void openDetail(PageModel pageModel);
+    void openDetail(Post post);
 }

@@ -3,6 +3,7 @@ package it.cosenonjaviste.core.contact;
 import android.databinding.Observable.OnPropertyChangedCallback;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -16,7 +17,7 @@ import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import retrofit.client.Response;
 import rx.Observable;
 
-public class ContactViewModel extends RxViewModel<ContactModel> {
+public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
     private MailJetService mailJetService;
 
@@ -37,7 +38,7 @@ public class ContactViewModel extends RxViewModel<ContactModel> {
         registerActivityAware(messageManager);
     }
 
-    @Override public ContactModel createDefaultModel() {
+    @NonNull @Override protected ContactModel createModel() {
         return new ContactModel();
     }
 

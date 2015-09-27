@@ -1,6 +1,7 @@
 package it.cosenonjaviste.core.post;
 
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -8,7 +9,6 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
-import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
@@ -17,7 +17,7 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class PostListViewModel extends RxListViewModel<PostListModel> {
+public class PostListViewModel extends RxListViewModel<PostListArgument, PostListModel> {
 
     private WordPressService wordPressService;
 
@@ -30,7 +30,7 @@ public class PostListViewModel extends RxListViewModel<PostListModel> {
         registerActivityAware(navigator);
     }
 
-    @Override public PostListModel createDefaultModel() {
+    @NonNull @Override protected PostListModel createModel() {
         return new PostListModel();
     }
 
@@ -46,7 +46,7 @@ public class PostListViewModel extends RxListViewModel<PostListModel> {
     }
 
     public void goToDetail(Post item) {
-        navigator.openDetail(new PageModel(item));
+        navigator.openDetail(item);
     }
 
     public void loadNextPage() {
@@ -66,15 +66,15 @@ public class PostListViewModel extends RxListViewModel<PostListModel> {
 
     private Observable<List<Post>> getObservable(int page) {
         Observable<PostResponse> observable;
-        Category category = getModel().getCategory();
-        if (category != null) {
-            observable = wordPressService.listCategoryPosts(category.getId(), page);
+        if (getArgument() == null) {
+            observable = wordPressService.listPosts(page);
         } else {
-            Author author = getModel().getAuthor();
-            if (author != null) {
-                observable = wordPressService.listAuthorPosts(author.getId(), page);
+            Category category = getArgument().getCategory();
+            if (category != null) {
+                observable = wordPressService.listCategoryPosts(category.getId(), page);
             } else {
-                observable = wordPressService.listPosts(page);
+                Author author = getArgument().getAuthor();
+                observable = wordPressService.listAuthorPosts(author.getId(), page);
             }
         }
         return observable.map(PostResponse::getPosts);
@@ -85,19 +85,25 @@ public class PostListViewModel extends RxListViewModel<PostListModel> {
     }
 
     public boolean isToolbarVisible() {
-        return getModel().getAuthor() != null || getModel().getCategory() != null;
+        PostListArgument arg = getArgument();
+        return arg != null && (arg.getAuthor() != null || arg.getCategory() != null);
     }
 
     public String getToolbarTitle() {
-        Author author = getModel().getAuthor();
-        if (author != null) {
-            return author.getName();
+        PostListArgument arg = getArgument();
+        if (arg == null) {
+            return null;
         } else {
-            Category category = getModel().getCategory();
-            if (category != null) {
-                return category.getTitle();
+            Author author = arg.getAuthor();
+            if (author != null) {
+                return author.getName();
             } else {
-                return null;
+                Category category = arg.getCategory();
+                if (category != null) {
+                    return category.getTitle();
+                } else {
+                    return null;
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package it.cosenonjaviste.core.author;
 
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,14 +10,14 @@ import javax.inject.Inject;
 
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
-import it.cosenonjaviste.core.post.PostListModel;
+import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
-public class AuthorListViewModel extends RxListViewModel<AuthorListModel> {
+public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
 
     private WordPressService wordPressService;
 
@@ -29,7 +30,7 @@ public class AuthorListViewModel extends RxListViewModel<AuthorListModel> {
         registerActivityAware(navigator);
     }
 
-    @Override public AuthorListModel createDefaultModel() {
+    @NonNull @Override protected AuthorListModel createModel() {
         return new AuthorListModel();
     }
 
@@ -49,6 +50,6 @@ public class AuthorListViewModel extends RxListViewModel<AuthorListModel> {
 
     public void goToAuthorDetail(int position) {
         Author author = getModel().get(position);
-        navigator.openPostList(new PostListModel(author));
+        navigator.openPostList(new PostListArgument(author));
     }
 }

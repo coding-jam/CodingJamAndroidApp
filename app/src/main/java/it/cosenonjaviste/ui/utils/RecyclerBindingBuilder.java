@@ -22,11 +22,11 @@ public class RecyclerBindingBuilder<T> {
 
     private final LayoutInflater inflater;
 
-    private final RxListViewModel<? extends ListModel<T>> viewModel;
+    private final RxListViewModel<?, ? extends ListModel<T>> viewModel;
 
     private RecyclerBinding binding;
 
-    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<? extends ListModel<T>> viewModel) {
+    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<?, ? extends ListModel<T>> viewModel) {
         this.inflater = inflater;
         this.viewModel = viewModel;
         binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));

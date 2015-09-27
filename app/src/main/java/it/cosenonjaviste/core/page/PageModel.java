@@ -12,15 +12,15 @@ public class PageModel implements Parcelable {
 
     Post post;
 
-    PageModel() {
-    }
-
-    public PageModel(Post post) {
-        this.post = post;
+    public PageModel() {
     }
 
     public Post getPost() {
         return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     @Override public int describeContents() {

@@ -33,7 +33,7 @@ public class PostListViewModelTest {
 
     @InjectMocks PostListViewModel viewModel;
 
-    @Captor ArgumentCaptor<PageModel> modelCaptor;
+    @Captor ArgumentCaptor<Post> captor;
 
     @Test
     public void testLoad() throws InterruptedException {
@@ -86,10 +86,10 @@ public class PostListViewModelTest {
 
         viewModel.goToDetail(firstPost);
 
-        verify(navigator).openDetail(modelCaptor.capture());
+        verify(navigator).openDetail(captor.capture());
 
-        PageModel detailModel = modelCaptor.getValue();
-        String url = detailModel.getPost().getUrl();
+        Post detailPost = captor.getValue();
+        String url = detailPost.getUrl();
 
         assertThat(url).isNotNull();
         assertThat(url).isEqualTo(firstPost.getUrl());
@@ -97,7 +97,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitleNotVisible() {
-        viewModel.initModel(new PostListModel());
+        viewModel.initAndResume();
 
         assertThat(viewModel.isToolbarVisible()).isFalse();
         assertThat(viewModel.getToolbarTitle()).isNull();
@@ -105,7 +105,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitleAuthor() {
-        viewModel.initModel(new PostListModel(TestData.createAuthor(1)));
+        viewModel.initAndResume(new PostListArgument(TestData.createAuthor(1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("name 1 last name 1");
@@ -113,7 +113,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitle() {
-        viewModel.initModel(new PostListModel(new Category(123, "aaa", 1)));
+        viewModel.initAndResume(new PostListArgument(new Category(123, "aaa", 1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("aaa");
