@@ -8,4 +8,6 @@ public interface Navigator extends ActivityAware {
     void openPostList(PostListArgument postListArgument);
 
     void openDetail(Post post);
+
+    void share(String title, String body);
 }

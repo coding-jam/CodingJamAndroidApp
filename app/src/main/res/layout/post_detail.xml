@@ -33,8 +33,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{viewModel.post.imageUrl}"
-                    android:src="@drawable/logocnj"/>
+                    android:src="@drawable/logocnj"
+                    app:imageUrl="@{viewModel.post.imageUrl}"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -46,7 +46,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_margin="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:textSize="18sp"
                     app:layout_scrollFlags="scroll"
                     tools:text="@{viewModel.post.subtitle}"/>
@@ -123,6 +125,7 @@
             android:src="@drawable/ic_share_white_24dp"
             app:backgroundTint="@color/cnj_border"
             app:layout_anchor="@id/app_bar_layout"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right|end"
+            app:onClick="@{viewModel.share}"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
