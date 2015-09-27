@@ -20,6 +20,9 @@
         </activity>
 
         <activity android:name=".ui.utils.SingleFragmentActivity" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8e3fc3042c15d9ee8a2c57326d7b03c8a4dd8427" />
     </application>
 
 </manifest>
