@@ -19,6 +19,7 @@ import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -94,7 +95,7 @@ public class CategoryListViewModelTest {
 
         viewModel.goToPosts(1);
 
-        verify(navigator).openPostList(argumentCaptor.capture());
+        verify(navigator).openPostList(any(), argumentCaptor.capture());
 
         assertThat(argumentCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
     }

@@ -17,7 +17,6 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     @Inject public PageViewModel(Navigator navigator) {
         this.navigator = navigator;
-        registerActivityAware(navigator);
     }
 
     @NonNull @Override protected PageModel createModel() {
@@ -40,6 +39,6 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     public void share() {
         Post post = model.getPost();
-        navigator.share(post.getTitle(), post.getTitle() + " - " + post.getUrl());
+        navigator.share(activity, post.getTitle(), post.getTitle() + " - " + post.getUrl());
     }
 }

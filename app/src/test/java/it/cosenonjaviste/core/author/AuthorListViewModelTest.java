@@ -19,6 +19,7 @@ import rx.Observable;
 
 import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -78,7 +79,7 @@ public class AuthorListViewModelTest {
 
         viewModel.goToAuthorDetail(1);
 
-        verify(navigator).openPostList(argumentCaptor.capture());
+        verify(navigator).openPostList(any(), argumentCaptor.capture());
 
         PostListArgument argument = argumentCaptor.getValue();
         assertThat(argument.getAuthor()).isEqualTo(authorListModel.get(1));

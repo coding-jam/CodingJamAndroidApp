@@ -27,7 +27,6 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
         super(schedulerManager);
         this.wordPressService = wordPressService;
         this.navigator = navigator;
-        registerActivityAware(navigator);
     }
 
     @NonNull @Override protected AuthorListModel createModel() {
@@ -48,6 +47,6 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        navigator.openPostList(new PostListArgument(author));
+        navigator.openPostList(activity, new PostListArgument(author));
     }
 }

@@ -26,7 +26,6 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
         super(schedulerManager);
         this.wordPressService = wordPressService;
         this.navigator = navigator;
-        registerActivityAware(navigator);
     }
 
     @NonNull @Override protected CategoryListModel createModel() {
@@ -47,6 +46,6 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        navigator.openPostList(new PostListArgument(category));
+        navigator.openPostList(activity, new PostListArgument(category));
     }
 }

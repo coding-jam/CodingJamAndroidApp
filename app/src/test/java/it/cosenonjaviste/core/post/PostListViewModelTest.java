@@ -12,7 +12,6 @@ import java.util.List;
 
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.Navigator;
-import it.cosenonjaviste.core.page.PageModel;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
@@ -20,6 +19,7 @@ import rx.Observable;
 
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -86,7 +86,7 @@ public class PostListViewModelTest {
 
         viewModel.goToDetail(firstPost);
 
-        verify(navigator).openDetail(captor.capture());
+        verify(navigator).openDetail(any(), captor.capture());
 
         Post detailPost = captor.getValue();
         String url = detailPost.getUrl();

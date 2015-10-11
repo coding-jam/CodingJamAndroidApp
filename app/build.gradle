@@ -93,7 +93,7 @@ android {
 }
 
 dependencies {
-    compile 'com.github.fabioCollini.mv2m:mv2mrx:0.2.2'
+    compile 'com.github.fabioCollini.mv2m:mv2mrx:0.3'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.squareup.picasso:picasso:2.5.0'

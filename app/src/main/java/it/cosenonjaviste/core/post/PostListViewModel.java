@@ -27,7 +27,6 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         super(schedulerManager);
         this.wordPressService = wordPressService;
         this.navigator = navigator;
-        registerActivityAware(navigator);
     }
 
     @NonNull @Override protected PostListModel createModel() {
@@ -44,7 +43,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     }
 
     public void goToDetail(Post item) {
-        navigator.openDetail(item);
+        navigator.openDetail(activity, item);
     }
 
     public void loadNextPage() {

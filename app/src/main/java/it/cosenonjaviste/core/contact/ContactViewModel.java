@@ -35,7 +35,6 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
         super(schedulerManager);
         this.mailJetService = mailJetService;
         this.messageManager = messageManager;
-        registerActivityAware(messageManager);
     }
 
     @NonNull @Override protected ContactModel createModel() {
@@ -97,8 +96,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
             subscribe(
                     sending::set,
                     observable,
-                    r -> messageManager.showMessage(R.string.message_sent),
-                    t -> messageManager.showMessage(R.string.error_sending_message)
+                    r -> messageManager.showMessage(activity, R.string.message_sent),
+                    t -> messageManager.showMessage(activity, R.string.error_sending_message)
             );
         }
     }

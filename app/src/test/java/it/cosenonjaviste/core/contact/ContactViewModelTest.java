@@ -13,7 +13,9 @@ import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -63,7 +65,7 @@ public class ContactViewModelTest {
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        verify(messageManager).showMessage(R.string.message_sent);
+        verify(messageManager).showMessage(any(), eq(R.string.message_sent));
     }
 
     @Test
@@ -77,7 +79,7 @@ public class ContactViewModelTest {
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        verify(messageManager).showMessage(R.string.error_sending_message);
+        verify(messageManager).showMessage(any(), eq(R.string.error_sending_message));
     }
 
     private void compileForm(ContactModel model, String name, String email, String message) {
