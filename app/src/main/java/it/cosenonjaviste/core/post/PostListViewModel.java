@@ -42,7 +42,8 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
                 }, throwable -> model.error());
     }
 
-    public void goToDetail(Post item) {
+    public void goToDetail(int position) {
+        Post item = model.getItems().get(position);
         navigator.openDetail(activity, item);
     }
 

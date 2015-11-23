@@ -84,7 +84,7 @@ public class PostListViewModelTest {
         PostListModel model = viewModel.initAndResume();
         Post firstPost = model.getItems().get(0);
 
-        viewModel.goToDetail(firstPost);
+        viewModel.goToDetail(0);
 
         verify(navigator).openDetail(any(), captor.capture());
 

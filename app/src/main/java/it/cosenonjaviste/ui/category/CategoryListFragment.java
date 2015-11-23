@@ -21,7 +21,7 @@ public class CategoryListFragment extends ViewModelFragment<CategoryListViewMode
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolder(CategoryRowBinding::inflate, CategoryRowBinding::setCategory, vh -> viewModel.goToPosts(vh.getAdapterPosition()))
+                .viewHolder(CategoryRowBinding::inflate, CategoryRowBinding::setCategory, viewModel::goToPosts)
                 .getRoot();
     }
 }

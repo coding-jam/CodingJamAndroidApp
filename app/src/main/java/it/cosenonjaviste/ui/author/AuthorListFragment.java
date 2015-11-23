@@ -21,7 +21,7 @@ public class AuthorListFragment extends ViewModelFragment<AuthorListViewModel> {
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolder(AuthorCellBinding::inflate, AuthorCellBinding::setAuthor, vh -> viewModel.goToAuthorDetail(vh.getAdapterPosition()))
+                .viewHolder(AuthorCellBinding::inflate, AuthorCellBinding::setAuthor, viewModel::goToAuthorDetail)
                 .getRoot();
     }
 }

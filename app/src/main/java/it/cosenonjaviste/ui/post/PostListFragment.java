@@ -21,7 +21,7 @@ public class PostListFragment extends ViewModelFragment<PostListViewModel> {
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .viewHolder(PostRowBinding::inflate, PostRowBinding::setPost, vh -> viewModel.goToDetail(vh.getItem()))
+                .viewHolder(PostRowBinding::inflate, PostRowBinding::setPost, viewModel::goToDetail)
                 .loadMoreListener(viewModel::loadNextPage)
                 .showToolbar((AppCompatActivity) getActivity(), viewModel.isToolbarVisible(), viewModel.getToolbarTitle())
                 .getRoot();
