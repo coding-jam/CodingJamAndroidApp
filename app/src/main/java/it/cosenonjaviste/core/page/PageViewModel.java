@@ -29,8 +29,10 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     @Override public void resume() {
         super.resume();
-        model.setPost(getArgument());
-        loading.set(true);
+        if (model.getPost() == null) {
+            model.setPost(getArgument());
+            loading.set(true);
+        }
     }
 
     public void htmlLoaded() {
