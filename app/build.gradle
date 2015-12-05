@@ -55,8 +55,8 @@ android {
         applicationId "it.cosenonjaviste"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 13
-        versionName "2.1.1"
+        versionCode 14
+        versionName "2.1.2"
         buildConfigField "String", "CONSUMER_KEY", project.oauth_consumerKey
         buildConfigField "String", "CONSUMER_SECRET", project.oauth_consumerSecret
         buildConfigField "String", "ACCESS_TOKEN", project.oauth_accessToken
@@ -94,8 +94,8 @@ android {
 }
 
 dependencies {
-    compile 'com.github.fabioCollini.mv2m:mv2mrx:0.3.5'
-    compile 'com.github.fabioCollini.mv2m:mv2mrecycler:0.3.5'
+    compile 'com.github.fabioCollini.mv2m:mv2mrx:0.4.1'
+    compile 'com.github.fabioCollini.mv2m:mv2mrecycler:0.4.1'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.0'
