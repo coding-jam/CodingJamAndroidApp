@@ -14,4 +14,8 @@ public class EspressoSchedulerManager implements SchedulerManager {
     @Override public <T> Observable<T> bindObservable(Observable<T> observable) {
         return observable.subscribeOn(scheduler).observeOn(mainThread());
     }
+
+    @Override public void logException(Throwable throwable) {
+        throwable.printStackTrace();
+    }
 }

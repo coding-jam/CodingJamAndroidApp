@@ -34,7 +34,7 @@ public class AppModule {
         return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
-    @Provides @Singleton WordPressService provideWordPressService(Gson gson) {
+    @Provides @Singleton public WordPressService provideWordPressService(Gson gson) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://www.cosenonjaviste.it/")
                 .setExecutors(Runnable::run, null)
@@ -46,7 +46,7 @@ public class AppModule {
         return restAdapter.create(WordPressService.class);
     }
 
-    @Provides @Singleton MailJetService provideMailJetService(Gson gson) {
+    @Provides @Singleton public MailJetService provideMailJetService(Gson gson) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("https://api.mailjet.com/v3")
                 .setExecutors(Runnable::run, null)
@@ -63,7 +63,7 @@ public class AppModule {
         return restAdapter.create(MailJetService.class);
     }
 
-    @Provides @Singleton TwitterService provideTwitterService() {
+    @Provides @Singleton public TwitterService provideTwitterService() {
         return new TwitterService(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET, BuildConfig.ACCESS_TOKEN, BuildConfig.ACCESS_TOKEN_SECRET);
     }
 

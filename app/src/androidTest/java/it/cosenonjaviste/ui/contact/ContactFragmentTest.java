@@ -5,14 +5,13 @@ import android.support.test.espresso.action.ViewActions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import javax.inject.Inject;
+import org.mockito.Mock;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.androidtest.utils.TestUtils;
 import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.ui.CnjDaggerRule;
 import retrofit.client.Response;
 import rx.Observable;
 
@@ -26,11 +25,11 @@ import static org.mockito.Mockito.when;
 public class ContactFragmentTest {
     @Rule public FragmentRule fragmentRule = new FragmentRule(ContactFragment.class);
 
-    @Inject MailJetService mailJetService;
+    @Mock MailJetService mailJetService;
+
+    @Rule public final CnjDaggerRule daggerRule = new CnjDaggerRule();
 
     @Before public void setUp() {
-        DaggerUtils.createTestComponent().inject(this);
-
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleepAction()));
     }

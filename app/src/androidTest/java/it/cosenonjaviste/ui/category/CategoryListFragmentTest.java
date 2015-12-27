@@ -1,18 +1,16 @@
 package it.cosenonjaviste.ui.category;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.CnjDaggerRule;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -24,13 +22,11 @@ import static org.mockito.Mockito.when;
 
 public class CategoryListFragmentTest {
 
-    @Inject WordPressService wordPressService;
+    @Mock WordPressService wordPressService;
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(CategoryListFragment.class);
 
-    @Before public void setUp() {
-        DaggerUtils.createTestComponent().inject(this);
-    }
+    @Rule public final CnjDaggerRule daggerRule = new CnjDaggerRule();
 
     @Test public void testCategoryList() {
         when(wordPressService.listCategories())

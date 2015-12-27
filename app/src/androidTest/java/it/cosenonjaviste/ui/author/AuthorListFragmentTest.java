@@ -1,16 +1,14 @@
 package it.cosenonjaviste.ui.author;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
 
-import javax.inject.Inject;
-
-import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.core.author.AuthorListModel;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.CnjDaggerRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -20,13 +18,11 @@ import static org.mockito.Mockito.when;
 
 public class AuthorListFragmentTest {
 
-    @Inject WordPressService wordPressService;
+    @Mock WordPressService wordPressService;
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(AuthorListFragment.class);
 
-    @Before public void setUp() {
-        DaggerUtils.createTestComponent().inject(this);
-    }
+    @Rule public final CnjDaggerRule daggerRule = new CnjDaggerRule();
 
     @Test
     public void testAuthorList() {

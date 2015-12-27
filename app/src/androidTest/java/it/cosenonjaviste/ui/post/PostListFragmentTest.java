@@ -5,15 +5,14 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import javax.inject.Inject;
+import org.mockito.Mock;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.dagger.DaggerUtils;
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.core.post.PostListModel;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.CnjDaggerRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -26,13 +25,13 @@ import static org.mockito.Mockito.when;
 
 public class PostListFragmentTest {
 
-    @Inject WordPressService wordPressService;
+    @Mock WordPressService wordPressService;
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(PostListFragment.class);
 
-    @Before public void setUp() {
-        DaggerUtils.createTestComponent().inject(this);
+    @Rule public final CnjDaggerRule daggerRule = new CnjDaggerRule();
 
+    @Before public void setUp() {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(TestData.postResponse(0, 10));
         when(wordPressService.listPosts(eq(2)))
