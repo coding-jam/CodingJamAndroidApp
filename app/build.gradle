@@ -118,10 +118,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.assertj:assertj-core:1.7.0'
-    testCompile 'com.github.fabioCollini:DaggerMock:0.3'
+    testCompile 'com.github.fabioCollini:DaggerMock:0.4'
 
     androidTestApt 'com.google.dagger:dagger-compiler:2.0.2'
-    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.3'
+    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.4'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.2') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
