@@ -30,7 +30,7 @@ public class AppModule {
         this.application = application;
     }
 
-    @Provides @Singleton Gson provideGson() {
+    @Provides @Singleton public Gson provideGson() {
         return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
@@ -67,15 +67,15 @@ public class AppModule {
         return new TwitterService(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET, BuildConfig.ACCESS_TOKEN, BuildConfig.ACCESS_TOKEN_SECRET);
     }
 
-    @Provides @Singleton SchedulerManager provideSchedulerManager() {
+    @Provides @Singleton public SchedulerManager provideSchedulerManager() {
         return new AndroidSchedulerManager();
     }
 
-    @Provides Navigator provideNavigator() {
+    @Provides public Navigator provideNavigator() {
         return new AndroidNavigator();
     }
 
-    @Provides MessageManager provideMessageManager() {
+    @Provides public MessageManager provideMessageManager() {
         return new SnackbarMessageManager();
     }
 }
