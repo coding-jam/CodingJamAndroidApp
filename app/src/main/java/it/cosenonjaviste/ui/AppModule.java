@@ -13,6 +13,7 @@ import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
 import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.Navigator;
+import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
@@ -31,7 +32,10 @@ public class AppModule {
     }
 
     @Provides @Singleton public Gson provideGson() {
-        return new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .registerTypeAdapterFactory(Category.typeAdapterFactory())
+            .create();
     }
 
     @Provides @Singleton public WordPressService provideWordPressService(Gson gson) {
