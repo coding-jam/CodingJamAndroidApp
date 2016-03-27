@@ -69,7 +69,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         } else {
             Category category = getArgument().getCategory();
             if (category != null) {
-                observable = wordPressService.listCategoryPosts(category.getId(), page);
+                observable = wordPressService.listCategoryPosts(category.id(), page);
             } else {
                 Author author = getArgument().getAuthor();
                 observable = wordPressService.listAuthorPosts(author.getId(), page);
@@ -98,7 +98,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
             } else {
                 Category category = arg.getCategory();
                 if (category != null) {
-                    return category.getTitle();
+                    return category.title();
                 } else {
                     return null;
                 }

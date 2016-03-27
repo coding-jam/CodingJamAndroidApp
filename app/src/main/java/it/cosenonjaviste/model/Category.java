@@ -13,14 +13,12 @@ public abstract class Category implements Parcelable {
         return new AutoValue_Category(id, title, postCount);
     }
 
-    @SerializedName("id")
-    public abstract long getId();
+    public abstract long id();
 
-    @SerializedName("title")
-    public abstract String getTitle();
+    public abstract String title();
 
     @SerializedName("post_count")
-    public abstract int getPostCount();
+    public abstract int postCount();
 
     public static TypeAdapterFactory typeAdapterFactory() {
         return AutoValue_Category.typeAdapterFactory();

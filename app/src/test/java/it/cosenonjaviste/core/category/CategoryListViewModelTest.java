@@ -52,9 +52,9 @@ public class CategoryListViewModelTest {
 
         assertThat(model.getItems()).hasSize(3);
         Category category = model.get(2);
-        assertThat(category.getId()).isEqualTo(2);
-        assertThat(category.getTitle()).isEqualTo("cat 2");
-        assertThat(category.getPostCount()).isEqualTo(12);
+        assertThat(category.id()).isEqualTo(2);
+        assertThat(category.title()).isEqualTo("cat 2");
+        assertThat(category.postCount()).isEqualTo(12);
     }
 
     @Test
