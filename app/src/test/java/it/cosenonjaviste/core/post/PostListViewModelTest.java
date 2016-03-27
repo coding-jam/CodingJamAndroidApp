@@ -113,7 +113,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitle() {
-        viewModel.initAndResume(new PostListArgument(new Category(123, "aaa", 1)));
+        viewModel.initAndResume(new PostListArgument(Category.create(123, "aaa", 1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("aaa");

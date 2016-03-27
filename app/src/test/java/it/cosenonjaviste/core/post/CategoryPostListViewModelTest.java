@@ -26,7 +26,7 @@ public class CategoryPostListViewModelTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(new PostListArgument(new Category(1, "cat", 10)));
+        PostListModel model = viewModel.initAndResume(new PostListArgument(Category.create(1, "cat", 10)));
 
         assertThat(model.getItems().size()).isEqualTo(1);
     }
@@ -38,7 +38,7 @@ public class CategoryPostListViewModelTest {
         when(wordPressService.listCategoryPosts(eq(1L), eq(2)))
                 .thenReturn(TestData.postResponse(5));
 
-        PostListModel model = viewModel.initAndResume(new PostListArgument(new Category(1, "cat", 10)));
+        PostListModel model = viewModel.initAndResume(new PostListArgument(Category.create(1, "cat", 10)));
         viewModel.loadNextPage();
 
         assertThat(model.getItems().size()).isEqualTo(15);

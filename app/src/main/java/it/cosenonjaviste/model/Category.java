@@ -18,11 +18,15 @@ public class Category implements Parcelable {
     public Category() {
     }
 
-    public Category(long id, String title, int postCount) {
+    private Category(long id, String title, int postCount) {
         this();
         this.id = id;
         this.title = title;
         this.postCount = postCount;
+    }
+
+    public static Category create(long id, String title, int postCount) {
+        return new Category(id, title, postCount);
     }
 
     public long getId() {

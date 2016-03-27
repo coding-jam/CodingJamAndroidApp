@@ -39,7 +39,7 @@ public class CategoryListViewModelTest {
         CategoryListModel model = new CategoryListModel();
         ParcelableTester.check(model, CategoryListModel.CREATOR);
 
-        model.done(Arrays.asList(new Category(123, "abc", 3), new Category(123456, "abcdef", 6)));
+        model.done(Arrays.asList(Category.create(123, "abc", 3), Category.create(123456, "abcdef", 6)));
         ParcelableTester.check(model, CategoryListModel.CREATOR);
     }
 

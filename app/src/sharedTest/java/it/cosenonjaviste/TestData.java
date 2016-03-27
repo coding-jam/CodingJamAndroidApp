@@ -52,7 +52,7 @@ public class TestData {
     }
 
     private static Category createCategory(int i) {
-        return new Category(i, "cat " + i, 10 + i);
+        return Category.create(i, "cat " + i, 10 + i);
     }
 
     public static Observable<List<Tweet>> tweets(int count) {
