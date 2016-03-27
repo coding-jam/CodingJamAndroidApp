@@ -1,21 +1,20 @@
 package it.cosenonjaviste.core.contact;
 
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
-import it.cosenonjaviste.core.utils.ObservableString;
-
 @ParcelablePlease
 public class ContactModel implements Parcelable {
 
     public boolean sendPressed;
 
-    public ObservableString name = new ObservableString();
-    public ObservableString email = new ObservableString();
-    public ObservableString message = new ObservableString();
+    public ObservableField<String> name = new ObservableField<>();
+    public ObservableField<String> email = new ObservableField<>();
+    public ObservableField<String> message = new ObservableField<>();
 
     public ObservableInt nameError = new ObservableInt();
     public ObservableInt emailError = new ObservableInt();

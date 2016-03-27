@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:layout_above="@id/more_progress"
             android:layout_below="@+id/toolbar"
-            android:onRefreshListener="@{viewModel.loadDataPullToRefresh}"
+            android:onRefreshListener="@{viewModel::loadDataPullToRefresh}"
             app:refreshing="@{viewModel.loadingPullToRefresh}"
             app:visibleOrGone="@{!viewModel.error &amp;&amp; !viewModel.loading}">
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="@string/retry"
-                app:onClick="@{viewModel.reloadData}"/>
+                android:onClick="@{viewModel::reloadData}"/>
         </LinearLayout>
 
     </RelativeLayout>

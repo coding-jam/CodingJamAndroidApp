@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
-                    app:binding="@{viewModel.model.name}">
+                    android:text="@={viewModel.model.name}">
 
                     <requestFocus/>
                 </EditText>
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    app:binding="@{viewModel.model.email}"/>
+                    android:text="@={viewModel.model.email}"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Message"
                     android:lines="4"
-                    app:binding="@{viewModel.model.message}"/>
+                    android:text="@={viewModel.model.message}"/>
             </android.support.design.widget.TextInputLayout>
 
             <RelativeLayout
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    app:onClick="@{viewModel.send}"
+                    android:onClick="@{viewModel::send}"
                     android:enabled="@{!viewModel.sending}"
                     android:text="@string/send"/>
 

@@ -126,6 +126,6 @@
             app:backgroundTint="@color/cnj_border"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|right|end"
-            app:onClick="@{viewModel.share}"/>
+            android:onClick="@{viewModel::share}"/>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

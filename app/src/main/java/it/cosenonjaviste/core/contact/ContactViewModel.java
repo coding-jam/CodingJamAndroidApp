@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.utils.EmailVerifier;
-import it.cosenonjaviste.core.utils.ObservableString;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
 import it.cosenonjaviste.mv2m.rx.SchedulerManager;
@@ -58,8 +57,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
     private boolean validate() {
         if (model.sendPressed) {
-            boolean isValid = checkMandatory(model.name, model.nameError);
-            if (!model.email.isEmpty()) {
+            boolean isValid = checkMandatory(model.nameError, model.name.get() == null || model.name.get().isEmpty());
+            if (model.email.get() != null && !model.email.get().isEmpty()) {
                 if (!EmailVerifier.checkEmail(model.email.get())) {
                     model.emailError.set(R.string.invalid_email);
                     isValid = false;
@@ -70,15 +69,14 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
                 model.emailError.set(R.string.mandatory_field);
                 isValid = false;
             }
-            isValid = checkMandatory(model.message, model.messageError) && isValid;
+            isValid = checkMandatory(model.messageError, model.message.get() == null || model.message.get().isEmpty()) && isValid;
             return isValid;
         } else {
             return true;
         }
     }
 
-    private boolean checkMandatory(ObservableString bindableString, ObservableInt error) {
-        boolean empty = bindableString.isEmpty();
+    private boolean checkMandatory(ObservableInt error, boolean empty) {
         error.set(empty ? R.string.mandatory_field : 0);
         return !empty;
     }
