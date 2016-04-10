@@ -10,6 +10,7 @@ import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.model.Attachment;
+import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,15 +28,15 @@ public class PageViewModelTest {
     @Test
     public void testParcelable() {
         PageModel model = new PageModel();
-        model.setPost(new Post(1, null, "title", null, "url", null, new Attachment("http://aaaa.aa")));
+        model.setPost(Post.create(1, Author.create(1, "name", "last", "email"), "title", null, "url", null, Attachment.create("http://aaaa.aa")));
         ParcelableTester.check(model, PageModel.CREATOR);
     }
 
     @Test
     public void testLoad() {
-        viewModel.initAndResume(new Post(1, null, "title", null, "url", null));
+        viewModel.initAndResume(Post.create(1, Author.create(1, "name", "last", "email"), "title", null, "url", null));
 
-        assertThat(viewModel.getPost().getUrl()).isEqualTo("url");
+        assertThat(viewModel.getPost().url()).isEqualTo("url");
     }
 
     @Test

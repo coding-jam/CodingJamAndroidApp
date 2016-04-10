@@ -72,10 +72,10 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
                 observable = wordPressService.listCategoryPosts(category.id(), page);
             } else {
                 Author author = getArgument().getAuthor();
-                observable = wordPressService.listAuthorPosts(author.getId(), page);
+                observable = wordPressService.listAuthorPosts(author.id(), page);
             }
         }
-        return observable.map(PostResponse::getPosts);
+        return observable.map(PostResponse::posts);
     }
 
     private static int calcNextPage(int size, int pageSize) {
@@ -94,7 +94,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         } else {
             Author author = arg.getAuthor();
             if (author != null) {
-                return author.getName();
+                return author.name();
             } else {
                 Category category = arg.getCategory();
                 if (category != null) {

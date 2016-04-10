@@ -13,8 +13,14 @@ import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
 import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.Navigator;
+import it.cosenonjaviste.model.Attachment;
+import it.cosenonjaviste.model.Author;
+import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.Category;
+import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.mv2m.rx.AndroidSchedulerManager;
@@ -34,7 +40,13 @@ public class AppModule {
     @Provides @Singleton public Gson provideGson() {
         return new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .registerTypeAdapterFactory(Attachment.typeAdapterFactory())
+            .registerTypeAdapterFactory(Author.typeAdapterFactory())
+            .registerTypeAdapterFactory(AuthorResponse.typeAdapterFactory())
             .registerTypeAdapterFactory(Category.typeAdapterFactory())
+            .registerTypeAdapterFactory(CategoryResponse.typeAdapterFactory())
+            .registerTypeAdapterFactory(Post.typeAdapterFactory())
+            .registerTypeAdapterFactory(PostResponse.typeAdapterFactory())
             .create();
     }
 

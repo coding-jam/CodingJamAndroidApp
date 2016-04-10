@@ -43,6 +43,6 @@ public class TwitterService {
 
     private Tweet createTweet(Status s) {
         User user = s.getUser();
-        return new Tweet(s.getId(), s.getText(), s.getCreatedAt(), user.getProfileImageURL(), user.getName());
+        return Tweet.create(s.getId(), s.getText(), s.getCreatedAt(), user.getProfileImageURL(), user.getName());
     }
 }

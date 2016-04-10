@@ -1,19 +1,20 @@
 package it.cosenonjaviste.model;
 
+import com.google.auto.value.AutoValue;
+import com.google.gson.TypeAdapterFactory;
+
 import java.util.List;
 
-public class AuthorResponse {
-    private List<Author> authors;
+@AutoValue
+public abstract class AuthorResponse {
 
-    public AuthorResponse() {
+    public static AuthorResponse create(List<Author> authors) {
+        return new AutoValue_AuthorResponse(authors);
     }
 
-    public AuthorResponse(List<Author> authors) {
-        this();
-        this.authors = authors;
-    }
+    public abstract List<Author> authors();
 
-    public List<Author> getAuthors() {
-        return authors;
+    public static TypeAdapterFactory typeAdapterFactory() {
+        return AutoValue_AuthorResponse.typeAdapterFactory();
     }
 }

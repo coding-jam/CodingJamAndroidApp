@@ -36,7 +36,7 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         Observable<List<Author>> observable = wordPressService
                 .listAuthors()
-                .map(AuthorResponse::getAuthors)
+                .map(AuthorResponse::authors)
                 .doOnNext(Collections::sort);
 
         subscribe(loadingAction::set,

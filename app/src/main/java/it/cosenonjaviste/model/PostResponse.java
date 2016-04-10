@@ -1,19 +1,20 @@
 package it.cosenonjaviste.model;
 
+import com.google.auto.value.AutoValue;
+import com.google.gson.TypeAdapterFactory;
+
 import java.util.List;
 
-public class PostResponse {
-    private List<Post> posts;
+@AutoValue
+public abstract class PostResponse {
 
-    public PostResponse() {
+    public static PostResponse create(List<Post> posts) {
+        return new AutoValue_PostResponse(posts);
     }
 
-    public PostResponse(List<Post> posts) {
-        this();
-        this.posts = posts;
-    }
+    public abstract List<Post> posts();
 
-    public List<Post> getPosts() {
-        return posts;
+    public static TypeAdapterFactory typeAdapterFactory() {
+        return AutoValue_PostResponse.typeAdapterFactory();
     }
 }

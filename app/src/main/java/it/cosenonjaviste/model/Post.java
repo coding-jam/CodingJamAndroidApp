@@ -1,102 +1,59 @@
 package it.cosenonjaviste.model;
 
-import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
-import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
+import com.google.auto.value.AutoValue;
+import com.google.gson.TypeAdapterFactory;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import it.cosenonjaviste.ui.utils.DateFormatter;
 
-@ParcelablePlease
-public class Post implements Parcelable {
-    long id;
-    Author author;
-    String title;
-    Date date;
-    String url;
-    String excerpt;
-    Attachment[] attachments;
-
-    public Post() {
+@AutoValue
+public abstract class Post implements Parcelable {
+    public static Post create(long id, Author author, String title, Date date, String url, String excerpt, Attachment... attachments) {
+        return new AutoValue_Post(id, author, title, date, url, excerpt, Arrays.asList(attachments));
     }
 
-    public Post(String title, String url) {
-        this.title = title;
-        this.url = url;
-    }
+    public abstract long id();
 
-    public Post(long id, Author author, String title, Date date, String url, String excerpt, Attachment... attachments) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.date = date;
-        this.url = url;
-        this.excerpt = excerpt;
-        this.attachments = attachments;
-    }
+    public abstract Author author();
 
-    public long getId() {
-        return id;
-    }
+    public abstract String title();
 
-    public Author getAuthor() {
-        return author;
-    }
+    @Nullable
+    public abstract Date date();
 
-    public String getTitle() {
-        return title;
-    }
+    public abstract String url();
 
-    public Date getDate() {
-        return date;
-    }
+    @Nullable
+    public abstract String excerpt();
 
-    public String getUrl() {
-        return url;
-    }
+    public abstract List<Attachment> attachments();
 
-    public Attachment[] getAttachments() {
-        return attachments;
-    }
-
-    public String getExcerptHtml() {
-        if (excerpt == null) {
+    public String excerptHtml() {
+        if (excerpt() == null) {
             return "";
         }
-        return excerpt.replaceAll("^<p>", "").replaceAll("$</p>", "");
+        return excerpt().replaceAll("^<p>", "").replaceAll("$</p>", "");
     }
 
-    public String getSubtitle() {
-        return author.getName() + ", " + DateFormatter.formatDate(date);
+    public String subtitle() {
+        return author().name() + ", " + DateFormatter.formatDate(date());
     }
 
-    public String getImageUrl() {
-        if (attachments != null && attachments.length > 0) {
-            return attachments[0].getUrl();
+    public String imageUrl() {
+        if (attachments() != null && !attachments().isEmpty()) {
+            return attachments().get(0).url();
         } else {
             return null;
         }
     }
 
-    @Override public int describeContents() {
-        return 0;
+    public static TypeAdapterFactory typeAdapterFactory() {
+        return AutoValue_Post.typeAdapterFactory();
     }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        PostParcelablePlease.writeToParcel(this, dest, flags);
-    }
-
-    public static final Creator<Post> CREATOR = new Creator<Post>() {
-        public Post createFromParcel(Parcel source) {
-            Post target = new Post();
-            PostParcelablePlease.readFromParcel(target, source);
-            return target;
-        }
-
-        public Post[] newArray(int size) {
-            return new Post[size];
-        }
-    };
 }

@@ -1,13 +1,15 @@
 package it.cosenonjaviste.core.model;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+import it.cosenonjaviste.core.CnjJUnitDaggerRule;
+import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Attachment;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
@@ -17,27 +19,30 @@ import static org.junit.Assert.assertEquals;
 
 public class WordPressServiceTest {
 
-    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    @Rule
+    public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
+
+    @InjectFromComponent Gson gson;
 
     @Test
     public void testLoadPosts() throws IOException {
         PostResponse postResponse = gson.fromJson(JsonStubs.getPostList(1), PostResponse.class);
-        List<Post> posts = postResponse.getPosts();
+        List<Post> posts = postResponse.posts();
         assertThat(posts).hasSize(1);
         Post post = posts.get(0);
-        assertEquals(12831, post.getId());
-        assertThat(post.getDate()).isNotNull();
-        assertThat(post.getTitle()).isNotEmpty();
-        assertThat(post.getUrl()).isNotEmpty();
-        assertThat(post.getExcerptHtml()).isNotEmpty();
-        assertThat(post.getAuthor()).isNotNull();
-        assertThat(post.getAuthor().getImageUrl()).isNotEmpty();
-        assertEquals(2, post.getAuthor().getId());
-        assertThat(post.getAuthor().getName()).isNotEmpty();
+        assertEquals(12831, post.id());
+        assertThat(post.date()).isNotNull();
+        assertThat(post.title()).isNotEmpty();
+        assertThat(post.url()).isNotEmpty();
+        assertThat(post.excerptHtml()).isNotEmpty();
+        assertThat(post.author()).isNotNull();
+        assertThat(post.author().imageUrl()).isNotEmpty();
+        assertEquals(2, post.author().id());
+        assertThat(post.author().name()).isNotEmpty();
 
-        Attachment[] attachments = post.getAttachments();
+        List<Attachment> attachments = post.attachments();
         assertThat(attachments).hasSize(1);
-        assertThat(attachments[0].getUrl()).isNotEmpty();
-        assertThat(post.getImageUrl()).isNotEmpty();
+        assertThat(attachments.get(0).url()).isNotEmpty();
+        assertThat(post.imageUrl()).isNotEmpty();
     }
 }

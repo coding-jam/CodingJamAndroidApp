@@ -89,10 +89,10 @@ public class PostListViewModelTest {
         verify(navigator).openDetail(any(), captor.capture());
 
         Post detailPost = captor.getValue();
-        String url = detailPost.getUrl();
+        String url = detailPost.url();
 
         assertThat(url).isNotNull();
-        assertThat(url).isEqualTo(firstPost.getUrl());
+        assertThat(url).isEqualTo(firstPost.url());
     }
 
     @Test

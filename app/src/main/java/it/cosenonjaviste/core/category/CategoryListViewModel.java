@@ -35,7 +35,7 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
     @Override protected void reloadData(ObservableBoolean loadingSetter) {
         Observable<List<Category>> observable = wordPressService
                 .listCategories()
-                .map(CategoryResponse::getCategories);
+                .map(CategoryResponse::categories);
 
         subscribe(loadingSetter::set,
                 observable,

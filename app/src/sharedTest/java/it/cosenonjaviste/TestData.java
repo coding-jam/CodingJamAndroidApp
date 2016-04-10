@@ -22,7 +22,7 @@ public class TestData {
         return Observable.range(start, size)
                 .map(TestData::createPost)
                 .toList()
-                .map(PostResponse::new);
+                .map(PostResponse::create);
     }
 
     public static Post createPost(int i) {
@@ -30,25 +30,25 @@ public class TestData {
     }
 
     public static Post createPost(int i, String url) {
-        return new Post(i, createAuthor(i), "post title " + i, new Date(), url, "excerpt " + i);
+        return Post.create(i, createAuthor(i), "post title " + i, new Date(), url, "excerpt " + i);
     }
 
     public static Author createAuthor(int i) {
-        return new Author(i, "name " + i, "last name " + i);
+        return Author.create(i, "name " + i, "last name " + i, "email " + i);
     }
 
     public static Observable<AuthorResponse> authorResponse(int size) {
         return Observable.range(0, size)
                 .map(TestData::createAuthor)
                 .toList()
-                .map(AuthorResponse::new);
+                .map(AuthorResponse::create);
     }
 
     public static Observable<CategoryResponse> categoryResponse(int size) {
         return Observable.range(0, size)
                 .map(TestData::createCategory)
                 .toList()
-                .map(CategoryResponse::new);
+                .map(CategoryResponse::create);
     }
 
     private static Category createCategory(int i) {
@@ -62,6 +62,6 @@ public class TestData {
     }
 
     public static Tweet createTweet(int i) {
-        return new Tweet(123, "tweet text " + i, new Date(), "image", "author");
+        return Tweet.create(123, "tweet text " + i, new Date(), "image", "author");
     }
 }
