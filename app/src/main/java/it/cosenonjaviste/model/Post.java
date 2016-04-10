@@ -35,10 +35,11 @@ public abstract class Post implements Parcelable {
     public abstract List<Attachment> attachments();
 
     public String excerptHtml() {
-        if (excerpt() == null) {
+        String excerpt = excerpt();
+        if (excerpt == null) {
             return "";
         }
-        return excerpt().replaceAll("^<p>", "").replaceAll("$</p>", "");
+        return excerpt.replaceAll("<br \\/><a .*>Continue reading...<\\/a>", "").replaceAll("^<p>", "").replaceAll("$</p>", "");
     }
 
     public String subtitle() {
