@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
-                android:drawableTop="@drawable/ic_launcher"
+                android:drawableTop="@mipmap/ic_launcher"
                 android:text="@string/download_error"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 

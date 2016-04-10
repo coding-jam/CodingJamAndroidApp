@@ -3,7 +3,7 @@
 
     <item name="binded" type="id" />
 
-    <string name="app_name">CoseNonJaviste</string>
+    <string name="app_name">CodingJam</string>
     <string name="loading_">Caricamento in corso…</string>
     <string name="download_error">Errore download</string>
     <string name="post">Post</string>
