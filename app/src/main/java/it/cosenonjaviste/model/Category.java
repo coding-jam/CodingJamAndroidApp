@@ -3,7 +3,8 @@ package it.cosenonjaviste.model;
 import android.os.Parcelable;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 
 @AutoValue
@@ -20,7 +21,7 @@ public abstract class Category implements Parcelable {
     @SerializedName("post_count")
     public abstract int postCount();
 
-    public static TypeAdapterFactory typeAdapterFactory() {
-        return AutoValue_Category.typeAdapterFactory();
+    public static TypeAdapter<Category> typeAdapter(Gson gson) {
+        return new AutoValue_Category.GsonTypeAdapter(gson);
     }
 }

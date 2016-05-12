@@ -1,7 +1,8 @@
 package it.cosenonjaviste.model;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public abstract class CategoryResponse {
 
     public abstract List<Category> categories();
 
-    public static TypeAdapterFactory typeAdapterFactory() {
-        return AutoValue_CategoryResponse.typeAdapterFactory();
+    public static TypeAdapter<CategoryResponse> typeAdapter(Gson gson) {
+        return new AutoValue_CategoryResponse.GsonTypeAdapter(gson);
     }
 }

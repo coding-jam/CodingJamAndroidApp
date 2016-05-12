@@ -4,7 +4,8 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -54,7 +55,7 @@ public abstract class Post implements Parcelable {
         }
     }
 
-    public static TypeAdapterFactory typeAdapterFactory() {
-        return AutoValue_Post.typeAdapterFactory();
+    public static TypeAdapter<Post> typeAdapter(Gson gson) {
+        return new AutoValue_Post.GsonTypeAdapter(gson);
     }
 }

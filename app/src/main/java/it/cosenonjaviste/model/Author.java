@@ -3,7 +3,8 @@ package it.cosenonjaviste.model;
 import android.os.Parcelable;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import it.cosenonjaviste.core.utils.Md5Utils;
@@ -15,8 +16,8 @@ public abstract class Author implements Comparable<Author>, Parcelable {
         return new AutoValue_Author(id, firstName, lastName, email);
     }
 
-    public static TypeAdapterFactory typeAdapterFactory() {
-        return AutoValue_Author.typeAdapterFactory();
+    public static TypeAdapter<Author> typeAdapter(Gson gson) {
+        return new AutoValue_Author.GsonTypeAdapter(gson);
     }
 
     public abstract long id();

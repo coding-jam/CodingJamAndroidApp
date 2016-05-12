@@ -3,7 +3,8 @@ package it.cosenonjaviste.model;
 import android.os.Parcelable;
 
 import com.google.auto.value.AutoValue;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
 @AutoValue
 public abstract class Attachment implements Parcelable {
@@ -13,7 +14,7 @@ public abstract class Attachment implements Parcelable {
 
     public abstract String url();
 
-    public static TypeAdapterFactory typeAdapterFactory() {
-        return AutoValue_Attachment.typeAdapterFactory();
+    public static TypeAdapter<Attachment> typeAdapter(Gson gson) {
+        return new AutoValue_Attachment.GsonTypeAdapter(gson);
     }
 }
