@@ -9,7 +9,6 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1x'
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -19,8 +18,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 apply plugin: 'me.tatarka.retrolambda'
-
-apply plugin: 'com.neenbedankt.android-apt'
 
 apply plugin: "jacoco"
 
@@ -94,7 +91,7 @@ android {
 }
 
 dependencies {
-    apt 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-processor:0.3.2'
+    annotationProcessor 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-processor:0.3.2'
     compile 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-lib:0.3.2'
     compile 'com.github.fabioCollini.mv2m:mv2mrx:0.4.1'
     compile 'com.github.fabioCollini.mv2m:mv2mrecycler:0.4.1'
@@ -106,14 +103,14 @@ dependencies {
     compile 'com.google.dagger:dagger:2.7'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'org.glassfish:javax.annotation:10.0-b28'
-    apt "com.google.guava:guava:19.0"
-    apt 'com.google.dagger:dagger-compiler:2.7'
+    annotationProcessor "com.google.guava:guava:19.0"
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
     compile 'com.hannesdorfmann.parcelableplease:annotation:1.0.2'
-    apt 'com.hannesdorfmann.parcelableplease:processor:1.0.2'
+    annotationProcessor 'com.hannesdorfmann.parcelableplease:processor:1.0.2'
     provided 'com.google.auto.value:auto-value:1.2'
-    apt 'com.google.auto.value:auto-value:1.2'
-    apt 'com.ryanharter.auto.value:auto-value-parcel:0.2.1'
-    apt 'com.ryanharter.auto.value:auto-value-gson:0.3.0'
+    annotationProcessor 'com.google.auto.value:auto-value:1.2'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.1'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-gson:0.3.0'
 
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
@@ -131,7 +128,6 @@ dependencies {
     testCompile 'com.google.dagger:dagger-compiler:2.7'
 
     androidTestCompile 'com.google.dagger:dagger:2.7'
-    androidTestApt 'com.google.dagger:dagger-compiler:2.7'
     androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.2') {
