@@ -3,7 +3,6 @@ package it.cosenonjaviste.core.list;
 import android.databinding.ObservableBoolean;
 
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
-import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 
 public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewModel<A, M> implements GenericRxListViewModel {
     protected ObservableBoolean loading = new ObservableBoolean();
@@ -11,10 +10,6 @@ public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewM
     protected ObservableBoolean loadingNextPage = new ObservableBoolean();
 
     protected ObservableBoolean loadingPullToRefresh = new ObservableBoolean();
-
-    public RxListViewModel(SchedulerManager schedulerManager) {
-        super(schedulerManager);
-    }
 
     @Override public ObservableBoolean isLoading() {
         return loading;

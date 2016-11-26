@@ -14,7 +14,6 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
 public class PostListViewModel extends RxListViewModel<PostListArgument, PostListModel> {
@@ -23,8 +22,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
 
     private Navigator navigator;
 
-    @Inject public PostListViewModel(SchedulerManager schedulerManager, WordPressService wordPressService, Navigator navigator) {
-        super(schedulerManager);
+    @Inject public PostListViewModel(WordPressService wordPressService, Navigator navigator) {
         this.wordPressService = wordPressService;
         this.navigator = navigator;
     }

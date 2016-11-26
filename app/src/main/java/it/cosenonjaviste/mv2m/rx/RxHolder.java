@@ -28,7 +28,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class RxHolder {
-    private SchedulerManager schedulerManager;
 
     private final CompositeSubscription connectableSubscriptions = new CompositeSubscription();
 
@@ -36,8 +35,7 @@ public class RxHolder {
 
     protected final List<ObservableWithObserver> observables = new ArrayList<>();
 
-    public RxHolder(SchedulerManager schedulerManager) {
-        this.schedulerManager = schedulerManager;
+    public RxHolder() {
     }
 
     public <T> void subscribe(final Action1<Boolean> loadingAction, Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
@@ -58,7 +56,7 @@ public class RxHolder {
         }
         ConnectableObservable<T> replay = observable.compose(observable1 ->
                 observable1.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(t -> schedulerManager.logException(t))
+                        .doOnError(t -> logException(t))
         ).replay();
         connectableSubscriptions.add(replay.connect());
         final ObservableWithObserver<T> observableWithObserver = new ObservableWithObserver<>(replay);
@@ -73,7 +71,7 @@ public class RxHolder {
                     }
                     observables.remove(observableWithObserver);
                 } catch (RuntimeException e) {
-                    schedulerManager.logException(e);
+                    logException(e);
                     throw e;
                 }
             }
@@ -87,7 +85,7 @@ public class RxHolder {
                         loadingAction.call(false);
                     }
                 } catch (RuntimeException ex) {
-                    schedulerManager.logException(ex);
+                    logException(ex);
                     throw ex;
                 } finally {
                     observables.remove(observableWithObserver);
@@ -100,7 +98,7 @@ public class RxHolder {
                         onNext.call(t);
                     }
                 } catch (RuntimeException e) {
-                    schedulerManager.logException(e);
+                    logException(e);
                     throw e;
                 }
             }
@@ -108,6 +106,10 @@ public class RxHolder {
         observableWithObserver.observer = observer;
         observables.add(observableWithObserver);
         subscribe(observableWithObserver);
+    }
+
+    private void logException(Throwable e) {
+//        schedulerManager.logException(e);
     }
 
 

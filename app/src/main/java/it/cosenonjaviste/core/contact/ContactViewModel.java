@@ -12,7 +12,6 @@ import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
-import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import retrofit.client.Response;
 import rx.Observable;
 
@@ -30,8 +29,7 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
         }
     };
 
-    @Inject public ContactViewModel(SchedulerManager schedulerManager, MailJetService mailJetService, MessageManager messageManager) {
-        super(schedulerManager);
+    @Inject public ContactViewModel(MailJetService mailJetService, MessageManager messageManager) {
         this.mailJetService = mailJetService;
         this.messageManager = messageManager;
     }

@@ -26,8 +26,8 @@ public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, 
 
     private RxHolder rxHolder;
 
-    public RxViewModel(SchedulerManager schedulerManager) {
-        rxHolder = new RxHolder(schedulerManager != null ? schedulerManager : SchedulerManager.IDENTITY);
+    public RxViewModel() {
+        rxHolder = new RxHolder();
     }
 
     @Override public void resume() {

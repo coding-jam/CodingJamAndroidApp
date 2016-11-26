@@ -14,7 +14,6 @@ import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import rx.Observable;
 
 public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
@@ -23,8 +22,7 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
 
     private Navigator navigator;
 
-    @Inject public AuthorListViewModel(SchedulerManager schedulerManager, WordPressService wordPressService, Navigator navigator) {
-        super(schedulerManager);
+    @Inject public AuthorListViewModel(WordPressService wordPressService, Navigator navigator) {
         this.wordPressService = wordPressService;
         this.navigator = navigator;
     }

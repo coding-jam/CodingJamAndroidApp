@@ -17,8 +17,6 @@ import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
-import it.cosenonjaviste.mv2m.rx.AndroidSchedulerManager;
-import it.cosenonjaviste.mv2m.rx.SchedulerManager;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -69,10 +67,6 @@ public class AppModule {
 
     @Provides @Singleton public TwitterService provideTwitterService() {
         return new TwitterService(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET, BuildConfig.ACCESS_TOKEN, BuildConfig.ACCESS_TOKEN_SECRET);
-    }
-
-    @Provides @Singleton public SchedulerManager provideSchedulerManager() {
-        return new AndroidSchedulerManager();
     }
 
     @Provides public Navigator provideNavigator() {
