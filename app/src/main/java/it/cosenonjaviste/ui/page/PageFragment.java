@@ -3,6 +3,7 @@ package it.cosenonjaviste.ui.page;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,26 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import it.codingjam.lifecyclebinder.LifeCycleBinder;
+import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
-import it.cosenonjaviste.mv2m.ViewModelFragment;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 
-public class PageFragment extends ViewModelFragment<PageViewModel> {
+public class PageFragment extends Fragment {
 
-    @Override public PageViewModel createViewModel() {
-        return CoseNonJavisteApp.getComponent(this).getPageViewModel();
+    @RetainedObjectProvider("viewModel") @Inject Provider<PageViewModel> provider;
+
+    PageViewModel viewModel;
+
+    @Override public void onCreate(Bundle state) {
+        super.onCreate(state);
+        CoseNonJavisteApp.getComponent(this).inject(this);
+        LifeCycleBinder.bind(this);
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

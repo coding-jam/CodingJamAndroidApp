@@ -1,13 +1,14 @@
 package it.cosenonjaviste.core;
 
+import android.app.Activity;
+
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mv2m.ActivityHolder;
 
 public interface Navigator {
-    void openPostList(ActivityHolder activityHolder, PostListArgument postListArgument);
+    void openPostList(Activity activity, PostListArgument postListArgument);
 
-    void openDetail(ActivityHolder activityHolder, Post post);
+    void openDetail(Activity activity, Post post);
 
-    void share(ActivityHolder activityHolder, String title, String body);
+    void share(Activity activity, String title, String body);
 }

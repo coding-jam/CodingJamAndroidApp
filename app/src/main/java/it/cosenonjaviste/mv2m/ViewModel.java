@@ -16,6 +16,8 @@
 package it.cosenonjaviste.mv2m;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -30,13 +32,17 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
 
     protected A argument;
 
-    protected final ActivityHolder activityHolder = new ActivityHolder();
-
-    /**
-     * @deprecated Use activityHolder.getActivity() instead.
-     */
-    @Deprecated
     protected Activity activity;
+
+    @Override public void onCreate(Fragment view, Bundle state, Intent intent, Bundle a) {
+        activity = view.getActivity();
+        M model = null;
+        if (state != null) {
+            model = state.getParcelable(ViewModel.MODEL);
+        }
+
+        initArgumentAndModel(ArgumentManager.readArgument(a), model);
+    }
 
     @Override public void onPause(Fragment view) {
         pause();
@@ -63,7 +69,6 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
     }
 
     public void detachView() {
-        activityHolder.setViewModelContainer(null);
         activity = null;
     }
 
@@ -92,8 +97,7 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
         return argument;
     }
 
-    public final void attachActivity(ViewModelContainer<?> view) {
-        this.activityHolder.setViewModelContainer(view);
-        activity = view.getActivity();
+    @Override public void onSaveInstanceState(Fragment view, Bundle bundle) {
+        bundle.putParcelable(ViewModel.MODEL, getModel());
     }
 }

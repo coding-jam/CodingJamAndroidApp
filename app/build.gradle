@@ -91,8 +91,8 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-processor:0.3.2'
-    compile 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-lib:0.3.2'
+    annotationProcessor 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-processor:0.3.3'
+    compile 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-lib:0.3.3'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'io.reactivex:rxjava:1.2.3'
     compile 'io.reactivex:rxandroid:1.2.1'

@@ -22,8 +22,8 @@ import android.os.Parcelable;
 public class ArgumentManager {
     public static final String ARGUMENT = "argument";
 
-    public static Object readArgument(Bundle arguments) {
-        return arguments.get(ARGUMENT);
+    public static <P extends Parcelable> P readArgument(Bundle arguments) {
+        return arguments != null ? arguments.getParcelable(ARGUMENT) : null;
     }
 
     public static Intent writeArgument(Intent intent, Parcelable argument) {

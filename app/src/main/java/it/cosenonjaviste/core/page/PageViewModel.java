@@ -41,6 +41,6 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     public void share() {
         Post post = model.getPost();
-        navigator.share(activityHolder, post.title(), post.title() + " - " + post.url());
+        navigator.share(activity, post.title(), post.title() + " - " + post.url());
     }
 }
