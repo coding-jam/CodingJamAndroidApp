@@ -15,14 +15,9 @@
  */
 package it.cosenonjaviste.mv2m;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-
-import java.io.Serializable;
 
 public class ArgumentManager {
     public static final String ARGUMENT = "argument";
@@ -31,60 +26,10 @@ public class ArgumentManager {
         return arguments.get(ARGUMENT);
     }
 
-    public static Intent writeArgument(Intent intent, Object argument) {
+    public static Intent writeArgument(Intent intent, Parcelable argument) {
         if (argument != null) {
-            if (argument instanceof Integer) {
-                intent.putExtra(ARGUMENT, (Integer) argument);
-            } else if (argument instanceof Float) {
-                intent.putExtra(ARGUMENT, (Float) argument);
-            } else if (argument instanceof Double) {
-                intent.putExtra(ARGUMENT, (Double) argument);
-            } else if (argument instanceof Long) {
-                intent.putExtra(ARGUMENT, (Long) argument);
-            } else if (argument instanceof Parcelable) {
-                intent.putExtra(ARGUMENT, (Parcelable) argument);
-            } else if (argument instanceof String) {
-                intent.putExtra(ARGUMENT, (String) argument);
-            } else if (argument instanceof Serializable) {
-                intent.putExtra(ARGUMENT, (Serializable) argument);
-            } else {
-                throw new RuntimeException("Invalid argument of class " + argument.getClass() + ", it can't be stored in a bundle");
-            }
+            intent.putExtra(ARGUMENT, argument);
         }
         return intent;
-    }
-
-    public static Bundle writeArgument(Bundle bundle, Object argument) {
-        if (argument != null) {
-            if (argument instanceof Integer) {
-                bundle.putInt(ARGUMENT, (Integer) argument);
-            } else if (argument instanceof Float) {
-                bundle.putFloat(ARGUMENT, (Float) argument);
-            } else if (argument instanceof Double) {
-                bundle.putDouble(ARGUMENT, (Double) argument);
-            } else if (argument instanceof Long) {
-                bundle.putLong(ARGUMENT, (Long) argument);
-            } else if (argument instanceof Parcelable) {
-                bundle.putParcelable(ARGUMENT, (Parcelable) argument);
-            } else if (argument instanceof String) {
-                bundle.putString(ARGUMENT, (String) argument);
-            } else if (argument instanceof Serializable) {
-                bundle.putSerializable(ARGUMENT, (Serializable) argument);
-            } else {
-                throw new RuntimeException("Invalid argument of class " + argument.getClass() + ", it can't be stored in a bundle");
-            }
-        }
-        return bundle;
-    }
-
-    public static <ARG, VM extends ViewModel<ARG, ?>, F extends ViewModelFragment<VM>> F instantiateFragment(Activity activity, Class<F> cls, ARG argument) {
-        Bundle args = new Bundle();
-        writeArgument(args, argument);
-        return (F) Fragment.instantiate(activity, cls.getName(), args);
-    }
-
-
-    @NonNull public static <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> Intent createIntent(Activity activity, Class<A> cls, ARG argument) {
-        return writeArgument(new Intent(activity, cls), argument);
     }
 }

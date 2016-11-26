@@ -17,7 +17,6 @@ package it.cosenonjaviste.mv2m;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Parcelable;
 
 public class ActivityHolder {
 
@@ -33,45 +32,5 @@ public class ActivityHolder {
 
     public void startActivity(Intent intent) {
         viewModelContainer.startActivity(intent);
-    }
-
-    public void startActivityForResult(Intent intent, int requestCode) {
-        viewModelContainer.startActivityForResult(intent, requestCode);
-    }
-
-    public void finishActivity() {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.finish();
-        }
-    }
-
-    public void finishActivity(ActivityResult result) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            Intent intent = new Intent();
-            Parcelable data = result.getData();
-            intent.putExtra(ViewModelManager.RESULT_DATA, data);
-            activity.setResult(result.isResultOk() ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
-            activity.finish();
-        }
-    }
-
-    public <ARG, VM extends ViewModel<ARG, ?>, F extends ViewModelFragment<VM>> F instantiateFragment(Class<F> cls, ARG argument) {
-        return ArgumentManager.instantiateFragment(getActivity(), cls, argument);
-    }
-
-    public <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> void startActivity(Class<A> cls, ARG argument) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.startActivity(ArgumentManager.createIntent(activity, cls, argument));
-        }
-    }
-
-    public <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> void startActivityForResult(Class<A> cls, int requestCode, ARG argument) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.startActivityForResult(ArgumentManager.createIntent(activity, cls, argument), requestCode);
-        }
     }
 }

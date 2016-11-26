@@ -3,6 +3,7 @@ package it.cosenonjaviste.ui.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,6 @@ import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.mv2m.ArgumentManager;
-import it.cosenonjaviste.mv2m.ViewModel;
-import it.cosenonjaviste.mv2m.ViewModelFragment;
 
 public class SingleFragmentActivity extends AppCompatActivity {
 
@@ -34,7 +33,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static <ARG, VM extends ViewModel<ARG, ?>, F extends ViewModelFragment<VM>> void open(FragmentActivity activity, Class<F> viewClass, ARG arg) {
+    public static <ARG extends Parcelable, F extends Fragment> void open(FragmentActivity activity, Class<F> viewClass, ARG arg) {
         Intent intent = createIntent(activity, viewClass);
         ArgumentManager.writeArgument(intent, arg);
         activity.startActivity(intent);
