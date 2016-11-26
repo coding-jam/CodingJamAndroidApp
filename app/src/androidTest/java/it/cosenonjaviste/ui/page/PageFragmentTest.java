@@ -3,7 +3,6 @@ package it.cosenonjaviste.ui.page;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
@@ -13,7 +12,7 @@ import it.cosenonjaviste.ui.CnjDaggerRule;
 
 public class PageFragmentTest {
 
-    @Mock MockWebServerWrapper server;
+    MockWebServerWrapper server = new MockWebServerWrapper();
 
     @Rule public FragmentRule fragmentRule = new FragmentRule(PageFragment.class);
 

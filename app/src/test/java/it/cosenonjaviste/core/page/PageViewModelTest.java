@@ -1,14 +1,14 @@
 package it.cosenonjaviste.core.page;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
+import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Attachment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
@@ -18,12 +18,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
 public class PageViewModelTest {
+
+    @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
     @Mock Navigator navigator;
 
-    @InjectMocks PageViewModel viewModel;
+    @InjectFromComponent PageViewModel viewModel;
 
     @Test
     public void testParcelable() {

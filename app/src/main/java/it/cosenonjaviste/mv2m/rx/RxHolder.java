@@ -20,9 +20,11 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.observables.ConnectableObservable;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class RxHolder {
@@ -54,15 +56,10 @@ public class RxHolder {
         if (loadingAction != null) {
             loadingAction.call(true);
         }
-        ConnectableObservable<T> replay = observable.compose(new Observable.Transformer<T, T>() {
-            @Override public Observable<T> call(Observable<T> observable1) {
-                return schedulerManager.bindObservable(observable1).doOnError(new Action1<Throwable>() {
-                    @Override public void call(Throwable t) {
-                        schedulerManager.logException(t);
-                    }
-                });
-            }
-        }).replay();
+        ConnectableObservable<T> replay = observable.compose(observable1 ->
+                observable1.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .doOnError(t -> schedulerManager.logException(t))
+        ).replay();
         connectableSubscriptions.add(replay.connect());
         final ObservableWithObserver<T> observableWithObserver = new ObservableWithObserver<>(replay);
         final Observer<T> observer = new Observer<T>() {

@@ -1,13 +1,13 @@
 package it.cosenonjaviste.core.contact;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.MessageManager;
+import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
 
@@ -18,12 +18,13 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ContactViewModelTest {
+
+    @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
     @Mock MailJetService mailJetService;
 
-    @InjectMocks ContactViewModel viewModel;
+    @InjectFromComponent ContactViewModel viewModel;
 
     @Mock MessageManager messageManager;
 

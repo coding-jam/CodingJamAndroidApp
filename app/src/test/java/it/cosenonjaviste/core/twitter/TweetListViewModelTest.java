@@ -1,28 +1,29 @@
 package it.cosenonjaviste.core.twitter;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.ParcelableTester;
+import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.TwitterService;
 import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TweetListViewModelTest {
+
+    @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
     @Mock TwitterService twitterService;
 
-    @InjectMocks TweetListViewModel viewModel;
+    @InjectFromComponent TweetListViewModel viewModel;
 
     @Test
     public void testParcelable() {

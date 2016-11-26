@@ -10,12 +10,8 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import rx.functions.Func1;
 
-@Singleton
 public class MockWebServerWrapper {
 
     private static MockWebServer server;
@@ -24,7 +20,7 @@ public class MockWebServerWrapper {
 
     private static Func1<RecordedRequest, MockResponse> dispatchFunction;
 
-    @Inject public MockWebServerWrapper() {
+    public MockWebServerWrapper() {
         if (server == null) {
             server = new MockWebServer();
             try {

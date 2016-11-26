@@ -1,19 +1,19 @@
 package it.cosenonjaviste.core.author;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
 import it.cosenonjaviste.TestData;
+import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListArgument;
+import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
 
@@ -23,10 +23,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AuthorListViewModelTest {
 
-    @InjectMocks AuthorListViewModel viewModel;
+    @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
+
+    @InjectFromComponent AuthorListViewModel viewModel;
 
     @Mock WordPressService wordPressService;
 
