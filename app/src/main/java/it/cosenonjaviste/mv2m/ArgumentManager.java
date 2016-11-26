@@ -77,31 +77,12 @@ public class ArgumentManager {
         return bundle;
     }
 
-    /**
-     * @deprecated Use {@link ActivityHolder#startActivity(Class, Object)} instead.
-     */
-    @Deprecated
-    public static <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> void startActivity(Activity activity, Class<A> cls, ARG argument) {
-        if (activity != null) {
-            activity.startActivity(createIntent(activity, cls, argument));
-        }
-    }
-
     public static <ARG, VM extends ViewModel<ARG, ?>, F extends ViewModelFragment<VM>> F instantiateFragment(Activity activity, Class<F> cls, ARG argument) {
         Bundle args = new Bundle();
         writeArgument(args, argument);
         return (F) Fragment.instantiate(activity, cls.getName(), args);
     }
 
-    /**
-     * @deprecated Use {@link ActivityHolder#startActivityForResult(Class, int, Object)} instead.
-     */
-    @Deprecated
-    public static <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> void startActivityForResult(Activity activity, Class<A> cls, int requestCode, ARG argument) {
-        if (activity != null) {
-            activity.startActivityForResult(createIntent(activity, cls, argument), requestCode);
-        }
-    }
 
     @NonNull public static <ARG, VM extends ViewModel<ARG, ?>, A extends ViewModelActivity<VM>> Intent createIntent(Activity activity, Class<A> cls, ARG argument) {
         return writeArgument(new Intent(activity, cls), argument);
