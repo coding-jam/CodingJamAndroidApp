@@ -18,8 +18,11 @@ package it.cosenonjaviste.mv2m;
 import android.app.Activity;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
-public abstract class ViewModel<A, M extends Parcelable> {
+import it.codingjam.lifecyclebinder.DefaultLifeCycleAware;
+
+public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycleAware<Fragment> {
 
     public static final String MODEL = "model";
 
@@ -35,10 +38,25 @@ public abstract class ViewModel<A, M extends Parcelable> {
     @Deprecated
     protected Activity activity;
 
+    @Override public void onPause(Fragment view) {
+        pause();
+    }
+
     public void pause() {
     }
 
+    @Override public void onResume(Fragment view) {
+        resume();
+    }
+
     public void resume() {
+    }
+
+    @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
+        detachView();
+        if (!changingConfigurations) {
+            destroy();
+        }
     }
 
     public void destroy() {
@@ -77,20 +95,5 @@ public abstract class ViewModel<A, M extends Parcelable> {
     public final void attachActivity(ViewModelContainer<?> view) {
         this.activityHolder.setViewModelContainer(view);
         activity = view.getActivity();
-    }
-
-    public ActivityResult onBackPressed() {
-        return null;
-    }
-
-    public void onResult(int requestCode, ActivityResult activityResult) {
-    }
-
-    public int getOptionMenuId() {
-        return -1;
-    }
-
-    public boolean onOptionsItemSelected(int itemId) {
-        return false;
     }
 }
