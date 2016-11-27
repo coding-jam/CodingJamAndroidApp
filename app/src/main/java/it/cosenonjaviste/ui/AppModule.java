@@ -5,7 +5,6 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
 
 import javax.inject.Singleton;
 
@@ -13,6 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
 import it.cosenonjaviste.model.MailJetService;
+import it.cosenonjaviste.model.MyAdapterFactory;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import retrofit.RestAdapter;
@@ -30,7 +30,7 @@ public class AppModule {
     @Provides @Singleton public Gson provideGson() {
         return new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .registerTypeAdapterFactory(new AutoValueGsonTypeAdapterFactory())
+            .registerTypeAdapterFactory(MyAdapterFactory.create())
             .create();
     }
 
