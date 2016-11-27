@@ -17,6 +17,7 @@ package it.cosenonjaviste.mv2m.rx;
 
 
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 
 import it.cosenonjaviste.mv2m.ViewModel;
 import rx.Observable;
@@ -29,8 +30,10 @@ public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, 
 
     protected final CompositeSubscription subscription = new CompositeSubscription();
 
-    @Override public void destroy() {
-        subscription.clear();
+    @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
+        if (!changingConfigurations) {
+            subscription.clear();
+        }
     }
 
     public <T> void subscribe(Action1<Boolean> loadingAction, Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {

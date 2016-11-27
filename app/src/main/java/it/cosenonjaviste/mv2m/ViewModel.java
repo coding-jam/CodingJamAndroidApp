@@ -54,15 +54,6 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
     public void resume() {
     }
 
-    @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
-        if (!changingConfigurations) {
-            destroy();
-        }
-    }
-
-    public void destroy() {
-    }
-
     @NonNull protected abstract M createModel();
 
     public void initArgumentAndModel(A arguments, M model) {
