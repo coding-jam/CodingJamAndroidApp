@@ -20,33 +20,26 @@ import android.os.Parcelable;
 
 import it.cosenonjaviste.mv2m.ViewModel;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, M> {
 
-    private RxHolder rxHolder;
-
-    public RxViewModel() {
-        rxHolder = new RxHolder();
-    }
-
-    @Override public void resume() {
-        rxHolder.resubscribePendingObservable();
-    }
-
-    @Override public void pause() {
-        rxHolder.pause();
-    }
+    protected final CompositeSubscription subscription = new CompositeSubscription();
 
     @Override public void destroy() {
-        rxHolder.destroy();
+        subscription.clear();
     }
 
     public <T> void subscribe(Action1<Boolean> loadingAction, Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribe(loadingAction, observable, onNext, onError);
-    }
-
-    public <T> void subscribe(Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
-        rxHolder.subscribe(observable, onNext, onError);
+        loadingAction.call(true);
+        subscription.add(observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingAction.call(false))
+                .subscribe(onNext, onError)
+        );
     }
 }
