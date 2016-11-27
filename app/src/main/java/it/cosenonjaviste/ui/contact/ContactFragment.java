@@ -13,10 +13,10 @@ import javax.inject.Provider;
 import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.contact.ContactViewModel;
 import it.cosenonjaviste.databinding.ContactBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
+import it.cosenonjaviste.ui.MessageManager;
 import rx.Subscription;
 
 public class ContactFragment extends Fragment {

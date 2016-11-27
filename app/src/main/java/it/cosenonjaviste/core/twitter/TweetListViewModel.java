@@ -14,10 +14,9 @@ import rx.Observable;
 
 public class TweetListViewModel extends RxListViewModel<Void, TweetListModel> {
 
-    private TwitterService twitterService;
+    @Inject TwitterService twitterService;
 
-    @Inject public TweetListViewModel(TwitterService twitterService) {
-        this.twitterService = twitterService;
+    @Inject public TweetListViewModel() {
     }
 
     @NonNull @Override protected TweetListModel createModel() {

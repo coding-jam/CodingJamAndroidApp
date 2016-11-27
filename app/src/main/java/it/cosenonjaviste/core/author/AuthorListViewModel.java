@@ -19,12 +19,11 @@ import rx.Observable;
 
 public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
 
-    private WordPressService wordPressService;
+    @Inject WordPressService wordPressService;
 
     public final PublishRelay<PostListArgument> postListNavigationEvents = PublishRelay.create();
 
-    @Inject public AuthorListViewModel(WordPressService wordPressService) {
-        this.wordPressService = wordPressService;
+    @Inject public AuthorListViewModel() {
     }
 
     @NonNull @Override protected AuthorListModel createModel() {

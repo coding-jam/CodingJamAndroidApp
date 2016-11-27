@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Category;
@@ -19,12 +18,11 @@ import rx.Observable;
 
 public class CategoryListViewModel extends RxListViewModel<Void, CategoryListModel> {
 
-    private WordPressService wordPressService;
+    @Inject WordPressService wordPressService;
 
     public final PublishRelay<PostListArgument> postListNavigationEvents = PublishRelay.create();
 
-    @Inject public CategoryListViewModel(WordPressService wordPressService, Navigator navigator) {
-        this.wordPressService = wordPressService;
+    @Inject public CategoryListViewModel() {
     }
 
     @NonNull @Override protected CategoryListModel createModel() {

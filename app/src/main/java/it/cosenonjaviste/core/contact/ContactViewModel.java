@@ -18,7 +18,7 @@ import rx.Observable;
 
 public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
-    private MailJetService mailJetService;
+    @Inject MailJetService mailJetService;
 
     public final ObservableBoolean sending = new ObservableBoolean();
 
@@ -30,8 +30,7 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
         }
     };
 
-    @Inject public ContactViewModel(MailJetService mailJetService) {
-        this.mailJetService = mailJetService;
+    @Inject public ContactViewModel() {
     }
 
     @NonNull @Override protected ContactModel createModel() {

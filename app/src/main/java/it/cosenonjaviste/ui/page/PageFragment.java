@@ -23,10 +23,10 @@ import javax.inject.Provider;
 import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
+import it.cosenonjaviste.ui.Navigator;
 import rx.Subscription;
 
 public class PageFragment extends Fragment {

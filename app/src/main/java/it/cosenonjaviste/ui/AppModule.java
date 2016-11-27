@@ -12,8 +12,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
-import it.cosenonjaviste.core.MessageManager;
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
@@ -70,10 +68,10 @@ public class AppModule {
     }
 
     @Provides public Navigator provideNavigator() {
-        return new AndroidNavigator();
+        return new Navigator();
     }
 
     @Provides public MessageManager provideMessageManager() {
-        return new SnackbarMessageManager();
+        return new MessageManager();
     }
 }

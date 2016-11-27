@@ -12,10 +12,10 @@ import javax.inject.Provider;
 
 import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
+import it.cosenonjaviste.ui.Navigator;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 import rx.Subscription;
 
