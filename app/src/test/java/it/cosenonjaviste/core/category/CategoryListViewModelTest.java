@@ -2,25 +2,21 @@ package it.cosenonjaviste.core.category;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 
 import java.util.Arrays;
 
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
+import rx.observers.AssertableSubscriber;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CategoryListViewModelTest {
@@ -30,10 +26,6 @@ public class CategoryListViewModelTest {
     @Mock WordPressService wordPressService;
 
     @InjectFromComponent CategoryListViewModel viewModel;
-
-    @Mock Navigator navigator;
-
-    @Captor ArgumentCaptor<PostListArgument> argumentCaptor;
 
     @Test
     public void testParcelable() {
@@ -92,12 +84,12 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
+        AssertableSubscriber<PostListArgument> subscriber = viewModel.postListNavigationEvents.test();
+
         CategoryListModel categoryListModel = viewModel.initAndResume();
 
         viewModel.goToPosts(1);
 
-        verify(navigator).openPostList(any(), argumentCaptor.capture());
-
-        assertThat(argumentCaptor.getValue().getCategory()).isEqualTo(categoryListModel.get(1));
+        assertThat(subscriber.getOnNextEvents().get(0).getCategory()).isEqualTo(categoryListModel.get(1));
     }
 }

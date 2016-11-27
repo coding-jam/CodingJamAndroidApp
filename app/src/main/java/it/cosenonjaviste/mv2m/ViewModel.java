@@ -15,7 +15,6 @@
  */
 package it.cosenonjaviste.mv2m;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -32,10 +31,7 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
 
     protected A argument;
 
-    protected Activity activity;
-
     @Override public void onCreate(Fragment view, Bundle state, Intent intent, Bundle a) {
-        activity = view.getActivity();
         M model = null;
         if (state != null) {
             model = state.getParcelable(ViewModel.MODEL);
@@ -59,17 +55,12 @@ public abstract class ViewModel<A, M extends Parcelable> extends DefaultLifeCycl
     }
 
     @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
-        detachView();
         if (!changingConfigurations) {
             destroy();
         }
     }
 
     public void destroy() {
-    }
-
-    public void detachView() {
-        activity = null;
     }
 
     @NonNull protected abstract M createModel();

@@ -1,21 +1,19 @@
 package it.cosenonjaviste.core.contact;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
-import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.MailJetService;
 import rx.Observable;
+import rx.observers.AssertableSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ContactViewModelTest {
@@ -26,12 +24,11 @@ public class ContactViewModelTest {
 
     @InjectFromComponent ContactViewModel viewModel;
 
-    @Mock MessageManager messageManager;
+    private AssertableSubscriber<Integer> subscriber;
 
-    @Test
-    public void testParcelable() {
-//        ContactModel model = new ContactModel();
-//        ParcelableTester.check(model, ContactModel.CREATOR);
+    @Before
+    public void setUp() throws Exception {
+        subscriber = viewModel.messageEvents.test();
     }
 
     @Test
@@ -65,7 +62,7 @@ public class ContactViewModelTest {
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        verify(messageManager).showMessage(any(), eq(R.string.message_sent));
+        subscriber.assertValue(R.string.message_sent);
     }
 
     @Test
@@ -79,7 +76,7 @@ public class ContactViewModelTest {
         viewModel.send();
 
         checkErrors(model, 0, 0, 0);
-        verify(messageManager).showMessage(any(), eq(R.string.error_sending_message));
+        subscriber.assertValue(R.string.error_sending_message);
     }
 
     private void compileForm(ContactModel model, String name, String email, String message) {

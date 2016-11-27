@@ -3,11 +3,12 @@ package it.cosenonjaviste.core.post;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.jakewharton.rxrelay.PublishRelay;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
@@ -18,13 +19,11 @@ import rx.Observable;
 
 public class PostListViewModel extends RxListViewModel<PostListArgument, PostListModel> {
 
-    private WordPressService wordPressService;
+    @Inject WordPressService wordPressService;
 
-    private Navigator navigator;
+    public final PublishRelay<Post> postNavigationEvents = PublishRelay.create();
 
-    @Inject public PostListViewModel(WordPressService wordPressService, Navigator navigator) {
-        this.wordPressService = wordPressService;
-        this.navigator = navigator;
+    @Inject public PostListViewModel() {
     }
 
     @NonNull @Override protected PostListModel createModel() {
@@ -42,7 +41,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
 
     public void goToDetail(int position) {
         Post item = model.getItems().get(position);
-        navigator.openDetail(activity, item);
+        postNavigationEvents.call(item);
     }
 
     public void loadNextPage() {

@@ -5,10 +5,11 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
+import com.jakewharton.rxrelay.PublishRelay;
+
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.core.MessageManager;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
@@ -19,9 +20,9 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
     private MailJetService mailJetService;
 
-    private MessageManager messageManager;
+    public final ObservableBoolean sending = new ObservableBoolean();
 
-    public ObservableBoolean sending = new ObservableBoolean();
+    public final PublishRelay<Integer> messageEvents = PublishRelay.create();
 
     private OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
         @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
@@ -29,9 +30,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
         }
     };
 
-    @Inject public ContactViewModel(MailJetService mailJetService, MessageManager messageManager) {
+    @Inject public ContactViewModel(MailJetService mailJetService) {
         this.mailJetService = mailJetService;
-        this.messageManager = messageManager;
     }
 
     @NonNull @Override protected ContactModel createModel() {
@@ -92,8 +92,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
             subscribe(
                     sending::set,
                     observable,
-                    r -> messageManager.showMessage(activity, R.string.message_sent),
-                    t -> messageManager.showMessage(activity, R.string.error_sending_message)
+                    r -> messageEvents.call(R.string.message_sent),
+                    t -> messageEvents.call(R.string.error_sending_message)
             );
         }
     }

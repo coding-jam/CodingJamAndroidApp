@@ -1,28 +1,24 @@
 package it.cosenonjaviste.core.page;
 
+import android.support.v4.util.Pair;
+
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
-import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Attachment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
+import rx.observers.AssertableSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
 
 public class PageViewModelTest {
 
     @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
-
-    @Mock Navigator navigator;
 
     @InjectFromComponent PageViewModel viewModel;
 
@@ -42,10 +38,11 @@ public class PageViewModelTest {
 
     @Test
     public void testShare() {
+        AssertableSubscriber<Pair<String, String>> subscriber = viewModel.shareEvents.test();
         viewModel.initAndResume(TestData.createPost(1));
 
         viewModel.share();
 
-        verify(navigator).share(any(), anyString(), anyString());
+        subscriber.assertValueCount(1);
     }
 }

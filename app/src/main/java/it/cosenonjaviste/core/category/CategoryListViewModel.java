@@ -3,6 +3,8 @@ package it.cosenonjaviste.core.category;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.jakewharton.rxrelay.PublishRelay;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,11 +21,10 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     private WordPressService wordPressService;
 
-    private Navigator navigator;
+    public final PublishRelay<PostListArgument> postListNavigationEvents = PublishRelay.create();
 
     @Inject public CategoryListViewModel(WordPressService wordPressService, Navigator navigator) {
         this.wordPressService = wordPressService;
-        this.navigator = navigator;
     }
 
     @NonNull @Override protected CategoryListModel createModel() {
@@ -44,6 +45,6 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        navigator.openPostList(activity, new PostListArgument(category));
+        postListNavigationEvents.call(new PostListArgument(category));
     }
 }
