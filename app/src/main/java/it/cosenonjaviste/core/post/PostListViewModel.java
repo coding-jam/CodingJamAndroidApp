@@ -64,11 +64,11 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         if (getArgument() == null) {
             observable = wordPressService.listPosts(page);
         } else {
-            Category category = getArgument().getCategory();
+            Category category = getArgument().category();
             if (category != null) {
                 observable = wordPressService.listCategoryPosts(category.id(), page);
             } else {
-                Author author = getArgument().getAuthor();
+                Author author = getArgument().author();
                 observable = wordPressService.listAuthorPosts(author.id(), page);
             }
         }
@@ -81,7 +81,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
 
     public boolean isToolbarVisible() {
         PostListArgument arg = getArgument();
-        return arg != null && (arg.getAuthor() != null || arg.getCategory() != null);
+        return arg != null && (arg.author() != null || arg.category() != null);
     }
 
     public String getToolbarTitle() {
@@ -89,11 +89,11 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         if (arg == null) {
             return null;
         } else {
-            Author author = arg.getAuthor();
+            Author author = arg.author();
             if (author != null) {
                 return author.name();
             } else {
-                Category category = arg.getCategory();
+                Category category = arg.category();
                 if (category != null) {
                     return category.title();
                 } else {

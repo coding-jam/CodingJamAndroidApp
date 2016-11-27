@@ -97,7 +97,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitleAuthor() {
-        viewModel.initAndResume(new PostListArgument(TestData.createAuthor(1)));
+        viewModel.initAndResume(PostListArgument.create(TestData.createAuthor(1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("name 1 last name 1");
@@ -105,7 +105,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitle() {
-        viewModel.initAndResume(new PostListArgument(Category.create(123, "aaa", 1)));
+        viewModel.initAndResume(PostListArgument.create(Category.create(123, "aaa", 1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("aaa");

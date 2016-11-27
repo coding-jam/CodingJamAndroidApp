@@ -75,6 +75,6 @@ public class AuthorListViewModelTest {
         viewModel.goToAuthorDetail(1);
 
         PostListArgument argument = subscriber.getOnNextEvents().get(0);
-        assertThat(argument.getAuthor()).isEqualTo(authorListModel.get(1));
+        assertThat(argument.author()).isEqualTo(authorListModel.get(1));
     }
 }

@@ -41,7 +41,7 @@ public class AuthorPostListViewModelTest {
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
                 .thenReturn(TestData.postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(new PostListArgument(TestData.createAuthor(145)));
+        PostListModel model = viewModel.initAndResume(PostListArgument.create(TestData.createAuthor(145)));
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

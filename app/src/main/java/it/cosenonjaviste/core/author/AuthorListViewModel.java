@@ -44,6 +44,6 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
 
     public void goToAuthorDetail(int position) {
         Author author = model.get(position);
-        postListNavigationEvents.call(new PostListArgument(author));
+        postListNavigationEvents.call(PostListArgument.create(author));
     }
 }

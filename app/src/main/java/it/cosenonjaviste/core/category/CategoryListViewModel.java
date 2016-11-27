@@ -43,6 +43,6 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     public void goToPosts(int position) {
         Category category = model.get(position);
-        postListNavigationEvents.call(new PostListArgument(category));
+        postListNavigationEvents.call(PostListArgument.create(category));
     }
 }

@@ -90,6 +90,6 @@ public class CategoryListViewModelTest {
 
         viewModel.goToPosts(1);
 
-        assertThat(subscriber.getOnNextEvents().get(0).getCategory()).isEqualTo(categoryListModel.get(1));
+        assertThat(subscriber.getOnNextEvents().get(0).category()).isEqualTo(categoryListModel.get(1));
     }
 }
