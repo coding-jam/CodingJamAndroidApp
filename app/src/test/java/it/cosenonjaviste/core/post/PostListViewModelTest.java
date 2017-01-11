@@ -2,22 +2,25 @@ package it.cosenonjaviste.core.post;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 
 import java.util.List;
 
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
-import rx.observers.AssertableSubscriber;
 
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PostListViewModelTest {
@@ -25,6 +28,10 @@ public class PostListViewModelTest {
     @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
     @Mock WordPressService wordPressService;
+
+    @Mock Navigator navigator;
+
+    @Captor ArgumentCaptor<Post> captor;
 
     @InjectFromComponent PostListViewModel viewModel;
 
@@ -74,13 +81,13 @@ public class PostListViewModelTest {
         when(wordPressService.listPosts(eq(1)))
                 .thenReturn(postResponse(1));
 
-        AssertableSubscriber<Post> subscriber = viewModel.postNavigationEvents.test();
         PostListModel model = viewModel.initAndResume();
         Post firstPost = model.getItems().get(0);
 
         viewModel.goToDetail(0);
 
-        Post detailPost = subscriber.getOnNextEvents().get(0);
+        verify(navigator).openDetail(captor.capture());
+        Post detailPost = captor.getValue();
         String url = detailPost.url();
 
         assertThat(url).isNotNull();

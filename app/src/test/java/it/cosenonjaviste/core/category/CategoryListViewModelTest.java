@@ -7,16 +7,17 @@ import org.mockito.Mock;
 import java.util.Arrays;
 
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
-import rx.observers.AssertableSubscriber;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CategoryListViewModelTest {
@@ -24,6 +25,8 @@ public class CategoryListViewModelTest {
     @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
     @Mock WordPressService wordPressService;
+
+    @Mock Navigator navigator;
 
     @InjectFromComponent CategoryListViewModel viewModel;
 
@@ -84,12 +87,10 @@ public class CategoryListViewModelTest {
         when(wordPressService.listCategories())
                 .thenReturn(categoryResponse(3));
 
-        AssertableSubscriber<PostListArgument> subscriber = viewModel.postListNavigationEvents.test();
-
         CategoryListModel categoryListModel = viewModel.initAndResume();
 
         viewModel.goToPosts(1);
 
-        assertThat(subscriber.getOnNextEvents().get(0).category()).isEqualTo(categoryListModel.get(1));
+        verify(navigator).openPostList(PostListArgument.create(categoryListModel.get(1)));
     }
 }

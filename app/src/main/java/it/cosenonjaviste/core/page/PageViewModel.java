@@ -2,12 +2,10 @@ package it.cosenonjaviste.core.page;
 
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
-
-import com.jakewharton.rxrelay.PublishRelay;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mv2m.ViewModel;
 
@@ -15,7 +13,7 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     public ObservableBoolean loading = new ObservableBoolean();
 
-    public final PublishRelay<Pair<String, String>> shareEvents = PublishRelay.create();
+    @Inject Navigator navigator;
 
     @Inject public PageViewModel() {
     }
@@ -42,6 +40,6 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     public void share() {
         Post post = model.getPost();
-        shareEvents.call(Pair.create(post.title(), post.title() + " - " + post.url()));
+        navigator.share(post.title(), post.title() + " - " + post.url());
     }
 }

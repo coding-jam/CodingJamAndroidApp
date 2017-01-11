@@ -26,8 +26,6 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.page.PageViewModel;
 import it.cosenonjaviste.databinding.PostDetailBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.Navigator;
-import rx.Subscription;
 
 public class PageFragment extends Fragment {
 
@@ -35,21 +33,10 @@ public class PageFragment extends Fragment {
 
     PageViewModel viewModel;
 
-    @Inject Navigator navigator;
-
-    private Subscription subscription;
-
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         CoseNonJavisteApp.getComponent(this).inject(this);
         LifeCycleBinder.bind(this);
-        subscription = viewModel.shareEvents.subscribe(
-                pair -> navigator.share(getActivity(), pair.first, pair.second));
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        subscription.unsubscribe();
     }
 
     @SuppressLint("SetJavaScriptEnabled") @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

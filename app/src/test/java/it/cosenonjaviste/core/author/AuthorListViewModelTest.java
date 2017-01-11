@@ -8,15 +8,16 @@ import java.util.Arrays;
 
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.WordPressService;
 import rx.Observable;
-import rx.observers.AssertableSubscriber;
 
 import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AuthorListViewModelTest {
@@ -26,6 +27,8 @@ public class AuthorListViewModelTest {
     @InjectFromComponent AuthorListViewModel viewModel;
 
     @Mock WordPressService wordPressService;
+
+    @Mock Navigator navigator;
 
     @Test
     public void testParcelable() {
@@ -68,13 +71,10 @@ public class AuthorListViewModelTest {
         when(wordPressService.listAuthors())
                 .thenReturn(authorResponse(2));
 
-        AssertableSubscriber<PostListArgument> subscriber = viewModel.postListNavigationEvents.test();
-
         AuthorListModel authorListModel = viewModel.initAndResume();
 
         viewModel.goToAuthorDetail(1);
 
-        PostListArgument argument = subscriber.getOnNextEvents().get(0);
-        assertThat(argument.author()).isEqualTo(authorListModel.get(1));
+        verify(navigator).openPostList(PostListArgument.create(authorListModel.get(1)));
     }
 }
