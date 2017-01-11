@@ -2,6 +2,7 @@ package it.cosenonjaviste.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
@@ -46,5 +47,9 @@ public class AndroidNavigator extends DefaultLifeCycleAware<Fragment> implements
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
         activity.startActivity(Intent.createChooser(sendIntent, activity.getResources().getText(R.string.share_post)));
+    }
+
+    @Override public void showMessage(int message) {
+        Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 }

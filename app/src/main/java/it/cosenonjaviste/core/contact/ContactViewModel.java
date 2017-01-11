@@ -5,11 +5,10 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
-import com.jakewharton.rxrelay.PublishRelay;
-
 import javax.inject.Inject;
 
 import it.cosenonjaviste.R;
+import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
@@ -20,9 +19,9 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
     @Inject MailJetService mailJetService;
 
-    public final ObservableBoolean sending = new ObservableBoolean();
+    @Inject Navigator navigator;
 
-    public final PublishRelay<Integer> messageEvents = PublishRelay.create();
+    public final ObservableBoolean sending = new ObservableBoolean();
 
     private OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
         @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
@@ -91,8 +90,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
             subscribe(
                     sending::set,
                     observable,
-                    r -> messageEvents.call(R.string.message_sent),
-                    t -> messageEvents.call(R.string.error_sending_message)
+                    r ->  navigator.showMessage(R.string.message_sent),
+                    t -> navigator.showMessage(R.string.error_sending_message)
             );
         }
     }

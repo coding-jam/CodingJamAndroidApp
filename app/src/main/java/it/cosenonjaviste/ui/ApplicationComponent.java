@@ -1,14 +1,12 @@
 package it.cosenonjaviste.ui;
 
+import android.support.annotation.VisibleForTesting;
+
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
-import it.cosenonjaviste.core.author.AuthorListViewModel;
-import it.cosenonjaviste.core.category.CategoryListViewModel;
-import it.cosenonjaviste.core.contact.ContactViewModel;
-import it.cosenonjaviste.core.page.PageViewModel;
-import it.cosenonjaviste.core.post.PostListViewModel;
-import it.cosenonjaviste.core.twitter.TweetListViewModel;
 import it.cosenonjaviste.ui.author.AuthorListFragment;
 import it.cosenonjaviste.ui.category.CategoryListFragment;
 import it.cosenonjaviste.ui.contact.ContactFragment;
@@ -20,17 +18,7 @@ import it.cosenonjaviste.ui.twitter.TweetListFragment;
 @Component(modules = {AppModule.class})
 public interface ApplicationComponent {
 
-    AuthorListViewModel getAuthorListViewModel();
-
-    ContactViewModel getContactViewModel();
-
-    CategoryListViewModel getCategoryListViewModel();
-
-    PostListViewModel getPostListViewModel();
-
-    TweetListViewModel getTweetListViewModel();
-
-    PageViewModel getPageViewModel();
+    @VisibleForTesting Gson gson();
 
     void inject(PostListFragment postListFragment);
 

@@ -71,8 +71,4 @@ public class AppModule {
     @Provides public Navigator provideNavigator() {
         return new AndroidNavigator();
     }
-
-    @Provides public MessageManager provideMessageManager() {
-        return new MessageManager();
-    }
 }

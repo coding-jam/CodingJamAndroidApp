@@ -13,6 +13,7 @@ import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.category.CategoryListFragment;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
@@ -28,7 +29,7 @@ public class CategoryListViewModelTest {
 
     @Mock Navigator navigator;
 
-    @InjectFromComponent CategoryListViewModel viewModel;
+    @InjectFromComponent(CategoryListFragment.class) CategoryListViewModel viewModel;
 
     @Test
     public void testParcelable() {

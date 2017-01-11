@@ -11,6 +11,7 @@ import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.post.PostListFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
@@ -25,7 +26,7 @@ public class AuthorPostListViewModelTest {
 
     @Mock WordPressService wordPressService;
 
-    @InjectFromComponent PostListViewModel viewModel;
+    @InjectFromComponent(PostListFragment.class) PostListViewModel viewModel;
 
     @Test
     public void testParcelable() {

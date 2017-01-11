@@ -15,6 +15,7 @@ import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.post.PostListFragment;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.postResponse;
@@ -33,7 +34,7 @@ public class PostListViewModelTest {
 
     @Captor ArgumentCaptor<Post> captor;
 
-    @InjectFromComponent PostListViewModel viewModel;
+    @InjectFromComponent(PostListFragment.class) PostListViewModel viewModel;
 
     @Test
     public void testLoad() throws InterruptedException {

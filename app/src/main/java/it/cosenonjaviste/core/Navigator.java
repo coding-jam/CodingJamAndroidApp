@@ -9,4 +9,6 @@ public interface Navigator {
     void openDetail(Post post);
 
     void share(String subject, String text);
+
+    void showMessage(int message);
 }

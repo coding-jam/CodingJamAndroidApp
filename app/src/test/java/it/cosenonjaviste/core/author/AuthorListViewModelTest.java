@@ -13,6 +13,7 @@ import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.author.AuthorListFragment;
 import rx.Observable;
 
 import static it.cosenonjaviste.TestData.authorResponse;
@@ -24,7 +25,7 @@ public class AuthorListViewModelTest {
 
     @Rule public final CnjJUnitDaggerRule daggerRule = new CnjJUnitDaggerRule();
 
-    @InjectFromComponent AuthorListViewModel viewModel;
+    @InjectFromComponent(AuthorListFragment.class) AuthorListViewModel viewModel;
 
     @Mock WordPressService wordPressService;
 

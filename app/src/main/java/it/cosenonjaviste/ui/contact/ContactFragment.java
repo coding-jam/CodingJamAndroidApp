@@ -16,8 +16,6 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.contact.ContactViewModel;
 import it.cosenonjaviste.databinding.ContactBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
-import it.cosenonjaviste.ui.MessageManager;
-import rx.Subscription;
 
 public class ContactFragment extends Fragment {
 
@@ -25,22 +23,10 @@ public class ContactFragment extends Fragment {
 
     ContactViewModel viewModel;
 
-    @Inject MessageManager messageManager;
-
-    private Subscription subscription;
-
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         CoseNonJavisteApp.getComponent(this).inject(this);
         LifeCycleBinder.bind(this);
-
-        subscription = viewModel.messageEvents.subscribe(
-                message -> messageManager.showMessage(getActivity(), message));
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        subscription.unsubscribe();
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

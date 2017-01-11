@@ -7,15 +7,16 @@ import it.cosenonjaviste.daggermock.DaggerMockRule;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.AppModule;
+import it.cosenonjaviste.ui.ApplicationComponent;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
-public class CnjJUnitDaggerRule extends DaggerMockRule<TestApplicationComponent> {
+public class CnjJUnitDaggerRule extends DaggerMockRule<ApplicationComponent> {
     public CnjJUnitDaggerRule() {
-        super(TestApplicationComponent.class, new AppModule(null));
+        super(ApplicationComponent.class, new AppModule(null));
         providesMock(WordPressService.class, TwitterService.class);
     }
 

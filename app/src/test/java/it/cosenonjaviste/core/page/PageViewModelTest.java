@@ -12,6 +12,7 @@ import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Attachment;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Post;
+import it.cosenonjaviste.ui.page.PageFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -23,7 +24,7 @@ public class PageViewModelTest {
 
     @Mock Navigator navigator;
 
-    @InjectFromComponent PageViewModel viewModel;
+    @InjectFromComponent(PageFragment.class) PageViewModel viewModel;
 
     @Test
     public void testParcelable() {

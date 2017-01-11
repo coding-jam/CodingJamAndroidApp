@@ -9,6 +9,7 @@ import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
+import it.cosenonjaviste.ui.post.PostListFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
@@ -20,7 +21,7 @@ public class CategoryPostListViewModelTest {
 
     @Mock WordPressService wordPressService;
 
-    @InjectFromComponent PostListViewModel viewModel;
+    @InjectFromComponent(PostListFragment.class) PostListViewModel viewModel;
 
     @Test
     public void testLoad() throws InterruptedException {
