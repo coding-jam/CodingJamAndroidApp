@@ -18,7 +18,6 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import rx.Observable;
 
-import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -39,7 +38,7 @@ public class PostListViewModelTest {
     @Test
     public void testLoad() throws InterruptedException {
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(postResponse(1));
+                .thenReturn(TestData.INSTANCE.postResponse(1));
 
         PostListModel model = viewModel.initAndResume();
 
@@ -49,9 +48,9 @@ public class PostListViewModelTest {
     @Test
     public void testLoadMore() {
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(postResponse(10));
+                .thenReturn(TestData.INSTANCE.postResponse(10));
         when(wordPressService.listPosts(eq(2)))
-                .thenReturn(postResponse(6));
+                .thenReturn(TestData.INSTANCE.postResponse(6));
 
         PostListModel model = viewModel.initAndResume();
         viewModel.loadNextPage();
@@ -69,7 +68,7 @@ public class PostListViewModelTest {
         assertThat(viewModel.isError().get()).isTrue();
 
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(postResponse(6));
+                .thenReturn(TestData.INSTANCE.postResponse(6));
 
         viewModel.reloadData();
 
@@ -80,7 +79,7 @@ public class PostListViewModelTest {
     @Test
     public void testGoToDetails() {
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(postResponse(1));
+                .thenReturn(TestData.INSTANCE.postResponse(1));
 
         PostListModel model = viewModel.initAndResume();
         Post firstPost = model.getItems().get(0);
@@ -105,7 +104,7 @@ public class PostListViewModelTest {
 
     @Test
     public void testToolbalTitleAuthor() {
-        viewModel.initAndResume(PostListArgument.create(TestData.createAuthor(1)));
+        viewModel.initAndResume(PostListArgument.create(TestData.INSTANCE.createAuthor(1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
         assertThat(viewModel.getToolbarTitle()).isEqualTo("name 1 last name 1");

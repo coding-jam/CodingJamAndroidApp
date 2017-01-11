@@ -33,16 +33,16 @@ public class AuthorPostListViewModelTest {
         PostListModel model = new PostListModel();
         ParcelableTester.check(model, PostListModel.CREATOR);
 
-        model.done(Arrays.asList(TestData.createPost(1), TestData.createPost(2)));
+        model.done(Arrays.asList(TestData.INSTANCE.createPost(1), TestData.INSTANCE.createPost(2)));
         ParcelableTester.check(model, PostListModel.CREATOR);
     }
 
     @Test
     public void testLoad() throws InterruptedException {
         when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
-                .thenReturn(TestData.postResponse(1));
+                .thenReturn(TestData.INSTANCE.postResponse(1));
 
-        PostListModel model = viewModel.initAndResume(PostListArgument.create(TestData.createAuthor(145)));
+        PostListModel model = viewModel.initAndResume(PostListArgument.create(TestData.INSTANCE.createAuthor(145)));
 
         assertThat(model.getItems().size()).isEqualTo(1);
         verify(wordPressService).listAuthorPosts(eq(145L), eq(1));

@@ -26,7 +26,7 @@ public class CategoryPostListViewModelTest {
     @Test
     public void testLoad() throws InterruptedException {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
-                .thenReturn(TestData.postResponse(1));
+                .thenReturn(TestData.INSTANCE.postResponse(1));
 
         PostListModel model = viewModel.initAndResume(PostListArgument.create(Category.create(1, "cat", 10)));
 
@@ -36,9 +36,9 @@ public class CategoryPostListViewModelTest {
     @Test
     public void testLoadMore() {
         when(wordPressService.listCategoryPosts(eq(1L), eq(1)))
-                .thenReturn(TestData.postResponse(10));
+                .thenReturn(TestData.INSTANCE.postResponse(10));
         when(wordPressService.listCategoryPosts(eq(1L), eq(2)))
-                .thenReturn(TestData.postResponse(5));
+                .thenReturn(TestData.INSTANCE.postResponse(5));
 
         PostListModel model = viewModel.initAndResume(PostListArgument.create(Category.create(1, "cat", 10)));
         viewModel.loadNextPage();

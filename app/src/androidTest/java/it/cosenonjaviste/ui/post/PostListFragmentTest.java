@@ -33,9 +33,9 @@ public class PostListFragmentTest {
 
     @Before public void setUp() {
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(TestData.postResponse(0, 10));
+                .thenReturn(TestData.INSTANCE.postResponse(0, 10));
         when(wordPressService.listPosts(eq(2)))
-                .thenReturn(TestData.postResponse(10, 10));
+                .thenReturn(TestData.INSTANCE.postResponse(10, 10));
     }
 
     @Test public void testPostList() throws InterruptedException {

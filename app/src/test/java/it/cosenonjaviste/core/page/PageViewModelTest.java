@@ -42,7 +42,7 @@ public class PageViewModelTest {
 
     @Test
     public void testShare() {
-        viewModel.initAndResume(TestData.createPost(1));
+        viewModel.initAndResume(TestData.INSTANCE.createPost(1));
 
         viewModel.share();
 

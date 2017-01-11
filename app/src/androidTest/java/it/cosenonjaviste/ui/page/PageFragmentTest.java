@@ -23,7 +23,7 @@ public class PageFragmentTest {
     }
 
     @Test public void testDetailFragment() {
-        fragmentRule.launchFragment(TestData.createPost(1, server.getUrl(false) + "abc"));
+        fragmentRule.launchFragment(TestData.INSTANCE.createPost(1, server.getUrl(false) + "abc"));
         TestUtils.sleep(100);
     }
 }

@@ -31,13 +31,13 @@ public class TweetListViewModelTest {
         TweetListModel model = new TweetListModel();
         ParcelableTester.check(model, TweetListModel.CREATOR);
 
-        model.done(Arrays.asList(TestData.createTweet(1), TestData.createTweet(2)));
+        model.done(Arrays.asList(TestData.INSTANCE.createTweet(1), TestData.INSTANCE.createTweet(2)));
         ParcelableTester.check(model, TweetListModel.CREATOR);
     }
 
     @Test public void testLoadTweets() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets(10));
+                .thenReturn(TestData.INSTANCE.tweets(10));
 
         TweetListModel model = viewModel.initAndResume();
 
@@ -53,7 +53,7 @@ public class TweetListViewModelTest {
         assertThat(viewModel.isError().get()).isTrue();
 
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets(10));
+                .thenReturn(TestData.INSTANCE.tweets(10));
 
         viewModel.reloadData();
 
@@ -63,9 +63,9 @@ public class TweetListViewModelTest {
 
     @Test public void testLoadMoreTweets() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(TestData.tweets(20));
+                .thenReturn(TestData.INSTANCE.tweets(20));
         Mockito.when(twitterService.loadTweets(Matchers.eq(2)))
-                .thenReturn(TestData.tweets(8));
+                .thenReturn(TestData.INSTANCE.tweets(8));
 
         TweetListModel tweetListModel = viewModel.initAndResume();
 

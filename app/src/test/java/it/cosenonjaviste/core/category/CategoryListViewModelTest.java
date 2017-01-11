@@ -6,6 +6,7 @@ import org.mockito.Mock;
 
 import java.util.Arrays;
 
+import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
@@ -16,7 +17,6 @@ import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.category.CategoryListFragment;
 import rx.Observable;
 
-import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -43,7 +43,7 @@ public class CategoryListViewModelTest {
     @Test
     public void testLoad() {
         when(wordPressService.listCategories())
-                .thenReturn(categoryResponse(3));
+                .thenReturn(TestData.INSTANCE.categoryResponse(3));
 
         CategoryListModel model = viewModel.initAndResume();
 
@@ -57,7 +57,7 @@ public class CategoryListViewModelTest {
     @Test
     public void testLoadAndPullToRefresh() {
         when(wordPressService.listCategories())
-                .thenReturn(categoryResponse(3), categoryResponse(2));
+                .thenReturn(TestData.INSTANCE.categoryResponse(3), TestData.INSTANCE.categoryResponse(2));
 
         CategoryListModel model = viewModel.initAndResume();
 
@@ -76,7 +76,7 @@ public class CategoryListViewModelTest {
         CategoryListModel model = viewModel.initAndResume();
 
         when(wordPressService.listCategories())
-                .thenReturn(categoryResponse(3));
+                .thenReturn(TestData.INSTANCE.categoryResponse(3));
 
         viewModel.reloadData();
 
@@ -86,7 +86,7 @@ public class CategoryListViewModelTest {
     @Test
     public void testGoToPosts() {
         when(wordPressService.listCategories())
-                .thenReturn(categoryResponse(3));
+                .thenReturn(TestData.INSTANCE.categoryResponse(3));
 
         CategoryListModel categoryListModel = viewModel.initAndResume();
 

@@ -30,7 +30,7 @@ public class CategoryListFragmentTest {
 
     @Test public void testCategoryList() {
         when(wordPressService.listCategories())
-                .thenReturn(TestData.categoryResponse(3));
+                .thenReturn(TestData.INSTANCE.categoryResponse(3));
 
         fragmentRule.launchFragment(new CategoryListModel());
 
