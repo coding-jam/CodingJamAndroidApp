@@ -15,6 +15,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 
 apply plugin: 'me.tatarka.retrolambda'
@@ -84,6 +85,7 @@ android {
     sourceSets {
         androidTest.java.srcDirs = ['src/androidTest/java', 'src/sharedTest/java']
         test.java.srcDirs = ['src/test/java', 'src/sharedTest/java']
+        main.java.srcDirs += 'src/main/kotlin'
     }
     dataBinding {
         enabled = true
@@ -150,6 +152,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 // Define coverage source.
