@@ -1,11 +1,10 @@
-package it.cosenonjaviste.core.model;
+package it.cosenonjaviste.core.model
 
-import com.annimon.stream.Stream;
+import com.annimon.stream.Collectors.joining
+import com.annimon.stream.Stream
 
-import static com.annimon.stream.Collectors.joining;
-
-public class JsonStubs {
-    private static final String SINGLE_POST = "{\n" +
+object JsonStubs {
+    private val SINGLE_POST = "{\n" +
             "            \"id\": 12831,\n" +
             "            \"type\": \"post\",\n" +
             "            \"slug\": \"gestione-di-una-form-con-il-data-binding-android\",\n" +
@@ -51,10 +50,10 @@ public class JsonStubs {
             "            ],\n" +
             "            \"comment_count\": 2,\n" +
             "            \"comment_status\": \"open\"\n" +
-            "        }";
+            "        }"
 
 
-    private static final String POSTS = "{\n" +
+    private val POSTS = "{\n" +
             "status: \"ok\",\n" +
             "count: 6,\n" +
             "count_total: 183,\n" +
@@ -62,20 +61,20 @@ public class JsonStubs {
             "posts: [\n" +
             "%s" +
             "]\n" +
-            "}";
+            "}"
 
-    public static String getPostList(int numberOfPost) {
-        return getPostList(0, numberOfPost);
+    fun getPostList(numberOfPost: Int): String {
+        return getPostList(0, numberOfPost)
     }
 
-    public static String getPostList(int firstPost, int numberOfPost) {
-        String s = Stream.ofRange(0, numberOfPost)
-                .map(i -> SINGLE_POST.replace("%TITLE%", "post title " + (firstPost + i)))
-                .collect(joining(","));
-        return String.format(POSTS, s);
+    fun getPostList(firstPost: Int, numberOfPost: Int): String {
+        val s = Stream.ofRange(0, numberOfPost)
+                .map({ i -> SINGLE_POST.replace("%TITLE%", "post title " + (firstPost + i)) })
+                .collect(joining(","))
+        return String.format(POSTS, s)
     }
 
-    public static final String AUTHORS = "{\n" +
+    val AUTHORS = "{\n" +
             "status: \"ok\",\n" +
             "count: 14,\n" +
             "authors: [\n" +
@@ -102,9 +101,9 @@ public class JsonStubs {
             "\t\temail: \"bbb@gmail.com\"\n" +
             "\t}\n" +
             "]\n" +
-            "}";
+            "}"
 
-    public static final String CATEGORIES = "{\n" +
+    val CATEGORIES = "{\n" +
             "status: \"ok\",\n" +
             "count: 3,\n" +
             "categories: [\n" +
@@ -133,6 +132,6 @@ public class JsonStubs {
             "post_count: 4\n" +
             "}" +
             "]" +
-            "}";
+            "}"
 
 }
