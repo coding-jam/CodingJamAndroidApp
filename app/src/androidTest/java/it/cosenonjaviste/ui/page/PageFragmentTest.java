@@ -24,6 +24,6 @@ public class PageFragmentTest {
 
     @Test public void testDetailFragment() {
         fragmentRule.launchFragment(TestData.INSTANCE.createPost(1, server.getUrl(false) + "abc"));
-        TestUtils.sleep(100);
+        TestUtils.INSTANCE.sleep(100);
     }
 }

@@ -35,7 +35,7 @@ public class CnjDaggerRule extends DaggerMockRule<ApplicationComponent> {
                 RxJavaHooks.setOnNewThreadScheduler(scheduler -> Schedulers.immediate());
                 RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
                     @Override public Scheduler getMainThreadScheduler() {
-                        return Schedulers.from(EspressoExecutor.newCachedThreadPool());
+                        return Schedulers.from(EspressoExecutor.INSTANCE);
                     }
                 });
                 try {

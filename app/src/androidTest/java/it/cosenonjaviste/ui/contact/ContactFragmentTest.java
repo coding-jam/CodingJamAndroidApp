@@ -31,7 +31,7 @@ public class ContactFragmentTest {
 
     @Before public void setUp() {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleepAction()));
+                .thenReturn(Observable.<Response>just(null).doOnNext(a -> TestUtils.INSTANCE.sleep(1)));
     }
 
     @Test public void testContactFragment() {
