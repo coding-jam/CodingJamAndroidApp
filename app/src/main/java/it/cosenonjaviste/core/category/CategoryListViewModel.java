@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListArgument;
@@ -19,7 +20,7 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     @Inject WordPressService wordPressService;
 
-    @Inject Navigator navigator;
+    @Inject @BindLifeCycle Navigator navigator;
 
     @Inject public CategoryListViewModel() {
     }

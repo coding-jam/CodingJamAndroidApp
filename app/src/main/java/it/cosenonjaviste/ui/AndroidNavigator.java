@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import it.codingjam.lifecyclebinder.DefaultLifeCycleAware;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.post.PostListArgument;
@@ -15,17 +14,21 @@ import it.cosenonjaviste.ui.page.PageFragment;
 import it.cosenonjaviste.ui.post.PostListFragment;
 import it.cosenonjaviste.ui.utils.SingleFragmentActivity;
 
-public class AndroidNavigator extends DefaultLifeCycleAware<Fragment> implements Navigator {
+public class AndroidNavigator extends Navigator {
 
     private FragmentActivity activity;
 
     @Override
-    public void onCreate(Fragment view, Bundle savedInstanceState, Intent intent, Bundle arguments) {
-        activity = view.getActivity();
+    public void onCreate(Object view, Bundle savedInstanceState, Intent intent, Bundle arguments) {
+        if (view instanceof Fragment) {
+            activity = ((Fragment) view).getActivity();
+        } else {
+            activity = (FragmentActivity) view;
+        }
     }
 
     @Override
-    public void onDestroy(Fragment view, boolean changingConfigurations) {
+    public void onDestroy(Object view, boolean changingConfigurations) {
         activity = null;
     }
 

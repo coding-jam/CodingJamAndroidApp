@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.mv2m.ViewModel;
@@ -13,7 +14,7 @@ public class PageViewModel extends ViewModel<Post, PageModel> {
 
     public ObservableBoolean loading = new ObservableBoolean();
 
-    @Inject Navigator navigator;
+    @Inject @BindLifeCycle Navigator navigator;
 
     @Inject public PageViewModel() {
     }
