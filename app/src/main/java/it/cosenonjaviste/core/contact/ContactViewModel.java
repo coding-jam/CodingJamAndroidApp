@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.utils.EmailVerifier;
@@ -19,7 +20,7 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
     @Inject MailJetService mailJetService;
 
-    @Inject Navigator navigator;
+    @Inject @BindLifeCycle Navigator navigator;
 
     public final ObservableBoolean sending = new ObservableBoolean();
 

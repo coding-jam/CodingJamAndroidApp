@@ -1,14 +1,15 @@
 package it.cosenonjaviste.core;
 
+import it.codingjam.lifecyclebinder.DefaultLifeCycleAware;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Post;
 
-public interface Navigator {
-    void openPostList(PostListArgument argument);
+public abstract class Navigator extends DefaultLifeCycleAware<Object> {
+    public abstract void openPostList(PostListArgument argument);
 
-    void openDetail(Post post);
+    public abstract void openDetail(Post post);
 
-    void share(String subject, String text);
+    public abstract void share(String subject, String text);
 
-    void showMessage(int message);
+    public abstract void showMessage(int message);
 }
