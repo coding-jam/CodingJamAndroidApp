@@ -12,6 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
 import it.cosenonjaviste.core.Navigator;
+import it.cosenonjaviste.core.utils.DenvelopingConverter;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.MyAdapterFactory;
 import it.cosenonjaviste.model.TwitterService;
@@ -41,6 +42,7 @@ public class AppModule {
     @Provides @Singleton public WordPressService provideWordPressService(Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(new DenvelopingConverter(gson))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("http://www.codingjam.it/")
                 .build();

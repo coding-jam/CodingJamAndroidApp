@@ -14,7 +14,6 @@ import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
 
 public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
@@ -33,7 +32,6 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
         Single<List<Author>> observable = wordPressService
                 .listAuthors()
-                .map(AuthorResponse::authors)
                 .doOnSuccess(Collections::sort);
 
         subscribe(loadingAction::set,

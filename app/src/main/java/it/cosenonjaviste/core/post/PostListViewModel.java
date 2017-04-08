@@ -14,7 +14,6 @@ import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
 
 public class PostListViewModel extends RxListViewModel<PostListArgument, PostListModel> {
@@ -60,19 +59,17 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     }
 
     private Single<List<Post>> getObservable(int page) {
-        Single<PostResponse> observable;
         if (getArgument() == null) {
-            observable = wordPressService.listPosts(page);
+            return wordPressService.listPosts(page);
         } else {
             Category category = getArgument().category();
             if (category != null) {
-                observable = wordPressService.listCategoryPosts(category.id(), page);
+                return wordPressService.listCategoryPosts(category.id(), page);
             } else {
                 Author author = getArgument().author();
-                observable = wordPressService.listAuthorPosts(author.id(), page);
+                return wordPressService.listAuthorPosts(author.id(), page);
             }
         }
-        return observable.map(PostResponse::posts);
     }
 
     private static int calcNextPage(int size, int pageSize) {

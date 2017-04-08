@@ -6,24 +6,20 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.Tweet;
 
 public class TestData {
 
-    public static Single<PostResponse> postResponse(int size) {
+    public static Single<List<Post>> postResponse(int size) {
         return postResponse(0, size);
     }
 
-    public static Single<PostResponse> postResponse(int start, int size) {
+    public static Single<List<Post>> postResponse(int start, int size) {
         return Observable.range(start, size)
                 .map(TestData::createPost)
-                .toList()
-                .map(PostResponse::create);
+                .toList();
     }
 
     public static Post createPost(int i) {
@@ -38,18 +34,16 @@ public class TestData {
         return Author.create(i, "name " + i, "last name " + i, "email " + i);
     }
 
-    public static Single<AuthorResponse> authorResponse(int size) {
+    public static Single<List<Author>> authorResponse(int size) {
         return Observable.range(0, size)
                 .map(TestData::createAuthor)
-                .toList()
-                .map(AuthorResponse::create);
+                .toList();
     }
 
-    public static Single<CategoryResponse> categoryResponse(int size) {
+    public static Single<List<Category>> categoryResponse(int size) {
         return Observable.range(0, size)
                 .map(TestData::createCategory)
-                .toList()
-                .map(CategoryResponse::create);
+                .toList();
     }
 
     private static Category createCategory(int i) {

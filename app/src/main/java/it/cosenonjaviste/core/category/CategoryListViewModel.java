@@ -13,7 +13,6 @@ import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
 
 public class CategoryListViewModel extends RxListViewModel<Void, CategoryListModel> {
@@ -31,8 +30,7 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
 
     @Override protected void reloadData(ObservableBoolean loadingSetter) {
         Single<List<Category>> observable = wordPressService
-                .listCategories()
-                .map(CategoryResponse::categories);
+                .listCategories();
 
         subscribe(loadingSetter::set,
                 observable,
