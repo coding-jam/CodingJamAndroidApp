@@ -5,6 +5,10 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nytimes.android.external.store2.base.impl.Store;
+import com.nytimes.android.external.store2.base.impl.StoreBuilder;
+
+import java.util.List;
 
 import javax.inject.Singleton;
 
@@ -13,8 +17,10 @@ import dagger.Provides;
 import it.cosenonjaviste.BuildConfig;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.utils.DenvelopingConverter;
+import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.model.MyAdapterFactory;
+import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import okhttp3.OkHttpClient;
@@ -81,5 +87,21 @@ public class AppModule {
 
     @Provides public Navigator provideNavigator() {
         return new AndroidNavigator();
+    }
+
+    @Provides @Singleton
+    public Store<List<Post>, Integer> postListStore(WordPressService wordPressService) {
+        return StoreBuilder.<Integer, List<Post>>key()
+                .fetcher(integer -> wordPressService.listPosts(integer).toObservable())
+//                .persister(persister)
+                .open();
+    }
+
+    @Provides @Singleton
+    public Store<List<Author>, Integer> authorListStore(WordPressService wordPressService) {
+        return StoreBuilder.<Integer, List<Author>>key()
+                .fetcher(integer -> wordPressService.listAuthors().toObservable())
+//                .persister(persister)
+                .open();
     }
 }

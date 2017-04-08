@@ -23,6 +23,8 @@ public class AuthorListFragment extends Fragment {
 
     AuthorListViewModel viewModel;
 
+//    @BindLifeCycle @Inject AuthorListViewModel viewModel;
+
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         CoseNonJavisteApp.getComponent(this).inject(this);

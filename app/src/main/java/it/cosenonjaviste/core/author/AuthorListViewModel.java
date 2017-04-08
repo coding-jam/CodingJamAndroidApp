@@ -3,22 +3,24 @@ package it.cosenonjaviste.core.author;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.nytimes.android.external.store2.base.impl.Store;
+
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.model.WordPressService;
 
 public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
 
-    @Inject WordPressService wordPressService;
+    @Inject Store<List<Author>, Integer> authorsStore;
 
     @Inject @BindLifeCycle Navigator navigator;
 
@@ -30,14 +32,16 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
     }
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
-        Single<List<Author>> observable = wordPressService
-                .listAuthors()
-                .doOnSuccess(Collections::sort);
-
-        subscribe(loadingAction::set,
-                observable,
-                model::done,
-                throwable -> model.error());
+        loadingAction.set(true);
+        subscription.add(authorsStore
+                .get(0)
+                .singleOrError()
+                .doOnSuccess(Collections::sort)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingAction.set(false))
+                .subscribe(model::done, throwable -> model.error())
+        );
     }
 
     public void goToAuthorDetail(int position) {
