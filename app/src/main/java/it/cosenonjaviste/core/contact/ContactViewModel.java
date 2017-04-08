@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.Navigator;
@@ -24,7 +26,8 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
     public final ObservableBoolean sending = new ObservableBoolean();
 
     private OnPropertyChangedCallback listener = new OnPropertyChangedCallback() {
-        @Override public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
+        @Override
+        public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
             validate();
         }
     };
@@ -87,11 +90,14 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
                     "Reply to: " + model.email + "\n" + model.message
             );
 
-            subscribe(
-                    sending::set,
-                    observable,
-                    () ->  navigator.showMessage(R.string.message_sent),
-                    t -> navigator.showMessage(R.string.error_sending_message)
+            sending.set(true);
+            disposable.add(observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doAfterTerminate(() -> sending.set(false))
+                    .subscribe(
+                            () -> navigator.showMessage(R.string.message_sent),
+                            t -> navigator.showMessage(R.string.error_sending_message))
             );
         }
     }

@@ -52,15 +52,17 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     public void loadNextPage() {
         if (!loadingNextPage.get() && model.isMoreDataAvailable()) {
             int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
-            Single<List<Post>> observable = getObservable(page);
 
-            subscribe(loadingNextPage::set,
-                    observable,
-                    posts -> {
+            loadingNextPage.set(true);
+            disposable.add(getObservable(page)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doAfterTerminate(() -> loadingNextPage.set(false))
+                    .subscribe(posts -> {
                         model.append(posts);
                         model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
-                    },
-                    throwable -> model.error());
+                    }, throwable -> model.error())
+            );
         }
     }
 
