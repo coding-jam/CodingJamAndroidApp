@@ -1,13 +1,9 @@
 package it.cosenonjaviste.ui.utils;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.list.ListModel;
@@ -21,11 +17,11 @@ public class RecyclerBindingBuilder<T> {
 
     private RecyclerBinding binding;
 
-    public RecyclerBindingBuilder(LayoutInflater inflater, @Nullable ViewGroup container, RxListViewModel<?, ? extends ListModel<T>> viewModel) {
+    public RecyclerBindingBuilder(RxListViewModel<?, ? extends ListModel<T>> viewModel, RecyclerBinding binding) {
         this.viewModel = viewModel;
-        binding = RecyclerBinding.bind(inflater.inflate(R.layout.recycler, container, false));
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
-        binding.setViewModel(viewModel);
+        this.binding = binding;
+        this.binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.cnj_border, R.color.cnj_selection);
+        this.binding.setViewModel(viewModel);
     }
 
     public RecyclerBinding getBinding() {
@@ -57,18 +53,6 @@ public class RecyclerBindingBuilder<T> {
     @NonNull
     public RecyclerBindingBuilder<T> viewHolder(BindableAdapter.ViewHolderFactory<T> factory) {
         binding.list.setAdapter(new BindableAdapter<>(viewModel.getModel().getItems(), factory));
-        return this;
-    }
-
-    public RecyclerBindingBuilder<T> showToolbar(AppCompatActivity activity, boolean toolbarVisible, String toolbarTitle) {
-        if (toolbarVisible) {
-            binding.toolbar.setVisibility(View.VISIBLE);
-            activity.setSupportActionBar(binding.toolbar);
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                activity.getSupportActionBar().setTitle(toolbarTitle);
-            }
-        }
         return this;
     }
 }

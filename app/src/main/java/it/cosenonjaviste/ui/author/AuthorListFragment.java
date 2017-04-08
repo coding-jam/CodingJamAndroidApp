@@ -14,6 +14,7 @@ import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
+import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
@@ -32,7 +33,7 @@ public class AuthorListFragment extends Fragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new RecyclerBindingBuilder<>(inflater, container, viewModel)
+        return new RecyclerBindingBuilder<>(viewModel, RecyclerBinding.inflate(inflater, container, false))
                 .gridLayoutManager(2)
                 .viewHolder(viewGroup -> new AuthorViewHolder(AuthorCellBinding.inflate(inflater, viewGroup, false), viewModel))
                 .getRoot();

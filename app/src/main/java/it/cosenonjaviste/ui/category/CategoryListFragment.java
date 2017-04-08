@@ -14,6 +14,7 @@ import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
+import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
 
@@ -30,7 +31,7 @@ public class CategoryListFragment extends Fragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new RecyclerBindingBuilder<>(inflater, container, viewModel)
+        return new RecyclerBindingBuilder<>(viewModel, RecyclerBinding.inflate(inflater, container, false))
                 .gridLayoutManager(2)
                 .viewHolder(viewGroup -> new CategoryViewHolder(CategoryRowBinding.inflate(inflater, viewGroup, false), viewModel))
                 .getRoot();

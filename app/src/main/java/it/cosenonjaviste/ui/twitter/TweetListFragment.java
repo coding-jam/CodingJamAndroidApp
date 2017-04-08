@@ -13,6 +13,7 @@ import javax.inject.Provider;
 import it.codingjam.lifecyclebinder.LifeCycleBinder;
 import it.codingjam.lifecyclebinder.RetainedObjectProvider;
 import it.cosenonjaviste.core.twitter.TweetListViewModel;
+import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.ui.CoseNonJavisteApp;
 import it.cosenonjaviste.ui.utils.RecyclerBindingBuilder;
@@ -30,7 +31,7 @@ public class TweetListFragment extends Fragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new RecyclerBindingBuilder<>(inflater, container, viewModel)
+        return new RecyclerBindingBuilder<>(viewModel, RecyclerBinding.inflate(inflater, container, false))
                 .viewHolder(viewGroup -> new TweetViewHolder(TweetRowBinding.inflate(inflater, viewGroup, false)))
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
