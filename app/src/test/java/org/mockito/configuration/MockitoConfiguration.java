@@ -6,7 +6,8 @@ import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Method;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public class MockitoConfiguration extends DefaultMockitoConfiguration {
     public Answer<Object> getDefaultAnswer() {

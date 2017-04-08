@@ -1,8 +1,8 @@
 package it.cosenonjaviste.model;
 
-import retrofit.http.GET;
-import retrofit.http.Query;
-import rx.Observable;
+import io.reactivex.Single;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface WordPressService {
 
@@ -12,13 +12,13 @@ public interface WordPressService {
     String CATEGORY_POSTS_URL = "/?json=get_category_posts";
     String AUTHOR_POSTS_URL = "/?json=get_author_posts";
 
-    @GET("/?json=get_recent_posts&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Observable<PostResponse> listPosts(@Query("page") int page);
+    @GET("/?json=get_recent_posts&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Single<PostResponse> listPosts(@Query("page") int page);
 
-    @GET(CATEGORY_POSTS_URL + "&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Observable<PostResponse> listCategoryPosts(@Query("id") long categoryId, @Query("page") int page);
+    @GET(CATEGORY_POSTS_URL + "&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Single<PostResponse> listCategoryPosts(@Query("id") long categoryId, @Query("page") int page);
 
-    @GET(AUTHOR_POSTS_URL + "&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Observable<PostResponse> listAuthorPosts(@Query("id") long authorId, @Query("page") int page);
+    @GET(AUTHOR_POSTS_URL + "&count=" + POST_PAGE_SIZE + POSTS_EXTRA) Single<PostResponse> listAuthorPosts(@Query("id") long authorId, @Query("page") int page);
 
-    @GET("/?json=get_author_index&author_meta=email") Observable<it.cosenonjaviste.model.AuthorResponse> listAuthors();
+    @GET("/?json=get_author_index&author_meta=email") Single<AuthorResponse> listAuthors();
 
-    @GET("/?json=get_category_index") Observable<CategoryResponse> listCategories();
+    @GET("/?json=get_category_index") Single<CategoryResponse> listCategories();
 }

@@ -1,10 +1,11 @@
 package it.cosenonjaviste.androidtest.utils;
 
-import rx.functions.Action1;
+
+import com.annimon.stream.function.Consumer;
 
 public class TestUtils {
 
-    public static <T> Action1<T> sleepAction() {
+    public static <T> Consumer<T> sleepAction() {
         return o -> sleep(1);
     }
 

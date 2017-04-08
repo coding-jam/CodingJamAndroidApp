@@ -8,13 +8,13 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.ParcelableTester;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.ui.twitter.TweetListFragment;
-import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ public class TweetListViewModelTest {
 
     @Test public void testRetryAfterError() {
         Mockito.when(twitterService.loadTweets(Matchers.eq(1)))
-                .thenReturn(Observable.error(new RuntimeException()));
+                .thenReturn(Single.error(new RuntimeException()));
 
         TweetListModel model = viewModel.initAndResume();
 

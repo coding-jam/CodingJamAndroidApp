@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
@@ -15,7 +16,6 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.PostResponse;
 import it.cosenonjaviste.model.WordPressService;
-import rx.Observable;
 
 public class PostListViewModel extends RxListViewModel<PostListArgument, PostListModel> {
 
@@ -47,7 +47,7 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
     public void loadNextPage() {
         if (!loadingNextPage.get() && model.isMoreDataAvailable()) {
             int page = calcNextPage(model.getItems().size(), WordPressService.POST_PAGE_SIZE);
-            Observable<List<Post>> observable = getObservable(page);
+            Single<List<Post>> observable = getObservable(page);
 
             subscribe(loadingNextPage::set,
                     observable,
@@ -59,8 +59,8 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         }
     }
 
-    private Observable<List<Post>> getObservable(int page) {
-        Observable<PostResponse> observable;
+    private Single<List<Post>> getObservable(int page) {
+        Single<PostResponse> observable;
         if (getArgument() == null) {
             observable = wordPressService.listPosts(page);
         } else {

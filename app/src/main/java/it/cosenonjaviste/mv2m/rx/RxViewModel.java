@@ -19,16 +19,19 @@ package it.cosenonjaviste.mv2m.rx;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import it.cosenonjaviste.mv2m.ViewModel;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, M> {
 
-    protected final CompositeSubscription subscription = new CompositeSubscription();
+    protected final CompositeDisposable subscription = new CompositeDisposable();
 
     @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
         if (!changingConfigurations) {
@@ -36,12 +39,41 @@ public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, 
         }
     }
 
-    public <T> void subscribe(Action1<Boolean> loadingAction, Observable<T> observable, Action1<? super T> onNext, Action1<Throwable> onError) {
-        loadingAction.call(true);
+    public <T> void subscribe(Consumer<Boolean> loadingAction, Observable<T> observable, Consumer<? super T> onNext, Consumer<Throwable> onError) {
+        try {
+            loadingAction.accept(true);
+        } catch (Exception ignored) {
+        }
         subscription.add(observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() -> loadingAction.call(false))
+                .doAfterTerminate(() -> loadingAction.accept(false))
+                .subscribe(onNext, onError)
+        );
+    }
+
+    public <T> void subscribe(Consumer<Boolean> loadingAction, Single<T> observable, Consumer<? super T> onNext, Consumer<Throwable> onError) {
+        try {
+            loadingAction.accept(true);
+        } catch (Exception ignored) {
+        }
+        subscription.add(observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingAction.accept(false))
+                .subscribe(onNext, onError)
+        );
+    }
+
+    public <T> void subscribe(Consumer<Boolean> loadingAction, Completable observable, Action onNext, Consumer<Throwable> onError) {
+        try {
+            loadingAction.accept(true);
+        } catch (Exception ignored) {
+        }
+        subscription.add(observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingAction.accept(false))
                 .subscribe(onNext, onError)
         );
     }

@@ -7,14 +7,13 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
-import retrofit.client.Response;
-import rx.Observable;
 
 public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 
@@ -81,7 +80,7 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
     public void send() {
         model.sendPressed = true;
         if (validate()) {
-            Observable<Response> observable = mailJetService.sendEmail(
+            Completable observable = mailJetService.sendEmail(
                     model.name + " <info@cosenonjaviste.it>",
                     "info@cosenonjaviste.it",
                     "Email from " + model.name,
@@ -91,7 +90,7 @@ public class ContactViewModel extends RxViewModel<Void, ContactModel> {
             subscribe(
                     sending::set,
                     observable,
-                    r ->  navigator.showMessage(R.string.message_sent),
+                    () ->  navigator.showMessage(R.string.message_sent),
                     t -> navigator.showMessage(R.string.error_sending_message)
             );
         }

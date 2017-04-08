@@ -4,13 +4,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import io.reactivex.Completable;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.ui.contact.ContactFragment;
-import rx.Observable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -50,7 +50,7 @@ public class ContactViewModelTest {
     @Test
     public void testSend() {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.just(null));
+                .thenReturn(Completable.complete());
 
         ContactModel model = viewModel.initAndResume();
 
@@ -64,7 +64,7 @@ public class ContactViewModelTest {
     @Test
     public void testSendError() {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.error(new Exception("aaa")));
+                .thenReturn(Completable.error(new Exception("aaa")));
 
         ContactModel model = viewModel.initAndResume();
 

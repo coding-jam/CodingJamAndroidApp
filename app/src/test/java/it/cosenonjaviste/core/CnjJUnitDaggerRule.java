@@ -3,16 +3,14 @@ package it.cosenonjaviste.core;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 import it.cosenonjaviste.model.TwitterService;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.AppModule;
 import it.cosenonjaviste.ui.ApplicationComponent;
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaHooks;
-import rx.schedulers.Schedulers;
 
 public class CnjJUnitDaggerRule extends DaggerMockRule<ApplicationComponent> {
     public CnjJUnitDaggerRule() {
@@ -24,19 +22,22 @@ public class CnjJUnitDaggerRule extends DaggerMockRule<ApplicationComponent> {
         Statement superStatement = super.apply(base, method, target);
         return new Statement() {
             @Override public void evaluate() throws Throwable {
-                RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
-                RxJavaHooks.setOnComputationScheduler(scheduler -> Schedulers.immediate());
-                RxJavaHooks.setOnNewThreadScheduler(scheduler -> Schedulers.immediate());
-                RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
-                    @Override public Scheduler getMainThreadScheduler() {
-                        return Schedulers.immediate();
-                    }
-                });
-                try {
+                RxJavaPlugins.setIoSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxJavaPlugins.setComputationSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxJavaPlugins.setNewThreadSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+
+                try
+                {
                     superStatement.evaluate();
-                } finally {
-                    RxJavaHooks.reset();
-                    RxAndroidPlugins.getInstance().reset();
+                } finally
+                {
+                    RxJavaPlugins.reset();
+                    RxAndroidPlugins.reset();
                 }
             }
         };

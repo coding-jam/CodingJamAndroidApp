@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
@@ -14,7 +15,6 @@ import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.CategoryResponse;
 import it.cosenonjaviste.model.WordPressService;
-import rx.Observable;
 
 public class CategoryListViewModel extends RxListViewModel<Void, CategoryListModel> {
 
@@ -30,7 +30,7 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
     }
 
     @Override protected void reloadData(ObservableBoolean loadingSetter) {
-        Observable<List<Category>> observable = wordPressService
+        Single<List<Category>> observable = wordPressService
                 .listCategories()
                 .map(CategoryResponse::categories);
 

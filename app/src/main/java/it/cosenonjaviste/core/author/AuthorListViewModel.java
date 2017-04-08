@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
@@ -15,7 +16,6 @@ import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.model.Author;
 import it.cosenonjaviste.model.AuthorResponse;
 import it.cosenonjaviste.model.WordPressService;
-import rx.Observable;
 
 public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> {
 
@@ -31,10 +31,10 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
     }
 
     @Override protected void reloadData(ObservableBoolean loadingAction) {
-        Observable<List<Author>> observable = wordPressService
+        Single<List<Author>> observable = wordPressService
                 .listAuthors()
                 .map(AuthorResponse::authors)
-                .doOnNext(Collections::sort);
+                .doOnSuccess(Collections::sort);
 
         subscribe(loadingAction::set,
                 observable,

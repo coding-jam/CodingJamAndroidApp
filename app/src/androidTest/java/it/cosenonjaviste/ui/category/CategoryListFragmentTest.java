@@ -6,12 +6,12 @@ import org.mockito.Mock;
 
 import java.io.IOException;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
 import it.cosenonjaviste.core.category.CategoryListModel;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.CnjDaggerRule;
-import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -39,7 +39,7 @@ public class CategoryListFragmentTest {
 
     @Test public void testCategoryError() {
         when(wordPressService.listCategories())
-                .thenReturn(Observable.error(new IOException("bla bla bla")));
+                .thenReturn(Single.error(new IOException("bla bla bla")));
 
         fragmentRule.launchFragment(new CategoryListModel());
 

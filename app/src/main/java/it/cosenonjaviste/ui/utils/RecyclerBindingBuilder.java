@@ -9,14 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.annimon.stream.function.Consumer;
+
+import io.reactivex.functions.Function3;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.list.ListModel;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.databinding.RecyclerBinding;
 import it.cosenonjaviste.mv2m.recycler.BindableAdapter;
 import it.cosenonjaviste.mv2m.recycler.BindableViewHolder;
-import rx.functions.Action1;
-import rx.functions.Func3;
 
 public class RecyclerBindingBuilder<T> {
 
@@ -61,14 +62,19 @@ public class RecyclerBindingBuilder<T> {
     }
 
     private <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolderWithCustomizer(
-            Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
+            Function3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
             BindableViewHolder.Binder<B, T> binder,
-            Action1<BindableViewHolder<T>> customizer) {
+            Consumer<BindableViewHolder<T>> customizer) {
         BindableAdapter.ViewHolderFactory<T> factory = v -> {
-            B binding = inflateFunction.call(inflater, v, false);
+            B binding = null;
+            try {
+                binding = inflateFunction.apply(inflater, v, false);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             BindableViewHolder<T> viewHolder = BindableViewHolder.create(binding, binder);
             if (customizer != null) {
-                customizer.call(viewHolder);
+                customizer.accept(viewHolder);
             }
             return viewHolder;
         };
@@ -76,15 +82,15 @@ public class RecyclerBindingBuilder<T> {
         return this;
     }
 
-    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolder(Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, BindableViewHolder.Binder<B, T> binder) {
+    public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolder(Function3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction, BindableViewHolder.Binder<B, T> binder) {
         return viewHolderWithCustomizer(inflateFunction, binder, null);
     }
 
     public <B extends ViewDataBinding> RecyclerBindingBuilder<T> viewHolder(
-            Func3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
+            Function3<LayoutInflater, ViewGroup, Boolean, B> inflateFunction,
             BindableViewHolder.Binder<B, T> binder,
-            Action1<Integer> clickListener) {
-        return viewHolderWithCustomizer(inflateFunction, binder, vh -> vh.itemView.setOnClickListener(v -> clickListener.call(vh.getAdapterPosition())));
+            Consumer<Integer> clickListener) {
+        return viewHolderWithCustomizer(inflateFunction, binder, vh -> vh.itemView.setOnClickListener(v -> clickListener.accept(vh.getAdapterPosition())));
     }
 
     public RecyclerBindingBuilder<T> showToolbar(AppCompatActivity activity, boolean toolbarVisible, String toolbarTitle) {

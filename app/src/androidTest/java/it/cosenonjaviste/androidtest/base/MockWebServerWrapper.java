@@ -1,16 +1,16 @@
 package it.cosenonjaviste.androidtest.base;
 
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 
-import rx.functions.Func1;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 public class MockWebServerWrapper {
 
@@ -18,7 +18,7 @@ public class MockWebServerWrapper {
 
     private static LinkedList<RecordedRequest> requests = new LinkedList<>();
 
-    private static Func1<RecordedRequest, MockResponse> dispatchFunction;
+    private static Function<RecordedRequest, MockResponse> dispatchFunction;
 
     public MockWebServerWrapper() {
         if (server == null) {
@@ -32,7 +32,7 @@ public class MockWebServerWrapper {
         }
     }
 
-    public static void initDispatcher(Func1<RecordedRequest, MockResponse> dispatchFunction) {
+    public static void initDispatcher(Function<RecordedRequest, MockResponse> dispatchFunction) {
         MockWebServerWrapper.dispatchFunction = dispatchFunction;
     }
 
@@ -45,7 +45,7 @@ public class MockWebServerWrapper {
         server.setDispatcher(new Dispatcher() {
             @Override public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 requests.add(request);
-                return dispatchFunction.call(request);
+                return dispatchFunction.apply(request);
             }
         });
     }
@@ -64,7 +64,7 @@ public class MockWebServerWrapper {
     }
 
     private String getUrlSync() {
-        return server.getUrl("/").toString();
+        return server.url("/").toString();
     }
 
     public void shutdown() {

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
@@ -16,10 +17,11 @@ import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.Post;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.post.PostListFragment;
-import rx.Observable;
 
 import static it.cosenonjaviste.TestData.postResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,7 +65,7 @@ public class PostListViewModelTest {
     @Test
     public void testRetryAfterError() {
         when(wordPressService.listPosts(eq(1)))
-                .thenReturn(Observable.error(new RuntimeException()));
+                .thenReturn(Single.error(new RuntimeException()));
 
         PostListModel model = viewModel.initAndResume();
         assertThat(viewModel.isError().get()).isTrue();
@@ -96,7 +98,10 @@ public class PostListViewModelTest {
     }
 
     @Test
-    public void testToolbalTitleNotVisible() {
+    public void testToolbarTitleNotVisible() {
+        when(wordPressService.listPosts(anyInt()))
+                .thenReturn(TestData.postResponse(1));
+
         viewModel.initAndResume();
 
         assertThat(viewModel.isToolbarVisible()).isFalse();
@@ -104,7 +109,10 @@ public class PostListViewModelTest {
     }
 
     @Test
-    public void testToolbalTitleAuthor() {
+    public void testToolbarTitleAuthor() {
+        when(wordPressService.listAuthorPosts(anyLong(), anyInt()))
+                .thenReturn(TestData.postResponse(1));
+
         viewModel.initAndResume(PostListArgument.create(TestData.createAuthor(1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();
@@ -112,7 +120,10 @@ public class PostListViewModelTest {
     }
 
     @Test
-    public void testToolbalTitle() {
+    public void testToolbarTitle() {
+        when(wordPressService.listCategoryPosts(anyLong(), anyInt()))
+                .thenReturn(TestData.postResponse(1));
+
         viewModel.initAndResume(PostListArgument.create(Category.create(123, "aaa", 1)));
 
         assertThat(viewModel.isToolbarVisible()).isTrue();

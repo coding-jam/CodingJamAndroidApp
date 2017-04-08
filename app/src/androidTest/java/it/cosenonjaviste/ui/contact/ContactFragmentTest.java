@@ -7,13 +7,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import io.reactivex.Completable;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.androidtest.base.FragmentRule;
-import it.cosenonjaviste.androidtest.utils.TestUtils;
 import it.cosenonjaviste.model.MailJetService;
 import it.cosenonjaviste.ui.CnjDaggerRule;
-import retrofit.client.Response;
-import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -31,7 +29,7 @@ public class ContactFragmentTest {
 
     @Before public void setUp() {
         when(mailJetService.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.<Response>just(null).doOnNext(TestUtils.sleepAction()));
+                .thenReturn(Completable.complete());
     }
 
     @Test public void testContactFragment() {

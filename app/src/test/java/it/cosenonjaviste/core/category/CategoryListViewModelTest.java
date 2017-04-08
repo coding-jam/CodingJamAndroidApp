@@ -6,6 +6,7 @@ import org.mockito.Mock;
 
 import java.util.Arrays;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.ParcelableTester;
@@ -14,7 +15,6 @@ import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.Category;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.category.CategoryListFragment;
-import rx.Observable;
 
 import static it.cosenonjaviste.TestData.categoryResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,7 +71,7 @@ public class CategoryListViewModelTest {
     @Test
     public void testRetryAfterError() {
         when(wordPressService.listCategories())
-                .thenReturn(Observable.error(new RuntimeException()));
+                .thenReturn(Single.error(new RuntimeException()));
 
         CategoryListModel model = viewModel.initAndResume();
 

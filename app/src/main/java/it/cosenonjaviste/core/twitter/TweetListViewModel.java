@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.model.Tweet;
 import it.cosenonjaviste.model.TwitterService;
-import rx.Observable;
 
 public class TweetListViewModel extends RxListViewModel<Void, TweetListModel> {
 
@@ -35,7 +35,7 @@ public class TweetListViewModel extends RxListViewModel<Void, TweetListModel> {
     public void loadNextPage() {
         if (!isLoadingNextPage().get() && model.isMoreDataAvailable()) {
             int page = calcNextPage(model.getItems().size(), TwitterService.PAGE_SIZE);
-            Observable<List<Tweet>> observable = twitterService.loadTweets(page);
+            Single<List<Tweet>> observable = twitterService.loadTweets(page);
 
             subscribe(
                     loadingNextPage::set,

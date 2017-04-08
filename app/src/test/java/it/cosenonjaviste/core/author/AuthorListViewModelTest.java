@@ -6,6 +6,7 @@ import org.mockito.Mock;
 
 import java.util.Arrays;
 
+import io.reactivex.Single;
 import it.cosenonjaviste.TestData;
 import it.cosenonjaviste.core.CnjJUnitDaggerRule;
 import it.cosenonjaviste.core.Navigator;
@@ -14,7 +15,6 @@ import it.cosenonjaviste.core.post.PostListArgument;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.cosenonjaviste.model.WordPressService;
 import it.cosenonjaviste.ui.author.AuthorListFragment;
-import rx.Observable;
 
 import static it.cosenonjaviste.TestData.authorResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,7 +54,7 @@ public class AuthorListViewModelTest {
     public void testRetryAfterError() {
         when(wordPressService.listAuthors())
                 .thenReturn(
-                        Observable.error(new RuntimeException()),
+                        Single.error(new RuntimeException()),
                         authorResponse(2)
                 );
 
