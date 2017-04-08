@@ -4,7 +4,7 @@ import android.databinding.ObservableField;
 
 import it.cosenonjaviste.databinding.TweetRowBinding;
 import it.cosenonjaviste.model.Tweet;
-import it.cosenonjaviste.mv2m.recycler.BindableViewHolder;
+import it.cosenonjaviste.ui.recycler.BindableViewHolder;
 
 
 public class TweetViewHolder extends BindableViewHolder<Tweet> {

@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import it.cosenonjaviste.R;
-import it.cosenonjaviste.mv2m.ArgumentManager;
+import it.cosenonjaviste.core.base.ArgumentManager;
 
 public class SingleFragmentActivity extends AppCompatActivity {
 

@@ -13,9 +13,9 @@ import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.Navigator;
+import it.cosenonjaviste.core.base.RxViewModel;
 import it.cosenonjaviste.core.utils.EmailVerifier;
 import it.cosenonjaviste.model.MailJetService;
-import it.cosenonjaviste.mv2m.rx.RxViewModel;
 
 public class ContactViewModel extends RxViewModel<Void, ContactModel> {
 

@@ -7,8 +7,8 @@ import javax.inject.Inject;
 
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
+import it.cosenonjaviste.core.base.ViewModel;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mv2m.ViewModel;
 
 public class PageViewModel extends ViewModel<Post, PageModel> {
 

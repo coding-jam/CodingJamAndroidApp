@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.cosenonjaviste.mv2m;
+package it.cosenonjaviste.core.base;
 
 import android.content.Intent;
 import android.os.Bundle;

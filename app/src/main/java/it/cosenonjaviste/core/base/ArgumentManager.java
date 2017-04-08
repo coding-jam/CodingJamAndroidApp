@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.cosenonjaviste.mv2m.recycler;
+package it.cosenonjaviste.core.base;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 
-public abstract class BindableViewHolder<T> extends RecyclerView.ViewHolder {
+public class ArgumentManager {
+    public static final String ARGUMENT = "argument";
 
-    public BindableViewHolder(View itemView) {
-        super(itemView);
+    public static <P extends Parcelable> P readArgument(Bundle arguments) {
+        return arguments != null ? arguments.getParcelable(ARGUMENT) : null;
     }
 
-    public abstract void bind(T item);
+    public static Intent writeArgument(Intent intent, Parcelable argument) {
+        if (argument != null) {
+            intent.putExtra(ARGUMENT, argument);
+        }
+        return intent;
+    }
 }

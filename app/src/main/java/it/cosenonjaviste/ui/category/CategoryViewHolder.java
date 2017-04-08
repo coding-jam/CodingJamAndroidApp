@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import it.cosenonjaviste.core.category.CategoryListViewModel;
 import it.cosenonjaviste.databinding.CategoryRowBinding;
 import it.cosenonjaviste.model.Category;
-import it.cosenonjaviste.mv2m.recycler.BindableViewHolder;
+import it.cosenonjaviste.ui.recycler.BindableViewHolder;
 
 
 public class CategoryViewHolder extends BindableViewHolder<Category> {

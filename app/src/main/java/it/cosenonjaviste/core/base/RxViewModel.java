@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.cosenonjaviste.mv2m;
+package it.cosenonjaviste.core.base;
 
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 
-public class ArgumentManager {
-    public static final String ARGUMENT = "argument";
+import io.reactivex.disposables.CompositeDisposable;
 
-    public static <P extends Parcelable> P readArgument(Bundle arguments) {
-        return arguments != null ? arguments.getParcelable(ARGUMENT) : null;
-    }
+public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, M> {
 
-    public static Intent writeArgument(Intent intent, Parcelable argument) {
-        if (argument != null) {
-            intent.putExtra(ARGUMENT, argument);
+    protected final CompositeDisposable disposable = new CompositeDisposable();
+
+    @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
+        if (!changingConfigurations) {
+            disposable.clear();
         }
-        return intent;
     }
 }

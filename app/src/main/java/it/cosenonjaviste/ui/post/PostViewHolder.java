@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import it.cosenonjaviste.core.post.PostListViewModel;
 import it.cosenonjaviste.databinding.PostRowBinding;
 import it.cosenonjaviste.model.Post;
-import it.cosenonjaviste.mv2m.recycler.BindableViewHolder;
+import it.cosenonjaviste.ui.recycler.BindableViewHolder;
 
 
 public class PostViewHolder extends BindableViewHolder<Post> {

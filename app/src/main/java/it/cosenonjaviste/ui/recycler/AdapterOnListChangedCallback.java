@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.cosenonjaviste.mv2m.recycler;
+package it.cosenonjaviste.ui.recycler;
 
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;

@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.cosenonjaviste.mv2m.rx;
+package it.cosenonjaviste.ui.recycler;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import android.os.Parcelable;
-import android.support.v4.app.Fragment;
+public abstract class BindableViewHolder<T> extends RecyclerView.ViewHolder {
 
-import io.reactivex.disposables.CompositeDisposable;
-import it.cosenonjaviste.mv2m.ViewModel;
-
-public abstract class RxViewModel<A, M extends Parcelable> extends ViewModel<A, M> {
-
-    protected final CompositeDisposable disposable = new CompositeDisposable();
-
-    @Override public void onDestroy(Fragment view, boolean changingConfigurations) {
-        if (!changingConfigurations) {
-            disposable.clear();
-        }
+    public BindableViewHolder(View itemView) {
+        super(itemView);
     }
+
+    public abstract void bind(T item);
 }

@@ -3,7 +3,7 @@ package it.cosenonjaviste.core.list;
 import android.databinding.ObservableBoolean;
 
 import io.reactivex.disposables.Disposable;
-import it.cosenonjaviste.mv2m.rx.RxViewModel;
+import it.cosenonjaviste.core.base.RxViewModel;
 
 public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewModel<A, M> implements GenericRxListViewModel {
     protected ObservableBoolean loading = new ObservableBoolean();

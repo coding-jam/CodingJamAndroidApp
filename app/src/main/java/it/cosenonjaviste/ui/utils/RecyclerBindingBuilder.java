@@ -9,7 +9,7 @@ import it.cosenonjaviste.R;
 import it.cosenonjaviste.core.list.ListModel;
 import it.cosenonjaviste.core.list.RxListViewModel;
 import it.cosenonjaviste.databinding.RecyclerBinding;
-import it.cosenonjaviste.mv2m.recycler.BindableAdapter;
+import it.cosenonjaviste.ui.recycler.BindableAdapter;
 
 public class RecyclerBindingBuilder<T> {
 

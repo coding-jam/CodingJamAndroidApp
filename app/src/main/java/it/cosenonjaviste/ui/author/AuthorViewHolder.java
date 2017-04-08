@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import it.cosenonjaviste.core.author.AuthorListViewModel;
 import it.cosenonjaviste.databinding.AuthorCellBinding;
 import it.cosenonjaviste.model.Author;
-import it.cosenonjaviste.mv2m.recycler.BindableViewHolder;
+import it.cosenonjaviste.ui.recycler.BindableViewHolder;
 
 
 public class AuthorViewHolder extends BindableViewHolder<Author> {
