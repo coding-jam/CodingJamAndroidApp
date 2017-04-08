@@ -2,6 +2,7 @@ package it.cosenonjaviste.core.list;
 
 import android.databinding.ObservableBoolean;
 
+import io.reactivex.disposables.Disposable;
 import it.cosenonjaviste.mv2m.rx.RxViewModel;
 
 public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewModel<A, M> implements GenericRxListViewModel {
@@ -29,18 +30,16 @@ public abstract class RxListViewModel<A, M extends ListModel<?>> extends RxViewM
 
     @Override public void resume() {
         super.resume();
-        if (!model.isLoaded() && !loading.get()) {
-            reloadData();
-        }
+        reloadData();
     }
 
     public void reloadData() {
-        reloadData(loading);
+        reloadData(loading, false);
     }
 
     public final void loadDataPullToRefresh() {
-        reloadData(loadingPullToRefresh);
+        reloadData(loadingPullToRefresh, true);
     }
 
-    protected abstract void reloadData(ObservableBoolean loadingAction);
+    protected abstract Disposable reloadData(ObservableBoolean loadingAction, boolean forceFetch);
 }

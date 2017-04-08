@@ -3,11 +3,11 @@ package it.cosenonjaviste.core.category;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
@@ -28,15 +28,14 @@ public class CategoryListViewModel extends RxListViewModel<Void, CategoryListMod
         return new CategoryListModel();
     }
 
-    @Override protected void reloadData(ObservableBoolean loadingSetter) {
-        Single<List<Category>> observable = wordPressService
-                .listCategories();
-
-        subscribe(loadingSetter::set,
-                observable,
-                model::done,
-                throwable -> model.error()
-        );
+    @Override protected Disposable reloadData(ObservableBoolean loadingSetter, boolean forceFetch) {
+        loadingSetter.set(true);
+        return wordPressService
+                .listCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingSetter.set(false))
+                .subscribe(model::done, throwable -> model.error());
     }
 
     public void goToPosts(int position) {

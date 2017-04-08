@@ -11,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
@@ -31,17 +32,15 @@ public class AuthorListViewModel extends RxListViewModel<Void, AuthorListModel> 
         return new AuthorListModel();
     }
 
-    @Override protected void reloadData(ObservableBoolean loadingAction) {
+    @Override protected Disposable reloadData(ObservableBoolean loadingAction, boolean forceFetch) {
         loadingAction.set(true);
-        subscription.add(authorsStore
-                .get(0)
+        return (forceFetch ? authorsStore.fetch(0) : authorsStore.get(0))
                 .singleOrError()
                 .doOnSuccess(Collections::sort)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> loadingAction.set(false))
-                .subscribe(model::done, throwable -> model.error())
-        );
+                .subscribe(model::done, throwable -> model.error());
     }
 
     public void goToAuthorDetail(int position) {

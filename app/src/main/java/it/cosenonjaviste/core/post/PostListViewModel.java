@@ -8,6 +8,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import it.codingjam.lifecyclebinder.BindLifeCycle;
 import it.cosenonjaviste.core.Navigator;
 import it.cosenonjaviste.core.list.RxListViewModel;
@@ -29,10 +32,13 @@ public class PostListViewModel extends RxListViewModel<PostListArgument, PostLis
         return new PostListModel();
     }
 
-    @Override protected void reloadData(ObservableBoolean loadingAction) {
-        subscribe(loadingAction::set,
-                getObservable(1),
-                posts -> {
+    @Override protected Disposable reloadData(ObservableBoolean loadingAction, boolean forceFetch) {
+        loadingAction.set(true);
+        return getObservable(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> loadingAction.set(false))
+                .subscribe(posts -> {
                     model.done(posts);
                     model.setMoreDataAvailable(posts.size() == WordPressService.POST_PAGE_SIZE);
                 }, throwable -> model.error());
