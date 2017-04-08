@@ -32,7 +32,7 @@ public class PostListFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .viewHolder(PostRowBinding::inflate, PostRowBinding::setPost, viewModel::goToDetail)
+                .viewHolder(viewGroup -> new PostViewHolder(PostRowBinding.inflate(inflater, viewGroup, false), viewModel))
                 .loadMoreListener(viewModel::loadNextPage)
                 .showToolbar((AppCompatActivity) getActivity(), viewModel.isToolbarVisible(), viewModel.getToolbarTitle())
                 .getRoot();

@@ -31,7 +31,7 @@ public class TweetListFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
-                .viewHolder(TweetRowBinding::inflate, TweetRowBinding::setTweet)
+                .viewHolder(viewGroup -> new TweetViewHolder(TweetRowBinding.inflate(inflater, viewGroup, false)))
                 .loadMoreListener(viewModel::loadNextPage)
                 .getRoot();
     }

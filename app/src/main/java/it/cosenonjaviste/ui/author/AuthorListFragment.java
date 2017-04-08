@@ -34,7 +34,7 @@ public class AuthorListFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolder(AuthorCellBinding::inflate, AuthorCellBinding::setAuthor, viewModel::goToAuthorDetail)
+                .viewHolder(viewGroup -> new AuthorViewHolder(AuthorCellBinding.inflate(inflater, viewGroup, false), viewModel))
                 .getRoot();
     }
 }

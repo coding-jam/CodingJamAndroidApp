@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="tweet"
-            type="it.cosenonjaviste.model.Tweet"/>
+            name="viewHolder"
+            type="it.cosenonjaviste.ui.twitter.TweetViewHolder"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -24,7 +24,7 @@
                 android:id="@+id/author_image"
                 android:layout_width="@dimen/author_image_size"
                 android:layout_height="@dimen/author_image_size"
-                app:userImageUrl="@{tweet.userImage}"/>
+                app:userImageUrl="@{viewHolder.item.userImage}"/>
 
             <TextView
                 android:id="@+id/author"
@@ -35,7 +35,7 @@
                 android:paddingLeft="6dip"
                 android:paddingRight="6dip"
                 android:paddingTop="3dip"
-                android:text="@{tweet.author}"
+                android:text="@{viewHolder.item.author}"
                 android:textSize="14sp"/>
 
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_toRightOf="@+id/author_image"
                 android:paddingLeft="6dip"
                 android:paddingRight="6dip"
-                android:text="@{tweet.createdAt}"
+                android:text="@{viewHolder.item.createdAt}"
                 android:textSize="14sp"/>
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_below="@+id/author_image"
                 android:paddingBottom="3dip"
                 android:paddingTop="3dip"
-                android:text="@{tweet.text}"
+                android:text="@{viewHolder.item.text}"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 

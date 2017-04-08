@@ -32,7 +32,7 @@ public class CategoryListFragment extends Fragment {
     @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return new RecyclerBindingBuilder<>(inflater, container, viewModel)
                 .gridLayoutManager(2)
-                .viewHolder(CategoryRowBinding::inflate, CategoryRowBinding::setCategory, viewModel::goToPosts)
+                .viewHolder(viewGroup -> new CategoryViewHolder(CategoryRowBinding.inflate(inflater, viewGroup, false), viewModel))
                 .getRoot();
     }
 }

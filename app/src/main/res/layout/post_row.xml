@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="post"
-            type="it.cosenonjaviste.model.Post"/>
+            name="viewHolder"
+            type="it.cosenonjaviste.ui.post.PostViewHolder"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -14,7 +14,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:onClick="@{() -> viewHolder.onItemClicked()}">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -25,7 +26,7 @@
                 android:id="@+id/author_image"
                 android:layout_width="@dimen/author_image_size"
                 android:layout_height="@dimen/author_image_size"
-                app:userImageUrl="@{post.author.imageUrl}"/>
+                app:userImageUrl="@{viewHolder.item.author.imageUrl}"/>
 
             <TextView
                 android:id="@+id/author"
@@ -36,7 +37,7 @@
                 android:paddingLeft="6dip"
                 android:paddingRight="6dip"
                 android:paddingTop="3dip"
-                android:text="@{post.author.name}"
+                android:text="@{viewHolder.item.author.name}"
                 android:textSize="14sp"/>
 
             <TextView
@@ -47,7 +48,7 @@
                 android:layout_toRightOf="@+id/author_image"
                 android:paddingLeft="6dip"
                 android:paddingRight="6dip"
-                android:text="@{post.date}"
+                android:text="@{viewHolder.item.date}"
                 android:textSize="14sp"/>
 
             <TextView
@@ -59,7 +60,7 @@
                 android:paddingTop="3dip"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:textHtml="@{post.title}"/>
+                app:textHtml="@{viewHolder.item.title}"/>
 
             <TextView
                 android:id="@+id/text"
@@ -68,7 +69,7 @@
                 android:layout_below="@+id/title"
                 android:paddingTop="3dip"
                 android:textSize="14sp"
-                app:textHtml="@{post.excerptHtml}"/>
+                app:textHtml="@{viewHolder.item.excerptHtml}"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
