@@ -15,7 +15,6 @@
  */
 package it.cosenonjaviste.mv2m.recycler;
 
-import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -25,17 +24,5 @@ public abstract class BindableViewHolder<T> extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public static <B extends ViewDataBinding, T> BindableViewHolder<T> create(B binding, Binder<B, T> binder) {
-        return new SimpleBindableViewHolder<>(binding, binder);
-    }
-
-    public static <B extends ViewDataBinding, T> BindableViewHolder<T> create(B binding, int variableId) {
-        return new SimpleBindableViewHolder<>(binding, variableId);
-    }
-
     public abstract void bind(T item);
-
-    public interface Binder<B extends ViewDataBinding, T> {
-        void bind(B binding, T item);
-    }
 }
